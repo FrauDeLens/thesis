@@ -1,0 +1,4743 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+/* ==========================
+   FIXED GAME SCREEN
+========================== */
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
+
+    background: black;
+}
+
+#game-container {
+    position: absolute;
+
+    width: 1920px;
+    height: 1080px;
+
+    left: 50%;
+    top: 50%;
+
+    transform-origin: center center;
+
+    overflow: hidden;
+}
+
+/* ==========================
+   GLOBAL
+========================== */
+
+body {
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+h1 {
+    font-size: 64px;
+}
+
+h2 {
+    font-size: 42px;
+}
+
+p {
+    font-size: 22px;
+}
+
+button {
+    width: 220px;
+    padding: 12px;
+    margin: 10px auto;
+    font-size: 20px;
+    cursor: pointer;
+    display: block;
+}
+
+input {
+    width: 320px;
+    padding: 12px;
+    font-size: 18px;
+    margin: 10px auto;
+    display: block;
+}
+
+/* ==========================
+   TITLE SCREEN
+========================== */
+
+#title-screen {
+    position: relative;
+
+    width: 1920px;
+    height: 1080px;
+
+    background-image: url("bgassets/title.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    overflow: hidden;
+}
+
+
+/* ==========================
+   BUG HUNT TITLE
+========================== */
+
+#title-screen h1 {
+    display: block;
+
+    position: absolute;
+
+    top: 230px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 82px;
+
+    letter-spacing: 8px;
+
+    color: #f0c8ff;
+
+    text-align: center;
+
+    white-space: nowrap;
+
+    z-index: 5;
+
+    /* Pixel / eldritch glow */
+    text-shadow:
+        5px 5px 0 #31004c,
+        10px 10px 0 #180028,
+        0 0 10px #b800ff,
+        0 0 25px rgba(212, 0, 255, 0.85),
+        0 0 50px rgba(212, 0, 255, 0.45);
+
+    /* Slightly sharper pixel appearance */
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: unset;
+}
+
+
+/* ==========================
+   TITLE DECORATION
+========================== */
+
+#title-screen h1::after {
+    content: "════════════════════";
+
+    display: block;
+
+    margin-top: 24px;
+
+    font-size: 11px;
+
+    letter-spacing: 4px;
+
+    color: #9d4dcc;
+
+    text-shadow:
+        0 0 8px rgba(212, 0, 255, 0.8),
+        0 0 18px rgba(212, 0, 255, 0.4);
+}
+
+
+/* ==========================
+   PRESS TO CONTINUE
+========================== */
+
+#title-screen p {
+    position: absolute;
+
+    top: 650px;
+    left: 50%;
+
+    margin: 0;
+
+    transform: translateX(-50%);
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 15px;
+
+    color: #e5b3ff;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+
+    white-space: nowrap;
+
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: unset;
+
+    text-shadow:
+        3px 3px 0 #31004c,
+        6px 6px 0 #180028,
+        9px 9px 0 #080010,
+        0 0 18px rgba(212, 0, 255, 0.85);
+
+    animation: retroBlink 2.2s ease-in-out infinite;
+
+    z-index: 5;
+}
+
+
+/* ==========================
+   PRESS TEXT BLINK
+========================== */
+
+@keyframes retroBlink {
+
+    0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.35;
+    }
+}
+
+/* ==========================
+   LOGIN SCREEN
+========================== */
+
+#login-screen {
+    display: none;
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    background-image: url("bgassets/login.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    overflow: hidden;
+    text-align: center;
+}
+
+/* DARK OVERLAY */
+#login-screen::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(40, 0, 60, 0.25),
+            rgba(0, 0, 0, 0.72)
+        );
+
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* VIGNETTE */
+#login-screen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    box-shadow:
+        inset 0 0 180px rgba(0, 0, 0, 0.9),
+        inset 0 0 60px rgba(100, 0, 150, 0.25);
+
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* ==========================
+   LOGIN TITLE
+========================== */
+
+#login-screen h1 {
+    position: absolute;
+
+    top: 240px;
+    left: 0;
+
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 52px;
+    letter-spacing: 6px;
+
+    color: #f0c8ff;
+
+    text-align: center;
+
+    text-shadow:
+        4px 4px 0 #31004c,
+        8px 8px 0 #180028,
+        0 0 10px #b800ff,
+        0 0 25px rgba(212, 0, 255, 0.8);
+
+    white-space: nowrap;
+
+    z-index: 5;
+}
+
+/* LINE UNDER TITLE */
+
+#login-screen h1::after {
+    content: "────────────";
+
+    display: block;
+
+    margin-top: 20px;
+
+    font-size: 13px;
+    letter-spacing: 5px;
+
+    color: #9d4dcc;
+
+    text-shadow:
+        0 0 8px rgba(212, 0, 255, 0.8);
+}
+
+/* ==========================
+   LOGIN INPUT AREA
+========================== */
+
+#login-screen input {
+    position: relative;
+    z-index: 5;
+
+    display: block;
+
+    width: 360px;
+    height: 52px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    padding: 10px 18px;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(25, 5, 35, 0.95),
+            rgba(5, 0, 10, 0.95)
+        );
+
+    color: #f5ddff;
+
+    border: 2px solid #6b397d;
+    border-left: 5px solid #9d4dcc;
+
+    outline: none;
+
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 12px;
+
+    text-align: left;
+
+    box-shadow:
+        inset 0 0 15px rgba(0, 0, 0, 0.8),
+        0 0 8px rgba(150, 0, 200, 0.2);
+}
+
+/* FIRST INPUT */
+#login-screen input:first-of-type {
+    margin-top: 380px;
+    margin-bottom: 15px;
+}
+
+/* SECOND INPUT */
+#login-screen input:nth-of-type(2) {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/* INPUT FOCUS */
+
+#login-screen input:focus {
+    border-color: #e5b3ff;
+
+    box-shadow:
+        inset 0 0 15px rgba(0, 0, 0, 0.8),
+        0 0 10px rgba(212, 0, 255, 0.45),
+        0 0 25px rgba(212, 0, 255, 0.2);
+}
+
+/* PLACEHOLDER */
+
+#login-screen input::placeholder {
+    color: #8c6b98;
+    opacity: 1;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+}
+
+/* ==========================
+   BUTTONS
+========================== */
+
+#login-screen button {
+    position: relative;
+    z-index: 5;
+
+    display: block;
+
+    width: 240px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    padding: 14px 10px;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(60, 10, 80, 0.7),
+            rgba(10, 0, 15, 0.9)
+        );
+
+    color: #e5b3ff;
+
+    border: 2px solid #9d4dcc;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    box-shadow:
+        inset 0 0 12px rgba(212, 0, 255, 0.08),
+        0 0 8px rgba(212, 0, 255, 0.25);
+
+    transition: 0.2s ease;
+}
+
+/* LOGIN BUTTON */
+
+#login-button {
+    margin-top: 28px;
+    margin-bottom: 10px;
+}
+
+/* REGISTER BUTTON */
+
+#register-button {
+    margin-top: 10px;
+}
+
+/* BUTTON HOVER */
+
+#login-screen button:hover {
+    color: white;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(120, 20, 160, 0.65),
+            rgba(30, 0, 40, 0.95)
+        );
+
+    border-color: #f0c8ff;
+
+    box-shadow:
+        0 0 12px rgba(212, 0, 255, 0.7),
+        0 0 25px rgba(212, 0, 255, 0.25);
+
+    transform: translateY(-2px);
+}
+
+/* BUTTON PRESS */
+
+#login-screen button:active {
+    transform: translateY(2px);
+}
+
+/* ==========================
+   LOGIN MESSAGE
+========================== */
+
+#login-message {
+    position: relative;
+    z-index: 5;
+
+    margin: 22px 0 0 0;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 11px;
+
+    color: #d9a8ff;
+
+    text-shadow:
+        0 0 8px rgba(212, 0, 255, 0.7);
+}
+
+
+/* ==========================
+   REGISTER SCREEN
+========================== */
+
+#register-screen {
+    display: none;
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    background-image: url("bgassets/login.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    overflow: hidden;
+    text-align: center;
+}
+
+/* DARK OVERLAY */
+
+#register-screen::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(40, 0, 60, 0.25),
+            rgba(0, 0, 0, 0.72)
+        );
+
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* VIGNETTE */
+
+#register-screen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    box-shadow:
+        inset 0 0 180px rgba(0, 0, 0, 0.9),
+        inset 0 0 60px rgba(100, 0, 150, 0.25);
+
+    z-index: 1;
+    pointer-events: none;
+}
+
+
+/* ==========================
+   REGISTER TITLE
+========================== */
+
+#register-screen h1 {
+    position: absolute;
+
+    top: 180px;
+    left: 0;
+
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 52px;
+
+    letter-spacing: 6px;
+
+    color: #f0c8ff;
+
+    text-align: center;
+
+    text-shadow:
+        4px 4px 0 #31004c,
+        8px 8px 0 #180028,
+        0 0 10px #b800ff,
+        0 0 25px rgba(212, 0, 255, 0.8);
+
+    white-space: nowrap;
+
+    z-index: 5;
+}
+
+
+/* LINE UNDER TITLE */
+
+#register-screen h1::after {
+    content: "────────────";
+
+    display: block;
+
+    margin-top: 20px;
+
+    font-size: 13px;
+
+    letter-spacing: 5px;
+
+    color: #9d4dcc;
+
+    text-shadow:
+        0 0 8px rgba(212, 0, 255, 0.8);
+}
+
+
+/* ==========================
+   REGISTER INPUTS
+========================== */
+
+#register-screen input {
+    position: relative;
+
+    z-index: 5;
+
+    display: block;
+
+    width: 360px;
+    height: 52px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    padding: 10px 18px;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(25, 5, 35, 0.95),
+            rgba(5, 0, 10, 0.95)
+        );
+
+    color: #f5ddff;
+
+    border: 2px solid #6b397d;
+    border-left: 5px solid #9d4dcc;
+
+    outline: none;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 12px;
+
+    text-align: left;
+
+    box-shadow:
+        inset 0 0 15px rgba(0, 0, 0, 0.8),
+        0 0 8px rgba(150, 0, 200, 0.2);
+}
+
+
+/* FIRST INPUT */
+
+#register-screen input:first-of-type {
+    margin-top: 340px;
+    margin-bottom: 15px;
+}
+
+
+/* OTHER INPUTS */
+
+#register-screen input:nth-of-type(2),
+#register-screen input:nth-of-type(3) {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+
+/* ==========================
+   INPUT FOCUS
+========================== */
+
+#register-screen input:focus {
+    border-color: #e5b3ff;
+
+    box-shadow:
+        inset 0 0 15px rgba(0, 0, 0, 0.8),
+        0 0 10px rgba(212, 0, 255, 0.45),
+        0 0 25px rgba(212, 0, 255, 0.2);
+}
+
+
+/* ==========================
+   PLACEHOLDER
+========================== */
+
+#register-screen input::placeholder {
+    color: #8c6b98;
+
+    opacity: 1;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+}
+
+
+/* ==========================
+   REGISTER BUTTONS
+========================== */
+
+#register-screen button {
+    position: relative;
+
+    z-index: 5;
+
+    display: block;
+
+    width: 240px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    padding: 14px 10px;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(60, 10, 80, 0.7),
+            rgba(10, 0, 15, 0.9)
+        );
+
+    color: #e5b3ff;
+
+    border: 2px solid #9d4dcc;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    box-shadow:
+        inset 0 0 12px rgba(212, 0, 255, 0.08),
+        0 0 8px rgba(212, 0, 255, 0.25);
+
+    transition: 0.2s ease;
+}
+
+
+/* CREATE ACCOUNT BUTTON */
+
+#create-account-button {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+
+/* BACK TO LOGIN BUTTON */
+
+#back-to-login-button {
+    margin-top: 10px;
+}
+
+
+/* ==========================
+   BUTTON HOVER
+========================== */
+
+#register-screen button:hover {
+    color: white;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(120, 20, 160, 0.65),
+            rgba(30, 0, 40, 0.95)
+        );
+
+    border-color: #f0c8ff;
+
+    box-shadow:
+        0 0 12px rgba(212, 0, 255, 0.7),
+        0 0 25px rgba(212, 0, 255, 0.25);
+
+    transform: translateY(-2px);
+}
+
+
+/* ==========================
+   BUTTON PRESS
+========================== */
+
+#register-screen button:active {
+    transform: translateY(2px);
+}
+
+
+/* ==========================
+   REGISTER MESSAGE
+========================== */
+
+#register-message {
+    position: relative;
+
+    z-index: 5;
+
+    margin: 22px 0 0 0;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 11px;
+
+    color: #d9a8ff;
+
+    text-shadow:
+        0 0 8px rgba(212, 0, 255, 0.7);
+}
+
+/* ==========================
+   MAIN MENU
+========================== */
+
+#main-menu {
+    display: none;
+
+    position: relative;
+
+    width: 1920px;
+    height: 1080px;
+
+    padding: 0;
+    box-sizing: border-box;
+
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.78) 0%,
+            rgba(0, 0, 0, 0.48) 35%,
+            rgba(0, 0, 0, 0.20) 100%
+        ),
+        url("bgassets/mainmenu.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    overflow: hidden;
+
+    text-align: center;
+}
+
+
+/* ==========================
+   DARK VIGNETTE
+========================== */
+
+#main-menu::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(110, 0, 160, 0.16),
+            transparent 42%
+        );
+
+    box-shadow:
+        inset 0 0 180px rgba(0, 0, 0, 0.9),
+        inset 0 0 70px rgba(100, 0, 150, 0.25);
+
+    pointer-events: none;
+    z-index: 0;
+}
+
+
+/* ==========================
+   SCANLINES
+========================== */
+
+#main-menu::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 0.018) 0px,
+            rgba(255, 255, 255, 0.018) 1px,
+            transparent 1px,
+            transparent 5px
+        );
+
+    opacity: 0.35;
+
+    pointer-events: none;
+    z-index: 1;
+}
+
+
+/* ==========================
+   MAIN MENU TITLE
+========================== */
+
+#main-menu h1 {
+    position: absolute;
+
+    top: 105px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 600px;
+
+    margin: 0;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 58px;
+
+    letter-spacing: 6px;
+
+    color: #f0c8ff;
+
+    text-align: center;
+
+    text-shadow:
+        4px 4px 0 #31004c,
+        8px 8px 0 #180028,
+        0 0 10px #b800ff,
+        0 0 25px rgba(212, 0, 255, 0.8);
+
+    z-index: 5;
+}
+
+
+/* ==========================
+   TITLE UNDERLINE
+========================== */
+
+#main-menu h1::after {
+    content: "════════════════";
+
+    display: block;
+
+    margin-top: 18px;
+
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+    color: #9d4dcc;
+
+    text-shadow:
+        0 0 8px rgba(212, 0, 255, 0.8);
+}
+
+
+/* ==========================
+   WELCOME MESSAGE
+========================== */
+
+#welcome-message {
+    position: absolute;
+
+    top: 300px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 520px;
+
+    margin: 0;
+    padding: 13px 20px;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(40, 0, 55, 0.55),
+            rgba(10, 0, 18, 0.88)
+        );
+
+    border-left: 4px solid #9d4dcc;
+    border-right: 1px solid #55256a;
+
+    color: #d9a8ff;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 12px;
+
+    letter-spacing: 1px;
+
+    text-align: center;
+
+    box-shadow:
+        inset 0 0 15px rgba(212, 0, 255, 0.06),
+        0 0 15px rgba(100, 0, 150, 0.15);
+
+    z-index: 5;
+}
+
+
+/* ==========================
+   TRUE POINTS
+========================== */
+
+#true-points-menu {
+    position: absolute;
+
+    top: 365px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 520px;
+
+    margin: 0;
+    padding: 10px;
+
+    box-sizing: border-box;
+
+    color: #e5b3ff;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 11px;
+
+    letter-spacing: 1px;
+
+    text-align: center;
+
+    text-shadow:
+        0 0 8px rgba(212, 0, 255, 0.65);
+
+    z-index: 5;
+}
+
+
+/* ==========================
+   ALL MENU BUTTONS
+========================== */
+
+#main-menu button {
+    position: absolute;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 360px;
+    height: 58px;
+
+    margin: 0;
+    padding: 10px;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(65, 10, 85, 0.82),
+            rgba(10, 0, 16, 0.96)
+        );
+
+    color: #e5b3ff;
+
+    border: 2px solid #74368e;
+    border-left: 5px solid #9d4dcc;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 12px;
+
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    box-shadow:
+        inset 0 0 15px rgba(212, 0, 255, 0.08),
+        5px 5px 0 rgba(20, 0, 30, 0.85),
+        0 0 10px rgba(150, 0, 200, 0.2);
+
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        background 0.18s ease,
+        border-color 0.18s ease;
+
+    z-index: 5;
+}
+
+
+/* ==========================
+BUTTON POSITIONS
+========================== */
+
+#start-button {
+top: 425px;
+}
+
+#shop-button {
+top: 495px;
+}
+
+#about-button {
+top: 565px;
+}
+
+#collection-button {
+top: 635px;
+}
+
+#logout-button {
+top: 705px;
+}
+
+
+
+/* ==========================
+   RESET SAVE
+========================== */
+
+#reset-button {
+    top: 835px;
+
+    width: 250px !important;
+    height: 42px !important;
+
+    font-size: 9px !important;
+
+    color: #8c6b98 !important;
+
+    border-color: #472052 !important;
+    border-left: 3px solid #55256a !important;
+
+    background:
+        rgba(5, 0, 10, 0.65) !important;
+
+    box-shadow:
+        none !important;
+
+    opacity: 0.65;
+}
+
+
+/* ==========================
+   BUTTON HOVER
+========================== */
+
+#main-menu button:not(#reset-button):hover {
+
+    color: white;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(130, 20, 175, 0.82),
+            rgba(35, 0, 50, 0.98)
+        );
+
+    border-color: #e5b3ff;
+    border-left-color: #f0c8ff;
+
+    box-shadow:
+        inset 0 0 18px rgba(212, 0, 255, 0.12),
+        6px 6px 0 rgba(15, 0, 25, 0.9),
+        0 0 12px rgba(212, 0, 255, 0.7),
+        0 0 28px rgba(212, 0, 255, 0.25);
+
+    transform:
+        translateX(-50%)
+        translateX(6px);
+}
+
+
+/* ==========================
+   BUTTON PRESS
+========================== */
+
+#main-menu button:not(#reset-button):active {
+
+    transform:
+        translateX(-50%)
+        translateY(4px);
+
+    box-shadow:
+        inset 0 0 15px rgba(0, 0, 0, 0.65),
+        2px 2px 0 rgba(15, 0, 25, 0.9);
+}
+
+
+/* ==========================
+   RESET HOVER
+========================== */
+
+#reset-button:hover {
+
+    opacity: 1 !important;
+
+    color: #d9a8ff !important;
+
+    border-color: #74368e !important;
+
+    box-shadow:
+        0 0 10px rgba(150, 0, 200, 0.25) !important;
+}
+
+
+/* ==========================
+   DECORATIVE SIDE PANEL
+========================== */
+
+#main-menu .menu-decoration {
+    position: absolute;
+
+    top: 185px;
+    left: 50%;
+
+    width: 590px;
+    height: 625px;
+
+    transform: translateX(-50%);
+
+    border: 1px solid rgba(157, 77, 204, 0.25);
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(35, 0, 50, 0.10),
+            rgba(0, 0, 0, 0.25)
+        );
+
+    box-shadow:
+        inset 0 0 40px rgba(100, 0, 150, 0.08);
+
+    pointer-events: none;
+
+    z-index: 2;
+}
+
+
+/* ==========================
+   CORNER MARKER
+========================== */
+
+#main-menu .menu-decoration::before {
+    content: "╔════════════════════════════╗";
+
+    position: absolute;
+
+    top: -13px;
+    left: 20px;
+
+    color: #9d4dcc;
+
+    font-family:
+        'Press Start 2P',
+        monospace;
+
+    font-size: 10px;
+
+    text-shadow:
+        0 0 8px rgba(212, 0, 255, 0.6);
+}
+
+
+/* ==========================
+   SYSTEM STATUS
+========================== */
+
+#main-menu .menu-decoration::after {
+    content: "SYSTEM ONLINE // BUG DATABASE READY";
+
+    position: absolute;
+
+    bottom: 18px;
+    left: 0;
+
+    width: 100%;
+
+    color: #6f4c7c;
+
+    font-family:
+        'Press Start 2P',
+        monospace;
+
+    font-size: 8px;
+
+    letter-spacing: 2px;
+
+    text-align: center;
+}
+/* ==========================
+   DIFFICULTY SELECTION
+========================== */
+
+#difficulty-selection {
+    display: none;
+
+    position: relative;
+
+    width: 1920px;
+    height: 1080px;
+
+    box-sizing: border-box;
+
+    background-image:
+        linear-gradient(
+            rgba(10, 0, 20, 0.45),
+            rgba(5, 0, 15, 0.75)
+        ),
+        url("bgassets/mainmenu.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    overflow: hidden;
+}
+
+/* Dark vignette */
+
+#difficulty-selection::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            transparent 35%,
+            rgba(0, 0, 0, 0.65) 100%
+        );
+
+    pointer-events: none;
+}
+
+/* ==========================
+   TITLE
+========================== */
+
+#difficulty-selection h2 {
+    position: absolute;
+
+    top: 145px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    margin: 0;
+
+    width: 100%;
+
+    text-align: center;
+
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+
+    font-size: 52px;
+    letter-spacing: 6px;
+
+    color: #f0c8ff;
+
+    text-shadow:
+        5px 5px 0 #31004c,
+        10px 10px 0 #180028,
+        0 0 10px #b800ff,
+        0 0 25px rgba(212, 0, 255, 0.85),
+        0 0 50px rgba(212, 0, 255, 0.4);
+
+    z-index: 5;
+}
+
+/* Decorative line underneath title */
+
+#difficulty-selection h2::after {
+    content: "════════════════════";
+
+    display: block;
+
+    margin-top: 25px;
+
+    font-size: 11px;
+    letter-spacing: 4px;
+
+    color: #9d4dcc;
+
+    text-shadow:
+        0 0 8px rgba(212, 0, 255, 0.8),
+        0 0 18px rgba(212, 0, 255, 0.4);
+}
+
+/* ==========================
+   DIFFICULTY BUTTON AREA
+========================== */
+
+#difficulty-selection {
+    text-align: center;
+}
+
+/* EASY / NORMAL / HARD */
+
+#easy-button,
+#normal-button,
+#hard-button,
+#hell-button {
+    position: absolute;
+
+    height: 100px;
+
+    box-sizing: border-box;
+
+    border: 3px solid #9d4dcc;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(100, 20, 140, 0.95),
+            rgba(30, 0, 55, 0.98)
+        );
+
+    color: #f0c8ff;
+
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+
+    font-size: 15px;
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 0 8px rgba(212, 0, 255, 0.8),
+        0 0 20px rgba(212, 0, 255, 0.35),
+        inset 0 0 15px rgba(212, 0, 255, 0.15);
+
+    text-shadow:
+        3px 3px 0 #180028,
+        0 0 8px rgba(212, 0, 255, 0.8);
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
+
+    z-index: 5;
+}
+
+/* ==========================
+   TOP THREE BUTTONS
+========================== */
+
+#easy-button {
+    top: 420px;
+    left: 360px;
+    width: 360px;
+}
+
+#normal-button {
+    top: 420px;
+    left: 780px;
+    width: 360px;
+}
+
+#hard-button {
+    top: 420px;
+    left: 1200px;
+    width: 360px;
+}
+
+/* ==========================
+   HELL BUTTON
+========================== */
+
+#hell-button {
+    top: 545px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 900px;
+}
+
+/* ==========================
+   HOVER
+========================== */
+
+#easy-button:hover,
+#normal-button:hover,
+#hard-button:hover {
+    transform: translateY(-6px);
+
+    border-color: #e5b3ff;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(150, 40, 190, 0.98),
+            rgba(45, 0, 75, 1)
+        );
+
+    box-shadow:
+        0 0 12px #d400ff,
+        0 0 30px rgba(212, 0, 255, 0.65),
+        inset 0 0 20px rgba(212, 0, 255, 0.25);
+}
+
+#hell-button:hover {
+    transform: translateX(-50%) translateY(-6px);
+
+    border-color: #e5b3ff;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(150, 40, 190, 0.98),
+            rgba(45, 0, 75, 1)
+        );
+
+    box-shadow:
+        0 0 15px #d400ff,
+        0 0 35px rgba(212, 0, 255, 0.7),
+        inset 0 0 20px rgba(212, 0, 255, 0.3);
+}
+
+/* ==========================
+   BACK BUTTON
+========================== */
+
+#difficulty-back-button {
+    position: absolute;
+
+    top: 35px;
+    left: 35px;
+
+    width: 180px;
+    height: 50px;
+
+    margin: 0;
+
+    border: 2px solid #9d4dcc;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(60, 10, 85, 0.95),
+            rgba(20, 0, 35, 0.98)
+        );
+
+    color: #e5b3ff;
+
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 0 8px rgba(212, 0, 255, 0.6),
+        inset 0 0 10px rgba(212, 0, 255, 0.15);
+
+    text-shadow:
+        2px 2px 0 #180028;
+
+    z-index: 10;
+
+    transition: 0.15s ease;
+}
+
+#difficulty-back-button:hover {
+    transform: translateX(5px);
+
+    color: white;
+
+    border-color: #e5b3ff;
+
+    box-shadow:
+        0 0 12px #d400ff,
+        0 0 25px rgba(212, 0, 255, 0.5);
+}
+
+/* ==========================
+   DIFFICULTY INTRO PANEL
+========================== */
+
+#difficulty-intro-panel {
+    display: none;
+    position: absolute;
+
+    top: 680px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 900px;
+    min-height: 250px;
+
+    box-sizing: border-box;
+
+    padding: 28px 50px;
+
+    border: 3px solid #74368e;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(45, 5, 65, 0.96),
+            rgba(10, 0, 20, 0.98)
+        );
+
+    box-shadow:
+        0 0 10px rgba(212, 0, 255, 0.55),
+        0 0 30px rgba(212, 0, 255, 0.2),
+        inset 0 0 25px rgba(212, 0, 255, 0.08);
+
+    text-align: center;
+
+    z-index: 8;
+
+    overflow: hidden;
+}
+
+
+/* PANEL TITLE */
+
+#difficulty-intro-title {
+
+    margin: 0 0 25px 0;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 20px;
+
+    color: #f0c8ff;
+
+    letter-spacing: 3px;
+
+    text-shadow:
+        3px 3px 0 #180028,
+        0 0 12px rgba(212, 0, 255, 0.8);
+}
+
+
+/* DESCRIPTION */
+
+#difficulty-intro-text {
+
+    margin: 0 auto 25px auto;
+
+    max-width: 760px;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 11px;
+
+    line-height: 2;
+
+    color: #d9b8e8;
+
+    white-space: pre-line;
+
+    text-shadow:
+        2px 2px 0 #180028;
+}
+
+
+/* CONFIRMATION TEXT */
+
+#difficulty-intro-confirm {
+
+    margin: 0;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+    color: #b86de0;
+
+    text-shadow:
+        0 0 8px rgba(212, 0, 255, 0.7);
+
+    animation: difficultyIntroBlink 1.8s ease-in-out infinite;
+}
+
+
+@keyframes difficultyIntroBlink {
+
+    0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+
+}
+
+
+
+
+/* ==========================
+   ABOUT SCREEN
+========================== */
+
+#about-screen {
+    display: none;
+
+    position: relative;
+
+    width: 1920px;
+    height: 1080px;
+
+    box-sizing: border-box;
+
+    padding: 0;
+
+    background:
+        linear-gradient(
+            rgba(8, 0, 18, 0.45),
+            rgba(5, 0, 12, 0.8)
+        ),
+        url("bgassets/mainmenu.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    overflow: hidden;
+}
+
+/* ==========================
+   VIGNETTE
+========================== */
+
+#about-screen::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            transparent 30%,
+            rgba(0, 0, 0, 0.7) 100%
+        );
+
+    pointer-events: none;
+}
+
+/* ==========================
+   ABOUT TITLE
+========================== */
+
+#about-screen h2 {
+    position: absolute;
+
+    top: 100px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 100%;
+
+    margin: 0;
+
+    text-align: center;
+
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+
+    font-size: 48px;
+
+    letter-spacing: 5px;
+
+    color: #f0c8ff;
+
+    text-shadow:
+        5px 5px 0 #31004c,
+        10px 10px 0 #180028,
+        0 0 10px #b800ff,
+        0 0 25px rgba(212, 0, 255, 0.85),
+        0 0 50px rgba(212, 0, 255, 0.4);
+
+    z-index: 5;
+}
+
+/* Decorative line */
+
+#about-screen h2::after {
+    content: "════════════════════";
+
+    display: block;
+
+    margin-top: 22px;
+
+    font-size: 11px;
+
+    letter-spacing: 4px;
+
+    color: #9d4dcc;
+
+    text-shadow:
+        0 0 8px rgba(212, 0, 255, 0.8),
+        0 0 18px rgba(212, 0, 255, 0.4);
+}
+
+/* ==========================
+   MAIN ABOUT PANEL
+========================== */
+
+#about-screen {
+    isolation: isolate;
+}
+
+#about-screen::after {
+    content: "";
+
+    position: absolute;
+
+    top: 250px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 1050px;
+    height: 600px;
+
+    border: 2px solid rgba(157, 77, 204, 0.75);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(45, 5, 65, 0.92),
+            rgba(10, 0, 22, 0.96)
+        );
+
+    box-shadow:
+        0 0 15px rgba(212, 0, 255, 0.35),
+        0 0 45px rgba(212, 0, 255, 0.15),
+        inset 0 0 30px rgba(212, 0, 255, 0.08);
+
+    z-index: 1;
+
+    pointer-events: none;
+}
+
+/* ==========================
+   ABOUT TEXT
+========================== */
+
+#about-screen p {
+    position: relative;
+
+    z-index: 5;
+
+    width: 850px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    margin-bottom: 22px;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 21px;
+
+    line-height: 1.7;
+
+    color: #ead8f2;
+
+    text-align: center;
+
+    text-shadow:
+        2px 2px 0 #180028;
+
+}
+
+/* First paragraph */
+
+#about-screen p:first-of-type {
+    margin-top: 310px;
+}
+
+/* Developer / Adviser section */
+
+#about-screen p:nth-of-type(4) {
+    margin-top: 30px;
+}
+
+#about-screen strong {
+    color: #dca8ff;
+
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+
+    font-size: 14px;
+
+    text-shadow:
+        0 0 8px rgba(212, 0, 255, 0.6);
+}
+
+/* ==========================
+   BACK BUTTON
+========================== */
+
+#about-back-button {
+    position: absolute;
+
+    top: 35px;
+    left: 35px;
+
+    width: 180px;
+    height: 50px;
+
+    margin: 0;
+
+    border: 2px solid #9d4dcc;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(60, 10, 85, 0.95),
+            rgba(20, 0, 35, 0.98)
+        );
+
+    color: #e5b3ff;
+
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 0 8px rgba(212, 0, 255, 0.6),
+        inset 0 0 10px rgba(212, 0, 255, 0.15);
+
+    text-shadow:
+        2px 2px 0 #180028;
+
+    z-index: 10;
+
+    transition: 0.15s ease;
+}
+
+#about-back-button:hover {
+    transform: translateX(5px);
+
+    color: white;
+
+    border-color: #e5b3ff;
+
+    box-shadow:
+        0 0 12px #d400ff,
+        0 0 25px rgba(212, 0, 255, 0.5);
+}
+
+
+
+/* ==========================
+   TROPHY COLLECTION
+========================== */
+
+#collection-screen {
+    display: none;
+
+    position: relative;
+
+    width: 1920px;
+    height: 1080px;
+
+    box-sizing: border-box;
+
+    padding: 0;
+
+    background:
+        linear-gradient(
+            rgba(8, 0, 18, 0.45),
+            rgba(5, 0, 12, 0.82)
+        ),
+        url("bgassets/mainmenu.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    overflow: hidden;
+
+    text-align: center;
+}
+
+/* ==========================
+   VIGNETTE
+========================== */
+
+#collection-screen::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            transparent 30%,
+            rgba(0, 0, 0, 0.7) 100%
+        );
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+/* ==========================
+   TITLE
+========================== */
+
+#collection-screen h2 {
+    position: absolute;
+
+    top: 90px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 100%;
+
+    margin: 0;
+
+    text-align: center;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 44px;
+
+    letter-spacing: 5px;
+
+    color: #f0c8ff;
+
+    text-shadow:
+        5px 5px 0 #31004c,
+        10px 10px 0 #180028,
+        0 0 10px #b800ff,
+        0 0 25px rgba(212, 0, 255, 0.85),
+        0 0 50px rgba(212, 0, 255, 0.4);
+
+    z-index: 5;
+}
+
+/* ==========================
+   TITLE DECORATION
+========================== */
+
+#collection-screen h2::after {
+    content: "════════════════════";
+
+    display: block;
+
+    margin-top: 22px;
+
+    font-size: 11px;
+
+    letter-spacing: 4px;
+
+    color: #9d4dcc;
+
+    text-shadow:
+        0 0 8px rgba(212, 0, 255, 0.8),
+        0 0 18px rgba(212, 0, 255, 0.4);
+}
+
+/* ==========================
+   TROPHY PANELS
+========================== */
+
+#easy-trophies,
+#normal-trophies,
+#hard-trophies,
+#hell-trophies {
+
+    position: absolute;
+
+    width: 620px;
+    height: 250px;
+
+    box-sizing: border-box;
+
+    border: 2px solid rgba(157, 77, 204, 0.8);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(50, 5, 70, 0.92),
+            rgba(10, 0, 22, 0.97)
+        );
+
+    box-shadow:
+        0 0 12px rgba(212, 0, 255, 0.35),
+        0 0 30px rgba(212, 0, 255, 0.12),
+        inset 0 0 25px rgba(212, 0, 255, 0.08);
+
+    z-index: 3;
+
+    overflow: hidden;
+}
+
+/* ==========================
+   PANEL POSITIONS
+========================== */
+
+#easy-trophies {
+    top: 255px;
+    left: 300px;
+}
+
+#normal-trophies {
+    top: 255px;
+    right: 300px;
+}
+
+#hard-trophies {
+    top: 545px;
+    left: 300px;
+}
+
+#hell-trophies {
+    top: 545px;
+    right: 300px;
+}
+
+/* ==========================
+   DIFFICULTY HEADERS
+========================== */
+
+#easy-trophies h3,
+#normal-trophies h3,
+#hard-trophies h3,
+#hell-trophies h3 {
+
+    margin: 0;
+
+    padding: 24px 10px 18px;
+
+    text-align: center;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 20px;
+
+    letter-spacing: 3px;
+
+    color: #e5b3ff;
+
+    border-bottom: 2px solid rgba(157, 77, 204, 0.65);
+
+    text-shadow:
+        3px 3px 0 #180028,
+        0 0 10px rgba(212, 0, 255, 0.7);
+}
+
+/* ==========================
+   TROPHY LIST
+========================== */
+
+#easy-trophy-list,
+#normal-trophy-list,
+#hard-trophy-list,
+#hell-trophy-list {
+
+    margin: 0;
+
+    padding: 25px 30px;
+
+    box-sizing: border-box;
+
+    min-height: 100px;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 12px;
+
+    line-height: 2;
+
+    color: #d9c0e5;
+
+    text-align: left;
+
+    text-shadow:
+        2px 2px 0 #180028;
+}
+
+/* ==========================
+   EMPTY TROPHY MESSAGE
+========================== */
+
+#easy-trophy-list:empty::before,
+#normal-trophy-list:empty::before,
+#hard-trophy-list:empty::before,
+#hell-trophy-list:empty::before {
+
+    content: "NO TROPHIES UNLOCKED";
+
+    display: block;
+
+    margin-top: 15px;
+
+    text-align: center;
+
+    color: #75527f;
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+}
+
+/* ==========================
+   BACK BUTTON
+========================== */
+
+#collection-back-button {
+
+    position: absolute;
+
+    top: 35px;
+    left: 35px;
+
+    width: 180px;
+    height: 50px;
+
+    margin: 0;
+
+    border: 2px solid #9d4dcc;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(60, 10, 85, 0.95),
+            rgba(20, 0, 35, 0.98)
+        );
+
+    color: #e5b3ff;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 0 8px rgba(212, 0, 255, 0.6),
+        inset 0 0 10px rgba(212, 0, 255, 0.15);
+
+    text-shadow:
+        2px 2px 0 #180028;
+
+    z-index: 10;
+
+    transition: 0.15s ease;
+}
+
+#collection-back-button:hover {
+
+    transform: translateX(5px);
+
+    color: white;
+
+    border-color: #e5b3ff;
+
+    box-shadow:
+        0 0 12px #d400ff,
+        0 0 25px rgba(212, 0, 255, 0.5);
+}
+
+/* ==========================
+SHOP SCREEN
+========================== */
+
+#shop-screen {
+display: none;
+
+
+position: relative;
+
+width: 1920px;
+height: 1080px;
+
+box-sizing: border-box;
+
+padding: 0;
+
+background:
+    linear-gradient(
+        rgba(8, 0, 18, 0.48),
+        rgba(5, 0, 12, 0.84)
+    ),
+    url("bgassets/mainmenu.png");
+
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+
+overflow: hidden;
+
+text-align: center;
+
+font-family:
+    'Press Start 2P',
+    'Courier New',
+    monospace;
+
+
+}
+
+/* ==========================
+SHOP VIGNETTE
+========================== */
+
+#shop-screen::before {
+content: "";
+
+
+position: absolute;
+
+inset: 0;
+
+background:
+    radial-gradient(
+        circle at center,
+        rgba(110, 0, 160, 0.14),
+        transparent 38%
+    );
+
+box-shadow:
+    inset 0 0 180px rgba(0, 0, 0, 0.9),
+    inset 0 0 70px rgba(100, 0, 150, 0.25);
+
+pointer-events: none;
+
+z-index: 0;
+
+
+}
+
+/* ==========================
+SHOP SCANLINES
+========================== */
+
+#shop-screen::after {
+content: "";
+
+
+position: absolute;
+
+inset: 0;
+
+background:
+    repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.018) 0px,
+        rgba(255, 255, 255, 0.018) 1px,
+        transparent 1px,
+        transparent 5px
+    );
+
+opacity: 0.35;
+
+pointer-events: none;
+
+z-index: 1;
+
+
+}
+
+/* ==========================
+SHOP TITLE
+========================== */
+
+#shop-screen h2 {
+position: absolute;
+
+
+top: 95px;
+left: 50%;
+
+transform: translateX(-50%);
+
+width: 100%;
+
+margin: 0;
+
+font-family:
+    'Press Start 2P',
+    'Courier New',
+    monospace;
+
+font-size: 48px;
+
+letter-spacing: 5px;
+
+color: #f0c8ff;
+
+text-align: center;
+
+text-shadow:
+    5px 5px 0 #31004c,
+    10px 10px 0 #180028,
+    0 0 10px #b800ff,
+    0 0 25px rgba(212, 0, 255, 0.85),
+    0 0 50px rgba(212, 0, 255, 0.4);
+
+z-index: 5;
+
+
+}
+
+/* ==========================
+TITLE LINE
+========================== */
+
+#shop-screen h2::after {
+content: "════════════════════";
+
+display: block;
+
+margin-top: 20px;
+
+font-size: 11px;
+
+letter-spacing: 4px;
+
+color: #9d4dcc;
+
+text-shadow:
+    0 0 8px rgba(212, 0, 255, 0.8),
+    0 0 18px rgba(212, 0, 255, 0.4);
+
+
+}
+
+/* ==========================
+TRUE POINTS
+========================== */
+
+#shop-true-points {
+position: absolute;
+
+
+top: 205px;
+left: 50%;
+
+transform: translateX(-50%);
+
+width: 500px;
+
+margin: 0;
+padding: 12px 20px;
+
+box-sizing: border-box;
+
+color: #e5b3ff;
+
+font-family:
+    'Press Start 2P',
+    'Courier New',
+    monospace;
+
+font-size: 13px;
+
+letter-spacing: 2px;
+
+text-align: center;
+
+background:
+    linear-gradient(
+        90deg,
+        rgba(45, 0, 65, 0.55),
+        rgba(10, 0, 18, 0.9)
+    );
+
+border-left: 4px solid #9d4dcc;
+border-right: 1px solid #55256a;
+
+box-shadow:
+    inset 0 0 15px rgba(212, 0, 255, 0.06),
+    0 0 15px rgba(100, 0, 150, 0.15);
+
+text-shadow:
+    0 0 8px rgba(212, 0, 255, 0.7);
+
+z-index: 5;
+
+}
+
+/* ==========================
+SHOP ITEM PANELS
+========================== */
+
+#max-hp-shop,
+#temp-hp-shop,
+#free-hint-shop {
+position: absolute;
+
+top: 320px;
+
+width: 400px;
+height: 400px;
+
+box-sizing: border-box;
+
+padding: 35px 25px;
+
+border: 2px solid rgba(157, 77, 204, 0.8);
+
+background:
+    linear-gradient(
+        145deg,
+        rgba(50, 5, 70, 0.94),
+        rgba(10, 0, 22, 0.97)
+    );
+
+box-shadow:
+    0 0 12px rgba(212, 0, 255, 0.3),
+    0 0 30px rgba(212, 0, 255, 0.12),
+    inset 0 0 30px rgba(212, 0, 255, 0.08);
+
+z-index: 4;
+
+
+}
+
+/* ==========================
+PANEL POSITIONS
+========================== */
+
+#max-hp-shop {
+left: 260px;
+}
+
+#temp-hp-shop {
+left: 760px;
+}
+
+#free-hint-shop {
+right: 260px;
+}
+
+/* ==========================
+SHOP PANEL TOP LINE
+========================== */
+
+#max-hp-shop::before,
+#temp-hp-shop::before,
+#free-hint-shop::before {
+content: "";
+
+
+position: absolute;
+
+top: 12px;
+left: 15px;
+
+right: 15px;
+
+height: 2px;
+
+background:
+    linear-gradient(
+        90deg,
+        transparent,
+        #9d4dcc,
+        transparent
+    );
+
+opacity: 0.7;
+
+}
+
+/* ==========================
+SHOP HEADERS
+========================== */
+
+#max-hp-shop h3,
+#temp-hp-shop h3,
+#free-hint-shop h3 {
+margin: 0 0 35px 0;
+
+
+padding-bottom: 20px;
+
+border-bottom: 2px solid rgba(157, 77, 204, 0.55);
+
+font-family:
+    'Press Start 2P',
+    'Courier New',
+    monospace;
+
+font-size: 19px;
+
+letter-spacing: 2px;
+
+color: #e5b3ff;
+
+text-shadow:
+    3px 3px 0 #180028,
+    0 0 10px rgba(212, 0, 255, 0.7);
+
+
+}
+
+/* ==========================
+SHOP DESCRIPTION TEXT
+========================== */
+
+#max-hp-display,
+#temp-hp-display,
+#free-hint-display {
+
+margin: 25px 0 18px 0;
+
+font-family:
+    'Press Start 2P',
+    'Courier New',
+    monospace;
+
+font-size: 11px;
+
+line-height: 1.8;
+
+color: #d9c0e5;
+
+text-shadow:
+    2px 2px 0 #180028;
+
+}
+
+#max-hp-cost,
+#temp-hp-cost,
+#free-hint-cost {
+
+margin: 0 0 35px 0;
+
+font-family:
+    'Press Start 2P',
+    'Courier New',
+    monospace;
+
+font-size: 10px;
+
+color: #9d4dcc;
+
+letter-spacing: 1px;
+
+text-shadow:
+    0 0 8px rgba(212, 0, 255, 0.5);
+
+}
+
+/* ==========================
+SHOP BUTTONS
+========================== */
+
+#max-hp-button,
+#temp-hp-button,
+#free-hint-button {
+
+position: absolute;
+
+bottom: 35px;
+left: 50%;
+
+transform: translateX(-50%);
+
+width: 270px;
+height: 55px;
+
+margin: 0;
+
+padding: 10px;
+
+box-sizing: border-box;
+
+border: 2px solid #9d4dcc;
+border-left: 5px solid #b800ff;
+
+background:
+    linear-gradient(
+        180deg,
+        rgba(70, 10, 95, 0.9),
+        rgba(10, 0, 18, 0.98)
+    );
+
+color: #e5b3ff;
+
+font-family:
+    'Press Start 2P',
+    'Courier New',
+    monospace;
+
+font-size: 10px;
+
+letter-spacing: 1px;
+
+cursor: pointer;
+
+box-shadow:
+    inset 0 0 15px rgba(212, 0, 255, 0.08),
+    4px 4px 0 rgba(20, 0, 30, 0.85),
+    0 0 10px rgba(150, 0, 200, 0.25);
+
+transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease;
+
+}
+
+/* ==========================
+SHOP BUTTON HOVER
+========================== */
+
+#max-hp-button:not(:disabled):hover,
+#temp-hp-button:not(:disabled):hover,
+#free-hint-button:not(:disabled):hover {
+
+
+color: white;
+
+background:
+    linear-gradient(
+        90deg,
+        rgba(130, 20, 175, 0.9),
+        rgba(35, 0, 50, 0.98)
+    );
+
+border-color: #e5b3ff;
+border-left-color: #f0c8ff;
+
+box-shadow:
+    inset 0 0 18px rgba(212, 0, 255, 0.12),
+    6px 6px 0 rgba(15, 0, 25, 0.9),
+    0 0 12px rgba(212, 0, 255, 0.7),
+    0 0 28px rgba(212, 0, 255, 0.25);
+
+transform:
+    translateX(-50%)
+    translateY(-3px);
+
+
+}
+
+/* ==========================
+DISABLED SHOP BUTTON
+========================== */
+
+#max-hp-button:disabled,
+#temp-hp-button:disabled,
+#free-hint-button:disabled {
+
+
+cursor: not-allowed;
+
+color: #75527f;
+
+border-color: #472052;
+
+border-left-color: #55256a;
+
+background:
+    rgba(5, 0, 10, 0.75);
+
+box-shadow:
+    none;
+
+opacity: 0.55;
+
+
+}
+
+/* ==========================
+SHOP BACK BUTTON
+========================== */
+
+#shop-back-button {
+
+
+position: absolute;
+
+top: 35px;
+left: 35px;
+
+width: 180px;
+height: 50px;
+
+margin: 0;
+
+border: 2px solid #9d4dcc;
+
+background:
+    linear-gradient(
+        180deg,
+        rgba(60, 10, 85, 0.95),
+        rgba(20, 0, 35, 0.98)
+    );
+
+color: #e5b3ff;
+
+font-family:
+    'Press Start 2P',
+    'Courier New',
+    monospace;
+
+font-size: 12px;
+
+cursor: pointer;
+
+box-shadow:
+    0 0 8px rgba(212, 0, 255, 0.6),
+    inset 0 0 10px rgba(212, 0, 255, 0.15);
+
+text-shadow:
+    2px 2px 0 #180028;
+
+z-index: 10;
+
+transition: 0.15s ease;
+
+
+}
+
+#shop-back-button:hover {
+
+
+transform: translateX(5px);
+
+color: white;
+
+border-color: #e5b3ff;
+
+box-shadow:
+    0 0 12px #d400ff,
+    0 0 25px rgba(212, 0, 255, 0.5);
+
+
+}
+
+/* ==========================
+   BATTLE
+========================== */
+
+#battle-screen {
+    display: none;
+
+    position: relative;
+
+    width: 1920px;
+    height: 1080px;
+
+    box-sizing: border-box;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    overflow: hidden;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    color: #f0c8ff;
+}
+
+#battle-screen.easy-battle {
+    background-image:
+        linear-gradient(
+            rgba(5, 0, 15, 0.12),
+            rgba(5, 0, 15, 0.25)
+        ),
+        url("bgassets/easy.png");
+}
+
+#battle-screen.normal-battle {
+    background-image:
+        linear-gradient(
+            rgba(5, 0, 15, 0.12),
+            rgba(5, 0, 15, 0.25)
+        ),
+        url("bgassets/normal.png");
+}
+
+#battle-screen.hard-battle {
+    background-image:
+        linear-gradient(
+            rgba(5, 0, 15, 0.12),
+            rgba(5, 0, 15, 0.25)
+        ),
+        url("bgassets/hard.png");
+}
+
+#battle-screen.hell-battle {
+    background-image:
+        linear-gradient(
+            rgba(15, 0, 20, 0.12),
+            rgba(15, 0, 20, 0.3)
+        ),
+        url("bgassets/hell.png");
+}
+
+
+/* ==========================
+   BATTLE OVERLAY
+========================== */
+
+#battle-screen::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            transparent 35%,
+            rgba(0, 0, 0, 0.55) 100%
+        );
+
+    box-shadow:
+        inset 0 0 180px rgba(0, 0, 0, 0.75),
+        inset 0 0 70px rgba(100, 0, 150, 0.18);
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+
+/* ==========================
+   BATTLE SCANLINES
+========================== */
+
+#battle-screen::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 0.015) 0px,
+            rgba(255, 255, 255, 0.015) 1px,
+            transparent 1px,
+            transparent 5px
+        );
+
+    opacity: 0.3;
+
+    pointer-events: none;
+
+    z-index: 1;
+}
+
+
+/* ==========================
+   BATTLE LAYERS
+========================== */
+
+#battle-top,
+#battle-area {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+
+    margin: 0;
+    padding: 0;
+
+    z-index: 5;
+}
+
+#battle-top *,
+#battle-area * {
+    pointer-events: auto;
+}
+
+
+/* ==========================
+   BACK BUTTON
+========================== */
+
+#battle-back-button {
+    position: absolute;
+
+    top: 20px;
+    left: 20px;
+
+    width: 120px;
+    height: 45px;
+
+    margin: 0;
+    padding: 8px;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(55, 8, 75, 0.92),
+            rgba(10, 0, 18, 0.97)
+        );
+
+    border: 2px solid #74368e;
+    border-left: 4px solid #9d4dcc;
+
+    color: #d9a8ff;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 9px;
+
+    cursor: pointer;
+
+    box-shadow:
+        inset 0 0 12px rgba(212, 0, 255, 0.08),
+        0 0 10px rgba(150, 0, 200, 0.25);
+
+    text-shadow:
+        2px 2px 0 #180028;
+
+    transition: 0.18s ease;
+
+    z-index: 20;
+}
+
+#battle-back-button:hover {
+    color: white;
+
+    border-color: #e5b3ff;
+    border-left-color: #f0c8ff;
+
+    box-shadow:
+        0 0 12px rgba(212, 0, 255, 0.75),
+        0 0 25px rgba(212, 0, 255, 0.3);
+
+    transform: translateX(4px);
+}
+
+
+/* ==========================
+   CHALLENGE BOX
+========================== */
+
+#challenge-box {
+    position: absolute;
+
+    top: 45%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 45%;
+    max-width: 700px;
+    min-height: 250px;
+
+    box-sizing: border-box;
+
+    padding: 30px;
+
+    margin: 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(30, 3, 45, 0.94),
+            rgba(5, 0, 12, 0.96)
+        );
+
+    border: 2px solid #74368e;
+    border-left: 5px solid #9d4dcc;
+
+    box-shadow:
+        0 0 12px rgba(212, 0, 255, 0.25),
+        0 0 35px rgba(212, 0, 255, 0.12),
+        inset 0 0 30px rgba(212, 0, 255, 0.06);
+
+    z-index: 8;
+}
+
+
+/* TOP DECORATION */
+
+#challenge-box::before {
+    content: "BUG // DETECTED";
+
+    position: absolute;
+
+    top: -18px;
+    left: 20px;
+
+    padding: 5px 10px;
+
+    background: #16001f;
+
+    color: #b86ee0;
+
+    border: 1px solid #74368e;
+
+    font-family:
+        'Press Start 2P',
+        monospace;
+
+    font-size: 8px;
+
+    letter-spacing: 2px;
+
+    text-shadow:
+        0 0 8px rgba(212, 0, 255, 0.7);
+}
+
+
+/* CORNER DETAIL */
+
+#challenge-box::after {
+    content: "/// DEBUG TERMINAL";
+
+    position: absolute;
+
+    right: 18px;
+    bottom: 12px;
+
+    color: #5f3970;
+
+    font-family:
+        'Press Start 2P',
+        monospace;
+
+    font-size: 7px;
+
+    letter-spacing: 1px;
+}
+
+
+/* ==========================
+   CODE
+========================== */
+
+#bug-code {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    min-height: 100%;
+
+    margin: 0;
+
+    padding: 10px;
+
+    box-sizing: border-box;
+
+    text-align: left;
+
+    white-space: pre-wrap;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 16px;
+
+    line-height: 1.8;
+
+    color: #ead8f2;
+
+    text-shadow:
+        2px 2px 0 #180028,
+        0 0 8px rgba(212, 0, 255, 0.25);
+}
+
+
+/* ==========================
+   ENEMY NAME
+========================== */
+
+#enemy-name {
+    position: absolute;
+
+    top: 100px;
+    right: 400px;
+
+    margin: 0;
+    padding: 10px 18px;
+
+    min-width: 260px;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(15, 0, 20, 0.92),
+            rgba(45, 0, 60, 0.72)
+        );
+
+    border-top: 2px solid #9d4dcc;
+    border-bottom: 2px solid #55256a;
+
+    color: #f0c8ff;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 16px;
+
+    font-weight: normal;
+
+    letter-spacing: 2px;
+
+    text-align: right;
+
+    text-shadow:
+        3px 3px 0 #180028,
+        0 0 10px rgba(212, 0, 255, 0.75);
+
+    z-index: 15;
+}
+
+
+/* ==========================
+   ENEMY HEARTS
+========================== */
+
+#enemy-hearts {
+    position: absolute;
+
+    top: 150px;
+    right: 400px;
+
+    margin: 0;
+
+    min-width: 260px;
+
+    padding: 7px 18px;
+
+    box-sizing: border-box;
+
+    background: rgba(5, 0, 10, 0.78);
+
+    border-right: 3px solid #74368e;
+    border-bottom: 1px solid #472052;
+
+    color: #e5b3ff;
+
+    font-family:
+        'Press Start 2P',
+        monospace;
+
+    font-size: 14px;
+
+    text-align: right;
+
+    text-shadow:
+        0 0 8px rgba(212, 0, 255, 0.6);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    white-space: nowrap;
+
+    z-index: 15;
+}
+
+
+/* ==========================
+   PLAYER HEARTS
+========================== */
+
+#player-hearts {
+    position: absolute;
+
+    bottom: 120px;
+    left: 15%;
+
+    margin: 0;
+
+    padding: 9px 18px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(10, 0, 18, 0.92),
+            rgba(40, 0, 55, 0.72)
+        );
+
+    border-left: 4px solid #9d4dcc;
+    border-top: 1px solid #55256a;
+    border-bottom: 1px solid #55256a;
+
+    font-family:
+        'Press Start 2P',
+        monospace;
+
+    font-size: 18px;
+
+    font-weight: normal;
+
+    color: #e5b3ff;
+
+    display: flex;
+
+    align-items: center;
+
+    white-space: nowrap;
+
+    text-shadow:
+        2px 2px 0 #180028,
+        0 0 10px rgba(212, 0, 255, 0.6);
+
+    z-index: 100;
+}
+
+
+/* ==========================
+   HEARTS
+========================== */
+
+.heart {
+    display: inline-block;
+
+    font-size: 28px;
+
+    line-height: 1;
+
+    margin-left: 5px;
+}
+
+.full-heart {
+    color: #d83bff;
+
+    text-shadow:
+        2px 2px 0 #3b0048,
+        0 0 8px rgba(212, 0, 255, 0.8);
+}
+
+.empty-heart {
+    color: #38253f;
+
+    opacity: 0.8;
+
+    text-shadow:
+        2px 2px 0 #120016;
+}
+
+
+/* ==========================
+   DIALOGUE BOX
+========================== */
+
+#dialogue-area {
+    position: absolute;
+
+    top: 25%;
+    left: 40px;
+
+    width: 250px;
+    min-height: 120px;
+
+    box-sizing: border-box;
+
+    padding: 20px;
+
+    margin: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(35, 5, 48, 0.94),
+            rgba(5, 0, 12, 0.96)
+        );
+
+    border: 2px solid #74368e;
+    border-left: 4px solid #b800ff;
+
+    border-radius: 4px;
+
+    box-shadow:
+        0 0 12px rgba(212, 0, 255, 0.3),
+        inset 0 0 20px rgba(212, 0, 255, 0.07);
+
+    z-index: 20;
+}
+
+
+/* DIALOGUE LABEL */
+
+#dialogue-area::before {
+    content: "FRAU // SYSTEM";
+
+    position: absolute;
+
+    top: -16px;
+    left: 15px;
+
+    padding: 4px 8px;
+
+    background: #16001f;
+
+    border: 1px solid #74368e;
+
+    color: #c57be8;
+
+    font-family:
+        'Press Start 2P',
+        monospace;
+
+    font-size: 7px;
+
+    letter-spacing: 1px;
+
+    text-shadow:
+        0 0 7px rgba(212, 0, 255, 0.7);
+}
+
+
+/* DIALOGUE TEXT */
+
+#dialogue-text {
+    margin: 0;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 10px;
+
+    line-height: 1.8;
+
+    color: #ead8f2;
+
+    text-align: left;
+
+    text-shadow:
+        2px 2px 0 #180028;
+}
+
+
+/* ==========================
+   ANSWER AREA
+========================== */
+
+#answer-area {
+    position: absolute;
+
+    bottom: 100px;
+    right: 230px;
+
+    width: 280px;
+    height: 150px;
+
+    box-sizing: border-box;
+
+    padding: 20px;
+
+    margin: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(35, 5, 48, 0.96),
+            rgba(5, 0, 12, 0.98)
+        );
+
+    border: 2px solid #74368e;
+    border-left: 4px solid #9d4dcc;
+
+    border-radius: 5px 0 0 5px;
+
+    box-shadow:
+        0 0 12px rgba(212, 0, 255, 0.25),
+        inset 0 0 20px rgba(212, 0, 255, 0.06);
+
+    z-index: 30;
+}
+
+
+/* ANSWER LABEL */
+
+#answer-area::before {
+    content: "ENTER DEBUG FIX";
+
+    position: absolute;
+
+    top: -17px;
+    left: 15px;
+
+    padding: 4px 8px;
+
+    background: #16001f;
+
+    border: 1px solid #74368e;
+
+    color: #c57be8;
+
+    font-family:
+        'Press Start 2P',
+        monospace;
+
+    font-size: 7px;
+
+    letter-spacing: 1px;
+}
+
+
+/* ==========================
+   ANSWER INPUT
+========================== */
+
+#answer-input {
+    width: 100%;
+    height: 45px;
+
+    margin: 0 0 15px 0;
+
+    padding: 10px 12px;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(8, 0, 14, 0.98),
+            rgba(25, 0, 35, 0.98)
+        );
+
+    border: 2px solid #55256a;
+
+    outline: none;
+
+    color: #f0c8ff;
+
+    font-family:
+        'Press Start 2P',
+        monospace;
+
+    font-size: 10px;
+
+    box-shadow:
+        inset 0 0 12px rgba(0, 0, 0, 0.8);
+}
+
+#answer-input::placeholder {
+    color: #694b73;
+}
+
+#answer-input:focus {
+    border-color: #b800ff;
+
+    box-shadow:
+        inset 0 0 12px rgba(0, 0, 0, 0.8),
+        0 0 10px rgba(212, 0, 255, 0.55);
+}
+
+
+/* ==========================
+   SUBMIT BUTTON
+========================== */
+
+#submit-button {
+    width: 100%;
+
+    height: 42px;
+
+    margin: 0;
+
+    padding: 8px;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(100, 20, 135, 0.9),
+            rgba(35, 0, 50, 0.98)
+        );
+
+    border: 2px solid #9d4dcc;
+
+    color: #f0c8ff;
+
+    font-family:
+        'Press Start 2P',
+        monospace;
+
+    font-size: 9px;
+
+    cursor: pointer;
+
+    text-shadow:
+        2px 2px 0 #180028;
+
+    box-shadow:
+        0 0 8px rgba(212, 0, 255, 0.3),
+        inset 0 0 10px rgba(212, 0, 255, 0.1);
+
+    transition: 0.15s ease;
+}
+
+#submit-button:hover {
+    color: white;
+
+    border-color: #e5b3ff;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(145, 35, 185, 0.95),
+            rgba(45, 0, 65, 1)
+        );
+
+    box-shadow:
+        0 0 12px rgba(212, 0, 255, 0.8),
+        0 0 25px rgba(212, 0, 255, 0.25);
+
+    transform: translateY(-2px);
+}
+
+#submit-button:active {
+    transform: translateY(2px);
+}
+
+
+/* ==========================
+   BATTLE RIGHT PANEL
+========================== */
+
+#battle-right {
+    position: absolute;
+
+    bottom: 100px;
+    right: 30px;
+
+    width: 200px;
+    height: 150px;
+
+    box-sizing: border-box;
+
+    padding: 20px;
+
+    margin: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(35, 5, 48, 0.96),
+            rgba(5, 0, 12, 0.98)
+        );
+
+    border: 2px solid #74368e;
+    border-right: 4px solid #9d4dcc;
+
+    border-radius: 0 5px 5px 0;
+
+    box-shadow:
+        0 0 12px rgba(212, 0, 255, 0.25),
+        inset 0 0 20px rgba(212, 0, 255, 0.06);
+
+    z-index: 30;
+}
+
+
+/* ==========================
+   POINTS DISPLAY
+========================== */
+
+#points-display {
+    margin: 0;
+
+    width: 100%;
+
+    padding-bottom: 8px;
+
+    border-bottom: 1px solid #472052;
+
+    text-align: right;
+}
+
+#points-display p {
+    margin: 6px 0;
+
+    font-family:
+        'Press Start 2P',
+        monospace;
+
+    font-size: 8px;
+
+    line-height: 1.5;
+
+    color: #cda6dc;
+
+    white-space: nowrap;
+
+    text-shadow:
+        0 0 6px rgba(212, 0, 255, 0.45);
+}
+
+
+/* ==========================
+   HINT BUTTON
+========================== */
+
+#hint-button {
+    width: 100%;
+
+    height: 40px;
+
+    margin: 0;
+
+    padding: 8px;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(55, 8, 75, 0.95),
+            rgba(12, 0, 20, 0.98)
+        );
+
+    border: 2px solid #74368e;
+
+    color: #cda6dc;
+
+    font-family:
+        'Press Start 2P',
+        monospace;
+
+    font-size: 8px;
+
+    cursor: pointer;
+
+    box-shadow:
+        inset 0 0 10px rgba(212, 0, 255, 0.08);
+
+    transition: 0.15s ease;
+}
+
+#hint-button:hover {
+    color: #f0c8ff;
+
+    border-color: #b800ff;
+
+    box-shadow:
+        0 0 10px rgba(212, 0, 255, 0.6),
+        inset 0 0 12px rgba(212, 0, 255, 0.12);
+
+    transform: translateY(-2px);
+}
+
+#hint-button:active {
+    transform: translateY(1px);
+}
+
+/* ==========================
+   VICTORY
+========================== */
+
+#victory-screen {
+    display: none;
+
+    position: relative;
+
+    width: 1920px;
+    height: 1080px;
+
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(10, 0, 20, 0.30) 0%,
+            rgba(10, 0, 20, 0.05) 100%
+        ),
+        url("bgassets/victorybg.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    overflow: hidden;
+
+    color: #cda6dc;
+
+    font-family:
+        'Press Start 2P',
+        monospace;
+
+    text-align: center;
+}
+
+
+/* ==========================
+   DEFEAT
+========================== */
+
+#defeat-screen {
+    display: none;
+
+    position: relative;
+
+    width: 1920px;
+    height: 1080px;
+
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(10, 0, 20, 0.35) 0%,
+            rgba(10, 0, 20, 0.10) 100%
+        ),
+        url("bgassets/defeatbg.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    overflow: hidden;
+
+    color: #cda6dc;
+
+    font-family:
+        'Press Start 2P',
+        monospace;
+
+    text-align: center;
+}
+
+
+/* ==========================
+   VICTORY FRAU
+========================== */
+
+#victory-frau {
+    position: absolute;
+
+    width: 650px;
+    height: auto;
+
+    left: 120px;
+    bottom: 35px;
+
+    margin: 0;
+    padding: 0;
+
+    z-index: 5;
+
+    object-fit: contain;
+    pointer-events: none;
+}
+
+
+/* ==========================
+   DEFEAT FRAU
+========================== */
+
+#defeat-frau {
+    position: absolute;
+
+    width: 650px;
+    height: auto;
+
+    right: 320px;
+    bottom: 35px;
+
+    margin: 0;
+    padding: 0;
+
+    z-index: 5;
+
+    object-fit: contain;
+    pointer-events: none;
+}
+
+
+
+/* ==========================
+   FADE
+========================== */
+
+.fade-out {
+    animation: fadeOut 1s forwards;
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* --- Top Right (Enemy) --- */
+#enemy-sprite {
+    position: absolute;
+    top: 0px;
+    right: 60px;
+
+    width: 440px;
+    height: 440px;
+
+    object-fit: contain;
+    margin: 0;
+
+    filter:
+        drop-shadow(0 18px 12px rgba(0, 0, 0, 0.8))
+        drop-shadow(0 0 25px rgba(255, 255, 255, 0.2));
+
+    animation: enemyFloat 4s ease-in-out infinite;
+}
+
+@keyframes enemyFloat {
+    0%, 100% {
+        transform: perspective(800px) rotateY(-10deg) translateY(0px);
+    }
+    50% {
+        transform: perspective(800px) rotateY(-10deg) translateY(-12px);
+    }
+}
+
+#enemy-name {
+    position: absolute;
+
+    top: 100px;
+    right: 400px;
+
+    font-size: 28px;
+    font-weight: bold;
+
+    margin: 0;
+}
+
+#enemy-hearts {
+    position: absolute;
+
+    top: 150px;
+    right: 400px;
+
+    font-size: 20px;
+
+    margin: 0;
+
+    display: flex;
+    align-items: center;
+
+    white-space: nowrap;
+}
+
+/* ==========================
+   PLAYER / FRAU SPRITE
+========================== */
+
+#player-sprite {
+    position: absolute;
+    bottom: 120px;
+    left: 60px;
+
+    width: 720px;
+    height: 720px;
+
+    object-fit: contain;
+    margin: 0;
+    image-rendering: pixelated;
+
+    filter:
+        drop-shadow(0 20px 12px rgba(0, 0, 0, 0.85))
+        drop-shadow(0 0 20px rgba(180, 0, 255, 0.25));
+
+    z-index: 10;
+}
+
+
+/* ==========================
+   PIXEL HEARTS
+========================== */
+.heart {
+    display: inline-block;
+    font-size: 32px;
+    line-height: 1;
+    margin-left: 4px;
+}
+
+.full-heart {
+    color: #e00000;
+    text-shadow: 2px 2px 0 #600000;
+}
+
+.empty-heart {
+    color: #555;
+    opacity: 0.7;
+    text-shadow: 2px 2px 0 #222;
+}
+
+/* ==========================
+   VICTORY SCREEN CONTENT
+========================== */
+
+#victory-screen h2 {
+    position: absolute;
+    top: 180px;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 80px;
+    text-align: center;
+    z-index: 10;
+}
+
+#victory-message {
+    position: absolute;
+    top: 330px;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 40px;
+    text-align: center;
+    z-index: 10;
+}
+
+#victory-points-message {
+    position: absolute;
+    top: 430px;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 28px;
+    text-align: center;
+    z-index: 10;
+}
+
+#trophy-message {
+    position: absolute;
+    top: 490px;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 28px;
+    text-align: center;
+    z-index: 10;
+}
+
+#next-enemy-button {
+    position: absolute;
+    top: 600px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    margin: 0;
+    font-size: 24px;
+    z-index: 10;
+}
+
+/* ==========================
+   DEFEAT SCREEN CONTENT
+========================== */
+
+#defeat-screen h1 {
+    position: absolute;
+    top: 180px;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 90px;
+    text-align: center;
+    z-index: 10;
+}
+
+#defeat-message {
+    position: absolute;
+    top: 370px;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 40px;
+    text-align: center;
+    white-space: pre-line;
+    z-index: 10;
+}
+
+#defeat-button {
+    position: absolute;
+    top: 550px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 350px;
+    margin: 0;
+    font-size: 24px;
+    z-index: 10;
+}
+
+
+/* ==========================
+   ATTACK SHAKE
+========================== */
+
+#battle-screen.attack-shake {
+    animation: battleShake 0.65s ease-in-out;
+}
+
+#player-sprite.attack-shake {
+    animation: playerAttackShake 0.65s ease-in-out;
+}
+
+#enemy-sprite.hit-shake {
+    animation: enemyHitShake 0.65s ease-in-out;
+}
+
+@keyframes battleShake {
+
+    0% {
+        transform: translate(0, 0);
+    }
+
+    10% {
+        transform: translate(-8px, 4px);
+    }
+
+    20% {
+        transform: translate(8px, -4px);
+    }
+
+    30% {
+        transform: translate(-7px, -5px);
+    }
+
+    40% {
+        transform: translate(7px, 5px);
+    }
+
+    50% {
+        transform: translate(-5px, -3px);
+    }
+
+    60% {
+        transform: translate(5px, 3px);
+    }
+
+    70% {
+        transform: translate(-3px, 2px);
+    }
+
+    80% {
+        transform: translate(3px, -2px);
+    }
+
+    90% {
+        transform: translate(-1px, 1px);
+    }
+
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+@keyframes playerAttackShake {
+
+    0% {
+        transform: translate(0, 0);
+    }
+
+    15% {
+        transform: translate(-5px, 2px);
+    }
+
+    30% {
+        transform: translate(5px, -2px);
+    }
+
+    45% {
+        transform: translate(-4px, 2px);
+    }
+
+    60% {
+        transform: translate(4px, -2px);
+    }
+
+    75% {
+        transform: translate(-2px, 1px);
+    }
+
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+@keyframes enemyHitShake {
+
+    0% {
+        transform: translate(0, 0);
+    }
+
+    15% {
+        transform: translate(7px, -3px);
+    }
+
+    30% {
+        transform: translate(-7px, 3px);
+    }
+
+    45% {
+        transform: translate(6px, -2px);
+    }
+
+    60% {
+        transform: translate(-5px, 2px);
+    }
+
+    75% {
+        transform: translate(3px, -1px);
+    }
+
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+/* ==========================
+   CHARACTER SHADOW / AURA
+========================== */
+
+#player-sprite,
+#enemy-sprite {
+    isolation: isolate;
+
+    background: radial-gradient(
+        ellipse,
+        rgba(0, 0, 0, 0.65) 0%,
+        rgba(40, 0, 55, 0.35) 35%,
+        rgba(0, 0, 0, 0) 70%
+    );
+
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-size: 100% 45%;
+}
+
+/* ==========================
+   FRAU SHADOW
+========================== */
+
+#player-sprite {
+    filter:
+        drop-shadow(0 25px 15px rgba(0, 0, 0, 0.85))
+        drop-shadow(0 0 30px rgba(120, 0, 160, 0.35))
+        drop-shadow(0 0 70px rgba(60, 0, 90, 0.25));
+}
+
+/* ==========================
+   ENEMY SHADOW
+========================== */
+
+#enemy-sprite {
+    filter:
+        drop-shadow(0 25px 15px rgba(0, 0, 0, 0.85))
+        drop-shadow(0 0 35px rgba(140, 0, 180, 0.35))
+        drop-shadow(0 0 80px rgba(60, 0, 90, 0.3));
+
+    animation: enemyFloat 4s ease-in-out infinite;
+}
+
+#login-hint {
+    position: relative;
+    z-index: 5;
+    margin: 16px auto 0 auto;
+    width: 720px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    line-height: 1.8;
+    color: #8c6b98;
+}
+
+#register-screen input:first-of-type {
+    margin-top: 300px;
+}
+
+#difficulty-proceed-button {
+    display: none;
+    width: 280px;
+    height: 52px;
+    margin: 18px auto 0 auto;
+    border: 2px solid #9d4dcc;
+    background: linear-gradient(180deg, rgba(100, 20, 140, 0.95), rgba(30, 0, 55, 0.98));
+    color: #f0c8ff;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(212, 0, 255, 0.45);
+}
+
+#difficulty-proceed-button.visible {
+    display: inline-block;
+}
+
+#difficulty-proceed-button:hover {
+    color: white;
+    border-color: #e5b3ff;
+    transform: translateY(-3px);
+}
+
+#difficulty-selection.focus-easy #normal-button,
+#difficulty-selection.focus-easy #hard-button,
+#difficulty-selection.focus-easy #hell-button,
+#difficulty-selection.focus-normal #easy-button,
+#difficulty-selection.focus-normal #hard-button,
+#difficulty-selection.focus-normal #hell-button,
+#difficulty-selection.focus-hard #easy-button,
+#difficulty-selection.focus-hard #normal-button,
+#difficulty-selection.focus-hard #hell-button,
+#difficulty-selection.focus-hell #easy-button,
+#difficulty-selection.focus-hell #normal-button,
+#difficulty-selection.focus-hell #hard-button {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+#difficulty-selection.focus-easy #easy-button,
+#difficulty-selection.focus-normal #normal-button,
+#difficulty-selection.focus-hard #hard-button {
+    left: 50%;
+    transform: translateX(-50%);
+    top: 280px;
+}
+
+#difficulty-selection.focus-hell #hell-button {
+    top: 280px;
+    width: 520px;
+}
+
+#difficulty-selection.focus-easy #difficulty-intro-panel,
+#difficulty-selection.focus-normal #difficulty-intro-panel,
+#difficulty-selection.focus-hard #difficulty-intro-panel,
+#difficulty-selection.focus-hell #difficulty-intro-panel {
+    top: 420px;
+    min-height: 320px;
+}
+
+#enemy-intro-overlay {
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 80;
+    background: rgba(4, 0, 10, 0.88);
+    box-sizing: border-box;
+    padding: 180px 80px 80px;
+}
+
+#enemy-intro-overlay.visible {
+    display: block;
+}
+
+#enemy-intro-topic,
+#enemy-intro-name,
+#enemy-intro-text {
+    font-family: 'Press Start 2P', monospace;
+}
+
+#enemy-intro-topic {
+    margin: 0 auto 18px;
+    color: #9d4dcc;
+    font-size: 12px;
+    letter-spacing: 3px;
+}
+
+#enemy-intro-name {
+    margin: 0 auto 28px;
+    color: #f0c8ff;
+    font-size: 28px;
+    letter-spacing: 3px;
+    text-shadow: 4px 4px 0 #180028, 0 0 18px rgba(212, 0, 255, 0.7);
+}
+
+#enemy-intro-text {
+    max-width: 900px;
+    margin: 0 auto 40px;
+    white-space: pre-line;
+    line-height: 2;
+    font-size: 13px;
+    color: #ead8f2;
+}
+
+#enemy-intro-continue {
+    width: 320px;
+}
+
+#battle-screen #player-hearts {
+    bottom: 230px;
+}
+
+#battle-hud {
+    position: absolute;
+    left: 50%;
+    bottom: 24px;
+    transform: translateX(-50%);
+    width: 1700px;
+    height: 190px;
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+    z-index: 40;
+    pointer-events: auto;
+}
+
+#battle-hud #points-display {
+    width: 250px;
+    margin: 0;
+    padding: 18px 16px;
+    border: 2px solid #74368e;
+    border-left: 4px solid #9d4dcc;
+    background: linear-gradient(135deg, rgba(35, 5, 48, 0.96), rgba(5, 0, 12, 0.98));
+    text-align: left;
+    box-sizing: border-box;
+}
+
+#battle-hud #points-display p {
+    margin: 10px 0;
+    font-size: 10px;
+    white-space: nowrap;
+    color: #e5b3ff;
+}
+
+#battle-hud #answer-area {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    width: auto;
+    height: auto;
+    flex: 1;
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+    padding: 16px;
+    border-radius: 4px;
+}
+
+#battle-hud #answer-input {
+    flex: 1;
+    width: auto;
+    height: auto;
+    min-height: 110px;
+    margin: 0;
+    resize: none;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+#battle-hud #submit-button {
+    width: 180px;
+    height: auto;
+    align-self: stretch;
+    font-size: 11px;
+}
+
+#hint-panel {
+    width: 230px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 16px;
+    box-sizing: border-box;
+    border: 2px solid #74368e;
+    border-right: 4px solid #9d4dcc;
+    background: linear-gradient(135deg, rgba(35, 5, 48, 0.96), rgba(5, 0, 12, 0.98));
+}
+
+#hint-cost-display {
+    margin: 0;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    line-height: 1.7;
+    color: #cda6dc;
+}
+
+#hint-panel #hint-button {
+    width: 100%;
+    height: 52px;
+}
+
+#admin-screen {
+    display: none;
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    box-sizing: border-box;
+    overflow: hidden;
+    background:
+        linear-gradient(rgba(8, 0, 18, 0.55), rgba(5, 0, 12, 0.86)),
+        url("bgassets/mainmenu.png");
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    font-family: 'Press Start 2P', monospace;
+}
+
+#admin-screen h2 {
+    margin: 70px 0 10px;
+    font-size: 36px;
+    color: #f0c8ff;
+    letter-spacing: 4px;
+}
+
+#admin-welcome {
+    color: #d9a8ff;
+    font-size: 11px;
+}
+
+#admin-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin: 20px 0;
+}
+
+.admin-tab {
+    width: 280px;
+    height: 48px;
+}
+
+.admin-tab.active {
+    color: white;
+    border-color: #e5b3ff;
+}
+
+#admin-logout-button {
+    position: absolute;
+    top: 35px;
+    left: 35px;
+    width: 180px;
+    height: 50px;
+    margin: 0;
+    z-index: 10;
+}
+
+#student-progress-table,
+#question-pool-list {
+    width: 1640px;
+    height: 620px;
+    margin: 10px auto 0;
+    overflow: auto;
+    text-align: left;
+    padding: 18px;
+    box-sizing: border-box;
+    background: rgba(8, 0, 16, 0.86);
+    border: 2px solid #74368e;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #ead8f2;
+    font-size: 10px;
+}
+
+.admin-table th,
+.admin-table td {
+    border-bottom: 1px solid #472052;
+    padding: 10px 8px;
+    vertical-align: top;
+    line-height: 1.6;
+}
+
+#question-form {
+    width: 1640px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+#question-form select,
+#question-form input,
+#question-form textarea {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: #f0c8ff;
+    background: rgba(10, 0, 16, 0.95);
+    border: 2px solid #55256a;
+}
+
+#question-form textarea {
+    width: 500px;
+    height: 90px;
+}
+
+#question-form input {
+    width: 360px;
+}
+
+#question-form-message {
+    width: 100%;
+    font-size: 10px;
+    color: #d9a8ff;
+}
+
+.pool-item {
+    border-bottom: 1px solid #472052;
+    padding: 12px 0;
+    font-size: 9px;
+    line-height: 1.7;
+    color: #d9c0e5;
+}
+
+.pool-item pre {
+    white-space: pre-wrap;
+    color: #ead8f2;
+    margin: 8px 0;
+}
+
+.delete-question-button {
+    width: 140px;
+    height: 36px;
+    font-size: 9px;
+    margin: 6px 0;
+}

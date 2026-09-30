@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>BugHunt</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+<div id="game-container">
+
+
+    <!-- ==========================
+         TITLE SCREEN
+    ========================== -->
+
+    <div id="title-screen">
+
+        <h1>BugHunt</h1>
+
+        <p>Press Anywhere to Continue</p>
+
+    </div>
+
+
+    <!-- ==========================
+         LOGIN SCREEN
+    ========================== -->
+
+    <div id="login-screen">
+
+        <h1>Login</h1>
+
+        <input
+            id="username"
+            type="text"
+            placeholder="Username"
+        >
+
+        <input
+            id="password"
+            type="password"
+            placeholder="Password"
+        >
+
+        <button id="login-button">
+            Login
+        </button>
+
+        <button id="register-button">
+            Register
+        </button>
+
+        <p id="login-hint">
+            Students register here. Teachers use the admin login.
+        </p>
+
+        <p id="login-message"></p>
+
+    </div>
+
+
+    <!-- ==========================
+         REGISTER SCREEN
+    ========================== -->
+
+    <div
+        id="register-screen"
+        style="display: none;"
+    >
+
+        <h1>Register</h1>
+
+        <input
+            id="register-fullname"
+            type="text"
+            placeholder="Full Name (optional)"
+        >
+
+        <input
+            id="register-username"
+            type="text"
+            placeholder="Create Username"
+        >
+
+        <input
+            id="register-password"
+            type="password"
+            placeholder="Create Password"
+        >
+
+        <input
+            id="register-confirm-password"
+            type="password"
+            placeholder="Confirm Password"
+        >
+
+        <button id="create-account-button">
+            Create Account
+        </button>
+
+        <button id="back-to-login-button">
+            Back to Login
+        </button>
+
+        <p id="register-message"></p>
+
+    </div>
+
+
+    <!-- ==========================
+         MAIN MENU
+    ========================== -->
+
+    <div
+        id="main-menu"
+        style="display: none;"
+    >
+
+        <h1>BugHunt</h1>
+
+        <p id="welcome-message">
+            Welcome!
+        </p>
+
+        <p id="true-points-menu">
+            True Points: 0
+        </p>
+
+
+        <button id="start-button">
+            Start Game
+        </button>
+
+
+        <button id="shop-button">
+            SHOP
+        </button>
+
+
+        <button id="about-button">
+            About
+        </button>
+
+
+        <button id="collection-button">
+            Trophy Collection
+        </button>
+
+
+        <button id="logout-button">
+            Log Out
+        </button>
+
+
+        <!-- Temporary Developer Button -->
+
+        <button id="reset-button">
+            Reset Save
+        </button>
+
+    </div>
+
+
+    <!-- ==========================
+         DIFFICULTY SELECTION
+    ========================== -->
+
+    <div id="difficulty-selection"
+        style="display: none;"
+    >
+
+        <h2>
+            Select Difficulty
+        </h2>
+
+
+        <button id="easy-button">
+            Easy
+        </button>
+
+
+        <button id="normal-button">
+            Normal
+        </button>
+
+
+        <button id="hard-button">
+            Hard
+        </button>
+
+
+        <button id="hell-button">
+            Hell
+        </button>
+
+        
+    <!-- DIFFICULTY INTRODUCTION -->
+    <div id="difficulty-intro-panel">
+
+    <h3 id="difficulty-intro-title">
+        SELECT A DIFFICULTY
+    </h3>
+
+    <p id="difficulty-intro-text">
+        Choose a difficulty to learn more about it.
+    </p>
+
+    <p id="difficulty-intro-confirm">
+        READ THE BRIEFING, THEN PROCEED
+    </p>
+
+    <button id="difficulty-proceed-button">
+        Proceed
+    </button>
+
+    </div>
+
+
+
+        <button id="difficulty-back-button">
+            Back
+        </button>
+
+    </div>
+
+
+    <!-- ==========================
+         ABOUT SCREEN
+    ========================== -->
+
+    <div
+        id="about-screen"
+        style="display: none;"
+    >
+
+        <h2>
+            About BugHunt
+        </h2>
+
+
+        <p>
+
+            BugHunt is a project developed in
+            accordance with our thesis at
+
+            <strong>
+                [College Name]
+            </strong>.
+
+        </p>
+
+
+        <p>
+
+            The game is designed to help students
+            develop one of the most important
+            skills in programming:
+
+            <strong>
+                debugging
+            </strong>.
+
+        </p>
+
+
+        <p>
+
+            Throughout the game, players will
+            encounter different Python bugs
+            and learn how to identify and fix
+            them through interactive challenges.
+
+        </p>
+
+
+        <p>
+
+            Developed by:<br>
+
+            <strong>
+                [Your Name]
+            </strong>
+
+            <br>
+
+            <strong>
+                [Groupmate Name]
+            </strong>
+
+        </p>
+
+
+        <p>
+
+            Thesis Adviser:<br>
+
+            <strong>
+                [Adviser Name]
+            </strong>
+
+        </p>
+
+
+        <button id="about-back-button">
+            Back
+        </button>
+
+    </div>
+
+
+    <!-- ==========================
+         TROPHY COLLECTION
+    ========================== -->
+
+    <div
+        id="collection-screen"
+        style="display: none;"
+    >
+
+        <h2>
+            Trophy Collection
+        </h2>
+
+
+        <!-- EASY -->
+
+        <div id="easy-trophies">
+
+            <h3>
+                Easy
+            </h3>
+
+            <p id="easy-trophy-list"></p>
+
+        </div>
+
+
+        <!-- NORMAL -->
+
+        <div id="normal-trophies">
+
+            <h3>
+                Normal
+            </h3>
+
+            <p id="normal-trophy-list"></p>
+
+        </div>
+
+
+        <!-- HARD -->
+
+        <div id="hard-trophies">
+
+            <h3>
+                Hard
+            </h3>
+
+            <p id="hard-trophy-list"></p>
+
+        </div>
+
+
+        <!-- HELL -->
+
+        <div id="hell-trophies">
+
+            <h3>
+                Hell
+            </h3>
+
+            <p id="hell-trophy-list"></p>
+
+        </div>
+
+
+        <button id="collection-back-button">
+            Back
+        </button>
+
+    </div>
+
+
+    <!-- ==========================
+         SHOP SCREEN
+    ========================== -->
+
+    <div
+        id="shop-screen"
+        style="display: none;"
+    >
+
+
+        <!-- SHOP BACK BUTTON -->
+
+        <button id="shop-back-button">
+            Back
+        </button>
+
+
+        <!-- SHOP TITLE -->
+
+        <h2>
+            Upgrade Shop
+        </h2>
+
+
+        <!-- TRUE POINTS -->
+
+        <p id="shop-true-points">
+            True Points: 0
+        </p>
+
+
+        <!-- ==========================
+             MAX HP
+        ========================== -->
+
+        <div id="max-hp-shop">
+
+            <h3>
+                MAX HP
+            </h3>
+
+
+            <p id="max-hp-display">
+                MAX HP: 5 / 10
+            </p>
+
+
+            <p id="max-hp-cost">
+                Cost: 50 TP
+            </p>
+
+
+            <button id="max-hp-button">
+                Upgrade
+            </button>
+
+        </div>
+
+
+        <!-- ==========================
+             TEMP HP
+        ========================== -->
+
+        <div id="temp-hp-shop">
+
+            <h3>
+                TEMP HP
+            </h3>
+
+
+            <p id="temp-hp-display">
+                TEMP HP: +0
+            </p>
+
+
+            <p id="temp-hp-cost">
+                Cost: 100 TP
+            </p>
+
+
+            <button id="temp-hp-button">
+                Buy
+            </button>
+
+        </div>
+
+
+        <!-- ==========================
+             FREE HINT
+        ========================== -->
+
+        <div id="free-hint-shop">
+
+            <h3>
+                FREE HINT
+            </h3>
+
+
+            <p id="free-hint-display">
+                FREE HINTS: 0 / RUN
+            </p>
+
+
+            <p id="free-hint-cost">
+                Cost: 100 TP
+            </p>
+
+
+            <button id="free-hint-button">
+                Upgrade
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==========================
+         BATTLE SCREEN
+    ========================== -->
+
+    <div
+        id="battle-screen"
+        style="display: none;"
+    >
+
+
+        <div id="battle-top">
+
+            <button id="battle-back-button">
+                Back
+            </button>
+
+        </div>
+
+
+        <div id="enemy-intro-overlay">
+
+            <p id="enemy-intro-topic"></p>
+
+            <h3 id="enemy-intro-name"></h3>
+
+            <p id="enemy-intro-text"></p>
+
+            <button id="enemy-intro-continue">
+                Begin Battle
+            </button>
+
+        </div>
+
+
+        <!-- ==========================
+             BATTLE AREA
+        ========================== -->
+
+        <div id="battle-area">
+
+
+            <!-- ENEMY NAME -->
+
+            <div id="enemy-name"></div>
+
+
+            <!-- ENEMY SPRITE -->
+
+            <img
+                id="enemy-sprite"
+                src=""
+                alt="Enemy"
+            >
+
+
+            <!-- ENEMY HP -->
+
+            <p id="enemy-hearts"></p>
+
+
+            <!-- PLAYER SPRITE -->
+
+            <img
+                id="player-sprite"
+                src=""
+                alt="Frau"
+            >
+
+
+            <!-- CHALLENGE -->
+
+            <div id="challenge-box">
+
+                <pre id="bug-code"></pre>
+
+            </div>
+
+
+            <!-- PLAYER HP -->
+
+            <p id="player-hearts"></p>
+
+        </div>
+
+
+        <!-- ==========================
+             DIALOGUE AREA
+        ========================== -->
+
+        <div id="dialogue-area">
+
+            <p id="dialogue-text"></p>
+
+        </div>
+
+
+        <div id="battle-hud">
+
+            <div id="points-display">
+
+                <p id="true-points-display">TP 0</p>
+
+                <p id="difficulty-points-display">RUN 0</p>
+
+                <p id="enemy-points-display">HIT 0</p>
+
+            </div>
+
+            <div id="answer-area">
+
+                <textarea
+                    id="answer-input"
+                    rows="3"
+                    placeholder="Type the full corrected Python here"
+                ></textarea>
+
+                <button id="submit-button">
+                    Submit Fix
+                </button>
+
+            </div>
+
+            <div id="hint-panel">
+
+                <p id="hint-cost-display">Hint locked</p>
+
+                <button id="hint-button">
+                    Hint
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div id="admin-screen" style="display: none;">
+
+        <button id="admin-logout-button">
+            Log Out
+        </button>
+
+        <h2>Teacher Console</h2>
+
+        <p id="admin-welcome"></p>
+
+        <div id="admin-tabs">
+
+            <button id="admin-students-tab" class="admin-tab active">
+                Student Progress
+            </button>
+
+            <button id="admin-questions-tab" class="admin-tab">
+                Question Pool
+            </button>
+
+        </div>
+
+        <div id="admin-students-panel">
+
+            <div id="student-progress-table"></div>
+
+        </div>
+
+        <div id="admin-questions-panel" style="display: none;">
+
+            <div id="question-form">
+
+                <select id="question-difficulty">
+                    <option value="easy">Easy</option>
+                    <option value="normal">Normal</option>
+                    <option value="hard">Hard</option>
+                    <option value="hell">Hell</option>
+                </select>
+
+                <select id="question-enemy"></select>
+
+                <textarea id="question-code" placeholder="Buggy Python code"></textarea>
+
+                <textarea id="question-answer" placeholder="Corrected Python answer"></textarea>
+
+                <input id="question-hint" type="text" placeholder="Hint for students">
+
+                <button id="add-question-button">
+                    Add to Pool
+                </button>
+
+                <p id="question-form-message"></p>
+
+            </div>
+
+            <div id="question-pool-list"></div>
+
+        </div>
+
+    </div>
+
+
+   <!-- ==========================
+     VICTORY SCREEN
+========================== -->
+
+<div
+    id="victory-screen"
+    style="display: none;"
+>
+
+    <img
+        id="victory-frau"
+        src="css/Sprites/user/victory.png"
+        alt="Frau Victory"
+    >
+
+    <h2>
+        Victory!
+    </h2>
+
+    <p id="victory-message"></p>
+
+    <p id="victory-points-message"></p>
+
+    <p id="trophy-message"></p>
+
+    <button id="next-enemy-button">
+        Next Enemy
+    </button>
+
+</div>
+
+
+<!-- ==========================
+     DEFEAT SCREEN
+========================== -->
+
+<div
+    id="defeat-screen"
+    style="display: none;"
+>
+
+    <img
+        id="defeat-frau"
+        src="css/Sprites/user/defeated.png"
+        alt="Frau Defeat"
+    >
+
+    <h1>
+        GAME OVER
+    </h1>
+
+    <p id="defeat-message"></p>
+
+    <button id="defeat-button">
+        Return to Difficulty
+    </button>
+
+</div>
+
+
+<!-- ==========================
+     GAME DATA
+========================== -->
+
+<script src="data/easy.js"></script>
+
+<script src="data/normal.js"></script>
+
+<script src="data/hard.js"></script>
+
+<script src="data/hell.js"></script>
+
+
+<!-- ==========================
+     MAIN JAVASCRIPT
+========================== -->
+
+<script src="js/app.js"></script>
+
+
+</body>
+
+</html>
