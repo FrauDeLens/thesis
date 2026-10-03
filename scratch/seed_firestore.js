@@ -69,8 +69,17 @@ async function seed() {
   const now = new Date().toISOString();
   const users = [
     {
+      username: 'admin',
+      password_hash: sha256('trimexcss'),
+      full_name: 'BugHunt Admin',
+      role: 'teacher',
+      progress: defaultProgress,
+      last_seen: now,
+      created_at: now
+    },
+    {
       username: 'teacher',
-      password_hash: sha256('bughunt2026'),
+      password_hash: sha256('trimexcss'),
       full_name: 'BugHunt Teacher',
       role: 'teacher',
       progress: defaultProgress,
@@ -95,7 +104,7 @@ async function seed() {
     }
   }));
   await commitWrites(userWrites);
-  console.log('Default users created: teacher and student');
+  console.log('Default users created: admin, teacher, and student');
 
   console.log('Seeding question pool...');
   const poolPath = path.join(__dirname, '..', 'data', 'question_pool.json');

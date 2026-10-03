@@ -147,9 +147,9 @@ function ensure_schema() {
     if ($count === 0) {
         $stmt = $pdo->prepare('INSERT INTO users (username, password_hash, full_name, role, progress_json) VALUES (?,?,?,?,?)');
         $stmt->execute([
-            'teacher',
-            password_hash('bughunt2026', PASSWORD_DEFAULT),
-            'BugHunt Teacher',
+            'admin',
+            password_hash('trimexcss', PASSWORD_DEFAULT),
+            'BugHunt Admin',
             'teacher',
             json_encode(default_progress()),
         ]);
