@@ -12,7 +12,18 @@
 
     <title>BugHunt</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/base.css?v=27">
+    <link rel="stylesheet" href="css/auth.css?v=27">
+    <link rel="stylesheet" href="css/menu.css?v=27">
+    <link rel="stylesheet" href="css/difficulty.css?v=27">
+    <link rel="stylesheet" href="css/battle.css?v=27">
+    <link rel="stylesheet" href="css/enemy-showcase.css?v=27">
+    <link rel="stylesheet" href="css/study.css?v=27">
+    <link rel="stylesheet" href="css/admin.css?v=27">
 
 </head>
 
@@ -28,9 +39,9 @@
 
     <div id="title-screen">
 
-        <h1>BugHunt</h1>
+        <h1 data-i18n="app_title">BugHunt</h1>
 
-        <p>Press Anywhere to Continue</p>
+        <p data-i18n="title_continue">Press Anywhere to Continue</p>
 
     </div>
 
@@ -41,29 +52,31 @@
 
     <div id="login-screen">
 
-        <h1>Login</h1>
+        <h1 data-i18n="login_title">Login</h1>
 
         <input
             id="username"
             type="text"
             placeholder="Username"
+            data-i18n-ph="login_username_ph"
         >
 
         <input
             id="password"
             type="password"
             placeholder="Password"
+            data-i18n-ph="login_password_ph"
         >
 
-        <button id="login-button">
+        <button id="login-button" data-i18n="login_btn">
             Login
         </button>
 
-        <button id="register-button">
+        <button id="register-button" data-i18n="register_btn">
             Register
         </button>
 
-        <p id="login-hint">
+        <p id="login-hint" data-i18n="login_hint">
             Students register here. Teachers use the admin login.
         </p>
 
@@ -81,37 +94,41 @@
         style="display: none;"
     >
 
-        <h1>Register</h1>
+        <h1 data-i18n="reg_title">Register</h1>
 
         <input
             id="register-fullname"
             type="text"
             placeholder="Full Name (optional)"
+            data-i18n-ph="reg_fullname_ph"
         >
 
         <input
             id="register-username"
             type="text"
             placeholder="Create Username"
+            data-i18n-ph="reg_username_ph"
         >
 
         <input
             id="register-password"
             type="password"
             placeholder="Create Password"
+            data-i18n-ph="reg_password_ph"
         >
 
         <input
             id="register-confirm-password"
             type="password"
             placeholder="Confirm Password"
+            data-i18n-ph="reg_confirm_ph"
         >
 
-        <button id="create-account-button">
+        <button id="create-account-button" data-i18n="reg_create_btn">
             Create Account
         </button>
 
-        <button id="back-to-login-button">
+        <button id="back-to-login-button" data-i18n="reg_back_btn">
             Back to Login
         </button>
 
@@ -129,7 +146,13 @@
         style="display: none;"
     >
 
-        <h1>BugHunt</h1>
+        <div class="lang-switch-box">
+            <button type="button" class="lang-btn active" data-lang="en">EN</button>
+            <span class="lang-sep">|</span>
+            <button type="button" class="lang-btn" data-lang="fil">FIL</button>
+        </div>
+
+        <h1 data-i18n="app_title">BugHunt</h1>
 
         <p id="welcome-message">
             Welcome!
@@ -140,34 +163,39 @@
         </p>
 
 
-        <button id="start-button">
+        <button id="start-button" data-i18n="menu_start_game">
             Start Game
         </button>
 
 
-        <button id="shop-button">
+        <button id="codex-button" data-i18n="menu_python_codex">
+            Python Codex
+        </button>
+
+
+        <button id="shop-button" data-i18n="menu_shop">
             SHOP
         </button>
 
 
-        <button id="about-button">
+        <button id="about-button" data-i18n="menu_about">
             About
         </button>
 
 
-        <button id="collection-button">
+        <button id="collection-button" data-i18n="menu_collection">
             Trophy Collection
         </button>
 
 
-        <button id="logout-button">
+        <button id="logout-button" data-i18n="menu_logout">
             Log Out
         </button>
 
 
         <!-- Temporary Developer Button -->
 
-        <button id="reset-button">
+        <button id="reset-button" data-i18n="menu_reset_save">
             Reset Save
         </button>
 
@@ -182,7 +210,7 @@
         style="display: none;"
     >
 
-        <h2>
+        <h2 data-i18n="diff_screen_title">
             Select Difficulty
         </h2>
 
@@ -218,11 +246,11 @@
         Choose a difficulty to learn more about it.
     </p>
 
-    <p id="difficulty-intro-confirm">
+    <p id="difficulty-intro-confirm" data-i18n="diff_intro_confirm">
         READ THE BRIEFING, THEN PROCEED
     </p>
 
-    <button id="difficulty-proceed-button">
+    <button id="difficulty-proceed-button" data-i18n="diff_proceed_btn">
         Proceed
     </button>
 
@@ -230,10 +258,152 @@
 
 
 
-        <button id="difficulty-back-button">
+        <button id="difficulty-back-button" data-i18n="diff_back_btn">
             Back
         </button>
 
+        <!-- ==============================================
+             LOCKED DIFFICULTY PROMPT MODAL
+        =============================================== -->
+        <div id="difficulty-locked-modal" class="diff-locked-modal-wrap" style="display: none;">
+            <div class="diff-locked-modal-backdrop" id="difficulty-locked-backdrop"></div>
+            <div class="diff-locked-modal-box">
+                <div class="diff-locked-header">
+                    <span class="diff-locked-icon">🔒</span>
+                    <div class="diff-locked-titles">
+                        <h3 class="diff-locked-title" data-i18n="locked_title">DIFFICULTY LOCKED!</h3>
+                        <p class="diff-locked-subtitle" data-i18n="locked_subtitle">Higher clearance required to challenge this stage.</p>
+                    </div>
+                    <button id="diff-locked-close-btn" class="diff-locked-close-x" type="button" title="Close alert">✕</button>
+                </div>
+
+                <div class="diff-locked-body">
+                    <div class="diff-target-pill-wrap">
+                        <span class="diff-target-label">TARGET SECTOR:</span>
+                        <span id="diff-locked-target-name" class="diff-target-name">NORMAL DIFFICULTY</span>
+                    </div>
+
+                    <div class="diff-requirement-card">
+                        <div class="diff-req-icon">⚠️</div>
+                        <div class="diff-req-content">
+                            <span class="diff-req-heading">UNLOCK REQUIREMENT</span>
+                            <p id="diff-locked-requirement-text" class="diff-req-text">
+                                Defeat the Beginner Dragon and clear all stages of Easy Difficulty first!
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="diff-roadmap-box">
+                        <span class="roadmap-title">CURRICULUM CLEARANCE PATHWAY:</span>
+                        <div class="roadmap-tiers">
+                            <div id="roadmap-tier-easy" class="roadmap-step">
+                                <span class="step-badge" data-i18n="locked_step1">STAGE 1</span>
+                                <span class="step-name">Easy</span>
+                                <span class="step-status">✅ Cleared</span>
+                            </div>
+                            <span class="roadmap-arrow">➔</span>
+                            <div id="roadmap-tier-normal" class="roadmap-step">
+                                <span class="step-badge" data-i18n="locked_step2">STAGE 2</span>
+                                <span class="step-name">Normal</span>
+                                <span class="step-status">🔒 Locked</span>
+                            </div>
+                            <span class="roadmap-arrow">➔</span>
+                            <div id="roadmap-tier-hard" class="roadmap-step">
+                                <span class="step-badge" data-i18n="locked_step3">STAGE 3</span>
+                                <span class="step-name">Hard</span>
+                                <span class="step-status">🔒 Locked</span>
+                            </div>
+                            <span class="roadmap-arrow">➔</span>
+                            <div id="roadmap-tier-hell" class="roadmap-step">
+                                <span class="step-badge" data-i18n="locked_step4">STAGE 4</span>
+                                <span class="step-name">Hell</span>
+                                <span class="step-status">🔒 Locked</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="diff-locked-footer">
+                    <button id="diff-locked-action-btn" class="diff-locked-play-btn" type="button">
+                        <span data-i18n="locked_play_highest">⚔️ Play Highest Available</span>
+                    </button>
+                    <button id="diff-locked-ok-btn" class="diff-locked-dismiss-btn" type="button">
+                        <span data-i18n="locked_understood">Understood</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- ==========================
+         PYTHON CODEX / STUDY SCREEN
+    ========================== -->
+
+    <div
+        id="codex-screen"
+        style="display: none;"
+    >
+        <div class="codex-header">
+            <button id="codex-back-button" class="codex-back-btn">
+                <span>&larr;</span> <span data-i18n="codex_back_btn">Back to Menu</span>
+            </button>
+            <div class="codex-header-titles">
+                <h1 class="codex-title" data-i18n="codex_title">PYTHON CODEX</h1>
+                <p class="codex-subtitle" data-i18n="codex_subtitle">Comprehensive Python Guide &amp; Bug Archive (Easy to Hell)</p>
+            </div>
+            <div class="codex-search-box">
+                <span class="codex-search-icon">&#128269;</span>
+                <input type="text" id="codex-search-input" placeholder="Search Python concept or bug..." data-i18n-ph="codex_search_ph">
+            </div>
+            <div class="lang-switch-box">
+                <button type="button" class="lang-btn active" data-lang="en">EN</button>
+                <span class="lang-sep">|</span>
+                <button type="button" class="lang-btn" data-lang="fil">FIL</button>
+            </div>
+        </div>
+
+        <div class="codex-tabs-bar">
+            <button class="codex-tab active" data-diff="easy">
+                <span class="tab-indicator easy-indicator">&#9679;</span>
+                <span data-i18n="codex_tab_easy">EASY</span> <span class="tab-sub" data-i18n="codex_tab_easy_sub">Fundamentals</span>
+            </button>
+            <button class="codex-tab" data-diff="normal">
+                <span class="tab-indicator normal-indicator">&#9679;</span>
+                <span data-i18n="codex_tab_normal">NORMAL</span> <span class="tab-sub" data-i18n="codex_tab_normal_sub">Data &amp; OOP</span>
+            </button>
+            <button class="codex-tab" data-diff="hard">
+                <span class="tab-indicator hard-indicator">&#9679;</span>
+                <span data-i18n="codex_tab_hard">HARD</span> <span class="tab-sub" data-i18n="codex_tab_hard_sub">Advanced OOP</span>
+            </button>
+            <button class="codex-tab" data-diff="hell">
+                <span class="tab-indicator hell-indicator">&#9679;</span>
+                <span data-i18n="codex_tab_hell">HELL</span> <span class="tab-sub" data-i18n="codex_tab_hell_sub">Mastery &amp; Async</span>
+            </button>
+            <button class="codex-tab" data-diff="cheatsheet">
+                <span class="tab-indicator sheet-indicator">&#9733;</span>
+                <span data-i18n="codex_tab_cheat">CHEAT SHEET</span> <span class="tab-sub" data-i18n="codex_tab_cheat_sub">Quick Reference</span>
+            </button>
+        </div>
+
+        <div class="codex-body">
+            <!-- Left: Topics Sidebar -->
+            <div class="codex-sidebar">
+                <div class="codex-sidebar-header">
+                    <span id="codex-topic-count">6 Topics</span>
+                    <span class="codex-sidebar-hint" data-i18n="codex_topic_hint">Select a topic</span>
+                </div>
+                <div id="codex-topic-list" class="codex-topic-list">
+                    <!-- Populated dynamically via js/study.js -->
+                </div>
+            </div>
+
+            <!-- Right: Lesson / Detail Viewer -->
+            <div class="codex-content-area" id="codex-content-area">
+                <!-- Populated dynamically via js/study.js -->
+            </div>
+        </div>
     </div>
 
 
@@ -314,7 +484,7 @@
         </p>
 
 
-        <button id="about-back-button">
+        <button id="about-back-button" data-i18n="about_back_btn">
             Back
         </button>
 
@@ -330,7 +500,7 @@
         style="display: none;"
     >
 
-        <h2>
+        <h2 data-i18n="collection_title">
             Trophy Collection
         </h2>
 
@@ -339,7 +509,7 @@
 
         <div id="easy-trophies">
 
-            <h3>
+            <h3 data-i18n="collection_easy">
                 Easy
             </h3>
 
@@ -352,7 +522,7 @@
 
         <div id="normal-trophies">
 
-            <h3>
+            <h3 data-i18n="collection_normal">
                 Normal
             </h3>
 
@@ -365,7 +535,7 @@
 
         <div id="hard-trophies">
 
-            <h3>
+            <h3 data-i18n="collection_hard">
                 Hard
             </h3>
 
@@ -378,7 +548,7 @@
 
         <div id="hell-trophies">
 
-            <h3>
+            <h3 data-i18n="collection_hell">
                 Hell
             </h3>
 
@@ -387,7 +557,7 @@
         </div>
 
 
-        <button id="collection-back-button">
+        <button id="collection-back-button" data-i18n="collection_back_btn">
             Back
         </button>
 
@@ -406,14 +576,14 @@
 
         <!-- SHOP BACK BUTTON -->
 
-        <button id="shop-back-button">
+        <button id="shop-back-button" data-i18n="shop_back_btn">
             Back
         </button>
 
 
         <!-- SHOP TITLE -->
 
-        <h2>
+        <h2 data-i18n="shop_title">
             Upgrade Shop
         </h2>
 
@@ -523,24 +693,248 @@
 
         <div id="battle-top">
 
-            <button id="battle-back-button">
-                Back
+            <button id="battle-back-button" title="Back to Difficulty Selection">
+                <span>◀ </span><span data-i18n="battle_back_btn">Back</span>
+            </button>
+
+            <!-- Battle Stage & Encounter Banner -->
+            <div id="battle-stage-banner">
+                <span id="battle-difficulty-badge">EASY</span>
+                <span class="banner-sep">/</span>
+                <span id="battle-stage-counter">ENEMY 1 OF 6</span>
+                <span class="banner-sep">:</span>
+                <span id="battle-target-name">SYNTAX SLIME</span>
+            </div>
+
+            <!-- In-battle Guide / Tutorial Access Button -->
+            <button id="battle-guide-button" type="button" title="View enemy intel, topic guide and combat tutorial">
+                <span>📖</span>
+                <span data-i18n="battle_guide_btn">GUIDE</span>
             </button>
 
         </div>
 
 
-        <div id="enemy-intro-overlay">
+        <!-- ==============================================
+             DEDICATED ENEMY CHARACTER SHOWCASE SCREEN SHOW
+        =============================================== -->
+        <div id="enemy-intro-overlay" class="enemy-showcase-screen">
 
-            <p id="enemy-intro-topic"></p>
+            <div class="showcase-ambient-grid"></div>
 
-            <h3 id="enemy-intro-name"></h3>
+            <!-- Top HUD & Encounter Banner -->
+            <div class="showcase-topbar">
+                <div class="showcase-alert-box">
+                    <span class="alert-pulse-circle"></span>
+                    <span class="alert-label-text">BUG ENCOUNTER DETECTED</span>
+                </div>
 
-            <p id="enemy-intro-text"></p>
+                <div class="showcase-pills-wrap">
+                    <span id="showcase-difficulty-pill" class="showcase-pill tier-pill">EASY SECTOR</span>
+                    <span id="showcase-stage-counter" class="showcase-pill counter-pill">ENCOUNTER 1 / 6</span>
+                    <span id="enemy-intro-topic" class="showcase-pill topic-pill">PYTHON SYNTAX</span>
+                </div>
 
-            <button id="enemy-intro-continue">
-                Begin Battle
-            </button>
+                <button id="showcase-close-btn" class="showcase-close-btn" type="button" style="display: none;" title="Resume Battle">
+                    <span>✕ Return to Battle</span>
+                </button>
+            </div>
+
+            <!-- Main Stage: Split 2-Column Showcase Presentation -->
+            <div class="showcase-main-stage">
+
+                <!-- Left Column: Character Spotlight & Threat Vitals -->
+                <div class="showcase-left-pillar">
+                    <div class="char-spotlight-frame">
+                        <div class="char-hologram-glow"></div>
+                        <div class="char-sprite-stage">
+                            <img id="showcase-enemy-sprite" src="" alt="Monster Sprite" class="showcase-sprite-floating">
+                            <div class="char-pedestal-platform"></div>
+                        </div>
+
+                        <div class="char-title-card">
+                            <h2 id="enemy-intro-name" class="showcase-enemy-title">Syntax Slime</h2>
+                            <div id="showcase-enemy-topic-sub" class="showcase-enemy-subtitle">Topic Domain: Python Syntax</div>
+                        </div>
+
+                        <!-- Vitals Grid -->
+                        <div class="showcase-vitals-grid">
+                            <div class="vital-card">
+                                <span class="vital-icon">❤️</span>
+                                <div class="vital-info">
+                                    <span class="vital-title">HP HEARTS</span>
+                                    <span id="showcase-enemy-hearts" class="vital-value">5 Hearts</span>
+                                </div>
+                            </div>
+
+                            <div class="vital-card">
+                                <span class="vital-icon">🏆</span>
+                                <div class="vital-info">
+                                    <span class="vital-title">REWARD TROPHY</span>
+                                    <span id="showcase-enemy-trophy" class="vital-value">Slime Core</span>
+                                </div>
+                            </div>
+
+                            <div class="vital-card">
+                                <span class="vital-icon">💎</span>
+                                <div class="vital-info">
+                                    <span class="vital-title">TRUE POINTS</span>
+                                    <span id="showcase-enemy-pts" class="vital-value">+10 TP / Hit</span>
+                                </div>
+                            </div>
+
+                            <div class="vital-card">
+                                <span class="vital-icon">⚠️</span>
+                                <div class="vital-info">
+                                    <span class="vital-title">THREAT CLASS</span>
+                                    <span id="showcase-enemy-threat" class="vital-value">Active Bug</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Intel, Quick Guide & Combat Tutorial -->
+                <div class="showcase-right-pillar">
+
+                    <!-- Showcase Tab Switcher -->
+                    <div class="showcase-tabs-nav">
+                        <button id="showcase-tab-btn-lore" class="showcase-tab-btn active" type="button" data-tab="lore">
+                            <span class="tab-emoji">📜</span>
+                            <span class="tab-name" data-i18n="showcase_tab_lore">Story & Behavior</span>
+                        </button>
+                        <button id="showcase-tab-btn-guide" class="showcase-tab-btn" type="button" data-tab="guide">
+                            <span class="tab-emoji">💡</span>
+                            <span class="tab-name" data-i18n="showcase_tab_guide">Battle Rules</span>
+                        </button>
+                        <button id="showcase-tab-btn-tutorial" class="showcase-tab-btn" type="button" data-tab="tutorial">
+                            <span class="tab-emoji">⚔️</span>
+                            <span class="tab-name" data-i18n="showcase_tab_tutorial">Quick Example</span>
+                        </button>
+                    </div>
+
+                    <!-- Panel 1: Monster Intel & Voice Line -->
+                    <div id="showcase-tab-lore" class="showcase-tab-panel active">
+                        <div class="transmission-box">
+                            <div class="transmission-header">
+                                <span class="transmission-dot"></span>
+                                <span class="transmission-title">ENEMY VOICE TRANSMISSION // DECODED LOG</span>
+                            </div>
+                            <p id="enemy-intro-text" class="transmission-quote"></p>
+                        </div>
+
+                        <div class="threat-intel-box">
+                            <div class="threat-intel-header">
+                                <span class="threat-icon">👾</span>
+                                <h4>HOW THIS BUG HARMS YOUR PYTHON CODE</h4>
+                            </div>
+                            <p id="showcase-enemy-behavior-text" class="threat-intel-desc"></p>
+                        </div>
+                    </div>
+
+                    <!-- Panel 2: Topic Quick Guide & Cheat Sheet -->
+                    <div id="showcase-tab-guide" class="showcase-tab-panel" style="display: none;">
+                        <div class="guide-banner-card">
+                            <div class="guide-banner-header">
+                                <span class="guide-book-icon">📘</span>
+                                <div>
+                                    <h3 id="showcase-guide-title" class="guide-topic-heading">PYTHON TOPIC CHEAT SHEET</h3>
+                                    <p class="guide-topic-subheading">Review key Python rules to quickly spot and eliminate this bug.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic Golden Rules -->
+                        <div id="showcase-guide-rules" class="guide-rules-list"></div>
+
+                        <!-- Side-by-Side Bug vs Solution Example -->
+                        <div class="syntax-compare-grid">
+                            <div class="syntax-box bug-box">
+                                <div class="syntax-badge bad" data-i18n="showcase_bad_label">❌ COMMON BUG TO SPOT</div>
+                                <pre id="showcase-example-bug" class="syntax-pre"></pre>
+                            </div>
+                            <div class="syntax-box fix-box">
+                                <div class="syntax-badge good" data-i18n="showcase_good_label">✅ HOW TO FIX IT</div>
+                                <pre id="showcase-example-fix" class="syntax-pre"></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panel 3: Combat Tutorial & How to Fight -->
+                    <div id="showcase-tab-tutorial" class="showcase-tab-panel" style="display: none;">
+                        <div class="tutorial-card">
+                            <div class="tutorial-header">
+                                <span class="tutorial-gamepad-icon">🎮</span>
+                                <h4>HOW TO BATTLE & DEBUG (STUDENT TUTORIAL)</h4>
+                            </div>
+
+                            <div class="tutorial-steps-container">
+                                <div class="tut-step">
+                                    <div class="tut-step-num">1</div>
+                                    <div class="tut-step-body">
+                                        <h5>INSPECT THE CHALLENGE</h5>
+                                        <p>Read the broken Python snippet shown inside the central <strong>BUG DETECTED</strong> terminal.</p>
+                                    </div>
+                                </div>
+
+                                <div class="tut-step">
+                                    <div class="tut-step-num">2</div>
+                                    <div class="tut-step-body">
+                                        <h5>SPOT THE CORRUPTION</h5>
+                                        <p>Find the error: missing quotes, colons, typos, incorrect syntax, or loop bugs.</p>
+                                    </div>
+                                </div>
+
+                                <div class="tut-step">
+                                    <div class="tut-step-num">3</div>
+                                    <div class="tut-step-body">
+                                        <h5>TYPE THE CORRECTED CODE</h5>
+                                        <p>Type the full valid Python line into the <strong>ENTER PYTHON FIX</strong> input box below.</p>
+                                    </div>
+                                </div>
+
+                                <div class="tut-step">
+                                    <div class="tut-step-num">4</div>
+                                    <div class="tut-step-body">
+                                        <h5>SUBMIT & DEAL DAMAGE</h5>
+                                        <p>Click <strong>Submit Fix</strong> or press <strong>Enter / Ctrl+Enter</strong>. Correct answers deal 1 Heart of damage!</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tutorial-tips-row">
+                                <div class="tut-tip-card">
+                                    <span class="tip-icon">💡</span>
+                                    <span><strong>Teacher Hint:</strong> After your first attempt, you can click <em>Hint</em> for a clue.</span>
+                                </div>
+                                <div class="tut-tip-card warn">
+                                    <span class="tip-icon">❤️</span>
+                                    <span><strong>Defend Frau:</strong> Wrong answers deplete Frau's hearts and reduce bonus points!</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Bottom Showcase Action Bar -->
+            <div class="showcase-footer-bar">
+                <button id="showcase-back-btn" class="showcase-btn retreat-btn" type="button">
+                    <span>🔙 Retreat</span>
+                </button>
+
+                <div class="showcase-footer-hint">
+                    <span>💡 <em>Pro Tip:</em> Read the <strong>Topic Quick Guide</strong> and <strong>Combat Tutorial</strong> tabs above before fighting!</span>
+                </div>
+
+                <button id="enemy-intro-continue" class="showcase-btn engage-btn" type="button">
+                    <span class="sword-icon">⚔️</span>
+                    <span>ENGAGE IN BATTLE</span>
+                    <span class="arrow-icon">▶</span>
+                </button>
+            </div>
 
         </div>
 
@@ -575,7 +969,7 @@
 
             <img
                 id="player-sprite"
-                src=""
+                src="css/Sprites/user/idle.png"
                 alt="Frau"
             >
 
@@ -583,6 +977,14 @@
             <!-- CHALLENGE -->
 
             <div id="challenge-box">
+
+                <div id="challenge-intro-box" class="challenge-intro-box">
+                    <div class="challenge-goal-tag">
+                        <span class="goal-icon">🎯</span>
+                        <span class="goal-label" data-i18n="challenge_goal_label">TASK OBJECTIVE:</span>
+                    </div>
+                    <p id="challenge-intro-text" class="challenge-intro-text">Analyze and fix the corrupted Python code.</p>
+                </div>
 
                 <pre id="bug-code"></pre>
 
@@ -601,9 +1003,13 @@
         ========================== -->
 
         <div id="dialogue-area">
-
-            <p id="dialogue-text"></p>
-
+            <div class="dialogue-avatar-wrap">
+                <img src="css/Sprites/user/talking.png" alt="Frau" class="dialogue-avatar-img">
+            </div>
+            <div class="dialogue-content-wrap">
+                <span class="dialogue-speaker-tag">FRAU // TACTICAL LOG</span>
+                <p id="dialogue-text"></p>
+            </div>
         </div>
 
 
@@ -620,15 +1026,22 @@
             </div>
 
             <div id="answer-area">
+                <div class="answer-header-tag">
+                    <span class="terminal-prompt-icon">⌨️</span>
+                    <span class="terminal-title" data-i18n="hud_answer_tag">ENTER CORRECTED PYTHON</span>
+                    <span class="terminal-shortcut-pill">[Enter / Ctrl+Enter]</span>
+                </div>
 
                 <textarea
                     id="answer-input"
                     rows="3"
-                    placeholder="Type the full corrected Python here"
+                    spellcheck="false"
+                    placeholder="Type the full corrected Python code here..."
+                    data-i18n-ph="hud_answer_placeholder"
                 ></textarea>
 
                 <button id="submit-button">
-                    Submit Fix
+                    <span data-i18n="hud_submit_button">⚔️ Submit Fix</span>
                 </button>
 
             </div>
@@ -637,7 +1050,7 @@
 
                 <p id="hint-cost-display">Hint locked</p>
 
-                <button id="hint-button">
+                <button id="hint-button" data-i18n="hud_hint_btn">
                     Hint
                 </button>
 
@@ -649,62 +1062,421 @@
 
 
     <div id="admin-screen" style="display: none;">
+        <div class="admin-shell">
 
-        <button id="admin-logout-button">
-            Log Out
-        </button>
+            <!-- SIDEBAR NAVIGATION (MENU SELECTION SA GILID) -->
+            <aside class="admin-sidebar">
+                <!-- Brand / Logo Area -->
+                <div class="admin-sidebar-brand">
+                    <div class="admin-brand-icon">👾</div>
+                    <div class="admin-brand-titles">
+                        <h1 class="admin-brand-title">BUGHUNT</h1>
+                        <span class="admin-brand-subtitle">TEACHER CONSOLE</span>
+                    </div>
+                </div>
 
-        <h2>Teacher Console</h2>
+                <!-- Teacher Session Profile Card -->
+                <div class="admin-profile-card">
+                    <div class="profile-avatar">👨‍🏫</div>
+                    <div class="profile-details">
+                        <span class="profile-role-tag">FACULTY INSTRUCTOR</span>
+                        <div id="admin-welcome" class="profile-username">Teacher</div>
+                        <div class="profile-status">
+                            <span class="status-indicator-dot"></span>
+                            <span class="status-indicator-text">Session Active</span>
+                        </div>
+                    </div>
+                </div>
 
-        <p id="admin-welcome"></p>
+                <!-- Sidebar Navigation Menu -->
+                <div class="admin-sidebar-menu-wrap">
+                    <div class="sidebar-heading">CONSOLE MENU</div>
+                    <nav id="admin-tabs" class="admin-sidebar-nav">
+                        <button id="admin-students-tab" class="admin-nav-item active" type="button">
+                            <span class="nav-item-icon">📊</span>
+                            <div class="nav-item-content">
+                                <span class="nav-item-title">Student Scores</span>
+                                <span class="nav-item-caption">Scores & progress</span>
+                            </div>
+                            <span id="nav-student-count" class="nav-item-badge">0</span>
+                        </button>
 
-        <div id="admin-tabs">
+                        <button id="admin-questions-tab" class="admin-nav-item" type="button">
+                            <span class="nav-item-icon">⚔️</span>
+                            <div class="nav-item-content">
+                                <span class="nav-item-title">Questions & Answers</span>
+                                <span class="nav-item-caption">Bug pool & solutions</span>
+                            </div>
+                            <span id="nav-question-count" class="nav-item-badge">0</span>
+                        </button>
+                    </nav>
+                </div>
 
-            <button id="admin-students-tab" class="admin-tab active">
-                Student Progress
-            </button>
+                <!-- Curriculum & System Information -->
+                <div class="admin-sidebar-info">
+                    <div class="sidebar-info-title">CURRICULUM SPEC</div>
+                    <div class="sidebar-info-row">
+                        <span class="info-label">Topic:</span>
+                        <span class="info-val">Python Debugging</span>
+                    </div>
+                    <div class="sidebar-info-row">
+                        <span class="info-label">Tiers:</span>
+                        <span class="info-val">4 Difficulties</span>
+                    </div>
+                    <div class="sidebar-info-row">
+                        <span class="info-label">Bosses:</span>
+                        <span class="info-val">24 Monsters</span>
+                    </div>
+                    <div class="sidebar-info-row">
+                        <span class="info-label">DB Status:</span>
+                        <span class="info-val status-online">Connected</span>
+                    </div>
+                </div>
 
-            <button id="admin-questions-tab" class="admin-tab">
-                Question Pool
-            </button>
+                <!-- Sidebar Footer: Log Out -->
+                <div class="admin-sidebar-footer">
+                    <button id="admin-logout-button" class="admin-logout-btn" type="button">
+                        <span class="logout-icon">🚪</span>
+                        <span>Log Out Console</span>
+                    </button>
+                </div>
+            </aside>
+
+            <!-- MAIN WORKSPACE CONTENT -->
+            <main class="admin-workspace">
+
+                <!-- WORKSPACE TOP HEADER -->
+                <header class="admin-workspace-header">
+                    <div class="header-left">
+                        <h2 id="admin-view-title" class="admin-page-title">STUDENT PERFORMANCE & SCORES</h2>
+                        <p id="admin-view-subtitle" class="admin-page-subtitle">Track registered student rankings, True Points (TP), difficulty progress, and unlocked trophies.</p>
+                    </div>
+                    <div class="header-right">
+                        <div class="admin-badge-faculty">
+                            <span class="status-indicator-dot pulse"></span>
+                            <span>Instructor Mode</span>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- WORKSPACE BODY PANELS -->
+                <div class="admin-workspace-body">
+
+                    <!-- ==============================================
+                         PANEL 1: STUDENT SCORES & PROGRESS
+                    =============================================== -->
+                    <div id="admin-students-panel" class="admin-tab-panel">
+
+                        <!-- Division 1: KPI Stat Summary Cards -->
+                        <div class="admin-kpi-grid">
+                            <div class="kpi-card">
+                                <div class="kpi-icon kpi-icon-blue">👥</div>
+                                <div class="kpi-info">
+                                    <div class="kpi-label">TOTAL STUDENTS</div>
+                                    <div id="kpi-total-students" class="kpi-value">0</div>
+                                    <div class="kpi-desc">Registered student accounts</div>
+                                </div>
+                            </div>
+
+                            <div class="kpi-card">
+                                <div class="kpi-icon kpi-icon-gold">🏆</div>
+                                <div class="kpi-info">
+                                    <div class="kpi-label">TOP SCORE</div>
+                                    <div id="kpi-top-score" class="kpi-value">0 TP</div>
+                                    <div id="kpi-top-student" class="kpi-desc">Leader: None</div>
+                                </div>
+                            </div>
+
+                            <div class="kpi-card">
+                                <div class="kpi-icon kpi-icon-purple">📈</div>
+                                <div class="kpi-info">
+                                    <div class="kpi-label">CLASS AVERAGE</div>
+                                    <div id="kpi-avg-score" class="kpi-value">0 TP</div>
+                                    <div class="kpi-desc">Average True Points</div>
+                                </div>
+                            </div>
+
+                            <div class="kpi-card">
+                                <div class="kpi-icon kpi-icon-green">🎖️</div>
+                                <div class="kpi-info">
+                                    <div class="kpi-label">TROPHIES WON</div>
+                                    <div id="kpi-total-trophies" class="kpi-value">0</div>
+                                    <div class="kpi-desc">Total unlocked by class</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Division 2: Student Score Controls & Filters -->
+                        <div class="admin-controls-card">
+                            <div class="search-input-wrap">
+                                <span class="search-icon-symbol">🔍</span>
+                                <input id="student-search-input" type="text" placeholder="Search student by username or full name...">
+                            </div>
+
+                            <div class="filter-controls-wrap">
+                                <div class="filter-item">
+                                    <label for="student-difficulty-filter">Stage:</label>
+                                    <select id="student-difficulty-filter">
+                                        <option value="all">All Difficulties</option>
+                                        <option value="cleared-normal">Cleared Normal (Stage 1+)</option>
+                                        <option value="cleared-hard">Cleared Hard (Stage 2+)</option>
+                                        <option value="cleared-hell">Cleared Hell (Completed All)</option>
+                                        <option value="easy-only">Easy Stage Only</option>
+                                    </select>
+                                </div>
+
+                                <div class="filter-item">
+                                    <label for="student-sort-select">Sort By:</label>
+                                    <select id="student-sort-select">
+                                        <option value="tp-desc">Highest True Points</option>
+                                        <option value="tp-asc">Lowest True Points</option>
+                                        <option value="name-asc">Username (A - Z)</option>
+                                        <option value="trophies-desc">Most Trophies</option>
+                                        <option value="recent">Recently Active</option>
+                                    </select>
+                                </div>
+
+                                <button id="student-refresh-btn" class="admin-action-btn" type="button" title="Refresh student scores">
+                                    <span>🔄</span>
+                                    <span>Refresh</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Division 3: Student Scores Data Table Card -->
+                        <div class="admin-table-card">
+                            <div class="table-card-topbar">
+                                <div class="table-card-title-group">
+                                    <span class="table-title-icon">📋</span>
+                                    <h3 class="table-title-text">STUDENT SCOREBOARD & CLEARANCE STATUS</h3>
+                                </div>
+                                <span id="student-table-count" class="table-row-counter">0 Students Listed</span>
+                            </div>
+                            <div id="student-progress-table" class="admin-table-scrollwrap"></div>
+                        </div>
+
+                    </div>
+
+
+                    <!-- ==============================================
+                         PANEL 2: QUESTIONS & ANSWERS POOL
+                    =============================================== -->
+                    <div id="admin-questions-panel" class="admin-tab-panel" style="display: none;">
+
+                        <div class="questions-split-grid">
+
+                            <!-- Left Division: Create/Add Question Challenge Form -->
+                            <div class="question-form-panel">
+                                <div class="panel-header-box">
+                                    <div class="panel-header-title-row">
+                                        <span class="panel-header-icon">➕</span>
+                                        <h3 class="panel-header-title">ADD NEW CHALLENGE</h3>
+                                    </div>
+                                    <p class="panel-header-desc">Create a Python bug challenge for students to debug and solve.</p>
+                                </div>
+
+                                <div id="question-form" class="question-form-body">
+
+                                    <!-- Row 1: Difficulty & Target Enemy -->
+                                    <div class="form-grid-2cols">
+                                        <div class="form-field-group">
+                                            <label for="question-difficulty">Difficulty Tier</label>
+                                            <select id="question-difficulty" class="admin-select">
+                                                <option value="easy">Easy (Basics)</option>
+                                                <option value="normal">Normal (Intermediate)</option>
+                                                <option value="hard">Hard (Advanced)</option>
+                                                <option value="hell">Hell (Expert)</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-field-group">
+                                            <label for="question-enemy">Target Monster / Bug</label>
+                                            <select id="question-enemy" class="admin-select"></select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Row 1.5: Question Introduction / Goal -->
+                                    <div class="form-field-group">
+                                        <div class="field-label-row">
+                                            <label for="question-intro">Question Introduction / Task Objective</label>
+                                            <span class="field-pill pill-hint">STUDENT CONTEXT</span>
+                                        </div>
+                                        <input id="question-intro" type="text" placeholder="e.g., Goal: Output 'Hello World' with a matching closing parenthesis.">
+                                        <span class="field-help">Brief introduction so students understand what the code is supposed to do.</span>
+                                    </div>
+
+                                    <!-- Row 2: Buggy Python Code (Challenge) -->
+                                    <div class="form-field-group">
+                                        <div class="field-label-row">
+                                            <label for="question-code">Buggy Python Code</label>
+                                            <span class="field-pill pill-challenge">CHALLENGE CODE</span>
+                                        </div>
+                                        <textarea id="question-code" rows="5" spellcheck="false" placeholder="# Buggy Python snippet for student challenge&#10;print(&quot;Hello World&quot;"></textarea>
+                                        <span class="field-help">This code will be presented to the student in battle.</span>
+                                    </div>
+
+                                    <!-- Row 3: Corrected Answer (Solution) -->
+                                    <div class="form-field-group">
+                                        <div class="field-label-row">
+                                            <label for="question-answer">Correct Python Answer</label>
+                                            <span class="field-pill pill-solution">CORRECT SOLUTION</span>
+                                        </div>
+                                        <textarea id="question-answer" rows="5" spellcheck="false" placeholder="# Corrected Python solution required to pass&#10;print(&quot;Hello World&quot;)"></textarea>
+                                        <span class="field-help">Student input is validated against this answer.</span>
+                                    </div>
+
+                                    <!-- Row 4: Hint -->
+                                    <div class="form-field-group">
+                                        <div class="field-label-row">
+                                            <label for="question-hint">Helpful Hint (Optional)</label>
+                                            <span class="field-pill pill-hint">STUDENT CLUE</span>
+                                        </div>
+                                        <input id="question-hint" type="text" placeholder="e.g., Don't forget to close the print parenthesis.">
+                                    </div>
+
+                                    <!-- Form Action & Status Message -->
+                                    <div class="form-footer-area">
+                                        <button id="add-question-button" type="button" class="admin-primary-action-btn">
+                                            <span>✨ Add to Question Pool</span>
+                                        </button>
+                                        <div id="question-form-message" class="admin-form-message"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <!-- Right Division: Question & Answer Pool Bank -->
+                            <div class="question-bank-panel">
+                                <div class="panel-header-box">
+                                    <div class="panel-header-title-row">
+                                        <span class="panel-header-icon">📚</span>
+                                        <h3 class="panel-header-title">QUESTION & ANSWER BANK</h3>
+                                        <span id="question-bank-count" class="bank-count-pill">0 Questions</span>
+                                    </div>
+                                    <p class="panel-header-desc">Search, filter, inspect and manage questions currently in the game pool.</p>
+                                </div>
+
+                                <!-- Filter toolbar -->
+                                <div class="bank-toolbar">
+                                    <div class="bank-search-wrap">
+                                        <span class="search-icon-symbol">🔍</span>
+                                        <input id="question-search-input" type="text" placeholder="Search questions by code, answer, or hint...">
+                                    </div>
+
+                                    <div class="bank-tier-tabs" id="question-tier-filters">
+                                        <button class="tier-tab-btn active" data-tier="all" type="button">All</button>
+                                        <button class="tier-tab-btn tier-easy" data-tier="easy" type="button">Easy</button>
+                                        <button class="tier-tab-btn tier-normal" data-tier="normal" type="button">Normal</button>
+                                        <button class="tier-tab-btn tier-hard" data-tier="hard" type="button">Hard</button>
+                                        <button class="tier-tab-btn tier-hell" data-tier="hell" type="button">Hell</button>
+                                    </div>
+
+                                    <div class="bank-enemy-select-wrap">
+                                        <select id="question-bank-enemy-filter" class="admin-select">
+                                            <option value="all">All Monsters</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Question List Scroll Container -->
+                                <div id="question-pool-list" class="question-cards-list-wrap"></div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </main>
 
         </div>
 
-        <div id="admin-students-panel">
+        <!-- ==============================================
+             ADMIN EDIT QUESTION & ANSWER MODAL
+        =============================================== -->
+        <div id="admin-edit-modal" class="admin-modal-wrap" style="display: none;">
+            <div class="admin-modal-backdrop" id="admin-edit-modal-backdrop"></div>
+            <div class="admin-modal-dialog">
+                <div class="admin-modal-header">
+                    <div class="modal-title-group">
+                        <span class="modal-title-icon">✏️</span>
+                        <div>
+                            <h3 class="modal-title-text" id="admin-edit-modal-title">EDIT CHALLENGE QUESTION</h3>
+                            <p class="modal-subtitle-text">Update the buggy code, solution, target enemy, or hint in the question pool.</p>
+                        </div>
+                    </div>
+                    <button id="close-edit-modal-btn" class="modal-close-btn" type="button" title="Close modal">✕</button>
+                </div>
 
-            <div id="student-progress-table"></div>
+                <div class="admin-modal-body">
+                    <input type="hidden" id="edit-question-id">
 
-        </div>
+                    <div class="form-grid-2cols">
+                        <div class="form-field-group">
+                            <label for="edit-question-difficulty">Difficulty Tier</label>
+                            <select id="edit-question-difficulty" class="admin-select">
+                                <option value="easy">Easy (Basics)</option>
+                                <option value="normal">Normal (Intermediate)</option>
+                                <option value="hard">Hard (Advanced)</option>
+                                <option value="hell">Hell (Expert)</option>
+                            </select>
+                        </div>
 
-        <div id="admin-questions-panel" style="display: none;">
+                        <div class="form-field-group">
+                            <label for="edit-question-enemy">Target Monster / Bug</label>
+                            <select id="edit-question-enemy" class="admin-select"></select>
+                        </div>
+                    </div>
 
-            <div id="question-form">
+                    <div class="form-field-group">
+                        <div class="field-label-row">
+                            <label for="edit-question-intro">Question Introduction / Task Objective</label>
+                            <span class="field-pill pill-hint">STUDENT CONTEXT</span>
+                        </div>
+                        <input id="edit-question-intro" type="text" placeholder="e.g., Goal: Output 'Hello World' with a matching closing parenthesis.">
+                        <span class="field-help">Brief introduction so students understand what the code is supposed to do.</span>
+                    </div>
 
-                <select id="question-difficulty">
-                    <option value="easy">Easy</option>
-                    <option value="normal">Normal</option>
-                    <option value="hard">Hard</option>
-                    <option value="hell">Hell</option>
-                </select>
+                    <div class="form-field-group">
+                        <div class="field-label-row">
+                            <label for="edit-question-code">Buggy Python Code (Challenge)</label>
+                            <span class="field-pill pill-challenge">CHALLENGE CODE</span>
+                        </div>
+                        <textarea id="edit-question-code" rows="5" spellcheck="false" placeholder="# Buggy Python snippet for student challenge"></textarea>
+                        <span class="field-help">This code will be presented to the student in battle.</span>
+                    </div>
 
-                <select id="question-enemy"></select>
+                    <div class="form-field-group">
+                        <div class="field-label-row">
+                            <label for="edit-question-answer">Correct Python Answer (Solution)</label>
+                            <span class="field-pill pill-solution">CORRECT SOLUTION</span>
+                        </div>
+                        <textarea id="edit-question-answer" rows="5" spellcheck="false" placeholder="# Corrected Python solution required to pass"></textarea>
+                        <span class="field-help">Student input is validated against this answer.</span>
+                    </div>
 
-                <textarea id="question-code" placeholder="Buggy Python code"></textarea>
+                    <div class="form-field-group">
+                        <div class="field-label-row">
+                            <label for="edit-question-hint">Helpful Hint (Optional)</label>
+                            <span class="field-pill pill-hint">STUDENT CLUE</span>
+                        </div>
+                        <input id="edit-question-hint" type="text" placeholder="e.g., Don't forget to close the print parenthesis.">
+                    </div>
 
-                <textarea id="question-answer" placeholder="Corrected Python answer"></textarea>
+                    <div id="edit-question-message" class="admin-form-message" style="display: none;"></div>
+                </div>
 
-                <input id="question-hint" type="text" placeholder="Hint for students">
-
-                <button id="add-question-button">
-                    Add to Pool
-                </button>
-
-                <p id="question-form-message"></p>
-
+                <div class="admin-modal-footer">
+                    <button id="cancel-edit-modal-btn" class="admin-action-btn" type="button">
+                        <span>Cancel</span>
+                    </button>
+                    <button id="save-edit-question-btn" class="admin-primary-action-btn" type="button">
+                        <span>💾 Save Changes</span>
+                    </button>
+                </div>
             </div>
-
-            <div id="question-pool-list"></div>
-
         </div>
 
     </div>
@@ -714,30 +1486,48 @@
      VICTORY SCREEN
 ========================== -->
 
-<div
-    id="victory-screen"
-    style="display: none;"
->
+<div id="victory-screen" style="display: none;">
 
-    <img
-        id="victory-frau"
-        src="css/Sprites/user/victory.png"
-        alt="Frau Victory"
-    >
+    <!-- Cinematic overlay -->
+    <div class="end-screen-vignette"></div>
 
-    <h2>
-        Victory!
-    </h2>
+    <!-- Particle layer -->
+    <div class="end-screen-particles" id="victory-particles"></div>
 
-    <p id="victory-message"></p>
+    <!-- Frau sprite -->
+    <img id="victory-frau" src="css/Sprites/user/victory.png" alt="Frau Victory">
 
-    <p id="victory-points-message"></p>
+    <!-- Content panel (right side) -->
+    <div class="end-screen-panel victory-panel">
 
-    <p id="trophy-message"></p>
+        <div class="end-panel-eyebrow">✦ STAGE CLEARED ✦</div>
 
-    <button id="next-enemy-button">
-        Next Enemy
-    </button>
+        <h2 class="end-panel-title victory-title">VICTORY!</h2>
+
+        <div class="end-panel-divider"></div>
+
+        <p id="victory-message" class="end-panel-subtitle"></p>
+
+        <div class="end-panel-stats">
+            <div class="end-stat-row" id="victory-points-row">
+                <span class="end-stat-icon">⚡</span>
+                <span class="end-stat-label">Points Earned</span>
+                <span class="end-stat-value" id="victory-points-message"></span>
+            </div>
+            <div class="end-stat-row" id="trophy-row">
+                <span class="end-stat-icon">🏆</span>
+                <span class="end-stat-label">Trophy</span>
+                <span class="end-stat-value" id="trophy-message"></span>
+            </div>
+        </div>
+
+        <div class="end-panel-divider"></div>
+
+        <button id="next-enemy-button" class="end-screen-btn victory-btn" data-i18n="victory_next_btn">
+            ⚔️ Next Enemy
+        </button>
+
+    </div>
 
 </div>
 
@@ -746,50 +1536,79 @@
      DEFEAT SCREEN
 ========================== -->
 
-<div
-    id="defeat-screen"
-    style="display: none;"
->
+<div id="defeat-screen" style="display: none;">
 
-    <img
-        id="defeat-frau"
-        src="css/Sprites/user/defeated.png"
-        alt="Frau Defeat"
-    >
+    <!-- Cinematic overlay -->
+    <div class="end-screen-vignette defeat-vignette"></div>
 
-    <h1>
-        GAME OVER
-    </h1>
+    <!-- Particle layer -->
+    <div class="end-screen-particles" id="defeat-particles"></div>
 
-    <p id="defeat-message"></p>
+    <!-- Frau sprite -->
+    <img id="defeat-frau" src="css/Sprites/user/defeated.png" alt="Frau Defeat">
 
-    <button id="defeat-button">
-        Return to Difficulty
-    </button>
+    <!-- Content panel (left side) -->
+    <div class="end-screen-panel defeat-panel">
+
+        <div class="end-panel-eyebrow">✦ MISSION FAILED ✦</div>
+
+        <h1 class="end-panel-title defeat-title" data-i18n="defeat_title">GAME OVER</h1>
+
+        <div class="end-panel-divider defeat-divider"></div>
+
+        <p id="defeat-message" class="end-panel-subtitle"></p>
+
+        <div class="end-panel-divider defeat-divider"></div>
+
+        <button id="defeat-button" class="end-screen-btn defeat-btn" data-i18n="defeat_btn">
+            ↩ Return to Difficulty
+        </button>
+
+    </div>
 
 </div>
 
 
 <!-- ==========================
+     LOCALIZATION & I18N SYSTEM
+========================== -->
+<script src="js/i18n.js?v=27"></script>
+
+<!-- ==========================
      GAME DATA
 ========================== -->
 
-<script src="data/easy.js"></script>
-
-<script src="data/normal.js"></script>
-
-<script src="data/hard.js"></script>
-
-<script src="data/hell.js"></script>
-
+<script src="data/easy.js?v=27"></script>
+<script src="data/normal.js?v=27"></script>
+<script src="data/hard.js?v=27"></script>
+<script src="data/hell.js?v=27"></script>
+<script src="data/enemyGuides.js?v=27"></script>
+<script src="data/pythonLessons.js?v=27"></script>
 
 <!-- ==========================
-     MAIN JAVASCRIPT
+     FIREBASE CLOUD DATABASE
 ========================== -->
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js?v=27"></script>
+<script src="js/firebase-db.js?v=27"></script>
 
-<script src="js/app.js"></script>
+<!-- ==========================
+     MODULAR JAVASCRIPT SYSTEM
+========================== -->
+<script src="js/auth.js?v=27"></script>
+<script src="js/save.js?v=27"></script>
+<script src="js/points.js?v=27"></script>
+<script src="js/difficulty.js?v=27"></script>
+<script src="js/enemyShowcase.js?v=27"></script>
+<script src="js/game.js?v=27"></script>
+<script src="js/study.js?v=27"></script>
+<script src="js/admin.js?v=27"></script>
+<script src="js/app.js?v=27"></script>
 
 
 </body>
 
 </html>
+
+

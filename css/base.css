@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+/* ==========================
+   FIXED GAME SCREEN
+========================== */
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
+
+    background: black;
+}
+
+#game-container {
+    position: absolute;
+
+    width: 1920px;
+    height: 1080px;
+
+    left: 50%;
+    top: 50%;
+
+    transform-origin: center center;
+
+    overflow: hidden;
+}
+
+/* ==========================
+   GLOBAL
+========================== */
+
+body {
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+h1 {
+    font-size: 64px;
+}
+
+h2 {
+    font-size: 42px;
+}
+
+p {
+    font-size: 22px;
+}
+
+button {
+    width: 220px;
+    padding: 12px;
+    margin: 10px auto;
+    font-size: 20px;
+    cursor: pointer;
+    display: block;
+}
+
+input {
+    width: 320px;
+    padding: 12px;
+    font-size: 18px;
+    margin: 10px auto;
+    display: block;
+}
+
+/* =========================================================
+   SIMPLE LANGUAGE SWITCH (EN | FIL)
+   ========================================================= */
+
+.lang-switch-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 11px;
+    line-height: 1;
+    user-select: none;
+    box-sizing: border-box;
+}
+
+.lang-switch-box .lang-btn {
+    position: static !important;
+    transform: none !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    cursor: pointer;
+    color: #888888 !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.5px !important;
+    display: inline-block !important;
+    text-shadow: none !important;
+    transition: color 0.15s ease;
+}
+
+.lang-switch-box .lang-btn:hover {
+    color: #ffffff !important;
+    background: transparent !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.lang-switch-box .lang-btn.active {
+    color: #00f0ff !important;
+    font-weight: 700 !important;
+}
+
+.lang-switch-box .lang-sep {
+    color: #444444;
+    font-size: 10px;
+    line-height: 1;
+}
+
+

@@ -1,0 +1,880 @@
+/* ==========================
+   DIFFICULTY SELECTION
+========================== */
+
+#difficulty-selection {
+    display: none;
+
+    position: relative;
+
+    width: 1920px;
+    height: 1080px;
+
+    box-sizing: border-box;
+
+    background-image:
+        linear-gradient(
+            rgba(10, 0, 20, 0.45),
+            rgba(5, 0, 15, 0.75)
+        ),
+        url("bgassets/mainmenu.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    overflow: hidden;
+}
+
+/* Dark vignette */
+
+#difficulty-selection::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            transparent 35%,
+            rgba(0, 0, 0, 0.65) 100%
+        );
+
+    pointer-events: none;
+}
+
+/* ==========================
+   TITLE
+========================== */
+
+#difficulty-selection h2 {
+    position: absolute;
+
+    top: 145px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    margin: 0;
+
+    width: 100%;
+
+    text-align: center;
+
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+
+    font-size: 52px;
+    letter-spacing: 6px;
+
+    color: #f0c8ff;
+
+    text-shadow:
+        5px 5px 0 #31004c,
+        10px 10px 0 #180028,
+        0 0 10px #b800ff,
+        0 0 25px rgba(212, 0, 255, 0.85),
+        0 0 50px rgba(212, 0, 255, 0.4);
+
+    z-index: 5;
+}
+
+/* Decorative line underneath title */
+
+#difficulty-selection h2::after {
+    content: "G��G��G��G��G��G��G��G��G��G��G��G��G��G��G��G��G��G��G��G��";
+
+    display: block;
+
+    margin-top: 25px;
+
+    font-size: 11px;
+    letter-spacing: 4px;
+
+    color: #9d4dcc;
+
+    text-shadow:
+        0 0 8px rgba(212, 0, 255, 0.8),
+        0 0 18px rgba(212, 0, 255, 0.4);
+}
+
+/* ==========================
+   DIFFICULTY BUTTON AREA
+========================== */
+
+#difficulty-selection {
+    text-align: center;
+}
+
+/* EASY / NORMAL / HARD */
+
+#easy-button,
+#normal-button,
+#hard-button,
+#hell-button {
+    position: absolute;
+
+    height: 100px;
+
+    box-sizing: border-box;
+
+    border: 3px solid #9d4dcc;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(100, 20, 140, 0.95),
+            rgba(30, 0, 55, 0.98)
+        );
+
+    color: #f0c8ff;
+
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+
+    font-size: 15px;
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 0 8px rgba(212, 0, 255, 0.8),
+        0 0 20px rgba(212, 0, 255, 0.35),
+        inset 0 0 15px rgba(212, 0, 255, 0.15);
+
+    text-shadow:
+        3px 3px 0 #180028,
+        0 0 8px rgba(212, 0, 255, 0.8);
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
+
+    z-index: 5;
+}
+
+/* ==========================
+   TOP THREE BUTTONS
+========================== */
+
+#easy-button {
+    top: 420px;
+    left: 360px;
+    width: 360px;
+}
+
+#normal-button {
+    top: 420px;
+    left: 780px;
+    width: 360px;
+}
+
+#hard-button {
+    top: 420px;
+    left: 1200px;
+    width: 360px;
+}
+
+/* ==========================
+   HELL BUTTON
+========================== */
+
+#hell-button {
+    top: 545px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 900px;
+}
+
+/* ==========================
+   HOVER
+========================== */
+
+#easy-button:hover,
+#normal-button:hover,
+#hard-button:hover {
+    transform: translateY(-6px);
+
+    border-color: #e5b3ff;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(150, 40, 190, 0.98),
+            rgba(45, 0, 75, 1)
+        );
+
+    box-shadow:
+        0 0 12px #d400ff,
+        0 0 30px rgba(212, 0, 255, 0.65),
+        inset 0 0 20px rgba(212, 0, 255, 0.25);
+}
+
+#hell-button:hover {
+    transform: translateX(-50%) translateY(-6px);
+
+    border-color: #e5b3ff;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(150, 40, 190, 0.98),
+            rgba(45, 0, 75, 1)
+        );
+
+    box-shadow:
+        0 0 15px #d400ff,
+        0 0 35px rgba(212, 0, 255, 0.7),
+        inset 0 0 20px rgba(212, 0, 255, 0.3);
+}
+
+/* ==========================
+   BACK BUTTON
+========================== */
+
+#difficulty-back-button {
+    position: absolute;
+
+    top: 35px;
+    left: 35px;
+
+    width: 180px;
+    height: 50px;
+
+    margin: 0;
+
+    border: 2px solid #9d4dcc;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(60, 10, 85, 0.95),
+            rgba(20, 0, 35, 0.98)
+        );
+
+    color: #e5b3ff;
+
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 0 8px rgba(212, 0, 255, 0.6),
+        inset 0 0 10px rgba(212, 0, 255, 0.15);
+
+    text-shadow:
+        2px 2px 0 #180028;
+
+    z-index: 10;
+
+    transition: 0.15s ease;
+}
+
+#difficulty-back-button:hover {
+    transform: translateX(5px);
+
+    color: white;
+
+    border-color: #e5b3ff;
+
+    box-shadow:
+        0 0 12px #d400ff,
+        0 0 25px rgba(212, 0, 255, 0.5);
+}
+
+/* ==========================
+   DIFFICULTY INTRO PANEL
+========================== */
+
+#difficulty-intro-panel {
+    display: none;
+    position: absolute;
+
+    top: 680px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 900px;
+    min-height: 250px;
+
+    box-sizing: border-box;
+
+    padding: 28px 50px;
+
+    border: 3px solid #74368e;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(45, 5, 65, 0.96),
+            rgba(10, 0, 20, 0.98)
+        );
+
+    box-shadow:
+        0 0 10px rgba(212, 0, 255, 0.55),
+        0 0 30px rgba(212, 0, 255, 0.2),
+        inset 0 0 25px rgba(212, 0, 255, 0.08);
+
+    text-align: center;
+
+    z-index: 8;
+
+    overflow: hidden;
+}
+
+
+/* PANEL TITLE */
+
+#difficulty-intro-title {
+
+    margin: 0 0 25px 0;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 20px;
+
+    color: #f0c8ff;
+
+    letter-spacing: 3px;
+
+    text-shadow:
+        3px 3px 0 #180028,
+        0 0 12px rgba(212, 0, 255, 0.8);
+}
+
+
+/* DESCRIPTION */
+
+#difficulty-intro-text {
+
+    margin: 0 auto 25px auto;
+
+    max-width: 760px;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 11px;
+
+    line-height: 2;
+
+    color: #d9b8e8;
+
+    white-space: pre-line;
+
+    text-shadow:
+        2px 2px 0 #180028;
+}
+
+
+/* CONFIRMATION TEXT */
+
+#difficulty-intro-confirm {
+
+    margin: 0;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+    color: #b86de0;
+
+    text-shadow:
+        0 0 8px rgba(212, 0, 255, 0.7);
+
+    animation: difficultyIntroBlink 1.8s ease-in-out infinite;
+}
+
+
+@keyframes difficultyIntroBlink {
+
+    0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+
+}
+
+/* ==========================
+   PROCEED BUTTON
+========================== */
+
+#difficulty-proceed-button {
+    display: none;
+    width: 280px;
+    height: 52px;
+    margin: 18px auto 0 auto;
+    border: 2px solid #9d4dcc;
+    background: linear-gradient(180deg, rgba(100, 20, 140, 0.95), rgba(30, 0, 55, 0.98));
+    color: #f0c8ff;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(212, 0, 255, 0.45);
+    transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+#difficulty-proceed-button.visible {
+    display: inline-block;
+}
+
+#difficulty-proceed-button:hover {
+    color: white;
+    border-color: #e5b3ff;
+    transform: translateY(-3px);
+}
+
+/* ==========================
+   DIFFICULTY FOCUS STATES
+========================== */
+
+#difficulty-selection.focus-easy #normal-button,
+#difficulty-selection.focus-easy #hard-button,
+#difficulty-selection.focus-easy #hell-button,
+#difficulty-selection.focus-normal #easy-button,
+#difficulty-selection.focus-normal #hard-button,
+#difficulty-selection.focus-normal #hell-button,
+#difficulty-selection.focus-hard #easy-button,
+#difficulty-selection.focus-hard #normal-button,
+#difficulty-selection.focus-hard #hell-button,
+#difficulty-selection.focus-hell #easy-button,
+#difficulty-selection.focus-hell #normal-button,
+#difficulty-selection.focus-hell #hard-button {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+#difficulty-selection.focus-easy #easy-button,
+#difficulty-selection.focus-normal #normal-button,
+#difficulty-selection.focus-hard #hard-button {
+    left: 50%;
+    transform: translateX(-50%);
+    top: 280px;
+}
+
+#difficulty-selection.focus-hell #hell-button {
+    top: 280px;
+    width: 520px;
+}
+
+#difficulty-selection.focus-easy #difficulty-intro-panel,
+#difficulty-selection.focus-normal #difficulty-intro-panel,
+#difficulty-selection.focus-hard #difficulty-intro-panel,
+#difficulty-selection.focus-hell #difficulty-intro-panel {
+    top: 420px;
+    min-height: 320px;
+}
+
+.admin-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 24px;
+    border-top: 1px solid #4a1760;
+    background: rgba(20, 5, 32, 0.7);
+}
+
+/* =========================================================
+   DIFFICULTY SELECTION: LOCKED BUTTONS & PROMPT MODAL
+========================================================= */
+
+.diff-btn-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    height: 100%;
+}
+
+.diff-btn-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 16px;
+    letter-spacing: 2px;
+}
+
+.diff-btn-tag {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    letter-spacing: 1px;
+    padding: 3px 8px;
+    border-radius: 3px;
+}
+
+.diff-btn-tag.tag-unlocked {
+    background: rgba(56, 239, 125, 0.2);
+    border: 1px solid #38ef7d;
+    color: #38ef7d;
+    text-shadow: 0 0 8px rgba(56, 239, 125, 0.6);
+}
+
+.diff-btn-tag.tag-locked {
+    background: rgba(255, 68, 102, 0.25);
+    border: 1px solid #ff4466;
+    color: #ff88a3;
+    text-shadow: 0 0 8px rgba(255, 68, 102, 0.6);
+}
+
+/* Locked button styling */
+#difficulty-selection button.is-locked {
+    background: linear-gradient(180deg, rgba(32, 6, 42, 0.95), rgba(12, 1, 18, 0.98)) !important;
+    border: 3px dashed #6b2680 !important;
+    color: #a482b8 !important;
+    opacity: 0.82;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8) !important;
+}
+
+#difficulty-selection button.is-locked:hover {
+    border-color: #ff4466 !important;
+    color: #ff99bb !important;
+    box-shadow: 0 0 20px rgba(255, 68, 102, 0.5), inset 0 0 15px rgba(255, 68, 102, 0.2) !important;
+    transform: translateY(-3px) !important;
+}
+
+#difficulty-selection #hell-button.is-locked:hover {
+    transform: translateX(-50%) translateY(-3px) !important;
+}
+
+/* Button Shake Animation when clicked while locked */
+button.lock-shake {
+    animation: buttonLockShake 0.45s ease-in-out !important;
+}
+
+#hell-button.lock-shake {
+    animation: hellLockShake 0.45s ease-in-out !important;
+}
+
+@keyframes buttonLockShake {
+    0%, 100% { transform: translateY(0); border-color: #ff3366; }
+    20%, 60% { transform: translateX(-10px) translateY(-2px); border-color: #ff3366; }
+    40%, 80% { transform: translateX(10px) translateY(-2px); border-color: #ff3366; }
+}
+
+@keyframes hellLockShake {
+    0%, 100% { transform: translateX(-50%) translateY(0); border-color: #ff3366; }
+    20%, 60% { transform: translateX(-52%) translateY(-2px); border-color: #ff3366; }
+    40%, 80% { transform: translateX(-48%) translateY(-2px); border-color: #ff3366; }
+}
+
+/* Modal Prompt */
+.diff-locked-modal-wrap {
+    position: absolute;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+.diff-locked-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(4, 0, 10, 0.88);
+    backdrop-filter: blur(6px);
+}
+
+.diff-locked-modal-box {
+    position: relative;
+    z-index: 10;
+    width: 680px;
+    max-width: 95%;
+    background: linear-gradient(180deg, #220330 0%, #0d0115 100%);
+    border: 2px solid #ff4466;
+    border-top: 5px solid #ff3366;
+    border-radius: 12px;
+    box-shadow: 0 0 50px rgba(255, 51, 102, 0.45), inset 0 0 35px rgba(255, 51, 102, 0.1);
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+    animation: popInModal 0.25s ease-out;
+}
+
+@keyframes popInModal {
+    0% { transform: scale(0.9); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.diff-locked-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px 24px;
+    border-bottom: 1px solid rgba(255, 68, 102, 0.35);
+    background: rgba(40, 8, 25, 0.65);
+    text-align: left;
+}
+
+.diff-locked-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+    animation: lockIconPulse 1.5s infinite alternate;
+}
+
+@keyframes lockIconPulse {
+    0% { transform: scale(0.95); }
+    100% { transform: scale(1.1); filter: drop-shadow(0 0 10px #ff3366); }
+}
+
+.diff-locked-titles {
+    display: flex;
+    flex-direction: column;
+}
+
+.diff-locked-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    color: #ff5577;
+    margin: 0 0 6px;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(255, 85, 119, 0.7);
+}
+
+.diff-locked-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    color: #f0c8ff;
+    margin: 0;
+}
+
+.diff-locked-close-x {
+    background: rgba(60, 10, 25, 0.8) !important;
+    border: 1px solid #ff4466 !important;
+    color: #ff99bb !important;
+    font-size: 16px !important;
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-left: auto;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    padding: 0 !important;
+    transition: all 0.2s;
+}
+
+.diff-locked-close-x:hover {
+    background: #ff4466 !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 12px #ff4466;
+}
+
+.diff-locked-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-align: left;
+}
+
+.diff-target-pill-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+}
+
+.diff-target-label {
+    color: #9d4dcc;
+    letter-spacing: 1px;
+}
+
+.diff-target-name {
+    background: rgba(157, 77, 204, 0.25);
+    border: 1px solid #9d4dcc;
+    color: #ffffff;
+    padding: 5px 12px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+}
+
+.diff-requirement-card {
+    background: rgba(35, 6, 20, 0.85);
+    border: 1px solid rgba(255, 68, 102, 0.5);
+    border-left: 5px solid #ff4466;
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.diff-req-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.diff-req-content {
+    flex: 1;
+}
+
+.diff-req-heading {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8.5px;
+    color: #ff7799;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.diff-req-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13.5px;
+    color: #ffe1e8;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.diff-roadmap-box {
+    background: rgba(18, 4, 28, 0.85);
+    border: 1px solid #5a1d74;
+    border-radius: 8px;
+    padding: 14px 16px;
+}
+
+.roadmap-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    color: #d9a8ff;
+    margin-bottom: 12px;
+    display: block;
+    letter-spacing: 0.5px;
+}
+
+.roadmap-tiers {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+}
+
+.roadmap-step {
+    flex: 1;
+    background: rgba(30, 8, 45, 0.75);
+    border: 1px solid #5a1d74;
+    border-radius: 6px;
+    padding: 8px 6px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.roadmap-step.cleared {
+    border-color: #38ef7d;
+    background: rgba(6, 35, 18, 0.85);
+    box-shadow: 0 0 10px rgba(56, 239, 125, 0.2);
+}
+
+.roadmap-step.active {
+    border-color: #00f0ff;
+    background: rgba(0, 40, 60, 0.85);
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+}
+
+.roadmap-step.locked {
+    opacity: 0.55;
+    border-style: dashed;
+}
+
+.step-badge {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    color: #c4a5d8;
+}
+
+.step-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8.5px;
+    color: #ffffff;
+}
+
+.step-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.roadmap-step.cleared .step-status { color: #38ef7d; }
+.roadmap-step.active .step-status { color: #00f0ff; }
+.roadmap-step.locked .step-status { color: #ff88a3; }
+
+.roadmap-arrow {
+    color: #74368e;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.diff-locked-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 24px;
+    border-top: 1px solid rgba(255, 68, 102, 0.2);
+    background: rgba(25, 4, 35, 0.8);
+}
+
+.diff-locked-play-btn {
+    background: linear-gradient(90deg, #9d4dcc, #d400ff) !important;
+    border: 2px solid #ffffff !important;
+    color: #ffffff !important;
+    font-family: 'Press Start 2P', monospace !important;
+    font-size: 10px !important;
+    padding: 12px 20px !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+    width: auto !important;
+    height: auto !important;
+    box-shadow: 0 0 15px rgba(212, 0, 255, 0.6) !important;
+}
+
+.diff-locked-play-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 25px rgba(212, 0, 255, 0.9) !important;
+}
+
+.diff-locked-dismiss-btn {
+    background: rgba(40, 10, 50, 0.8) !important;
+    border: 1px solid #74368e !important;
+    color: #d9a8ff !important;
+    font-family: 'Press Start 2P', monospace !important;
+    font-size: 10px !important;
+    padding: 12px 18px !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+    width: auto !important;
+    height: auto !important;
+}
+
+.diff-locked-dismiss-btn:hover {
+    background: #5a1d74 !important;
+    color: #ffffff !important;
+}

@@ -1,0 +1,792 @@
+#title-screen {
+    position: relative;
+
+    width: 1920px;
+    height: 1080px;
+
+    background-image: url("bgassets/title.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    overflow: hidden;
+}
+
+
+/* ==========================
+   BUG HUNT TITLE
+========================== */
+
+#title-screen h1 {
+    display: block;
+
+    position: absolute;
+
+    top: 230px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 82px;
+
+    letter-spacing: 8px;
+
+    color: #f0c8ff;
+
+    text-align: center;
+
+    white-space: nowrap;
+
+    z-index: 5;
+
+    /* Pixel / eldritch glow */
+    text-shadow:
+        5px 5px 0 #31004c,
+        10px 10px 0 #180028,
+        0 0 10px #b800ff,
+        0 0 25px rgba(212, 0, 255, 0.85),
+        0 0 50px rgba(212, 0, 255, 0.45);
+
+    /* Slightly sharper pixel appearance */
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: unset;
+}
+
+
+/* ==========================
+   TITLE DECORATION
+========================== */
+
+#title-screen h1::after {
+    content: "G��G��G��G��G��G��G��G��G��G��G��G��G��G��G��G��G��G��G��G��";
+
+    display: block;
+
+    margin-top: 24px;
+
+    font-size: 11px;
+
+    letter-spacing: 4px;
+
+    color: #9d4dcc;
+
+    text-shadow:
+        0 0 8px rgba(212, 0, 255, 0.8),
+        0 0 18px rgba(212, 0, 255, 0.4);
+}
+
+
+/* ==========================
+   PRESS TO CONTINUE
+========================== */
+
+#title-screen p {
+    position: absolute;
+
+    top: 650px;
+    left: 50%;
+
+    margin: 0;
+
+    transform: translateX(-50%);
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 15px;
+
+    color: #e5b3ff;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+
+    white-space: nowrap;
+
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: unset;
+
+    text-shadow:
+        3px 3px 0 #31004c,
+        6px 6px 0 #180028,
+        9px 9px 0 #080010,
+        0 0 18px rgba(212, 0, 255, 0.85);
+
+    animation: retroBlink 2.2s ease-in-out infinite;
+
+    z-index: 5;
+}
+
+
+/* ==========================
+   PRESS TEXT BLINK
+========================== */
+
+@keyframes retroBlink {
+
+    0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.35;
+    }
+}
+
+/* ==========================
+   LOGIN SCREEN
+========================== */
+
+#login-screen {
+    display: none;
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    background-image: url("bgassets/login.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    overflow: hidden;
+    text-align: center;
+}
+
+/* DARK OVERLAY */
+#login-screen::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(40, 0, 60, 0.25),
+            rgba(0, 0, 0, 0.72)
+        );
+
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* VIGNETTE */
+#login-screen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    box-shadow:
+        inset 0 0 180px rgba(0, 0, 0, 0.9),
+        inset 0 0 60px rgba(100, 0, 150, 0.25);
+
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* ==========================
+   LOGIN TITLE
+========================== */
+
+#login-screen h1 {
+    position: absolute;
+
+    top: 240px;
+    left: 0;
+
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 52px;
+    letter-spacing: 6px;
+
+    color: #f0c8ff;
+
+    text-align: center;
+
+    text-shadow:
+        4px 4px 0 #31004c,
+        8px 8px 0 #180028,
+        0 0 10px #b800ff,
+        0 0 25px rgba(212, 0, 255, 0.8);
+
+    white-space: nowrap;
+
+    z-index: 5;
+}
+
+/* LINE UNDER TITLE */
+
+#login-screen h1::after {
+    content: "G��G��G��G��G��G��G��G��G��G��G��G��";
+
+    display: block;
+
+    margin-top: 20px;
+
+    font-size: 13px;
+    letter-spacing: 5px;
+
+    color: #9d4dcc;
+
+    text-shadow:
+        0 0 8px rgba(212, 0, 255, 0.8);
+}
+
+/* ==========================
+   LOGIN INPUT AREA
+========================== */
+
+#login-screen input {
+    position: relative;
+    z-index: 5;
+
+    display: block;
+
+    width: 360px;
+    height: 52px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    padding: 10px 18px;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(25, 5, 35, 0.95),
+            rgba(5, 0, 10, 0.95)
+        );
+
+    color: #f5ddff;
+
+    border: 2px solid #6b397d;
+    border-left: 5px solid #9d4dcc;
+
+    outline: none;
+
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 12px;
+
+    text-align: left;
+
+    box-shadow:
+        inset 0 0 15px rgba(0, 0, 0, 0.8),
+        0 0 8px rgba(150, 0, 200, 0.2);
+}
+
+/* FIRST INPUT */
+#login-screen input:first-of-type {
+    margin-top: 380px;
+    margin-bottom: 15px;
+}
+
+/* SECOND INPUT */
+#login-screen input:nth-of-type(2) {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/* INPUT FOCUS */
+
+#login-screen input:focus {
+    border-color: #e5b3ff;
+
+    box-shadow:
+        inset 0 0 15px rgba(0, 0, 0, 0.8),
+        0 0 10px rgba(212, 0, 255, 0.45),
+        0 0 25px rgba(212, 0, 255, 0.2);
+}
+
+/* PLACEHOLDER */
+
+#login-screen input::placeholder {
+    color: #8c6b98;
+    opacity: 1;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+}
+
+/* ==========================
+   BUTTONS
+========================== */
+
+#login-screen button {
+    position: relative;
+    z-index: 5;
+
+    display: block;
+
+    width: 240px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    padding: 14px 10px;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(60, 10, 80, 0.7),
+            rgba(10, 0, 15, 0.9)
+        );
+
+    color: #e5b3ff;
+
+    border: 2px solid #9d4dcc;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    box-shadow:
+        inset 0 0 12px rgba(212, 0, 255, 0.08),
+        0 0 8px rgba(212, 0, 255, 0.25);
+
+    transition: 0.2s ease;
+}
+
+/* LOGIN BUTTON */
+
+#login-button {
+    margin-top: 28px;
+    margin-bottom: 10px;
+}
+
+/* REGISTER BUTTON */
+
+#register-button {
+    margin-top: 10px;
+}
+
+/* BUTTON HOVER */
+
+#login-screen button:hover {
+    color: white;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(120, 20, 160, 0.65),
+            rgba(30, 0, 40, 0.95)
+        );
+
+    border-color: #f0c8ff;
+
+    box-shadow:
+        0 0 12px rgba(212, 0, 255, 0.7),
+        0 0 25px rgba(212, 0, 255, 0.25);
+
+    transform: translateY(-2px);
+}
+
+/* BUTTON PRESS */
+
+#login-screen button:active {
+    transform: translateY(2px);
+}
+
+/* ==========================
+   LOGIN MESSAGE
+========================== */
+
+#login-message {
+    position: relative;
+    z-index: 5;
+
+    margin: 22px 0 0 0;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 11px;
+
+    color: #d9a8ff;
+
+    text-shadow:
+        0 0 8px rgba(212, 0, 255, 0.7);
+}
+
+
+/* ==========================
+   REGISTER SCREEN
+========================== */
+
+#register-screen {
+    display: none;
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    background-image: url("bgassets/login.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    overflow: hidden;
+    text-align: center;
+}
+
+/* DARK OVERLAY */
+
+#register-screen::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(40, 0, 60, 0.25),
+            rgba(0, 0, 0, 0.72)
+        );
+
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* VIGNETTE */
+
+#register-screen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    box-shadow:
+        inset 0 0 180px rgba(0, 0, 0, 0.9),
+        inset 0 0 60px rgba(100, 0, 150, 0.25);
+
+    z-index: 1;
+    pointer-events: none;
+}
+
+
+/* ==========================
+   REGISTER TITLE
+========================== */
+
+#register-screen h1 {
+    position: absolute;
+
+    top: 180px;
+    left: 0;
+
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 52px;
+
+    letter-spacing: 6px;
+
+    color: #f0c8ff;
+
+    text-align: center;
+
+    text-shadow:
+        4px 4px 0 #31004c,
+        8px 8px 0 #180028,
+        0 0 10px #b800ff,
+        0 0 25px rgba(212, 0, 255, 0.8);
+
+    white-space: nowrap;
+
+    z-index: 5;
+}
+
+
+/* LINE UNDER TITLE */
+
+#register-screen h1::after {
+    content: "G��G��G��G��G��G��G��G��G��G��G��G��";
+
+    display: block;
+
+    margin-top: 20px;
+
+    font-size: 13px;
+
+    letter-spacing: 5px;
+
+    color: #9d4dcc;
+
+    text-shadow:
+        0 0 8px rgba(212, 0, 255, 0.8);
+}
+
+
+/* ==========================
+   REGISTER INPUTS
+========================== */
+
+#register-screen input {
+    position: relative;
+
+    z-index: 5;
+
+    display: block;
+
+    width: 360px;
+    height: 52px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    padding: 10px 18px;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(25, 5, 35, 0.95),
+            rgba(5, 0, 10, 0.95)
+        );
+
+    color: #f5ddff;
+
+    border: 2px solid #6b397d;
+    border-left: 5px solid #9d4dcc;
+
+    outline: none;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 12px;
+
+    text-align: left;
+
+    box-shadow:
+        inset 0 0 15px rgba(0, 0, 0, 0.8),
+        0 0 8px rgba(150, 0, 200, 0.2);
+}
+
+
+/* FIRST INPUT */
+
+#register-screen input:first-of-type {
+    margin-top: 340px;
+    margin-bottom: 15px;
+}
+
+
+/* OTHER INPUTS */
+
+#register-screen input:nth-of-type(2),
+#register-screen input:nth-of-type(3) {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+
+/* ==========================
+   INPUT FOCUS
+========================== */
+
+#register-screen input:focus {
+    border-color: #e5b3ff;
+
+    box-shadow:
+        inset 0 0 15px rgba(0, 0, 0, 0.8),
+        0 0 10px rgba(212, 0, 255, 0.45),
+        0 0 25px rgba(212, 0, 255, 0.2);
+}
+
+
+/* ==========================
+   PLACEHOLDER
+========================== */
+
+#register-screen input::placeholder {
+    color: #8c6b98;
+
+    opacity: 1;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+}
+
+
+/* ==========================
+   REGISTER BUTTONS
+========================== */
+
+#register-screen button {
+    position: relative;
+
+    z-index: 5;
+
+    display: block;
+
+    width: 240px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    padding: 14px 10px;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(60, 10, 80, 0.7),
+            rgba(10, 0, 15, 0.9)
+        );
+
+    color: #e5b3ff;
+
+    border: 2px solid #9d4dcc;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    box-shadow:
+        inset 0 0 12px rgba(212, 0, 255, 0.08),
+        0 0 8px rgba(212, 0, 255, 0.25);
+
+    transition: 0.2s ease;
+}
+
+
+/* CREATE ACCOUNT BUTTON */
+
+#create-account-button {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+
+/* BACK TO LOGIN BUTTON */
+
+#back-to-login-button {
+    margin-top: 10px;
+}
+
+
+/* ==========================
+   BUTTON HOVER
+========================== */
+
+#register-screen button:hover {
+    color: white;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(120, 20, 160, 0.65),
+            rgba(30, 0, 40, 0.95)
+        );
+
+    border-color: #f0c8ff;
+
+    box-shadow:
+        0 0 12px rgba(212, 0, 255, 0.7),
+        0 0 25px rgba(212, 0, 255, 0.25);
+
+    transform: translateY(-2px);
+}
+
+
+/* ==========================
+   BUTTON PRESS
+========================== */
+
+#register-screen button:active {
+    transform: translateY(2px);
+}
+
+
+/* ==========================
+   REGISTER MESSAGE
+========================== */
+
+#register-message {
+    position: relative;
+
+    z-index: 5;
+
+    margin: 22px 0 0 0;
+
+    font-family:
+        'Press Start 2P',
+        'Courier New',
+        monospace;
+
+    font-size: 11px;
+
+    color: #d9a8ff;
+
+    text-shadow:
+        0 0 8px rgba(212, 0, 255, 0.7);
+}
+
+/* ==========================
+   LOGIN HINT & REGISTER OFFSET
+========================== */
+
+#login-hint {
+    position: relative;
+    z-index: 5;
+    margin: 16px auto 0 auto;
+    width: 720px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    line-height: 1.8;
+    color: #8c6b98;
+}
+
+#register-screen input:first-of-type {
+    margin-top: 300px;
+}

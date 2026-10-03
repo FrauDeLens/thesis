@@ -10,7 +10,7 @@ if ($method === 'GET') {
     $count = (int) ($_GET['count'] ?? 0);
 
     if ($enemyId !== '') {
-        $stmt = db()->prepare('SELECT id, enemy_id, difficulty, code, answer, hint FROM questions WHERE enemy_id = ?');
+        $stmt = db()->prepare('SELECT id, enemy_id, difficulty, intro, code, answer, hint FROM questions WHERE enemy_id = ?');
         $stmt->execute([$enemyId]);
         $rows = $stmt->fetchAll();
         if ($count > 0 && count($rows) > 0) {
@@ -28,7 +28,7 @@ if ($method === 'GET') {
         json_ok(['questions' => $rows]);
     }
 
-    $sql = 'SELECT id, enemy_id, difficulty, code, answer, hint, created_at FROM questions';
+    $sql = 'SELECT id, enemy_id, difficulty, intro, code, answer, hint, created_at FROM questions';
     $params = [];
     if ($difficulty !== '') {
         $sql .= ' WHERE difficulty = ?';
@@ -40,10 +40,31 @@ if ($method === 'GET') {
     json_ok(['questions' => $stmt->fetchAll()]);
 }
 
+if ($method === 'PUT' || ($method === 'POST' && (($body['action'] ?? '') === 'update' || (isset($body['id']) && (int) $body['id'] > 0 && ($body['action'] ?? '') !== 'create')))) {
+    require_teacher();
+    $id = (int) ($body['id'] ?? ($_GET['id'] ?? 0));
+    $enemyId = trim($body['enemy_id'] ?? '');
+    $difficulty = trim($body['difficulty'] ?? '');
+    $intro = trim((string) ($body['intro'] ?? ''));
+    $code = (string) ($body['code'] ?? '');
+    $answer = trim((string) ($body['answer'] ?? ''));
+    $hint = trim((string) ($body['hint'] ?? ''));
+
+    $valid = ['easy', 'normal', 'hard', 'hell'];
+    if ($id <= 0 || $enemyId === '' || !in_array($difficulty, $valid, true) || $code === '' || $answer === '') {
+        json_error('Question ID, target enemy, valid difficulty, code, and answer are required.');
+    }
+
+    $stmt = db()->prepare('UPDATE questions SET enemy_id = ?, difficulty = ?, intro = ?, code = ?, answer = ?, hint = ? WHERE id = ?');
+    $stmt->execute([$enemyId, $difficulty, $intro, $code, $answer, $hint, $id]);
+    json_ok(['id' => $id, 'updated' => true]);
+}
+
 if ($method === 'POST') {
     require_teacher();
     $enemyId = trim($body['enemy_id'] ?? '');
     $difficulty = trim($body['difficulty'] ?? '');
+    $intro = trim((string) ($body['intro'] ?? ''));
     $code = (string) ($body['code'] ?? '');
     $answer = trim((string) ($body['answer'] ?? ''));
     $hint = trim((string) ($body['hint'] ?? ''));
@@ -53,8 +74,8 @@ if ($method === 'POST') {
         json_error('Enemy, difficulty, code, and answer are required.');
     }
 
-    $stmt = db()->prepare('INSERT INTO questions (enemy_id, difficulty, code, answer, hint, created_by) VALUES (?,?,?,?,?,?)');
-    $stmt->execute([$enemyId, $difficulty, $code, $answer, $hint, $_SESSION['user_id']]);
+    $stmt = db()->prepare('INSERT INTO questions (enemy_id, difficulty, intro, code, answer, hint, created_by) VALUES (?,?,?,?,?,?,?)');
+    $stmt->execute([$enemyId, $difficulty, $intro, $code, $answer, $hint, $_SESSION['user_id']]);
     json_ok(['id' => (int) db()->lastInsertId()]);
 }
 

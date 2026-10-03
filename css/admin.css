@@ -1,0 +1,1310 @@
+/* =========================================================
+   BUGHUNT: FACULTY / TEACHER ADMIN CONSOLE (css/admin.css)
+========================================================= */
+
+#admin-screen {
+    display: none;
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: #0d0115;
+    background-image:
+        radial-gradient(circle at 15% 20%, rgba(90, 20, 130, 0.25) 0%, transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(212, 0, 255, 0.15) 0%, transparent 40%),
+        linear-gradient(rgba(10, 0, 20, 0.88), rgba(5, 0, 12, 0.94)),
+        url("bgassets/mainmenu.png");
+    background-size: cover;
+    background-position: center;
+    font-family: 'JetBrains Mono', 'Inter', monospace;
+    color: #e5d4ed;
+}
+
+/* Master 2-Column Shell */
+.admin-shell {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* =========================================================
+   SIDEBAR NAVIGATION
+========================================================= */
+
+.admin-sidebar {
+    width: 320px;
+    flex-shrink: 0;
+    background: linear-gradient(180deg, #180327 0%, #0d0115 100%);
+    border-right: 2px solid #5a1d74;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 20px;
+    box-sizing: border-box;
+    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.6);
+    z-index: 20;
+}
+
+.admin-sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(116, 54, 142, 0.4);
+    margin-bottom: 20px;
+}
+
+.admin-brand-icon {
+    font-size: 32px;
+    filter: drop-shadow(0 0 10px #d400ff);
+}
+
+.admin-brand-titles {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-brand-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 16px;
+    color: #f0c8ff;
+    margin: 0;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(212, 0, 255, 0.8);
+}
+
+.admin-brand-subtitle {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    color: #00f0ff;
+    letter-spacing: 1px;
+    margin-top: 4px;
+}
+
+/* Profile Card */
+.admin-profile-card {
+    background: rgba(35, 8, 52, 0.65);
+    border: 1px solid #74368e;
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.profile-avatar {
+    font-size: 28px;
+    background: rgba(60, 15, 85, 0.7);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #9d4dcc;
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.profile-role-tag {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    color: #00f0ff;
+    letter-spacing: 0.5px;
+}
+
+.profile-username {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    color: #ffffff;
+    letter-spacing: 1px;
+}
+
+.profile-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 2px;
+}
+
+.status-indicator-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #38ef7d;
+    box-shadow: 0 0 6px #38ef7d;
+}
+
+.status-indicator-dot.pulse {
+    animation: dotPulse 1.5s infinite;
+}
+
+@keyframes dotPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+.status-indicator-text {
+    font-size: 10px;
+    color: #38ef7d;
+}
+
+/* Sidebar Menu Navigation */
+.admin-sidebar-menu-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-heading {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7.5px;
+    color: #8c6b98;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    padding-left: 4px;
+}
+
+.admin-sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.admin-nav-item {
+    background: rgba(25, 5, 38, 0.6) !important;
+    border: 1px solid #4a1760 !important;
+    border-radius: 8px !important;
+    padding: 12px 14px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    text-align: left !important;
+    width: 100% !important;
+    height: auto !important;
+    box-shadow: none !important;
+}
+
+.admin-nav-item:hover {
+    background: rgba(45, 10, 68, 0.8) !important;
+    border-color: #9d4dcc !important;
+    transform: translateX(4px) !important;
+}
+
+.admin-nav-item.active {
+    background: linear-gradient(90deg, rgba(80, 15, 115, 0.9), rgba(40, 5, 60, 0.9)) !important;
+    border-color: #d400ff !important;
+    border-left: 4px solid #00f0ff !important;
+    box-shadow: 0 0 15px rgba(212, 0, 255, 0.35) !important;
+}
+
+.nav-item-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.nav-item-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.nav-item-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+}
+
+.nav-item-caption {
+    font-size: 10.5px;
+    color: #a482b8;
+}
+
+.nav-item-badge {
+    background: rgba(0, 240, 255, 0.2);
+    border: 1px solid #00f0ff;
+    color: #00f0ff;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    padding: 3px 7px;
+    border-radius: 10px;
+}
+
+/* Sidebar Info Block */
+.admin-sidebar-info {
+    background: rgba(18, 2, 28, 0.7);
+    border: 1px solid #471556;
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 11px;
+}
+
+.sidebar-info-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    color: #d9a8ff;
+    margin-bottom: 4px;
+}
+
+.sidebar-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-label {
+    color: #8c6b98;
+}
+
+.info-val {
+    color: #f0c8ff;
+    font-weight: 500;
+}
+
+.info-val.status-online {
+    color: #38ef7d;
+}
+
+/* Sidebar Footer & Logout */
+.admin-sidebar-footer {
+    padding-top: 12px;
+    border-top: 1px solid rgba(116, 54, 142, 0.3);
+}
+
+.admin-logout-btn {
+    width: 100% !important;
+    height: 42px !important;
+    background: rgba(50, 10, 25, 0.8) !important;
+    border: 1px solid #8e2040 !important;
+    color: #ff99bb !important;
+    font-family: 'Press Start 2P', monospace !important;
+    font-size: 9px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+}
+
+.admin-logout-btn:hover {
+    background: #a8244a !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 15px rgba(255, 68, 102, 0.6) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* =========================================================
+   MAIN WORKSPACE AREA
+========================================================= */
+
+.admin-workspace {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: rgba(8, 0, 15, 0.7);
+}
+
+.admin-workspace-header {
+    height: 80px;
+    flex-shrink: 0;
+    padding: 0 36px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #5a1d74;
+    background: linear-gradient(90deg, rgba(25, 4, 38, 0.85) 0%, rgba(12, 1, 20, 0.95) 100%);
+}
+
+.header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: left;
+}
+
+.admin-page-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 15px;
+    color: #f0c8ff;
+    letter-spacing: 1.5px;
+    margin: 0;
+    text-shadow: 0 0 12px rgba(212, 0, 255, 0.7);
+}
+
+.admin-page-subtitle {
+    font-size: 12px;
+    color: #a482b8;
+    margin: 0;
+}
+
+.admin-badge-faculty {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(56, 239, 125, 0.15);
+    border: 1px solid #38ef7d;
+    color: #38ef7d;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    padding: 6px 12px;
+    border-radius: 20px;
+}
+
+.admin-workspace-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 36px 36px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.admin-tab-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+/* =========================================================
+   PANEL 1: KPI STAT SUMMARY CARDS
+========================================================= */
+
+.admin-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    width: 100%;
+}
+
+.kpi-card {
+    background: linear-gradient(135deg, rgba(28, 5, 42, 0.85) 0%, rgba(15, 2, 22, 0.95) 100%);
+    border: 1px solid #5a1d74;
+    border-radius: 10px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.kpi-card:hover {
+    transform: translateY(-2px);
+    border-color: #9d4dcc;
+}
+
+.kpi-icon {
+    font-size: 28px;
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.kpi-icon-blue { background: rgba(0, 180, 255, 0.2); border: 1px solid #00b4ff; }
+.kpi-icon-gold { background: rgba(255, 204, 0, 0.2); border: 1px solid #ffcc00; }
+.kpi-icon-purple { background: rgba(212, 0, 255, 0.2); border: 1px solid #d400ff; }
+.kpi-icon-green { background: rgba(56, 239, 125, 0.2); border: 1px solid #38ef7d; }
+
+.kpi-info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    gap: 3px;
+}
+
+.kpi-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7.5px;
+    color: #a482b8;
+    letter-spacing: 0.5px;
+}
+
+.kpi-value {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 15px;
+    color: #ffffff;
+    letter-spacing: 1px;
+}
+
+.kpi-desc {
+    font-size: 11px;
+    color: #8c6b98;
+}
+
+/* =========================================================
+   CONTROLS & FILTER TOOLBAR
+========================================================= */
+
+.admin-controls-card {
+    background: rgba(22, 4, 34, 0.8);
+    border: 1px solid #5a1d74;
+    border-radius: 10px;
+    padding: 14px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.search-input-wrap,
+.bank-search-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(10, 0, 18, 0.85);
+    border: 1px solid #55256a;
+    border-radius: 6px;
+    padding: 8px 14px;
+    flex: 1;
+    max-width: 480px;
+}
+
+.search-input-wrap input,
+.bank-search-wrap input {
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    color: #f0c8ff !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 12.5px !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+}
+
+.filter-controls-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.filter-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #c4a5d8;
+}
+
+.filter-item select,
+.admin-select {
+    background: rgba(14, 2, 22, 0.95);
+    border: 1px solid #6c238b;
+    color: #f0c8ff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    outline: none;
+    cursor: pointer;
+}
+
+.admin-action-btn {
+    background: rgba(45, 10, 65, 0.8) !important;
+    border: 1px solid #8e2baf !important;
+    color: #f0c8ff !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    padding: 8px 16px !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    width: auto !important;
+    height: auto !important;
+    box-shadow: none !important;
+    transition: all 0.2s !important;
+}
+
+.admin-action-btn:hover {
+    background: #6c1b8f !important;
+    color: #ffffff !important;
+    border-color: #d400ff !important;
+    box-shadow: 0 0 12px rgba(212, 0, 255, 0.5) !important;
+}
+
+/* =========================================================
+   STUDENT DATA TABLE CARD
+========================================================= */
+
+.admin-table-card {
+    background: linear-gradient(180deg, rgba(22, 4, 34, 0.9) 0%, rgba(12, 2, 18, 0.95) 100%);
+    border: 1px solid #5a1d74;
+    border-radius: 10px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+}
+
+.table-card-topbar {
+    padding: 16px 24px;
+    border-bottom: 1px solid #4a1760;
+    background: rgba(30, 6, 45, 0.5);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.table-card-title-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.table-title-icon {
+    font-size: 18px;
+}
+
+.table-title-text {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: #ffffff;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+.table-row-counter {
+    font-size: 11px;
+    color: #c4a5d8;
+    background: rgba(60, 15, 85, 0.5);
+    border: 1px solid #74368e;
+    padding: 4px 10px;
+    border-radius: 12px;
+}
+
+.admin-table-scrollwrap {
+    max-height: 480px;
+    overflow-y: auto;
+    padding: 0;
+}
+
+.student-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    text-align: left;
+}
+
+.student-data-table th {
+    background: rgba(20, 3, 30, 0.95);
+    color: #a482b8;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7.5px;
+    letter-spacing: 0.5px;
+    padding: 14px 18px;
+    border-bottom: 1px solid #5a1d74;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+}
+
+.student-data-table td {
+    padding: 14px 18px;
+    border-bottom: 1px solid rgba(75, 20, 100, 0.3);
+    vertical-align: middle;
+}
+
+.student-data-table tr:hover td {
+    background: rgba(45, 10, 65, 0.35);
+}
+
+.student-rank-badge {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8.5px;
+    color: #ffd700;
+}
+
+.student-name-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.student-username {
+    font-weight: 600;
+    color: #ffffff;
+    font-size: 13px;
+}
+
+.student-fullname {
+    font-size: 11px;
+    color: #a482b8;
+}
+
+.tp-score-badge {
+    background: rgba(212, 0, 255, 0.15);
+    border: 1px solid #d400ff;
+    color: #f0c8ff;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+.clearance-chips-group {
+    display: flex;
+    gap: 4px;
+}
+
+.stage-chip {
+    font-size: 10px;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+    background: rgba(30, 8, 45, 0.7);
+    border: 1px solid #4a1760;
+    color: #8c6b98;
+}
+
+.stage-chip.stage-easy { border-color: #38ef7d; color: #38ef7d; background: rgba(56, 239, 125, 0.15); }
+.stage-chip.stage-normal { border-color: #00f0ff; color: #00f0ff; background: rgba(0, 240, 255, 0.15); }
+.stage-chip.stage-hard { border-color: #ffaa00; color: #ffaa00; background: rgba(255, 170, 0, 0.15); }
+.stage-chip.stage-hell { border-color: #ff3366; color: #ff3366; background: rgba(255, 51, 102, 0.15); }
+
+.trophies-summary-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.trophy-total-count {
+    color: #ffd700;
+    font-weight: 700;
+}
+
+.trophy-mini-breakdown {
+    font-size: 11px;
+    color: #8c6b98;
+}
+
+.student-time-text {
+    font-size: 11px;
+    color: #8c6b98;
+}
+
+.table-empty-notice {
+    padding: 40px;
+    text-align: center;
+    color: #a482b8;
+}
+
+/* =========================================================
+   PANEL 2: QUESTIONS & ANSWERS SPLIT GRID
+========================================================= */
+
+.questions-split-grid {
+    display: grid;
+    grid-template-columns: 500px 1fr;
+    gap: 20px;
+    width: 100%;
+}
+
+.question-form-panel,
+.question-bank-panel {
+    background: linear-gradient(180deg, rgba(22, 4, 34, 0.9) 0%, rgba(12, 2, 18, 0.95) 100%);
+    border: 1px solid #5a1d74;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.panel-header-box {
+    padding: 16px 20px;
+    border-bottom: 1px solid #4a1760;
+    background: rgba(30, 6, 45, 0.5);
+    text-align: left;
+}
+
+.panel-header-title-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.panel-header-icon {
+    font-size: 18px;
+}
+
+.panel-header-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: #ffffff;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+.panel-header-desc {
+    font-size: 11.5px;
+    color: #a482b8;
+    margin: 0;
+}
+
+.bank-count-pill {
+    margin-left: auto;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7.5px;
+    background: rgba(0, 240, 255, 0.15);
+    border: 1px solid #00f0ff;
+    color: #00f0ff;
+    padding: 3px 8px;
+    border-radius: 8px;
+}
+
+/* Question Form */
+.question-form-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+.form-grid-2cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.form-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+}
+
+.field-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-field-group label {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #c4a5d8;
+}
+
+.field-pill {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 6.5px;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.pill-challenge { background: rgba(255, 68, 102, 0.2); border: 1px solid #ff4466; color: #ff7799; }
+.pill-solution { background: rgba(56, 239, 125, 0.2); border: 1px solid #38ef7d; color: #38ef7d; }
+.pill-hint { background: rgba(255, 204, 0, 0.2); border: 1px solid #ffcc00; color: #ffcc00; }
+
+.form-field-group input,
+.form-field-group textarea {
+    background: rgba(10, 0, 16, 0.95);
+    border: 1px solid #5a1d74;
+    border-radius: 6px;
+    padding: 10px 12px;
+    color: #f0c8ff;
+    font-family: 'JetBrains Mono', 'Consolas', monospace;
+    font-size: 12px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.form-field-group input:focus,
+.form-field-group textarea:focus {
+    border-color: #d400ff;
+    box-shadow: 0 0 10px rgba(212, 0, 255, 0.35);
+}
+
+.form-field-group textarea {
+    resize: vertical;
+    min-height: 80px;
+    line-height: 1.5;
+}
+
+.field-help {
+    font-size: 10.5px;
+    color: #8c6b98;
+}
+
+.form-footer-area {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.admin-primary-action-btn {
+    background: linear-gradient(90deg, #9d4dcc, #d400ff) !important;
+    border: 1px solid #ffffff !important;
+    color: #ffffff !important;
+    font-family: 'Press Start 2P', monospace !important;
+    font-size: 9px !important;
+    padding: 12px 20px !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+    width: 100% !important;
+    height: auto !important;
+    box-shadow: 0 0 15px rgba(212, 0, 255, 0.5) !important;
+}
+
+.admin-primary-action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 25px rgba(212, 0, 255, 0.8) !important;
+}
+
+.admin-form-message {
+    font-size: 11px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    display: none;
+}
+
+.admin-form-message.success {
+    display: block;
+    background: rgba(56, 239, 125, 0.15);
+    border: 1px solid #38ef7d;
+    color: #38ef7d;
+}
+
+.admin-form-message.error {
+    display: block;
+    background: rgba(255, 68, 102, 0.15);
+    border: 1px solid #ff4466;
+    color: #ff7799;
+}
+
+/* =========================================================
+   QUESTION BANK TOOLBAR & CARD LIST
+========================================================= */
+
+.bank-toolbar {
+    padding: 12px 18px;
+    border-bottom: 1px solid #4a1760;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(18, 3, 28, 0.6);
+}
+
+.bank-tier-tabs {
+    display: flex;
+    gap: 4px;
+}
+
+.tier-tab-btn {
+    background: rgba(30, 8, 45, 0.7) !important;
+    border: 1px solid #5a1d74 !important;
+    color: #c4a5d8 !important;
+    font-family: 'Press Start 2P', monospace !important;
+    font-size: 7.5px !important;
+    padding: 6px 10px !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    transition: all 0.15s !important;
+    width: auto !important;
+    height: auto !important;
+}
+
+.tier-tab-btn:hover {
+    border-color: #9d4dcc !important;
+    color: #ffffff !important;
+}
+
+.tier-tab-btn.active {
+    background: #74368e !important;
+    border-color: #d400ff !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 8px rgba(212, 0, 255, 0.4) !important;
+}
+
+.question-cards-list-wrap {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 600px;
+}
+
+/* Individual Admin Question Card */
+.admin-qcard {
+    background: rgba(20, 3, 30, 0.85);
+    border: 1px solid #4a1760;
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.admin-qcard:hover {
+    border-color: #74368e;
+    box-shadow: 0 0 15px rgba(116, 54, 142, 0.3);
+}
+
+.qcard-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.qcard-tier-badge {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7.5px;
+    padding: 3px 7px;
+    border-radius: 4px;
+}
+
+.qcard-tier-badge.tier-easy { background: rgba(56, 239, 125, 0.15); border: 1px solid #38ef7d; color: #38ef7d; }
+.qcard-tier-badge.tier-normal { background: rgba(0, 240, 255, 0.15); border: 1px solid #00f0ff; color: #00f0ff; }
+.qcard-tier-badge.tier-hard { background: rgba(255, 170, 0, 0.15); border: 1px solid #ffaa00; color: #ffaa00; }
+.qcard-tier-badge.tier-hell { background: rgba(255, 51, 102, 0.15); border: 1px solid #ff3366; color: #ff3366; }
+
+.qcard-enemy-name {
+    font-weight: 600;
+    color: #f0c8ff;
+    font-size: 12px;
+}
+
+.qcard-id-tag {
+    font-size: 10px;
+    color: #8c6b98;
+    background: rgba(50, 15, 75, 0.6);
+    border: 1px solid #5a1d74;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.qcard-actions-group {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.qcard-edit-btn {
+    background: rgba(30, 15, 65, 0.85) !important;
+    border: 1px solid #7943d0 !important;
+    color: #d8b8ff !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    padding: 4px 10px !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    width: auto !important;
+    height: auto !important;
+    box-shadow: none !important;
+}
+
+.qcard-edit-btn:hover {
+    background: #7943d0 !important;
+    border-color: #ffffff !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 12px rgba(180, 80, 255, 0.6) !important;
+}
+
+.qcard-delete-btn {
+    background: rgba(60, 10, 25, 0.8) !important;
+    border: 1px solid #a8244a !important;
+    color: #ff99bb !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    padding: 4px 10px !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    width: auto !important;
+    height: auto !important;
+    box-shadow: none !important;
+}
+
+.qcard-delete-btn:hover {
+    background: #d6284d !important;
+    border-color: #ffffff !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 12px rgba(255, 50, 100, 0.6) !important;
+}
+
+.qcard-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.qcard-code-block {
+    border-radius: 6px;
+    padding: 8px 12px;
+}
+
+.qcard-code-block.buggy {
+    background: rgba(28, 5, 14, 0.85);
+    border: 1px solid rgba(255, 60, 90, 0.35);
+    border-left: 4px solid #ff4466;
+}
+
+.qcard-code-block.solution {
+    background: rgba(4, 22, 12, 0.85);
+    border: 1px solid rgba(56, 239, 125, 0.35);
+    border-left: 4px solid #38ef7d;
+}
+
+.code-block-header {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.qcard-code-block.buggy .code-block-header {
+    color: #ff7799;
+}
+
+.qcard-code-block.solution .code-block-header {
+    color: #38ef7d;
+}
+
+.qcard-code-snippet {
+    font-family: 'JetBrains Mono', 'Consolas', 'Courier New', monospace;
+    font-size: 12.5px;
+    line-height: 1.45;
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.qcard-code-block.buggy .qcard-code-snippet {
+    color: #ffd1dc;
+}
+
+.qcard-code-block.solution .qcard-code-snippet {
+    color: #d0ffe2;
+}
+
+.qcard-intro-box {
+    background: rgba(30, 8, 48, 0.7);
+    border: 1px solid rgba(212, 0, 255, 0.35);
+    border-left: 4px solid #f6c85f;
+    border-radius: 6px;
+    padding: 7px 12px;
+    font-size: 12.5px;
+    color: #f7e8ff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 1.4;
+    margin-bottom: 4px;
+}
+
+.qcard-intro-icon {
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.qcard-hint-box {
+    background: rgba(35, 26, 6, 0.7);
+    border: 1px solid rgba(255, 204, 0, 0.35);
+    border-left: 4px solid #ffcc00;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 12px;
+    color: #ffe680;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 1.4;
+}
+
+.qcard-hint-icon {
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.qcard-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: #8c6b98;
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid rgba(75, 20, 100, 0.3);
+}
+
+/* =========================================================
+   ADMIN EDIT QUESTION MODAL DIALOG
+========================================================= */
+
+.admin-modal-wrap {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+.admin-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(5, 0, 12, 0.85);
+    backdrop-filter: blur(6px);
+}
+
+.admin-modal-dialog {
+    position: relative;
+    z-index: 10;
+    width: 820px;
+    max-width: 95%;
+    max-height: 90vh;
+    background: linear-gradient(180deg, #180524 0%, #0d0115 100%);
+    border: 2px solid #74368e;
+    border-top: 4px solid #d400ff;
+    border-radius: 12px;
+    box-shadow: 0 0 45px rgba(212, 0, 255, 0.4), inset 0 0 30px rgba(212, 0, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.admin-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 24px;
+    border-bottom: 1px solid #4a1760;
+    background: rgba(30, 8, 45, 0.5);
+}
+
+.modal-title-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+}
+
+.modal-title-icon {
+    font-size: 24px;
+}
+
+.modal-title-text {
+    margin: 0;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 13px;
+    color: #ffffff;
+    letter-spacing: 1px;
+}
+
+.modal-subtitle-text {
+    margin: 4px 0 0;
+    font-size: 12px;
+    color: #c4a5d8;
+}
+
+.modal-close-btn {
+    background: rgba(50, 15, 30, 0.8) !important;
+    border: 1px solid #a8244a !important;
+    color: #ff99bb !important;
+    font-size: 16px !important;
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+}
+
+.modal-close-btn:hover {
+    background: #ff4466 !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 12px #ff4466 !important;
+}
+
+.admin-modal-body {
+    padding: 20px 24px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    text-align: left;
+}
+
+.admin-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 24px;
+    border-top: 1px solid #4a1760;
+    background: rgba(20, 5, 32, 0.7);
+}
+
+/* Custom Scrollbars for All Admin Scrollable Sections */
+#admin-screen ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+#admin-screen ::-webkit-scrollbar-track {
+    background: rgba(12, 3, 20, 0.9);
+    border-radius: 4px;
+}
+
+#admin-screen ::-webkit-scrollbar-thumb {
+    background: #5a1d74;
+    border-radius: 4px;
+    border: 1px solid #74368e;
+}
+
+#admin-screen ::-webkit-scrollbar-thumb:hover {
+    background: #9d4dcc;
+    box-shadow: 0 0 10px #d400ff;
+}

@@ -3,6 +3,18 @@ session_start();
 
 header('Content-Type: application/json; charset=utf-8');
 
+if (isset($_SERVER['HTTP_ORIGIN'])) {
+    header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+    header('Access-Control-Allow-Credentials: true');
+    header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
+    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
 $DB_HOST = 'localhost';
 $DB_USER = 'root';
 $DB_PASS = '';
@@ -120,6 +132,7 @@ function ensure_schema() {
             id INT AUTO_INCREMENT PRIMARY KEY,
             enemy_id VARCHAR(64) NOT NULL,
             difficulty ENUM('easy','normal','hard','hell') NOT NULL,
+            intro TEXT NOT NULL DEFAULT '',
             code TEXT NOT NULL,
             answer TEXT NOT NULL,
             hint TEXT NOT NULL,
@@ -164,7 +177,7 @@ function seed_questions($pdo) {
     if (!is_array($rows)) {
         return;
     }
-    $stmt = $pdo->prepare('INSERT INTO questions (enemy_id, difficulty, code, answer, hint, created_by) VALUES (?,?,?,?,?,NULL)');
+    $stmt = $pdo->prepare('INSERT INTO questions (enemy_id, difficulty, intro, code, answer, hint, created_by) VALUES (?,?,?,?,?,?,NULL)');
     foreach ($rows as $row) {
         if (empty($row['enemy_id']) || empty($row['code']) || empty($row['answer'])) {
             continue;
@@ -172,6 +185,7 @@ function seed_questions($pdo) {
         $stmt->execute([
             $row['enemy_id'],
             $row['difficulty'] ?? 'easy',
+            $row['intro'] ?? '',
             $row['code'],
             $row['answer'],
             $row['hint'] ?? '',
@@ -186,10 +200,14 @@ try {
 }
 
 function read_json_body() {
+    static $data = null;
+    if ($data !== null) return $data;
     $raw = file_get_contents('php://input');
     if (!$raw) {
-        return $_POST;
+        $data = $_POST;
+        return $data;
     }
-    $data = json_decode($raw, true);
-    return is_array($data) ? $data : $_POST;
+    $decoded = json_decode($raw, true);
+    $data = is_array($decoded) ? $decoded : $_POST;
+    return $data;
 }
