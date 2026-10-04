@@ -1,0 +1,502 @@
+/* =========================================================
+   AUTHENTICATION & TITLE SCREENS (MODERN & ACCESSIBLE)
+   1920x1080 Native Canvas Layout
+========================================================= */
+
+#title-screen {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    background-image: url("bgassets/title.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+#title-screen h1 {
+    display: block;
+    position: absolute;
+    top: 230px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 92px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    color: #ffffff;
+    text-align: center;
+    white-space: nowrap;
+    z-index: 5;
+    text-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.75),
+        0 0 35px rgba(168, 85, 247, 0.7),
+        0 0 70px rgba(147, 51, 234, 0.4);
+}
+
+#title-screen h1::after {
+    content: "✦ PYTHON DEBUGGING ODYSSEY ✦";
+    display: block;
+    margin-top: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 5px;
+    color: #c4b5fd;
+    text-shadow: 0 0 12px rgba(168, 85, 247, 0.8);
+}
+
+#title-screen p {
+    position: absolute;
+    top: 650px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #e9d5ff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(168, 85, 247, 0.8);
+    animation: retroBlink 2.2s ease-in-out infinite;
+    z-index: 5;
+    cursor: pointer;
+}
+
+@keyframes retroBlink {
+    0%, 100% { opacity: 1; transform: translateX(-50%) scale(1); }
+    50% { opacity: 0.45; transform: translateX(-50%) scale(0.98); }
+}
+
+/* =========================================================
+   LOGIN SCREEN
+========================================================= */
+
+#login-screen {
+    display: none;
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-image: url("bgassets/login.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+}
+
+#login-screen::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(30, 15, 50, 0.35), rgba(5, 2, 12, 0.82));
+    z-index: 0;
+    pointer-events: none;
+}
+
+#login-screen h1 {
+    position: absolute;
+    top: 200px;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 56px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #ffffff;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.7), 0 0 30px rgba(168, 85, 247, 0.6);
+    z-index: 5;
+}
+
+#login-screen h1::after {
+    content: "SIGN IN TO RESUME HUNTING";
+    display: block;
+    margin-top: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: #c4b5fd;
+    text-shadow: 0 0 10px rgba(168, 85, 247, 0.6);
+}
+
+/* Form Inputs */
+#login-screen input,
+#register-screen input {
+    position: relative;
+    z-index: 5;
+    display: block;
+    width: 380px;
+    height: 52px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px 18px;
+    box-sizing: border-box;
+    background: rgba(18, 12, 32, 0.92);
+    color: #ffffff;
+    border: 2px solid #5a388a;
+    border-radius: 10px;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: left;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6);
+    transition: all 0.2s ease;
+}
+
+#login-screen input:first-of-type {
+    margin-top: 360px;
+    margin-bottom: 16px;
+}
+
+#login-screen input:nth-of-type(2) {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#login-screen input:focus,
+#register-screen input:focus {
+    border-color: #a855f7;
+    background: rgba(26, 18, 46, 0.96);
+    box-shadow: 0 0 16px rgba(168, 85, 247, 0.4), inset 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+#login-screen input::placeholder,
+#register-screen input::placeholder {
+    color: #8b7aa3;
+    font-size: 15px;
+}
+
+/* Buttons */
+#login-screen button,
+#register-screen button {
+    position: relative;
+    z-index: 5;
+    display: block;
+    width: 380px;
+    height: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#login-button {
+    margin-top: 24px;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #7c3aed, #9333ea);
+    border: none;
+    color: #ffffff;
+    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.45);
+}
+
+#login-button:hover:not(:disabled) {
+    background: linear-gradient(135deg, #8b5cf6, #a855f7);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.65);
+}
+
+#login-button:disabled {
+    background: #3b2b52;
+    color: #7b6a93;
+    cursor: not-allowed;
+    box-shadow: none;
+    border: 1px solid #4a3366;
+}
+
+#register-button {
+    background: rgba(30, 20, 50, 0.85);
+    border: 1px solid #7c3aed;
+    color: #e9d5ff;
+}
+
+#register-button:hover {
+    background: #7c3aed;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+/* Forgot Password Link Button */
+.auth-link-btn {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: #c4b5fd !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    margin: 14px auto 0 auto !important;
+    text-decoration: underline;
+    transition: color 0.2s;
+    width: auto !important;
+    height: auto !important;
+    display: inline-block !important;
+}
+
+.auth-link-btn:hover {
+    color: #ffffff !important;
+    transform: none !important;
+}
+
+#login-hint {
+    position: relative;
+    z-index: 5;
+    margin: 18px auto 0 auto;
+    width: 640px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #a79cb8;
+}
+
+#login-message {
+    position: relative;
+    z-index: 5;
+    margin: 16px auto 0 auto;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    max-width: 600px;
+    color: #fca5a5;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+/* Lockout banner */
+.lockout-alert {
+    background: rgba(239, 68, 68, 0.18);
+    border: 1px solid #ef4444;
+    border-radius: 10px;
+    padding: 12px 20px;
+    color: #fee2e2;
+    animation: lockoutPulse 1.2s infinite alternate;
+}
+
+@keyframes lockoutPulse {
+    0% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.2); }
+    100% { box-shadow: 0 0 22px rgba(239, 68, 68, 0.55); }
+}
+
+/* =========================================================
+   REGISTER SCREEN
+========================================================= */
+
+#register-screen {
+    display: none;
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    background-image: url("bgassets/login.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+}
+
+#register-screen::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(30, 15, 50, 0.35), rgba(5, 2, 12, 0.82));
+    z-index: 0;
+    pointer-events: none;
+}
+
+#register-screen h1 {
+    position: absolute;
+    top: 140px;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 52px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #ffffff;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.7), 0 0 30px rgba(168, 85, 247, 0.6);
+    z-index: 5;
+}
+
+#register-screen h1::after {
+    content: "JOIN THE ACADEMY OF BUG HUNTERS";
+    display: block;
+    margin-top: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: #c4b5fd;
+    text-shadow: 0 0 10px rgba(168, 85, 247, 0.6);
+}
+
+#register-screen input:first-of-type {
+    margin-top: 270px;
+    margin-bottom: 14px;
+}
+
+#register-screen input:nth-of-type(2),
+#register-screen input:nth-of-type(3),
+#register-screen input:nth-of-type(4) {
+    margin-top: 0;
+    margin-bottom: 14px;
+}
+
+#create-account-button {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #059669, #10b981);
+    border: none;
+    color: #ffffff;
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+#create-account-button:hover {
+    background: linear-gradient(135deg, #10b981, #34d399);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.6);
+}
+
+#back-to-login-button {
+    background: rgba(30, 20, 50, 0.85);
+    border: 1px solid #7c3aed;
+    color: #e9d5ff;
+}
+
+#back-to-login-button:hover {
+    background: #7c3aed;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+#register-message {
+    position: relative;
+    z-index: 5;
+    margin: 16px auto 0 auto;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    max-width: 600px;
+    color: #d1fae5;
+}
+
+/* =========================================================
+   PASSWORD RESET MODAL
+========================================================= */
+
+.auth-modal-card {
+    width: 520px;
+    background: linear-gradient(180deg, #1c1332 0%, #0e091b 100%);
+    border: 2px solid #7c3aed;
+    border-radius: 18px;
+    padding: 36px 32px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(124, 58, 237, 0.35);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    box-sizing: border-box;
+    animation: modalPopIn 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.auth-modal-title {
+    margin: 0 0 8px 0;
+    font-size: 28px;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.auth-modal-sub {
+    margin: 0 0 24px 0;
+    font-size: 14px;
+    color: #c4b5fd;
+    line-height: 1.4;
+}
+
+.auth-modal-card input {
+    width: 100% !important;
+    height: 48px !important;
+    background: rgba(14, 9, 25, 0.9) !important;
+    border: 1px solid #5a388a !important;
+    border-radius: 8px !important;
+    color: #ffffff !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 15px !important;
+    padding: 10px 14px !important;
+    margin-bottom: 12px !important;
+    box-sizing: border-box !important;
+}
+
+.auth-modal-card input:focus {
+    border-color: #a855f7 !important;
+    box-shadow: 0 0 12px rgba(168, 85, 247, 0.4) !important;
+}
+
+.auth-modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.modal-btn {
+    flex: 1;
+    height: 48px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.confirm-btn {
+    background: linear-gradient(135deg, #7c3aed, #9333ea);
+    border: none;
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+}
+
+.confirm-btn:hover {
+    background: linear-gradient(135deg, #8b5cf6, #a855f7);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.6);
+}
+
+.cancel-btn {
+    background: rgba(30, 20, 50, 0.85);
+    border: 1px solid #634394;
+    color: #c4b5fd;
+}
+
+.cancel-btn:hover {
+    background: rgba(50, 30, 80, 0.9);
+    color: #ffffff;
+}
+
+.modal-msg {
+    margin: 14px 0 0 0;
+    font-size: 14px;
+    font-weight: 600;
+    min-height: 20px;
+}
+
+.modal-msg.success { color: #34d399; }
+.modal-msg.error { color: #f87171; }

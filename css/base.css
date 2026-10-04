@@ -1,0 +1,109 @@
+/* =========================================================
+   BUGHUNT: CORE BASE STYLES & NATIVE 1920x1080 CANVAS
+========================================================= */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #000000;
+    color: #ffffff;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* 1920x1080 Scaled Viewport Container */
+#game-container {
+    position: absolute;
+    width: 1920px;
+    height: 1080px;
+    left: 50%;
+    top: 50%;
+    transform-origin: center center;
+    overflow: hidden;
+    background: #05020c;
+}
+
+/* Universal Media Drag & Select Safety */
+img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+    user-select: none;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+input, textarea, select {
+    font-family: inherit;
+    outline: none;
+}
+
+/* =========================================================
+   LANGUAGE SWITCHER (EN | FIL)
+========================================================= */
+
+.lang-switch-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(18, 12, 32, 0.75);
+    border: 1px solid rgba(120, 80, 180, 0.4);
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    line-height: 1;
+    user-select: none;
+    box-sizing: border-box;
+}
+
+.lang-switch-box .lang-btn {
+    position: static !important;
+    transform: none !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    cursor: pointer;
+    color: #a494be !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+    display: inline-block !important;
+    text-shadow: none !important;
+    transition: color 0.15s ease;
+}
+
+.lang-switch-box .lang-btn:hover {
+    color: #ffffff !important;
+}
+
+.lang-switch-box .lang-btn.active {
+    color: #38bdf8 !important;
+    font-weight: 700 !important;
+}
+
+.lang-switch-box .lang-sep {
+    color: #63507d;
+    font-size: 12px;
+    line-height: 1;
+}

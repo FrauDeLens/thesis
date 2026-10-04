@@ -1,0 +1,1247 @@
+/* =========================================================
+   BUGHUNT: PYTHON CODEX & STUDY ACADEMY STYLESHEET (css/study.css)
+   Ultra-clean, polished, cyber-arcade UI for mastering Python
+   ========================================================= */
+
+#codex-screen {
+    display: none;
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    box-sizing: border-box;
+    padding: 22px 38px 20px 38px;
+    background:
+        radial-gradient(circle at 50% 12%, #220732 0%, #0d0117 50%, #05000a 100%),
+        url("bgassets/mainmenu.png") center/cover no-repeat;
+    overflow: hidden;
+    color: #f0e6f6;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    z-index: 120;
+    flex-direction: column;
+}
+
+#codex-screen:not([style*="display: none"]),
+#codex-screen[style*="display: block"],
+#codex-screen[style*="display: flex"] {
+    display: flex !important;
+}
+
+/* Subtle ambient vignette overlay */
+#codex-screen::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(130, 0, 180, 0.05), transparent 65%);
+    box-shadow: inset 0 0 140px rgba(0, 0, 0, 0.94);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* =========================================================
+   1. CODEX HEADER & NAVIGATION BAR
+   ========================================================= */
+.codex-header {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 72px;
+    flex-shrink: 0;
+    padding: 0;
+    border-bottom: 1.5px solid #4a1961;
+    box-sizing: border-box;
+}
+
+.codex-back-btn {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 46px;
+    padding: 0 20px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: #e5b3ff;
+    background: linear-gradient(180deg, rgba(65, 10, 85, 0.85), rgba(18, 0, 28, 0.96));
+    border: 2px solid #74368e;
+    border-left: 4px solid #9d4dcc;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 0 12px rgba(212, 0, 255, 0.25);
+    transition: all 0.18s ease;
+    z-index: 5;
+}
+
+.codex-back-btn:hover {
+    background: linear-gradient(180deg, #9d4dcc, #4a0d68);
+    color: #ffffff;
+    border-color: #ba68c8;
+    box-shadow: 0 0 18px rgba(212, 0, 255, 0.6);
+    transform: translateY(-50%) scale(1.02);
+}
+
+.codex-header-titles {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: auto;
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 2;
+}
+
+.codex-title {
+    margin: 0;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 26px;
+    letter-spacing: 3px;
+    color: #f0c8ff;
+    text-shadow:
+        0 0 12px rgba(212, 0, 255, 0.75),
+        2px 2px 0 #180028;
+}
+
+.codex-subtitle {
+    margin: 6px 0 0 0;
+    font-size: 12.5px;
+    color: #b79cc7;
+    letter-spacing: 0.5px;
+}
+
+.codex-search-box {
+    position: absolute;
+    top: 50%;
+    right: 100px;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    background: rgba(12, 1, 20, 0.9);
+    border: 1.5px solid #582173;
+    border-radius: 22px;
+    padding: 0 16px;
+    width: 320px;
+    height: 40px;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.7);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+    z-index: 5;
+}
+
+.codex-search-box:focus-within {
+    border-color: #00f0ff;
+    box-shadow: 0 0 14px rgba(0, 240, 255, 0.35), inset 0 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+.codex-header .lang-switch-box {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: 5;
+}
+
+.codex-search-icon {
+    font-size: 15px;
+    margin-right: 10px;
+    color: #a47bb8;
+}
+
+#codex-search-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #f7e6ff;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    width: 100%;
+}
+
+#codex-search-input::placeholder {
+    color: #7d5493;
+}
+
+.codex-search-clear-btn {
+    background: none;
+    border: none;
+    color: #a47bb8;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 0 4px;
+    margin-left: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.15s, transform 0.15s;
+}
+
+.codex-search-clear-btn:hover {
+    color: #ff3366;
+    transform: scale(1.15);
+}
+
+/* =========================================================
+   2. DIFFICULTY TABS (SEGMENTED BAR)
+   ========================================================= */
+.codex-tabs-bar {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+    height: 48px;
+    flex-shrink: 0;
+}
+
+.codex-tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: rgba(20, 4, 32, 0.8);
+    border: 1.5px solid #4a1961;
+    border-radius: 6px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10.5px;
+    color: #bfa4ce;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.6);
+}
+
+.codex-tab .tab-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 11.5px;
+    font-weight: 500;
+    color: #8c60a2;
+}
+
+.codex-tab:hover {
+    background: rgba(42, 8, 64, 0.9);
+    border-color: #8e3eb5;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+/* Tab Active States */
+.codex-tab.active {
+    color: #ffffff;
+    font-weight: bold;
+    transform: translateY(-2px);
+}
+
+.codex-tab.active[data-diff="easy"] {
+    background: linear-gradient(180deg, rgba(20, 70, 45, 0.9), rgba(8, 28, 16, 0.95));
+    border-color: #38ef7d;
+    box-shadow: 0 0 14px rgba(56, 239, 125, 0.35);
+}
+.codex-tab.active[data-diff="easy"] .tab-sub { color: #8ef7b5; }
+
+.codex-tab.active[data-diff="normal"] {
+    background: linear-gradient(180deg, rgba(15, 60, 100, 0.9), rgba(5, 20, 40, 0.95));
+    border-color: #00f0ff;
+    box-shadow: 0 0 14px rgba(0, 240, 255, 0.35);
+}
+.codex-tab.active[data-diff="normal"] .tab-sub { color: #85f3ff; }
+
+.codex-tab.active[data-diff="hard"] {
+    background: linear-gradient(180deg, rgba(85, 15, 100, 0.9), rgba(30, 4, 40, 0.95));
+    border-color: #d400ff;
+    box-shadow: 0 0 14px rgba(212, 0, 255, 0.35);
+}
+.codex-tab.active[data-diff="hard"] .tab-sub { color: #f4b0ff; }
+
+.codex-tab.active[data-diff="hell"] {
+    background: linear-gradient(180deg, rgba(110, 15, 30, 0.9), rgba(40, 4, 10, 0.95));
+    border-color: #ff3366;
+    box-shadow: 0 0 14px rgba(255, 51, 102, 0.35);
+}
+.codex-tab.active[data-diff="hell"] .tab-sub { color: #ff99aa; }
+
+.codex-tab.active[data-diff="cheatsheet"] {
+    background: linear-gradient(180deg, rgba(90, 65, 15, 0.9), rgba(35, 25, 5, 0.95));
+    border-color: #ffd700;
+    box-shadow: 0 0 14px rgba(255, 215, 0, 0.35);
+}
+.codex-tab.active[data-diff="cheatsheet"] .tab-sub { color: #ffe680; }
+
+.tab-indicator {
+    font-size: 13px;
+}
+.easy-indicator { color: #38ef7d; }
+.normal-indicator { color: #00f0ff; }
+.hard-indicator { color: #d400ff; }
+.hell-indicator { color: #ff3366; }
+.sheet-indicator { color: #ffd700; }
+
+/* =========================================================
+   3. CODEX MAIN BODY & TWO-PANE LAYOUT
+   ========================================================= */
+.codex-body {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    gap: 18px;
+    margin-top: 14px;
+    flex: 1 1 0;
+    min-height: 0;
+    height: calc(1080px - 72px - 48px - 14px - 14px - 22px - 20px);
+    max-height: calc(1080px - 72px - 48px - 14px - 14px - 22px - 20px);
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* Left Sidebar */
+.codex-sidebar {
+    width: 410px;
+    height: 100%;
+    max-height: 100%;
+    min-height: 0;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    background: rgba(12, 1, 20, 0.94);
+    border: 1.5px solid #4a1961;
+    border-radius: 8px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.codex-sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 42px;
+    flex-shrink: 0;
+    padding: 0 16px;
+    background: rgba(22, 4, 34, 0.95);
+    border-bottom: 1.5px solid #3d1452;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: #e5b3ff;
+    box-sizing: border-box;
+}
+
+.codex-sidebar-hint {
+    font-family: 'Inter', sans-serif;
+    font-size: 11.5px;
+    color: #a47bb8;
+}
+
+.codex-topic-list {
+    flex: 1 1 0;
+    min-height: 0;
+    height: calc(100% - 42px);
+    max-height: calc(100% - 42px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: #582173 rgba(6, 0, 12, 0.8);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-sizing: border-box;
+}
+
+/* Individual Topic Item */
+.codex-topic-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    background: rgba(22, 4, 34, 0.75);
+    border: 1.5px solid #3d1452;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.16s ease;
+    position: relative;
+}
+
+.codex-topic-card:hover {
+    background: rgba(38, 8, 58, 0.9);
+    border-color: #74368e;
+    transform: translateX(3px);
+}
+
+.codex-topic-card.active {
+    background: linear-gradient(90deg, rgba(55, 12, 85, 0.95), rgba(24, 4, 38, 0.95));
+    border-color: #00f0ff;
+    border-left: 5px solid #00f0ff;
+    box-shadow: 0 0 14px rgba(0, 240, 255, 0.25);
+    transform: translateX(3px);
+}
+
+.topic-step-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #a47bb8;
+    background: rgba(0, 0, 0, 0.45);
+    padding: 2px 5px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    flex-shrink: 0;
+}
+
+.codex-topic-card.active .topic-step-badge {
+    color: #00f0ff;
+    border-color: rgba(0, 240, 255, 0.4);
+    background: rgba(0, 240, 255, 0.1);
+}
+
+.topic-sprite-thumb {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    object-fit: contain;
+    image-rendering: pixelated;
+    background: rgba(6, 0, 12, 0.7);
+    border: 1px solid #4a1961;
+    border-radius: 5px;
+    padding: 2px;
+}
+
+.topic-sprite-thumb.fallback-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #ffd700;
+}
+
+.topic-info-wrap {
+    flex: 1;
+    min-width: 0;
+}
+
+.topic-card-category-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 2px;
+}
+
+.topic-card-category {
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #00f0ff;
+}
+
+.topic-card-error-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    color: #ffd700;
+    background: rgba(255, 215, 0, 0.12);
+    border: 1px solid rgba(255, 215, 0, 0.35);
+    padding: 0 5px;
+    border-radius: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 140px;
+}
+
+.topic-card-title {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #f7e6ff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 2px;
+}
+
+.topic-card-enemy {
+    font-size: 11px;
+    color: #d9a8ff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.topic-active-indicator {
+    font-size: 11px;
+    color: #00f0ff;
+    opacity: 0;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    flex-shrink: 0;
+}
+
+.codex-topic-card.active .topic-active-indicator {
+    opacity: 1;
+    transform: translateX(2px);
+}
+
+/* Empty Search State */
+.codex-no-results-box {
+    padding: 36px 20px;
+    text-align: center;
+    color: #bfa0cc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.no-results-icon {
+    font-size: 28px;
+}
+
+.codex-clear-filter-btn {
+    background: rgba(85, 18, 115, 0.85);
+    border: 1.5px solid #ba68c8;
+    color: #ffffff;
+    padding: 6px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.15s ease;
+}
+
+.codex-clear-filter-btn:hover {
+    background: #9d4dcc;
+    box-shadow: 0 0 10px rgba(212, 0, 255, 0.5);
+}
+
+.codex-empty-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    color: #b79cc7;
+    padding: 40px;
+}
+
+.placeholder-icon {
+    font-size: 48px;
+    margin-bottom: 14px;
+}
+
+.placeholder-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 15px;
+    color: #d400ff;
+    margin: 0 0 8px 0;
+}
+
+.placeholder-desc {
+    font-size: 13px;
+    color: #bfa0cc;
+    margin: 0;
+}
+
+/* =========================================================
+   4. RIGHT PANE: LESSON DETAIL VIEWER
+   ========================================================= */
+.codex-content-area {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    max-height: 100%;
+    background: rgba(12, 1, 20, 0.92);
+    border: 1.5px solid #4a1961;
+    border-radius: 8px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+    padding: 24px 34px 34px 34px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: #582173 rgba(6, 0, 12, 0.8);
+    box-sizing: border-box;
+}
+
+/* Topic Hero Banner */
+.lesson-hero-banner {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 18px 22px;
+    background: linear-gradient(135deg, rgba(36, 7, 54, 0.85), rgba(10, 0, 18, 0.95));
+    border: 1.5px solid #63247f;
+    border-radius: 8px;
+    margin-bottom: 22px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.hero-sprite-frame {
+    width: 82px;
+    height: 82px;
+    flex-shrink: 0;
+    background: rgba(6, 0, 12, 0.8);
+    border: 2px solid #8e44ad;
+    border-radius: 8px;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 14px rgba(212, 0, 255, 0.35);
+}
+
+.lesson-hero-sprite {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+
+.lesson-hero-details {
+    flex: 1;
+}
+
+.lesson-hero-tags {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+}
+
+.lesson-badge {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.badge-easy { background: rgba(56, 239, 125, 0.2); border: 1px solid #38ef7d; color: #38ef7d; }
+.badge-normal { background: rgba(0, 240, 255, 0.2); border: 1px solid #00f0ff; color: #00f0ff; }
+.badge-hard { background: rgba(212, 0, 255, 0.2); border: 1px solid #d400ff; color: #d400ff; }
+.badge-hell { background: rgba(255, 51, 102, 0.2); border: 1px solid #ff3366; color: #ff3366; }
+.badge-cheatsheet { background: rgba(255, 215, 0, 0.2); border: 1px solid #ffd700; color: #ffd700; }
+
+.badge-enemy {
+    background: rgba(140, 70, 180, 0.25);
+    border: 1px solid #8e44ad;
+    color: #e5b3ff;
+}
+
+.badge-error {
+    background: rgba(255, 215, 0, 0.15);
+    border: 1px solid #ffd700;
+    color: #ffd700;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+}
+
+.badge-category {
+    background: rgba(0, 240, 255, 0.15);
+    border: 1px solid #00f0ff;
+    color: #00f0ff;
+}
+
+.lesson-hero-title {
+    margin: 0 0 6px 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.4px;
+}
+
+.lesson-hero-summary {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: #ccb6dc;
+}
+
+/* Quick Navigation Jump Bar */
+.codex-jump-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 22px;
+    padding: 8px 12px;
+    background: rgba(18, 3, 28, 0.75);
+    border: 1px solid #4a1961;
+    border-radius: 6px;
+    align-items: center;
+}
+
+.jump-pill {
+    background: rgba(35, 7, 52, 0.85);
+    border: 1px solid #63247f;
+    color: #e5b3ff;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.jump-pill:hover {
+    background: #9d4dcc;
+    color: #ffffff;
+    border-color: #ba68c8;
+    transform: translateY(-1px);
+    box-shadow: 0 0 10px rgba(212, 0, 255, 0.4);
+}
+
+/* Section Headings */
+.lesson-section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 26px 0 14px 0;
+    border-bottom: 1.5px solid rgba(0, 240, 255, 0.2);
+    padding-bottom: 8px;
+}
+
+.lesson-section-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 800;
+    color: #00f0ff;
+    background: rgba(0, 240, 255, 0.15);
+    border: 1px solid #00f0ff;
+    padding: 2px 7px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+}
+
+.lesson-section-title {
+    margin: 0;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 13.5px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #ffffff;
+    text-transform: uppercase;
+}
+
+/* Explanation Prose */
+.lesson-prose {
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: #eae0f2;
+    background: rgba(18, 4, 28, 0.65);
+    border: 1px solid #3d1452;
+    border-radius: 6px;
+    padding: 20px 24px;
+}
+
+.lesson-prose h3 {
+    margin: 16px 0 8px 0;
+    font-size: 14.5px;
+    color: #ffd700;
+    font-weight: 600;
+}
+
+.lesson-prose p {
+    margin: 0 0 12px 0;
+}
+
+.lesson-prose p:last-child {
+    margin-bottom: 0;
+}
+
+.lesson-prose ul, .lesson-prose ol {
+    margin: 8px 0 14px 22px;
+    padding: 0;
+}
+
+.lesson-prose li {
+    margin-bottom: 6px;
+}
+
+.lesson-prose code {
+    font-family: 'JetBrains Mono', 'Consolas', monospace;
+    font-size: 13px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 2px 7px;
+    border-radius: 4px;
+    color: #00f0ff;
+    border: 1px solid rgba(0, 240, 255, 0.2);
+}
+
+/* Syntax Blueprint Box */
+.syntax-blueprint-card {
+    background: #08010f;
+    border: 1.5px solid #4a1961;
+    border-top: 3px solid #ffd700;
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 16px 0;
+    box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.9);
+}
+
+.blueprint-terminal-bar {
+    height: 32px;
+    background: rgba(20, 3, 30, 0.95);
+    border-bottom: 1px solid #331045;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.terminal-dots {
+    display: flex;
+    gap: 6px;
+}
+
+.term-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot-red { background: #ff5f56; }
+.dot-yellow { background: #ffbd2e; }
+.dot-green { background: #27c93f; }
+
+.blueprint-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    color: #d4a373;
+    letter-spacing: 0.8px;
+}
+
+.syntax-blueprint-card pre {
+    margin: 0;
+    padding: 16px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #ffeaa7;
+    white-space: pre-wrap;
+}
+
+/* Side-by-Side Bug Comparison */
+.bug-comparison-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 16px 0;
+}
+
+.comparison-box {
+    display: flex;
+    flex-direction: column;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #090111;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+}
+
+.comparison-box.bad {
+    border: 1.5px solid #942236;
+    border-top: 3px solid #ff3366;
+}
+
+.comparison-box.good {
+    border: 1.5px solid #1a743e;
+    border-top: 3px solid #38ef7d;
+}
+
+.comparison-header {
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 14px;
+}
+
+.comparison-box.bad .comparison-header {
+    background: rgba(168, 35, 59, 0.2);
+    border-bottom: 1px solid #631221;
+}
+
+.comparison-box.good .comparison-header {
+    background: rgba(28, 122, 66, 0.2);
+    border-bottom: 1px solid #124e29;
+}
+
+.terminal-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.term-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.comparison-box.bad .term-label { color: #ff859f; }
+.comparison-box.good .term-label { color: #6df2a6; }
+
+.status-badge {
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7.5px;
+}
+
+.bad-badge {
+    background: rgba(255, 51, 102, 0.2);
+    border: 1px solid #ff3366;
+    color: #ff99aa;
+}
+
+.copy-code-btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    background: rgba(56, 239, 125, 0.15);
+    border: 1px solid #38ef7d;
+    color: #38ef7d;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.copy-code-btn:hover {
+    background: #38ef7d;
+    color: #052010;
+}
+
+.comparison-code-wrap {
+    padding: 14px 18px;
+    background: #05000a;
+    border-bottom: 1px solid #280a36;
+}
+
+.comparison-code-wrap pre {
+    margin: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+}
+
+.comparison-box.bad .comparison-code-wrap pre {
+    color: #ff99aa;
+}
+
+.comparison-box.good .comparison-code-wrap pre {
+    color: #a4fcd0;
+}
+
+.comparison-footer {
+    padding: 12px 16px;
+    font-size: 12.5px;
+    line-height: 1.55;
+    flex: 1;
+}
+
+.comparison-box.bad .comparison-footer {
+    color: #f7c0ca;
+    background: rgba(45, 10, 18, 0.35);
+}
+
+.comparison-box.good .comparison-footer {
+    color: #bbf7d6;
+    background: rgba(10, 45, 22, 0.35);
+}
+
+.error-badge {
+    display: inline-block;
+    padding: 2px 7px;
+    margin-bottom: 6px;
+    border-radius: 3px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 600;
+    background: rgba(255, 51, 102, 0.25);
+    border: 1px solid #ff3366;
+    color: #ff99aa;
+}
+
+.fix-label {
+    font-weight: 600;
+    color: #5cf49c;
+    margin-bottom: 4px;
+}
+
+/* Golden Rules Checklist */
+.golden-rules-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 14px 0;
+}
+
+.golden-rule-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: rgba(24, 5, 36, 0.7);
+    border: 1px solid #4a1961;
+    border-left: 4px solid #ffd700;
+    border-radius: 6px;
+    font-size: 13.5px;
+    color: #ebdcf5;
+}
+
+.rule-check-icon {
+    color: #ffd700;
+    font-size: 12px;
+}
+
+/* Spot-the-Bug Mini Quiz */
+.codex-quiz-card {
+    background: linear-gradient(135deg, rgba(28, 5, 44, 0.9), rgba(10, 0, 18, 0.95));
+    border: 1.5px solid #63247f;
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-top: 22px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.codex-quiz-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: #ffd700;
+    margin-bottom: 12px;
+}
+
+.quiz-star {
+    font-size: 14px;
+}
+
+.codex-quiz-question {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 12px;
+}
+
+.codex-quiz-code {
+    background: #06000c;
+    border: 1px solid #3d1452;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 14px;
+}
+
+.codex-quiz-code pre {
+    margin: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    color: #00f0ff;
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+
+.codex-quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.quiz-option-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 16px;
+    background: rgba(18, 4, 28, 0.85);
+    border: 1.5px solid #4a1961;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: #eadbf2;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.16s ease;
+}
+
+.quiz-option-btn:hover {
+    background: rgba(45, 10, 70, 0.9);
+    border-color: #8e44ad;
+    transform: translateX(3px);
+}
+
+.quiz-option-badge {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9.5px;
+    color: #ffd700;
+}
+
+.quiz-option-btn.selected-correct {
+    background: rgba(20, 80, 45, 0.9) !important;
+    border-color: #38ef7d !important;
+    color: #ffffff !important;
+}
+
+.quiz-option-btn.selected-wrong {
+    background: rgba(100, 20, 35, 0.9) !important;
+    border-color: #ff3366 !important;
+    color: #ffffff !important;
+}
+
+.quiz-feedback-box {
+    display: none;
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    margin-top: 14px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+.quiz-feedback-box.show {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.quiz-feedback-box.correct {
+    background: rgba(14, 55, 30, 0.7);
+    border: 1.5px solid #38ef7d;
+    color: #bbf7d6;
+}
+
+.quiz-feedback-box.wrong {
+    background: rgba(70, 15, 26, 0.7);
+    border: 1.5px solid #ff3366;
+    color: #ffb8c7;
+}
+
+.feedback-status-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    letter-spacing: 0.8px;
+}
+
+.quiz-feedback-box.correct .feedback-status-title {
+    color: #38ef7d;
+}
+
+.quiz-feedback-box.wrong .feedback-status-title {
+    color: #ff5577;
+}
+
+.feedback-solution-text {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 13px;
+    line-height: 1.55;
+    color: #ffffff;
+}
+
+.quiz-reset-btn {
+    align-self: flex-start;
+    margin-top: 6px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1.5px solid currentColor;
+    color: inherit;
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s ease;
+}
+
+.quiz-reset-btn:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* =========================================================
+   5. CHEAT SHEET TABLE FORMATTING
+   ========================================================= */
+.cheatsheet-table-wrap {
+    overflow-x: auto;
+    margin: 14px 0;
+    border: 1px solid #4a1961;
+    border-radius: 6px;
+}
+
+.cheatsheet-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.cheatsheet-table th, .cheatsheet-table td {
+    padding: 11px 16px;
+    text-align: left;
+    border-bottom: 1px solid #331045;
+}
+
+.cheatsheet-table th {
+    background: rgba(35, 8, 54, 0.95);
+    color: #ffd700;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.5px;
+}
+
+.cheatsheet-table tr:nth-child(even) {
+    background: rgba(18, 3, 28, 0.5);
+}
+
+.cheatsheet-table tr:hover {
+    background: rgba(42, 10, 64, 0.5);
+}
+
+.cheatsheet-table td code {
+    font-family: 'JetBrains Mono', monospace;
+    background: #06000c;
+    color: #00f0ff;
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: 1px solid rgba(0, 240, 255, 0.2);
+}
+
+/* =========================================================
+   6. CUSTOM SLEEK SCROLLBARS
+   ========================================================= */
+.codex-topic-list::-webkit-scrollbar,
+.codex-content-area::-webkit-scrollbar {
+    width: 8px;
+}
+
+.codex-topic-list::-webkit-scrollbar-track,
+.codex-content-area::-webkit-scrollbar-track {
+    background: rgba(6, 0, 12, 0.8);
+    border-radius: 4px;
+}
+
+.codex-topic-list::-webkit-scrollbar-thumb,
+.codex-content-area::-webkit-scrollbar-thumb {
+    background: #582173;
+    border-radius: 4px;
+}
+
+.codex-topic-list::-webkit-scrollbar-thumb:hover,
+.codex-content-area::-webkit-scrollbar-thumb:hover {
+    background: #8e44ad;
+}
