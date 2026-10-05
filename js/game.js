@@ -1,3 +1,183 @@
+
+// =========================================================
+// TACTICAL PEDAGOGY & CODE DIAGNOSIS INTEL SYSTEM
+// Introduces what the code is, what it should do, why it broke,
+// and provides instant tactical feedback on wrong fixes.
+// =========================================================
+
+function analyzeBugPedagogy(bugData, enemy, lang) {
+    const isFil = (lang === "fil");
+    const code = (bugData && bugData.code) ? bugData.code : "";
+    const hint = (bugData && bugData.hint) ? bugData.hint : "";
+    const category = (bugData && bugData.category) ? bugData.category : "General Bug";
+    const errorType = (bugData && bugData.error_type) ? bugData.error_type : "";
+    const topic = (enemy && enemy.topic) ? enemy.topic : "";
+
+    let whatItIs = "";
+    let whatItShouldDo = "";
+    let whyItBroke = "";
+    let smallHint = "";
+
+    // 1. Identify What It Is & Intended Goal
+    if (/dfs\s*\(|visited|graph/i.test(code) || /depth-first|dfs/i.test(topic)) {
+        whatItIs = isFil 
+            ? "Depth-First Search (DFS) algorithm function para sa graph o tree exploration."
+            : "Depth-First Search (DFS) traversal function for graph or tree exploration.";
+        whatItShouldDo = isFil
+            ? "Dapat nitong bisitahin ang bawat connected node nang sunod-sunod gamit ang recursion o stack nang walang redundant cycles."
+            : "Systematically explore connected graph nodes using recursion or stack without redundant cycles.";
+    } else if (/^\s*def\s+/m.test(code) || /function/i.test(topic)) {
+        whatItIs = isFil
+            ? "Python function definition na nagpapatupad ng reusable logic at return value."
+            : "Python function definition implementing reusable logic and return values.";
+        whatItShouldDo = isFil
+            ? "Dapat nitong ma-execute ang block ng code at magbalik ng tamang kalkulasyon."
+            : "Execute the encapsulated block and return the correct computed result.";
+    } else if (/^\s*(for|while)\s+/m.test(code) || /loop/i.test(topic)) {
+        whatItIs = isFil
+            ? "Python iteration loop (for/while) para sa paulit-ulit na pagproseso ng data."
+            : "Python iteration loop (for/while) for repetitive sequence processing.";
+        whatItShouldDo = isFil
+            ? "Dapat nitong ikutin ang bawat element sa sequence hanggang maabot ang termination point."
+            : "Iterate across each item in the sequence until reaching the termination condition.";
+    } else if (/\b(if|elif|else)\b/.test(code) || /condition/i.test(topic)) {
+        whatItIs = isFil
+            ? "Conditional branching statement (if/else) para sa decision-making logic."
+            : "Conditional branching statement (if/else) for program decision flow.";
+        whatItShouldDo = isFil
+            ? "Dapat nitong suriin kung True o False ang expression upang patakbuhin ang tamang code block."
+            : "Evaluate boolean expressions to branch execution into the correct code block.";
+    } else if (/\bprint\b/.test(code)) {
+        whatItIs = isFil
+            ? "Standard console print output command sa Python."
+            : "Standard console print output command in Python.";
+        whatItShouldDo = isFil
+            ? "Dapat nitong i-display ang ibinigay na mensahe o variable sa output console."
+            : "Format and display the provided message or variable onto the terminal.";
+    } else if (/\[.*?\]|\bappend\b|\bsort\b|\blen\b/.test(code) || /list/i.test(topic)) {
+        whatItIs = isFil
+            ? "Python list indexing o data manipulation statement."
+            : "Python list indexing or element manipulation statement.";
+        whatItShouldDo = isFil
+            ? "Dapat nitong i-store, i-access, o i-update ang list elements gamit ang tamang index at syntax."
+            : "Safely access, retrieve, or append list items within valid index boundaries.";
+    } else if (/\{.*?:.*?\}|\bdict\b/.test(code) || /dict/i.test(topic)) {
+        whatItIs = isFil
+            ? "Python dictionary operation na gumagamit ng key-value pairs."
+            : "Python dictionary operation mapping key-value associations.";
+        whatItShouldDo = isFil
+            ? "Dapat nitong ma-access o ma-update ang tamang key nang walang KeyError."
+            : "Access or update values using valid keys without triggering KeyError.";
+    } else {
+        whatItIs = isFil
+            ? (topic ? ("Python routine patungkol sa " + topic + ".") : "Python statement block.")
+            : (topic ? ("Python routine concerning " + topic + ".") : "Python statement block.");
+        whatItShouldDo = isFil
+            ? "Dapat nitong maipatupad ang mga command nang malinis at walang error."
+            : "Execute the command instructions cleanly without failing.";
+    }
+
+    // 2. Identify Why It Broke
+    const catLower = category.toLowerCase();
+    const cleanError = errorType || category;
+
+    if (catLower.includes("syntax")) {
+        whyItBroke = isFil
+            ? ("May Syntax Error (" + cleanError + "). May bawal na bantas, nawawalang colon (:), o hindi saradong panaklong/quote kaya hindi ma-parse ng Python.")
+            : ("Syntax Error detected (" + cleanError + "). Invalid tokens, unclosed quotes/brackets, or a missing colon (:) prevent Python from parsing this line.");
+    } else if (catLower.includes("log")) {
+        whyItBroke = isFil
+            ? ("May Logical Error (" + cleanError + "). Tumatakbo ang code pero mali ang logic o kondisyon, kaya mali ang nagiging resulta o na-stuck sa loop.")
+            : ("Logical Error detected (" + cleanError + "). The code runs without crashing, but flawed conditional or algorithmic logic causes unexpected behavior.");
+    } else if (catLower.includes("runtime")) {
+        whyItBroke = isFil
+            ? ("May Runtime Error (" + cleanError + "). Nag-crash habang tumatakbo dahil sa bawal na operasyon (hal. index out of range, zero division, o recursion overflow).")
+            : ("Runtime Error detected (" + cleanError + "). The script crashes mid-execution due to an illegal operation (e.g. index out of range, zero division, or recursion overflow).");
+    } else {
+        whyItBroke = isFil
+            ? ("May issue (" + cleanError + ") na nagdudulot ng malfunction sa execution.")
+            : ("Defect detected (" + cleanError + ") causing the execution to fail.");
+    }
+
+    // 3. Small Tactical Hint for Wrong Answer Feedback
+    if (hint) {
+        smallHint = hint;
+    } else if (catLower.includes("syntax")) {
+        smallHint = isFil ? 'Suriin ang mga colons (:), quotes (\' o "), o parentheses () sa bawat linya.' : 'Inspect colons (:), quotation marks, or closing parentheses ().';
+    } else if (catLower.includes("log")) {
+        smallHint = isFil ? "Suriin ang comparison operators (<, >, ==) at conditional branch logic." : "Check your comparison operators (<, >, ==) and conditional branch logic.";
+    } else {
+        smallHint = isFil ? "I-check ang variable types, indexing boundaries, at tamang data structures." : "Verify variable names, indexing boundaries, and valid type casting.";
+    }
+
+    return { whatItIs, whatItShouldDo, whyItBroke, smallHint };
+}
+
+function displayCodeIntroduction(bugData, enemy) {
+    const dialogueText = document.getElementById("dialogue-text");
+    if (!dialogueText) return;
+
+    if (!bugData) {
+        const lang = (typeof getLanguage === "function") ? getLanguage() : "en";
+        dialogueText.textContent = lang === "fil" ? "A wild bug appeared! What will Frau do?" : "A wild bug appeared! What will Frau do?";
+        return;
+    }
+
+    const lang = (typeof getLanguage === "function") ? getLanguage() : "en";
+    const isFil = (lang === "fil");
+    const intel = analyzeBugPedagogy(bugData, enemy, lang);
+    const cat = bugData.category || "Bug";
+
+    const badgeClass = cat.toLowerCase().includes("syntax") ? "badge-syntax" :
+                       cat.toLowerCase().includes("log") ? "badge-logical" : "badge-runtime";
+
+    dialogueText.innerHTML = `
+        <div class="combat-intel-wrapper">
+            <div class="intel-tag-row">
+                <span class="intel-badge ${badgeClass}">⚡ ${escapeHtml(cat.toUpperCase())}</span>
+                <span class="intel-subtag">${enemy ? escapeHtml(enemy.name) : "Enemy Bug"}</span>
+            </div>
+            <div class="intel-details">
+                <div class="intel-line">
+                    <span class="intel-label">📌 ${isFil ? "ANO ITO" : "CODE"}:</span>
+                    <span class="intel-val">${escapeHtml(intel.whatItIs)}</span>
+                </div>
+                <div class="intel-line">
+                    <span class="intel-label">🎯 ${isFil ? "DAPAT GAWIN" : "GOAL"}:</span>
+                    <span class="intel-val">${escapeHtml(intel.whatItShouldDo)}</span>
+                </div>
+                <div class="intel-line error-line">
+                    <span class="intel-label">⚠️ ${isFil ? "BAKIT NASIRA" : "DEFECT"}:</span>
+                    <span class="intel-val">${escapeHtml(intel.whyItBroke)}</span>
+                </div>
+            </div>
+        </div>
+    `;
+
+    const speakerLabel = document.querySelector("#pokemon-dialogue-pane .speaker-label");
+    if (speakerLabel) {
+        speakerLabel.textContent = isFil ? "FRAU // CODE INTEL & DIAGNOSIS" : "FRAU // CODE INTEL & DIAGNOSIS";
+    }
+}
+
+function updateBattleLanguage() {
+    const battleScreen = document.getElementById("battle-screen");
+    if (battleScreen && battleScreen.style.display !== "none" && currentEnemy && currentEnemy.bugs && currentEnemy.bugs[currentBug]) {
+        displayCodeIntroduction(currentEnemy.bugs[currentBug], currentEnemy);
+    }
+}
+
+
+function escapeHtml(str) {
+    if (str === null || str === undefined) return "";
+    return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
 // =========================================================
 // BUGHUNT: CORE BATTLE & COMBAT ENGINE MODULE (js/game.js)
 // =========================================================
@@ -180,6 +360,7 @@ function loadBug() {
     const catBadge = document.getElementById("bug-category-badge");
 
     const currentBugData = (currentEnemy && currentEnemy.bugs && currentEnemy.bugs[currentBug]) ? currentEnemy.bugs[currentBug] : null;
+    displayCodeIntroduction(currentBugData, currentEnemy);
 
     if (bugCode && currentBugData) {
         bugCode.textContent = currentBugData.code;
@@ -624,10 +805,23 @@ async function handleAnswerSubmission() {
 
         // Damage Enemy
         currentHearts--;
+        const lang = (typeof getLanguage === "function") ? getLanguage() : "en";
+        const isFil = (lang === "fil");
         if (dialogueText) {
-            dialogueText.textContent = typeof t === "function" 
-                ? t("dialogue_hit_enemy", { enemy: currentEnemy.name })
-                : ("Frau: Correct fix! " + currentEnemy.name + " took damage!");
+            dialogueText.innerHTML = `
+                <div class="combat-feedback-wrapper correct">
+                    <div class="feedback-badge-row">
+                        <span class="feedback-badge-correct">✅ ${isFil ? "TAMA ANG AYOS!" : "CRITICAL FIX APPLIED!"}</span>
+                    </div>
+                    <p class="feedback-note">${isFil 
+                        ? ("Matagumpay mong naayos ang bug! Nabawasan ng 1 HP si <strong>" + escapeHtml(currentEnemy.name) + "</strong>.") 
+                        : ("Patch successfully compiled! Dealt 1 DMG to <strong>" + escapeHtml(currentEnemy.name) + "</strong>.")}</p>
+                </div>
+            `;
+        }
+        const speakerLabel = document.querySelector("#pokemon-dialogue-pane .speaker-label");
+        if (speakerLabel) {
+            speakerLabel.textContent = isFil ? "FRAU // COMBAT SUCCESS" : "FRAU // COMBAT SUCCESS";
         }
         updateHearts();
         if (answerInput) answerInput.value = "";
@@ -685,22 +879,55 @@ async function handleAnswerSubmission() {
             currentBug++;
             setTimeout(function () {
                 if (playerSprite) playerSprite.src = "css/Sprites/user/idle.png";
-            }, 700);
-
-            loadBug();
-            if (answerInput) answerInput.focus();
+                loadBug();
+                if (answerInput) answerInput.focus();
+            }, 800);
         }
     } else {
         if (playerSprite) playerSprite.src = "css/Sprites/user/wrong.png";
-        if (dialogueText) {
-            dialogueText.textContent = typeof t === "function"
-                ? t("dialogue_wrong_answer")
-                : "Frau: Wrong fix! The bug remains.";
-        }
 
         enemyPointValue--;
         if (enemyPointValue < 0) enemyPointValue = 0;
         updatePoints();
+
+        const lang = (typeof getLanguage === "function") ? getLanguage() : "en";
+        const isFil = (lang === "fil");
+        const currentBugData = (currentEnemy && currentEnemy.bugs) ? currentEnemy.bugs[currentBug] : null;
+        const intel = analyzeBugPedagogy(currentBugData, currentEnemy, lang);
+
+        let damageNote = isFil
+            ? "Hindi gumana ang submit mong ayos. Bawas ang buhay ni Frau! (-1 HP)"
+            : "Your fix failed to compile or resolve the defect. Frau took damage! (-1 HP)";
+
+        if (isShieldActive) {
+            damageNote = isFil
+                ? "Hindi gumana ang ayos, pero sinalag ng Code Shield ang bawas na buhay!"
+                : "Your fix failed, but your Code Shield absorbed the damage!";
+        }
+
+        if (dialogueText) {
+            dialogueText.innerHTML = `
+                <div class="combat-feedback-wrapper wrong">
+                    <div class="feedback-badge-row">
+                        <span class="feedback-badge-wrong">❌ ${isFil ? "HINDI GUMANA ANG AYOS" : "FIX COMPILATION FAILED"}</span>
+                        <span class="feedback-recap-toggle" onclick="displayCodeIntroduction(currentEnemy.bugs[currentBug], currentEnemy)">${isFil ? "[ 🔄 Tingnan Muli ang Code Intel ]" : "[ 🔄 Review Code Intel ]"}</span>
+                    </div>
+                    <p class="feedback-note">${damageNote}</p>
+                    <div class="feedback-hint-box">
+                        <span class="hint-lamp">💡</span>
+                        <div class="hint-content">
+                            <span class="hint-title">${isFil ? "TACTICAL CLUE / PAHIWATIG" : "TACTICAL BUG HINT"}:</span>
+                            <p class="hint-body">${escapeHtml(intel.smallHint)}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        const speakerLabel = document.querySelector("#pokemon-dialogue-pane .speaker-label");
+        if (speakerLabel) {
+            speakerLabel.textContent = isFil ? "FRAU // COMBAT ALERT" : "FRAU // COMBAT ALERT";
+        }
 
         damagePlayer();
         if (playerHearts <= 0) return;

@@ -10,3 +10,7 @@ Desktop.ini
 # Editor directories
 .vscode/
 .idea/
+
+# Scratch & test scripts
+scratch/
+
