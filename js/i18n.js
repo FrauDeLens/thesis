@@ -402,6 +402,19 @@ function getLanguage() {
     return currentLanguage;
 }
 
+// Global accessor so any module referencing 'isFil' directly never throws ReferenceError
+try {
+    Object.defineProperty(window, "isFil", {
+        get: function () {
+            return currentLanguage === "fil";
+        },
+        configurable: true,
+        enumerable: true
+    });
+} catch (e) {
+    window.isFil = false;
+}
+
 // Set language and update all registered elements
 function setLanguage(lang) {
     if (lang !== "en" && lang !== "fil") lang = "en";

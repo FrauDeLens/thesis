@@ -18,6 +18,9 @@ function updateHintCostDisplay() {
     const hintCostDisplay = document.getElementById("hint-cost-display");
     if (!hintCostDisplay) return;
 
+    const lang = (typeof getLanguage === "function") ? getLanguage() : "en";
+    const isFil = lang === "fil";
+
     const diff = (typeof getCurrentDifficultyName === "function") ? getCurrentDifficultyName() : "easy";
     const isEasyOrNormal = (diff === "easy" || diff === "normal");
 
