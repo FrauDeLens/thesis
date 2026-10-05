@@ -4,29 +4,29 @@
 // =========================================================
 
 const ENEMY_GUIDE_DATA = {
-    "syntax_slime": {
+        "syntax_slime": {
         "behavior": {
-            "en": "Drops broken syntax all over the code — unclosed quotes, missing parentheses, and forgotten colons before Python can run.",
-            "fil": "Nagkakalat ng sirang syntax sa code — nakalimutang quotes, kulang na panaklong, at nawawalang colon bago pa patakbuhin ng Python."
+            "en": "Drops broken syntax all over basic statements — unclosed quotes, missing parentheses, and mismatched tokens before Python can run.",
+            "fil": "Nagkakalat ng sirang syntax sa mga simpleng linya — nakalimutang quotes, kulang na panaklong, at maling bantas bago pa patakbuhin ng Python."
         },
         "rules": {
             "en": [
                 "Strings must be closed with matching quotes: 'text' or \"text\".",
-                "Header statements (def, if, for, while, class) must end with a colon (:).",
-                "Make sure all parentheses '()' are closed and balanced."
+                "Make sure all parentheses '()' in print and expressions are closed and balanced.",
+                "Separate multiple items in print() with a comma (,)."
             ],
             "fil": [
                 "Kailangang may kapares na quote ang bawat text: 'text' o \"text\".",
-                "Dapat may colon (:) sa dulo ang def, if, for, while, at class.",
-                "Siguraduhing sarado at pantay ang lahat ng panaklong '()'."
+                "Siguraduhing sarado at pantay ang lahat ng panaklong '()' sa print at kalkulasyon.",
+                "Paghiwalayin ang maraming text sa print() gamit ang kuwit (,)."
             ]
         },
         "bad": "print(\"Hello World",
         "good": "print(\"Hello World\")",
         "errorType": "SyntaxError",
         "tip": {
-            "en": "Inspect quote pairs and verify that all if/for statements end with a colon (:).",
-            "fil": "Suriin ang mga panipi at tiyaking may colon (:) ang dulo ng if at for statements."
+            "en": "Inspect quote pairs and verify that all print() parentheses are properly closed.",
+            "fil": "Suriin ang mga pares ng panipi at tiyaking sarado ang panaklong ng print()."
         }
     },
     "variable_goblin": {

@@ -15,25 +15,7 @@
         "error_type": "SyntaxError: EOL while scanning string literal",
         "code": "message = \"BugHunt\nprint(message)",
         "answer": "message = \"BugHunt\"\nprint(message)",
-        "hint": "The string literal on line 1 is missing a closing quote."
-    },
-    {
-        "enemy_id": "syntax_slime",
-        "difficulty": "easy",
-        "category": "Syntax Error",
-        "error_type": "SyntaxError: expected ':'",
-        "code": "if score > 10\n    print(\"Win\")",
-        "answer": "if score > 10:\n    print(\"Win\")",
-        "hint": "If statement headers must end with a colon (:)."
-    },
-    {
-        "enemy_id": "syntax_slime",
-        "difficulty": "easy",
-        "category": "Syntax Error",
-        "error_type": "SyntaxError: expected ':'",
-        "code": "else\n    print(\"Try again\")",
-        "answer": "else:\n    print(\"Try again\")",
-        "hint": "An else statement header must end with a colon (:)."
+        "hint": "The string literal is missing a closing double quotation mark (\")."
     },
     {
         "enemy_id": "syntax_slime",
@@ -48,15 +30,6 @@
         "enemy_id": "syntax_slime",
         "difficulty": "easy",
         "category": "Syntax Error",
-        "error_type": "SyntaxError: expected ':'",
-        "code": "for i in range(5\n    print(i)",
-        "answer": "for i in range(5):\n    print(i)",
-        "hint": "Close the range() call and add a colon to the for loop header."
-    },
-    {
-        "enemy_id": "syntax_slime",
-        "difficulty": "easy",
-        "category": "Syntax Error",
         "error_type": "SyntaxError: Missing parentheses in call to 'print'",
         "code": "print \"Game Over\"",
         "answer": "print(\"Game Over\")",
@@ -66,28 +39,55 @@
         "enemy_id": "syntax_slime",
         "difficulty": "easy",
         "category": "Syntax Error",
-        "error_type": "SyntaxError: expected ':'",
-        "code": "while hp > 0\n    hp -= 1",
-        "answer": "while hp > 0:\n    hp -= 1",
-        "hint": "While loop headers must end with a colon (:)."
+        "error_type": "SyntaxError: invalid syntax",
+        "code": "print(Hello)",
+        "answer": "print(\"Hello\")",
+        "hint": "Text in print() must be enclosed in quotes to be treated as a string literal."
     },
     {
         "enemy_id": "syntax_slime",
         "difficulty": "easy",
         "category": "Syntax Error",
-        "error_type": "SyntaxError: closing bracket ']' does not match",
-        "code": "numbers = [1, 2, 3\nprint(numbers)",
-        "answer": "numbers = [1, 2, 3]\nprint(numbers)",
-        "hint": "The list was opened with [ but never closed with ]."
+        "error_type": "SyntaxError: invalid syntax",
+        "code": "print(\"Score:\" score)",
+        "answer": "print(\"Score:\", score)",
+        "hint": "Separate multiple arguments inside print() with a comma (,)."
     },
     {
         "enemy_id": "syntax_slime",
         "difficulty": "easy",
         "category": "Syntax Error",
-        "error_type": "SyntaxError: expected ':'",
-        "code": "elif choice == 2\n    print(\"Run\")",
-        "answer": "elif choice == 2:\n    print(\"Run\")",
-        "hint": "Elif statement headers must end with a colon (:)."
+        "error_type": "SyntaxError: unexpected EOF while parsing",
+        "code": "print(\"Welcome to BugHunt\"",
+        "answer": "print(\"Welcome to BugHunt\")",
+        "hint": "Close the print() function call with a closing parenthesis )."
+    },
+    {
+        "enemy_id": "syntax_slime",
+        "difficulty": "easy",
+        "category": "Syntax Error",
+        "error_type": "SyntaxError: EOL while scanning string literal",
+        "code": "title = 'BugHunt\nprint(title)",
+        "answer": "title = 'BugHunt'\nprint(title)",
+        "hint": "The string opened with a single quote (') is missing its closing single quote."
+    },
+    {
+        "enemy_id": "syntax_slime",
+        "difficulty": "easy",
+        "category": "Syntax Error",
+        "error_type": "SyntaxError: EOL while scanning string literal",
+        "code": "greeting = \"Hello \" + World\"\nprint(greeting)",
+        "answer": "greeting = \"Hello \" + \"World\"\nprint(greeting)",
+        "hint": "The second string operand is missing an opening quotation mark (\")."
+    },
+    {
+        "enemy_id": "syntax_slime",
+        "difficulty": "easy",
+        "category": "Syntax Error",
+        "error_type": "SyntaxError: unexpected EOF while parsing",
+        "code": "print(10 + (5 * 2)",
+        "answer": "print(10 + (5 * 2))",
+        "hint": "Two parentheses were opened in the expression, but only one was closed. Add a closing parenthesis )."
     },
     {
         "enemy_id": "variable_goblin",
@@ -448,96 +448,6 @@
         "code": "import os\nprint(os.get_cwd())",
         "answer": "import os\nprint(os.getcwd())",
         "hint": "The os module function is getcwd(), not get_cwd()."
-    },
-    {
-        "enemy_id": "beginner_dragon",
-        "difficulty": "easy",
-        "category": "Syntax Error",
-        "error_type": "SyntaxError: cannot use assignment '=' in conditional expression",
-        "code": "hp = 100\nif hp = 100:\n    print(\"Full HP\")",
-        "answer": "hp = 100\nif hp == 100:\n    print(\"Full HP\")",
-        "hint": "Equality comparison in if statements uses ==, not =."
-    },
-    {
-        "enemy_id": "beginner_dragon",
-        "difficulty": "easy",
-        "category": "Syntax Error",
-        "error_type": "SyntaxError: invalid syntax",
-        "code": "def attack():\n    return 25\nhero_hp -= attack()",
-        "answer": "def attack():\n    return 25\nhero_hp = 100\nhero_hp -= attack()",
-        "hint": "hero_hp must be initialized before subtracting damage."
-    },
-    {
-        "enemy_id": "beginner_dragon",
-        "difficulty": "easy",
-        "category": "Syntax Error",
-        "error_type": "SyntaxError: cannot use assignment '=' in conditional expression",
-        "code": "count = 0\nwhile count < 3\n    print(count)\n    count += 1",
-        "answer": "count = 0\nwhile count < 3:\n    print(count)\n    count += 1",
-        "hint": "The while loop header requires a colon (:)."
-    },
-    {
-        "enemy_id": "beginner_dragon",
-        "difficulty": "easy",
-        "category": "Syntax Error",
-        "error_type": "SyntaxError: invalid syntax",
-        "code": "inventory = [\"shield\", \"potion\"\nprint(inventory)",
-        "answer": "inventory = [\"shield\", \"potion\"]\nprint(inventory)",
-        "hint": "Close the list literal with a closing square bracket (])."
-    },
-    {
-        "enemy_id": "beginner_dragon",
-        "difficulty": "easy",
-        "category": "Syntax Error",
-        "error_type": "SyntaxError: invalid syntax",
-        "code": "def heal(amount)\n    return amount",
-        "answer": "def heal(amount):\n    return amount",
-        "hint": "Add a colon (:) at the end of the def heal(amount) line."
-    },
-    {
-        "enemy_id": "beginner_dragon",
-        "difficulty": "easy",
-        "category": "Syntax Error",
-        "error_type": "SyntaxError: invalid syntax",
-        "code": "player_score = 50\nprint(player_Score)",
-        "answer": "player_score = 50\nprint(player_score)",
-        "hint": "Match variable casing: player_score, not player_Score."
-    },
-    {
-        "enemy_id": "beginner_dragon",
-        "difficulty": "easy",
-        "category": "Syntax Error",
-        "error_type": "IndentationError: expected an indented block",
-        "code": "for i in range(3):\nprint(\"Fire!\")",
-        "answer": "for i in range(3):\n    print(\"Fire!\")",
-        "hint": "Indent the print statement inside the for loop."
-    },
-    {
-        "enemy_id": "beginner_dragon",
-        "difficulty": "easy",
-        "category": "Syntax Error",
-        "error_type": "SyntaxError: invalid syntax",
-        "code": "print(\"Boss Dragon\"",
-        "answer": "print(\"Boss Dragon\")",
-        "hint": "Close the parenthesis on print()."
-    },
-    {
-        "enemy_id": "beginner_dragon",
-        "difficulty": "easy",
-        "category": "Syntax Error",
-        "error_type": "SyntaxError: invalid syntax",
-        "code": "import random\nloot = random.randint(1, 10)\nprint(loot",
-        "answer": "import random\nloot = random.randint(1, 10)\nprint(loot)",
-        "hint": "Close the print(loot) call with a parenthesis."
-    },
-    {
-        "enemy_id": "beginner_dragon",
-        "difficulty": "easy",
-        "category": "Syntax Error",
-        "error_type": "SyntaxError: invalid syntax",
-        "code": "name = Dragon\nprint(name)",
-        "answer": "name = \"Dragon\"\nprint(name)",
-        "hint": "Enclose text values in quotes: \"Dragon\"."
     },
     {
         "enemy_id": "list_ogre",
@@ -2176,5 +2086,95 @@
         "code": "class BugHunt:\n    @staticmethod\n    def victory():\n        return \"Master Debugger Achieved!\"\nprint(BugHunt.victory)",
         "answer": "class BugHunt:\n    @staticmethod\n    def victory():\n        return \"Master Debugger Achieved!\"\nprint(BugHunt.victory())",
         "hint": "Call the victory() static method with parentheses to claim ultimate mastery."
+    },
+    {
+        "enemy_id": "beginner_dragon",
+        "difficulty": "easy",
+        "category": "Syntax Error",
+        "error_type": "SyntaxError: cannot use assignment '=' in conditional expression",
+        "code": "hp = 100\nif hp = 100:\n    print(\"Full HP\")",
+        "answer": "hp = 100\nif hp == 100:\n    print(\"Full HP\")",
+        "hint": "Equality comparison in if statements uses ==, not =."
+    },
+    {
+        "enemy_id": "beginner_dragon",
+        "difficulty": "easy",
+        "category": "Syntax Error",
+        "error_type": "SyntaxError: expected ':'",
+        "code": "if score > 10\n    print(\"Win\")",
+        "answer": "if score > 10:\n    print(\"Win\")",
+        "hint": "If statement headers must end with a colon (:)."
+    },
+    {
+        "enemy_id": "beginner_dragon",
+        "difficulty": "easy",
+        "category": "Syntax Error",
+        "error_type": "SyntaxError: expected ':'",
+        "code": "else\n    print(\"Try again\")",
+        "answer": "else:\n    print(\"Try again\")",
+        "hint": "An else statement header must end with a colon (:)."
+    },
+    {
+        "enemy_id": "beginner_dragon",
+        "difficulty": "easy",
+        "category": "Syntax Error",
+        "error_type": "SyntaxError: expected ':'",
+        "code": "elif choice == 2\n    print(\"Run\")",
+        "answer": "elif choice == 2:\n    print(\"Run\")",
+        "hint": "Elif statement headers must end with a colon (:)."
+    },
+    {
+        "enemy_id": "beginner_dragon",
+        "difficulty": "easy",
+        "category": "Syntax Error",
+        "error_type": "SyntaxError: expected ':'",
+        "code": "count = 0\nwhile count < 3\n    print(count)\n    count += 1",
+        "answer": "count = 0\nwhile count < 3:\n    print(count)\n    count += 1",
+        "hint": "The while loop header requires a colon (:)."
+    },
+    {
+        "enemy_id": "beginner_dragon",
+        "difficulty": "easy",
+        "category": "Syntax Error",
+        "error_type": "SyntaxError: invalid syntax",
+        "code": "inventory = [\"shield\", \"potion\"\nprint(inventory)",
+        "answer": "inventory = [\"shield\", \"potion\"]\nprint(inventory)",
+        "hint": "Close the list literal with a closing square bracket (])."
+    },
+    {
+        "enemy_id": "beginner_dragon",
+        "difficulty": "easy",
+        "category": "Syntax Error",
+        "error_type": "SyntaxError: expected ':'",
+        "code": "def heal(amount)\n    return amount",
+        "answer": "def heal(amount):\n    return amount",
+        "hint": "Add a colon (:) at the end of the def heal(amount) line."
+    },
+    {
+        "enemy_id": "beginner_dragon",
+        "difficulty": "easy",
+        "category": "Syntax Error",
+        "error_type": "NameError: name is not defined",
+        "code": "player_score = 50\nprint(player_Score)",
+        "answer": "player_score = 50\nprint(player_score)",
+        "hint": "Match variable casing: player_score, not player_Score."
+    },
+    {
+        "enemy_id": "beginner_dragon",
+        "difficulty": "easy",
+        "category": "Syntax Error",
+        "error_type": "IndentationError: expected an indented block",
+        "code": "for i in range(3):\nprint(\"Fire!\")",
+        "answer": "for i in range(3):\n    print(\"Fire!\")",
+        "hint": "Indent the print statement inside the for loop."
+    },
+    {
+        "enemy_id": "beginner_dragon",
+        "difficulty": "easy",
+        "category": "Syntax Error",
+        "error_type": "SyntaxError: unexpected EOF while parsing",
+        "code": "import random\nloot = random.randint(1, 10)\nprint(loot",
+        "answer": "import random\nloot = random.randint(1, 10)\nprint(loot)",
+        "hint": "Close the print(loot) function call with a parenthesis )."
     }
 ]
