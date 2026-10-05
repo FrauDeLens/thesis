@@ -1,3 +1,79 @@
+
+// =========================================================
+// PYTHON QUESTION SYNTAX & EQUIVALENCE VALIDATOR
+// =========================================================
+function testQuestionDiffAndSyntax(buggyCode, solutionAnswer) {
+    if (!buggyCode || !solutionAnswer) {
+        return {
+            valid: false,
+            message: "⚠️ Please enter both Buggy Code and Solution Answer before testing."
+        };
+    }
+
+    if (buggyCode.trim() === solutionAnswer.trim()) {
+        return {
+            valid: false,
+            message: "❌ Buggy code and Solution cannot be identical! The bug must be fixable."
+        };
+    }
+
+    if (typeof checkAnswersEquivalent === "function" && checkAnswersEquivalent(buggyCode, solutionAnswer)) {
+        return {
+            valid: false,
+            message: "⚠️ Notice: The solution normalizes to the exact same structure as the buggy code."
+        };
+    }
+
+    const issues = [];
+    const sol = solutionAnswer.trim();
+
+    // Check bracket balance
+    const pairs = { '(': ')', '[': ']', '{': '}' };
+    const stack = [];
+    let inSingle = false, inDouble = false;
+    for (let i = 0; i < sol.length; i++) {
+        const c = sol[i];
+        const prev = i > 0 ? sol[i - 1] : '';
+        if (c === "'" && prev !== '\\' && !inDouble) inSingle = !inSingle;
+        else if (c === '"' && prev !== '\\' && !inSingle) inDouble = !inDouble;
+        else if (!inSingle && !inDouble) {
+            if (c === '(' || c === '[' || c === '{') stack.push(c);
+            else if (c === ')' || c === ']' || c === '}') {
+                const open = stack.pop();
+                if (!open || pairs[open] !== c) {
+                    issues.push("Unmatched closing bracket '" + c + "'.");
+                }
+            }
+        }
+    }
+    if (inSingle || inDouble) issues.push("Unclosed quotation mark in solution.");
+    if (stack.length > 0) issues.push("Unclosed opening bracket '" + stack[stack.length - 1] + "'.");
+
+    // Check colons on control headers
+    const lines = sol.split('\n');
+    lines.forEach((line, idx) => {
+        const trimmed = line.trim();
+        if (/^(if|elif|else|for|while|def|class|try|except|finally|with)\b/.test(trimmed)) {
+            const withoutComment = trimmed.split('#')[0].trim();
+            if (!withoutComment.endsWith(':')) {
+                issues.push("Line " + (idx + 1) + " ('" + trimmed.slice(0, 25) + "...') is missing trailing colon ':'.");
+            }
+        }
+    });
+
+    if (issues.length > 0) {
+        return {
+            valid: false,
+            message: "⚠️ Solution syntax issues detected:\n• " + issues.join("\n• ")
+        };
+    }
+
+    return {
+        valid: true,
+        message: "✅ Verification passed! Solution has valid Python structure and is distinct from the buggy code."
+    };
+}
+
 // =========================================================
 // BUGHUNT: TEACHER & ADMIN WORKSPACE MODULE (js/admin.js)
 // =========================================================
@@ -232,159 +308,22 @@ function renderStudentTable() {
     });
 
     if (countBadge) {
-        countBadge.textContent = list.length + " Student" + (list.length === 1 ? "" : "s") + " Listed";
-    }
-
-    if (list.length === 0) {
-        container.innerHTML = "<div class='table-empty-notice'><p style='color:#d9a8ff'>🔍 No student records match the search or filter criteria.</p></div>";
-        return;
-    }
-
-    let html = "<table class='student-data-table'>";
-    html += "<thead><tr>";
-    html += "<th style='width:60px;text-align:center'>Rank</th>";
-    html += "<th style='min-width:220px'>Student Information</th>";
-    html += "<th style='min-width:140px;text-align:center'>True Points (Score)</th>";
-    html += "<th style='min-width:240px'>Stage Clearances</th>";
-    html += "<th style='min-width:180px'>Trophies Won</th>";
-    html += "<th style='min-width:160px'>Upgrades & Stats</th>";
-    html += "<th style='min-width:150px'>Last Activity</th>";
-    html += "</tr></thead><tbody>";
-
-    list.forEach(function (s, index) {
-        const rank = index + 1;
-        let rankClass = "rank-default";
-        let rankLabel = "#" + rank;
-        if (sortBy === "tp-desc") {
-            if (rank === 1) { rankClass = "rank-gold"; rankLabel = "🥇 1"; }
-            else if (rank === 2) { rankClass = "rank-silver"; rankLabel = "🥈 2"; }
-            else if (rank === 3) { rankClass = "rank-bronze"; rankLabel = "🥉 3"; }
-        }
-
-        const unlocks = s.unlocks || {};
-        const isEasy = unlocks.easy !== false;
-        const isNormal = !!unlocks.normal;
-        const isHard = !!unlocks.hard;
-        const isHell = !!unlocks.hell;
-
-        const trophies = s.trophies || {};
-        const eTrophies = (trophies.easy || []).length;
-        const nTrophies = (trophies.normal || []).length;
-        const hTrophies = (trophies.hard || []).length;
-        const hlTrophies = (trophies.hell || []).length;
-        const totalTrophies = eTrophies + nTrophies + hTrophies + hlTrophies;
-
-        const shop = s.shop || {};
-        const maxHp = shop.maxHp || 5;
-        const freeHints = shop.freeHints || 0;
-
-        let lastActiveStr = "Never";
-        if (s.last_seen) {
-            const d = new Date(s.last_seen);
-            if (!isNaN(d.getTime())) {
-                lastActiveStr = d.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }) +
-                    " " + d.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" });
-            }
-        } else if (s.created_at) {
-            const d = new Date(s.created_at);
-            if (!isNaN(d.getTime())) {
-                lastActiveStr = "Joined " + d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
-            }
-        }
-
-        html += "<tr>";
-        html += "<td style='text-align:center'><span class='student-rank-badge " + rankClass + "'>" + rankLabel + "</span></td>";
-        html += "<td><div class='student-name-cell'><span class='student-username'>" + escapeHtml(s.username) + "</span>";
-        if (s.full_name) {
-            html += "<span class='student-fullname'>" + escapeHtml(s.full_name) + "</span>";
-        }
-        html += "</div></td>";
-        html += "<td style='text-align:center'><span class='tp-score-badge'>⭐ " + (s.truePoints || 0).toLocaleString() + " TP</span></td>";
-        html += "<td><div class='clearance-chips-group'>";
-        html += "<span class='stage-chip stage-easy " + (isEasy ? "unlocked" : "locked") + "'>" + (isEasy ? "EASY ✓" : "EASY 🔒") + "</span>";
-        html += "<span class='stage-chip stage-normal " + (isNormal ? "unlocked" : "locked") + "'>" + (isNormal ? "NORMAL ✓" : "NORMAL 🔒") + "</span>";
-        html += "<span class='stage-chip stage-hard " + (isHard ? "unlocked" : "locked") + "'>" + (isHard ? "HARD ✓" : "HARD 🔒") + "</span>";
-        html += "<span class='stage-chip stage-hell " + (isHell ? "unlocked" : "locked") + "'>" + (isHell ? "HELL ✓" : "HELL 🔒") + "</span>";
-        html += "</div></td>";
-        html += "<td><div class='trophies-summary-pill'><span class='trophy-total-count'>🏆 " + totalTrophies + "</span>";
-        html += "<span class='trophy-mini-breakdown'>(E:" + eTrophies + " N:" + nTrophies + " H:" + hTrophies + " Hell:" + hlTrophies + ")</span></div></td>";
-        html += "<td><div style='font-size:12px;color:#d9c0e5;display:flex;flex-direction:column;gap:2px'>";
-        html += "<span>❤️ Max HP: <strong style='color:#ffffff'>" + maxHp + " / 10</strong></span>";
-        html += "<span>💡 Free Hints: <strong style='color:#ffffff'>" + freeHints + "</strong></span>";
-        html += "</div></td>";
-        html += "<td><span class='student-time-text'>" + lastActiveStr + "</span></td>";
-        html += "</tr>";
-    });
-
-    html += "</tbody></table>";
-    container.innerHTML = html;
-}
-
-// ==========================
-// QUESTION & ANSWER BANK LOGIC
-// ==========================
-
-async function loadQuestionPoolList() {
-    const container = document.getElementById("question-pool-list");
-    if (!container) return;
-    container.innerHTML = "<div class='table-empty-notice'><p style='color:#e5b3ff;font-family:monospace'>Loading question bank...</p></div>";
-
-    try {
-        const data = await api("questions.php", "GET");
-        cachedAdminQuestions = data.questions || [];
-
-        const navQBadge = document.getElementById("nav-question-count");
-        if (navQBadge) navQBadge.textContent = cachedAdminQuestions.length;
-
-        renderQuestionBank();
-    } catch (e) {
-        container.innerHTML = "<div class='table-empty-notice'><p style='color:#ff6b6b'>Failed to load questions: " + escapeHtml(e.message) + "</p></div>";
-    }
-}
-
-function renderQuestionBank() {
-    const container = document.getElementById("question-pool-list");
-    const countBadge = document.getElementById("question-bank-count");
-    if (!container) return;
-
-    const keyword = (document.getElementById("question-search-input") ? document.getElementById("question-search-input").value : "").trim().toLowerCase();
-    const enemyFilter = document.getElementById("question-bank-enemy-filter") ? document.getElementById("question-bank-enemy-filter").value : "all";
-    const categoryFilter = document.getElementById("question-bank-category-filter") ? document.getElementById("question-bank-category-filter").value : "all";
-
-    let list = cachedAdminQuestions.slice();
-
-    if (categoryFilter !== "all") {
-        list = list.filter(function (q) {
-            const cat = (q.category || "").toLowerCase();
-            return cat.includes(categoryFilter.toLowerCase());
-        });
-    }
-
-    if (currentQuestionFilterTier !== "all") {
-        list = list.filter(function (q) {
-            return (q.difficulty || "").toLowerCase() === currentQuestionFilterTier;
-        });
-    }
-
-    if (enemyFilter !== "all") {
-        list = list.filter(function (q) {
-            return q.enemy_id === enemyFilter;
-        });
-    }
-
-    if (keyword) {
-        list = list.filter(function (q) {
-            const code = (q.code || "").toLowerCase();
-            const ans = (q.answer || "").toLowerCase();
-            const hint = (q.hint || "").toLowerCase();
-            const enemy = (q.enemy_id || "").toLowerCase();
-            return code.includes(keyword) || ans.includes(keyword) || hint.includes(keyword) || enemy.includes(keyword);
-        });
-    }
-
-    if (countBadge) {
         countBadge.textContent = list.length + " Challenge" + (list.length === 1 ? "" : "s");
     }
+
+    // Live Category KPI Counts
+    const totalSyntax = cachedAdminQuestions.filter(function (q) { return (q.category || "").toLowerCase().includes("syntax"); }).length;
+    const totalLogic = cachedAdminQuestions.filter(function (q) { return (q.category || "").toLowerCase().includes("log"); }).length;
+    const totalRuntime = cachedAdminQuestions.filter(function (q) { return (q.category || "").toLowerCase().includes("runtime"); }).length;
+
+    const synEl = document.getElementById("bank-cat-syntax-count");
+    if (synEl) synEl.textContent = totalSyntax;
+    const logEl = document.getElementById("bank-cat-logic-count");
+    if (logEl) logEl.textContent = totalLogic;
+    const runEl = document.getElementById("bank-cat-runtime-count");
+    if (runEl) runEl.textContent = totalRuntime;
+    const allEl = document.getElementById("bank-cat-all-count");
+    if (allEl) allEl.textContent = cachedAdminQuestions.length;
 
     if (list.length === 0) {
         container.innerHTML = "<div class='table-empty-notice'><p style='color:#d9a8ff'>📚 No questions found matching the selected filters.</p></div>";
@@ -410,6 +349,9 @@ function renderQuestionBank() {
         html += "<div class='qcard-header'>";
         html += "<span class='qcard-tier-badge tier-" + diffLower + "-badge'>" + diffLower.toUpperCase() + "</span>";
         if (catBadgeHtml) html += catBadgeHtml;
+        if (q.error_type) {
+            html += "<span class='qcard-error-type-tag'>🏷️ " + escapeHtml(q.error_type) + "</span>";
+        }
         html += "<span class='qcard-enemy-name'>" + escapeHtml(friendlyEnemy) + "</span>";
         html += "<span class='qcard-id-tag'>ID #" + q.id + "</span>";
         html += "<div class='qcard-actions-group'>";
@@ -504,6 +446,9 @@ function adminOpenEditModal(id) {
     if (document.getElementById("edit-question-category")) {
         document.getElementById("edit-question-category").value = q.category || "Syntax Error";
     }
+    if (document.getElementById("edit-question-error-type")) {
+        document.getElementById("edit-question-error-type").value = q.error_type || "";
+    }
     document.getElementById("edit-question-code").value = q.code || "";
     document.getElementById("edit-question-answer").value = q.answer || "";
     document.getElementById("edit-question-hint").value = q.hint || "";
@@ -557,11 +502,13 @@ async function adminSaveEditedQuestion() {
         }
 
         const category = document.getElementById("edit-question-category") ? document.getElementById("edit-question-category").value : "Syntax Error";
+        const error_type = document.getElementById("edit-question-error-type") ? document.getElementById("edit-question-error-type").value.trim() : "";
         await api("questions.php", "PUT", {
             id: id,
             difficulty: difficulty,
             enemy_id: enemy_id,
             category: category,
+            error_type: error_type,
             code: code,
             answer: answer,
             hint: hint
@@ -572,6 +519,7 @@ async function adminSaveEditedQuestion() {
             item.difficulty = difficulty;
             item.enemy_id = enemy_id;
             item.category = category;
+            item.error_type = error_type;
             item.code = code;
             item.answer = answer;
             item.hint = hint;
@@ -674,6 +622,20 @@ document.addEventListener("DOMContentLoaded", function () {
             if (adminViewTitle) adminViewTitle.textContent = "QUESTION & ANSWER BANK";
             if (adminViewSubtitle) adminViewSubtitle.textContent = "Manage Python bug challenges, answers, and hints for all difficulty levels.";
             fillEnemySelect();
+
+    // Attach click listeners to category KPI pills
+    document.querySelectorAll(".bank-pill-mini").forEach(function (pill) {
+        pill.addEventListener("click", function () {
+            const cat = this.getAttribute("data-cat") || "all";
+            const catSelect = document.getElementById("question-bank-category-filter");
+            if (catSelect) {
+                catSelect.value = cat;
+                renderQuestionBank();
+            }
+        });
+    });
+    // kpi-pill-listener-attached
+
             loadQuestionPoolList();
         });
     }
@@ -697,6 +659,21 @@ document.addEventListener("DOMContentLoaded", function () {
     const saveEditBtn = document.getElementById("save-edit-question-btn");
     if (saveEditBtn) saveEditBtn.addEventListener("click", adminSaveEditedQuestion);
 
+    const testEditBtn = document.getElementById("test-edit-question-btn");
+    if (testEditBtn) {
+        testEditBtn.addEventListener("click", function () {
+            const code = document.getElementById("edit-question-code").value;
+            const answer = document.getElementById("edit-question-answer").value;
+            const msg = document.getElementById("edit-question-message");
+            const res = testQuestionDiffAndSyntax(code, answer);
+            if (msg) {
+                msg.style.display = "block";
+                msg.className = "admin-form-message " + (res.valid ? "success" : "error");
+                msg.textContent = res.message;
+            }
+        });
+    }
+
     const addQuestionBtn = document.getElementById("add-question-button");
     if (addQuestionBtn) {
         addQuestionBtn.addEventListener("click", async function () {
@@ -705,15 +682,19 @@ document.addEventListener("DOMContentLoaded", function () {
             const codeInput = document.getElementById("question-code");
             const answerInput = document.getElementById("question-answer");
             const hintInput = document.getElementById("question-hint");
+            const errorTypeInput = document.getElementById("question-error-type");
             const msg = document.getElementById("question-form-message");
 
             const code = codeInput ? codeInput.value.trim() : "";
             const answer = answerInput ? answerInput.value.trim() : "";
             const hint = hintInput ? hintInput.value.trim() : "";
+            const error_type = errorTypeInput ? errorTypeInput.value.trim() : "";
+            const category = document.getElementById("question-category") ? document.getElementById("question-category").value : "Syntax Error";
 
             if (!code || !answer) {
                 if (msg) {
                     msg.className = "admin-form-message error";
+                    msg.style.display = "block";
                     msg.textContent = "⚠️ Please provide both the Buggy Code and Correct Answer.";
                 }
                 return;
@@ -725,11 +706,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     msg.style.display = "block";
                     msg.textContent = "Submitting challenge...";
                 }
-                const category = document.getElementById("question-category") ? document.getElementById("question-category").value : "Syntax Error";
                 await api("questions.php", "POST", {
                     difficulty: diff,
                     enemy_id: enemy,
                     category: category,
+                    error_type: error_type,
                     code: code,
                     answer: answer,
                     hint: hint
@@ -743,6 +724,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (codeInput) codeInput.value = "";
                 if (answerInput) answerInput.value = "";
                 if (hintInput) hintInput.value = "";
+                if (errorTypeInput) errorTypeInput.value = "";
 
                 loadQuestionPoolList();
 
@@ -756,6 +738,21 @@ document.addEventListener("DOMContentLoaded", function () {
                     msg.className = "admin-form-message error";
                     msg.textContent = "❌ Error adding question: " + e.message;
                 }
+            }
+        });
+    }
+
+    const testQuestionBtn = document.getElementById("test-question-button");
+    if (testQuestionBtn) {
+        testQuestionBtn.addEventListener("click", function () {
+            const codeInput = document.getElementById("question-code");
+            const answerInput = document.getElementById("question-answer");
+            const msg = document.getElementById("question-form-message");
+            const res = testQuestionDiffAndSyntax(codeInput ? codeInput.value : "", answerInput ? answerInput.value : "");
+            if (msg) {
+                msg.style.display = "block";
+                msg.className = "admin-form-message " + (res.valid ? "success" : "error");
+                msg.textContent = res.message;
             }
         });
     }

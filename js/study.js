@@ -7,6 +7,7 @@
     let currentDifficulty = "easy";
     let selectedTopicId = null;
     let searchQuery = "";
+    let currentCategoryFilter = "all";
 
     // DOM Elements Cache
     let codexScreen = null;
@@ -16,6 +17,16 @@
     let codexSearchInput = null;
     let codexSearchClear = null;
     let codexTabs = [];
+
+    // Helper: Localize topic based on active language (en or fil)
+    function getLocalizedTopic(topic) {
+        if (!topic) return topic;
+        const lang = (typeof getLanguage === "function") ? getLanguage() : "en";
+        const loc = topic[lang] || topic["en"] || {};
+        return Object.assign({}, topic, loc, {
+            bugCategory: loc.bugCategory || topic.bugCategory || "Syntax Error"
+        });
+    }
 
     // Helper: Simple Markdown to HTML Formatter
     function formatMarkdown(text) {
@@ -151,15 +162,22 @@
         const allTopics = rawTopics.map(t => (typeof getLocalizedTopic === "function" ? getLocalizedTopic(t) : t));
 
         // Apply Search Filtering (across title, enemy, summary, category, errorType)
-        const filtered = allTopics.filter(t => {
+        let filtered = allTopics.filter(t => {
             if (!searchQuery) return true;
             const inTitle = (t.title || "").toLowerCase().includes(searchQuery);
             const inEnemy = (t.enemyName || "").toLowerCase().includes(searchQuery);
             const inSummary = (t.summary || "").toLowerCase().includes(searchQuery);
-            const inCat = (t.category || "").toLowerCase().includes(searchQuery);
+            const inCat = (t.bugCategory || t.category || "").toLowerCase().includes(searchQuery);
             const inErr = (t.bugExample && t.bugExample.errorType ? t.bugExample.errorType.toLowerCase() : "").includes(searchQuery);
             return inTitle || inEnemy || inSummary || inCat || inErr;
         });
+
+        if (currentCategoryFilter !== "all") {
+            filtered = filtered.filter(t => {
+                const cat = (t.bugCategory || t.category || "").toLowerCase();
+                return cat.includes(currentCategoryFilter.toLowerCase());
+            });
+        }
 
         const lang = typeof getLanguage === "function" ? getLanguage() : "en";
 
@@ -229,7 +247,13 @@
                 ${spriteHtml}
                 <div class="topic-info-wrap">
                     <div class="topic-card-category-row">
-                        <span class="topic-card-category">${topic.category || currentDifficulty.toUpperCase()}</span>
+                        <span class="topic-card-category ${
+    (topic.bugCategory || topic.category || "").toLowerCase().includes("syntax") ? "cat-syntax" :
+    (topic.bugCategory || topic.category || "").toLowerCase().includes("log") ? "cat-logical" : "cat-runtime"
+}">${
+    (topic.bugCategory || topic.category || "").toLowerCase().includes("syntax") ? "⚡ " :
+    (topic.bugCategory || topic.category || "").toLowerCase().includes("log") ? "🧠 " : "💥 "
+}${topic.bugCategory || topic.category || currentDifficulty.toUpperCase()}</span>
                         ${errorTypeLabel ? `<span class="topic-card-error-pill">${errorTypeLabel}</span>` : ""}
                     </div>
                     <div class="topic-card-title">${topic.title}</div>
@@ -412,10 +436,103 @@
                         ${topic.bugExample?.errorType ? `<span class="lesson-badge badge-error">⚡ ${escapeHtml(topic.bugExample.errorType)}</span>` : ""}
                         <span class="lesson-badge badge-category">${topic.category || "Basics"}</span>
                     </div>
+                    <!-- Hero Banner -->
+            <div class="lesson-hero-banner">
+                ${topic.sprite ? `
+                    <div class="hero-sprite-frame">
+                        <img class="lesson-hero-sprite" src="${topic.sprite}" alt="${topic.enemyName || 'Enemy'}">
+                    </div>
+                ` : ""}
+                <div class="lesson-hero-details">
+                    <div class="lesson-hero-tags">
+                        <span class="lesson-badge ${diffBadgeClass}">${currentDifficulty.toUpperCase()}</span>
+                        ${topic.enemyName ? `<span class="lesson-badge badge-enemy">👾 ${topic.enemyName}</span>` : ""}
+                        ${topic.bugExample?.errorType ? `<span class="lesson-badge badge-error">⚡ ${escapeHtml(topic.bugExample.errorType)}</span>` : ""}
+                        <span class="lesson-badge badge-category">${topic.bugCategory || topic.category || "Basics"}</span>
+                    </div>
                     <h2 class="lesson-hero-title">${escapeHtml(topic.title)}</h2>
                     <p class="lesson-hero-summary">${escapeHtml(topic.summary)}</p>
                 </div>
             </div>
+
+            <!-- Bug Classification & Diagnostics Overview -->
+            ${(() => {
+                const cat = (topic.bugCategory || topic.category || "Syntax Error").toLowerCase();
+                const isSyntax = cat.includes("syntax");
+                const isLogical = cat.includes("log");
+                const isRuntime = !isSyntax && !isLogical;
+
+                const borderClass = isSyntax ? "syntax-border" : isLogical ? "logical-border" : "runtime-border";
+                const badgeClass = isSyntax ? "syntax" : isLogical ? "logical" : "runtime";
+                const catLabel = isSyntax ? "⚡ SYNTAX ERROR" : isLogical ? "🧠 LOGICAL ERROR" : "💥 RUNTIME ERROR";
+
+                const phaseEn = isSyntax ? "Parsing / Compile Phase" : isLogical ? "Post-Run Execution Logic" : "Mid-Execution Phase";
+                const phaseFil = isSyntax ? "Yugto ng Parsing (Bago Patakbuhin)" : isLogical ? "Yugto ng Lohika (Walang Crash pero Mali)" : "Yugto ng Pagpapatakbo (Unhandled Exception)";
+
+                const causeEn = isSyntax 
+                    ? "Violates Python formal grammar rules (missing colons, unclosed quotes, parentheses mismatch, or invalid indentation)."
+                    : isLogical
+                    ? "Valid syntax and completes without crashing, but outputs wrong answers, loops endlessly, or mishandles algorithm state."
+                    : "Valid syntax that crashes mid-execution when illegal operations occur (e.g., dividing by zero, missing dictionary key, or list index out of range).";
+
+                const causeFil = isSyntax
+                    ? "Lumalabag sa baririla ng Python (kulang na colon, bukas na quote o parenthesis, o maling indentation)."
+                    : isLogical
+                    ? "Wastong syntax at hindi nag-crash, ngunit mali ang kinalabasan, walang katapusang loop, o maling DFS traversal."
+                    : "Wastong syntax ngunit biglang nag-crash sa gitna dahil sa bawal na operasyon (hal. divide by zero, KeyError, o IndexError).";
+
+                const reactionEn = isSyntax
+                    ? "Python stops parsing immediately and halts before executing line 1."
+                    : isLogical
+                    ? "Python runs silently to the end; programmer must trace variable state or use debugger to locate the flaw."
+                    : "Python halts immediately and prints an explicit Traceback with line numbers and exception name.";
+
+                const reactionFil = isSyntax
+                    ? "Agad na humihinto ang Python at hindi man lang magsisimula ang execution."
+                    : isLogical
+                    ? "Tahimik na tatakbo ang Python hanggang dulo; kailangang i-trace ng programmer ang variable state."
+                    : "Biglang hihinto ang Python at maglalabas ng Traceback na may numero ng linya at pangalan ng Exception.";
+
+                const fixEn = isSyntax
+                    ? "Match all opening/closing pairs, add colons to control statements, and maintain consistent 4-space indentation."
+                    : isLogical
+                    ? "Audit loop boundaries, verify algorithm preconditions, track visited sets in graph DFS, and test edge cases."
+                    : "Validate inputs before use, use safe accessors like dict.get(), and wrap risky operations in try-except blocks.";
+
+                const fixFil = isSyntax
+                    ? "Ipares ang lahat ng panaklong at quotes, maglagay ng colon sa header, at panatilihin ang 4-space indentation."
+                    : isLogical
+                    ? "Suriin ang loop conditions, tiyakin ang visited set sa graph DFS, at mag-test gamit ang boundary values."
+                    : "Suriin muna ang input, gamitin ang dict.get(), o kaya ay saluhin gamit ang try-except block.";
+
+                return `
+                    <div class="lesson-bug-classification-card ${borderClass}">
+                        <div class="classification-header">
+                            <div class="classification-badges-left">
+                                <span class="classification-badge ${badgeClass}">${catLabel}</span>
+                                <span class="classification-phase">${lang === 'fil' ? phaseFil : phaseEn}</span>
+                            </div>
+                            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#d9c0e5">
+                                <strong>TARGET ERROR:</strong> ${escapeHtml(topic.bugExample?.errorType || 'Python Bug')}
+                            </span>
+                        </div>
+                        <div class="classification-grid">
+                            <div class="classification-col">
+                                <span class="classification-col-title">⚠️ ${lang === 'fil' ? 'Ano ang Sanhi?' : 'Root Cause'}</span>
+                                <p class="classification-col-desc">${lang === 'fil' ? causeFil : causeEn}</p>
+                            </div>
+                            <div class="classification-col">
+                                <span class="classification-col-title">⚙️ ${lang === 'fil' ? 'Reaksyon ng Python' : 'Interpreter Reaction'}</span>
+                                <p class="classification-col-desc">${lang === 'fil' ? reactionFil : reactionEn}</p>
+                            </div>
+                            <div class="classification-col">
+                                <span class="classification-col-title">🛡️ ${lang === 'fil' ? 'Paraan ng Pag-ayos' : 'Resolution Defense'}</span>
+                                <p class="classification-col-desc">${lang === 'fil' ? fixFil : fixEn}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            })()}
 
             <!-- Quick Navigation Jump Bar -->
             <div class="codex-jump-bar">

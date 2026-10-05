@@ -1245,3 +1245,208 @@
 .codex-content-area::-webkit-scrollbar-thumb:hover {
     background: #8e44ad;
 }
+
+
+/* =========================================================
+   CODEX CATEGORY FILTER BAR & BUG CLASSIFICATION CARD
+========================================================= */
+
+.codex-category-filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: rgba(18, 2, 28, 0.85);
+    border-bottom: 1px solid #4a1961;
+    overflow-x: auto;
+    flex-shrink: 0;
+}
+
+.codex-cat-filter-btn {
+    background: rgba(45, 10, 65, 0.6);
+    border: 1px solid #6b248a;
+    color: #e5b3ff;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 14px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.codex-cat-filter-btn:hover {
+    background: #6a1b9a;
+    border-color: #d400ff;
+    color: #ffffff;
+    box-shadow: 0 0 10px rgba(212, 0, 255, 0.4);
+}
+
+.codex-cat-filter-btn.active {
+    background: #d400ff;
+    border-color: #f0c8ff;
+    color: #ffffff;
+    box-shadow: 0 0 12px rgba(212, 0, 255, 0.6);
+}
+
+.codex-cat-filter-btn.cat-syntax.active, .codex-cat-filter-btn.cat-syntax:hover {
+    background: #ffaa00;
+    border-color: #ffe066;
+    color: #220d00;
+    box-shadow: 0 0 12px rgba(255, 170, 0, 0.6);
+}
+
+.codex-cat-filter-btn.cat-logical.active, .codex-cat-filter-btn.cat-logical:hover {
+    background: #00f0ff;
+    border-color: #a8f8ff;
+    color: #002533;
+    box-shadow: 0 0 12px rgba(0, 240, 255, 0.6);
+}
+
+.codex-cat-filter-btn.cat-runtime.active, .codex-cat-filter-btn.cat-runtime:hover {
+    background: #ff4466;
+    border-color: #ff99b0;
+    color: #ffffff;
+    box-shadow: 0 0 12px rgba(255, 68, 102, 0.6);
+}
+
+/* Topic Card Category Pills */
+.topic-card-category.cat-syntax {
+    color: #ffcc44;
+    border: 1px solid rgba(255, 170, 0, 0.5);
+    background: rgba(255, 170, 0, 0.12);
+}
+
+.topic-card-category.cat-logical {
+    color: #70f0ff;
+    border: 1px solid rgba(0, 240, 255, 0.5);
+    background: rgba(0, 240, 255, 0.12);
+}
+
+.topic-card-category.cat-runtime {
+    color: #ff88a3;
+    border: 1px solid rgba(255, 68, 102, 0.5);
+    background: rgba(255, 68, 102, 0.12);
+}
+
+/* Bug Classification Diagnostic Banner */
+.lesson-bug-classification-card {
+    margin: 16px 0 24px 0;
+    padding: 18px 20px;
+    background: linear-gradient(135deg, rgba(30, 8, 45, 0.95) 0%, rgba(15, 2, 24, 0.98) 100%);
+    border: 1.5px solid #74368e;
+    border-left: 5px solid #d400ff;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.lesson-bug-classification-card.syntax-border {
+    border-color: #ffaa00;
+    border-left-color: #ffaa00;
+    box-shadow: 0 0 20px rgba(255, 170, 0, 0.15);
+}
+
+.lesson-bug-classification-card.logical-border {
+    border-color: #00f0ff;
+    border-left-color: #00f0ff;
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+}
+
+.lesson-bug-classification-card.runtime-border {
+    border-color: #ff4466;
+    border-left-color: #ff4466;
+    box-shadow: 0 0 20px rgba(255, 68, 102, 0.15);
+}
+
+.classification-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 10px;
+}
+
+.classification-badges-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.classification-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.classification-badge.syntax {
+    background: #ffaa00;
+    color: #1a0800;
+}
+
+.classification-badge.logical {
+    background: #00f0ff;
+    color: #002233;
+}
+
+.classification-badge.runtime {
+    background: #ff4466;
+    color: #ffffff;
+}
+
+.classification-phase {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #e5b3ff;
+    background: rgba(140, 60, 220, 0.2);
+    border: 1px solid rgba(212, 0, 255, 0.4);
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
+.classification-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+@media (max-width: 900px) {
+    .classification-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.classification-col {
+    background: rgba(10, 0, 18, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 6px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.classification-col-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #c9a0dc;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.classification-col-desc {
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: #f0e6f6;
+    margin: 0;
+}

@@ -1,6 +1,7 @@
 // =========================================================
 // BUGHUNT: PYTHON CODEX & STUDY CURRICULUM DATA (data/pythonLessons.js)
 // Bilingual everyday conversational English and Filipino
+// Categorized by Syntax, Logical, and Runtime errors
 // =========================================================
 
 const PYTHON_CODEX_DATA = {
@@ -39,7 +40,8 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "B is correct. Python if statements end with a colon ':' and do not use curly braces '{}'."
-                }
+                },
+                "bugCategory": "Syntax Error"
             },
             "fil": {
                 "title": "Python Syntax at Punctuation",
@@ -70,8 +72,10 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "B ang tama. Sa Python, nagtatapos sa colon ':' ang if statement at hindi gumagamit ng curly braces '{}'."
-                }
-            }
+                },
+                "bugCategory": "Syntax Error"
+            },
+            "bugCategory": "Syntax Error"
         },
         {
             "id": "easy_variables",
@@ -107,7 +111,8 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "B is correct. The '+=' operator adds the value to the variable in Python."
-                }
+                },
+                "bugCategory": "Runtime Error"
             },
             "fil": {
                 "title": "Variables, Pangalan at Pagdadagdag",
@@ -138,8 +143,10 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "B ang tama. Ang '+=' operator ang wastong paraan para magdagdag ng halaga sa variable sa Python."
-                }
-            }
+                },
+                "bugCategory": "Runtime Error"
+            },
+            "bugCategory": "Runtime Error"
         },
         {
             "id": "easy_loops",
@@ -175,7 +182,8 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "3 times (0, 1, and 2). range(3) gives three numbers starting at 0."
-                }
+                },
+                "bugCategory": "Logical Error"
             },
             "fil": {
                 "title": "Loops: for at while Statements",
@@ -206,8 +214,10 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "3 beses (0, 1, at 2). Ang range(3) ay nagbibigay ng tatlong numero simula sa 0."
-                }
-            }
+                },
+                "bugCategory": "Logical Error"
+            },
+            "bugCategory": "Logical Error"
         },
         {
             "id": "easy_functions",
@@ -243,7 +253,8 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "Forgot 'return total'. Without a return statement, Python functions automatically return None."
-                }
+                },
+                "bugCategory": "Logical Error"
             },
             "fil": {
                 "title": "Functions: def, Parameters at Return",
@@ -274,8 +285,10 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "Nakalimutan ang 'return total'. Kung walang return statement, laging None ang ibinabalik ng Python."
-                }
-            }
+                },
+                "bugCategory": "Logical Error"
+            },
+            "bugCategory": "Logical Error"
         },
         {
             "id": "easy_imports",
@@ -379,7 +392,8 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "points++ has the error. Python doesn't have '++'. It should be 'points += 1'."
-                }
+                },
+                "bugCategory": "Syntax Error"
             },
             "fil": {
                 "title": "Beginner Dragon: Buod ng Aralin",
@@ -410,8 +424,10 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "Ang points++ ang may error. Walang '++' sa Python. Dapat itong 'points += 1'."
-                }
-            }
+                },
+                "bugCategory": "Syntax Error"
+            },
+            "bugCategory": "Syntax Error"
         }
     ],
     "normal": [
@@ -449,7 +465,8 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "'green'. Because Python is 0-indexed: index 0 is 'red', index 1 is 'green'."
-                }
+                },
+                "bugCategory": "Runtime Error"
             },
             "fil": {
                 "title": "Lists, 0-Indexing at .append()",
@@ -480,8 +497,10 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "'green'. Nagsisimula sa 0 ang bilang: index 0 ay 'red', index 1 ay 'green'."
-                }
-            }
+                },
+                "bugCategory": "Runtime Error"
+            },
+            "bugCategory": "Runtime Error"
         },
         {
             "id": "normal_dicts",
@@ -517,7 +536,8 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "data['gold'] is correct. Python dictionaries use square brackets with quotes."
-                }
+                },
+                "bugCategory": "Runtime Error"
             },
             "fil": {
                 "title": "Dictionaries: Keys, Values at Ligtas na Pagbasa",
@@ -548,8 +568,10 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "data['gold'] ang tama. Square brackets na may quotes ang paraan sa Python."
-                }
-            }
+                },
+                "bugCategory": "Runtime Error"
+            },
+            "bugCategory": "Runtime Error"
         },
         {
             "id": "normal_recursion",
@@ -585,7 +607,8 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "It causes a RecursionError because Python runs out of memory calling itself endlessly."
-                }
+                },
+                "bugCategory": "Runtime Error"
             },
             "fil": {
                 "title": "Recursion: Base Case at Pagtawag sa Sarili",
@@ -616,8 +639,10 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "Magdudulot ito ng RecursionError dahil mauubos ang memory sa walang-katapusang pagtawag sa sarili."
-                }
-            }
+                },
+                "bugCategory": "Runtime Error"
+            },
+            "bugCategory": "Runtime Error"
         },
         {
             "id": "normal_classes",
@@ -653,7 +678,8 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "Missing 'self' parameter. Python passes the object instance automatically, so def defend(self): is required."
-                }
+                },
+                "bugCategory": "Runtime Error"
             },
             "fil": {
                 "title": "Classes, Objects at ang 'self' Keyword",
@@ -684,8 +710,10 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "Kulang ng 'self' parameter. Awtomatikong ipinapasa ng Python ang object, kaya kailangan ng def defend(self):."
-                }
-            }
+                },
+                "bugCategory": "Runtime Error"
+            },
+            "bugCategory": "Runtime Error"
         },
         {
             "id": "normal_exceptions",
@@ -721,7 +749,8 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "ZeroDivisionError. This is the specific error Python raises for division by zero."
-                }
+                },
+                "bugCategory": "Runtime Error"
             },
             "fil": {
                 "title": "Error Handling: try at except",
@@ -752,8 +781,10 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "ZeroDivisionError. Ito ang partikular na error ng Python para sa division by zero."
-                }
-            }
+                },
+                "bugCategory": "Runtime Error"
+            },
+            "bugCategory": "Runtime Error"
         },
         {
             "id": "normal_titan",
@@ -789,7 +820,8 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "players[0]['name']. Get the first list element at [0] first, then look up the 'name' key."
-                }
+                },
+                "bugCategory": "Logical Error"
             },
             "fil": {
                 "title": "Normal Titan: Buod ng Aralin",
@@ -820,8 +852,10 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "players[0]['name']. Kunin muna ang index 0 ng list, tapos kunin ang 'name' key ng dictionary."
-                }
-            }
+                },
+                "bugCategory": "Logical Error"
+            },
+            "bugCategory": "Logical Error"
         }
     ],
     "hard": [
@@ -859,7 +893,8 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "None. When n = 2, solve(1) is called but not returned, so Python defaults to None."
-                }
+                },
+                "bugCategory": "Logical Error"
             },
             "fil": {
                 "title": "Advanced Recursion at Nawawalang Return",
@@ -890,8 +925,10 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "None. Kapag n = 2, tinawag ang solve(1) pero hindi ito in-return sa huling linya kaya naging None."
-                }
-            }
+                },
+                "bugCategory": "Logical Error"
+            },
+            "bugCategory": "Logical Error"
         },
         {
             "id": "hard_dicts",
@@ -927,7 +964,8 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 2,
                     "solution": ".items() is the built-in method that provides (key, value) pairs."
-                }
+                },
+                "bugCategory": "Runtime Error"
             },
             "fil": {
                 "title": "Advanced Dicts: .items() at .pop()",
@@ -958,8 +996,10 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 2,
                     "solution": ".items() ang opisyal na method para makakuha ng (key, value) pairs."
-                }
-            }
+                },
+                "bugCategory": "Runtime Error"
+            },
+            "bugCategory": "Runtime Error"
         },
         {
             "id": "hard_init",
@@ -995,7 +1035,8 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 2,
                     "solution": "C (__init__) is correct. Constructors in Python use two underscores on each side."
-                }
+                },
+                "bugCategory": "Runtime Error"
             },
             "fil": {
                 "title": "Constructors: __init__ at Instance Variables",
@@ -1026,8 +1067,10 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 2,
                     "solution": "C (__init__) ang tama. May tig-dalawang underscores ito sa unahan at dulo."
-                }
-            }
+                },
+                "bugCategory": "Runtime Error"
+            },
+            "bugCategory": "Runtime Error"
         },
         {
             "id": "hard_inheritance",
@@ -1063,7 +1106,8 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "B: class Player(Entity): is correct. The parent class is placed inside parentheses."
-                }
+                },
+                "bugCategory": "Logical Error"
             },
             "fil": {
                 "title": "Inheritance at ang super() Method",
@@ -1094,8 +1138,10 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "B: class Player(Entity): ang tama. Inilalagay ang parent class sa loob ng panaklong."
-                }
-            }
+                },
+                "bugCategory": "Logical Error"
+            },
+            "bugCategory": "Logical Error"
         },
         {
             "id": "hard_exceptions",
@@ -1131,7 +1177,8 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "B: raise ValueError(\"Invalid\"). 'raise' is Python's official keyword."
-                }
+                },
+                "bugCategory": "Runtime Error"
             },
             "fil": {
                 "title": "Paggamit ng 'raise' at ang finally Block",
@@ -1162,8 +1209,10 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "B: raise ValueError(\"Invalid\"). 'raise' ang opisyal na salita sa Python."
-                }
-            }
+                },
+                "bugCategory": "Runtime Error"
+            },
+            "bugCategory": "Runtime Error"
         },
         {
             "id": "hard_boss",
@@ -1199,7 +1248,8 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 0,
                     "solution": "A is legal Python code. It uses (B) for inheritance and super().__init__() for parent constructor."
-                }
+                },
+                "bugCategory": "Logical Error"
             },
             "fil": {
                 "title": "Code Titan: Buod ng Aralin",
@@ -1230,8 +1280,10 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 0,
                     "solution": "A ang legal na Python code gamit ang (B) para sa inheritance at super().__init__()."
-                }
-            }
+                },
+                "bugCategory": "Logical Error"
+            },
+            "bugCategory": "Logical Error"
         }
     ],
     "hell": [
@@ -1269,7 +1321,8 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "[1, 2, 3]. Because lists are mutable, y = x simply shares the same reference in memory."
-                }
+                },
+                "bugCategory": "Logical Error"
             },
             "fil": {
                 "title": "Memory, Mutation at NoneType Traps",
@@ -1300,8 +1353,10 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "[1, 2, 3]. Dahil iisa lang ang tinuturo nilang listahan sa memorya."
-                }
-            }
+                },
+                "bugCategory": "Logical Error"
+            },
+            "bugCategory": "Logical Error"
         },
         {
             "id": "hell_algorithms",
@@ -1309,67 +1364,70 @@ const PYTHON_CODEX_DATA = {
             "enemyName": "Algorithm Wraith",
             "sprite": "css/Sprites/Hell/algorithmWraith.png",
             "en": {
-                "title": "Algorithms: Integer Division // & .sort()",
+                "title": "Depth-First Search (DFS) & Graph Traversal",
                 "category": "Algorithms",
-                "summary": "Why midpoint calculation requires integer division //, and avoiding the .sort() return value wipeout.",
-                "explanation": "In search and sort algorithms, two Python quirks often catch developers off-guard:\n\n### 1. Integer Division `//` vs Normal Division `/`:\nIn Python 3, normal division `/` ALWAYS returns a float (e.g. `4 / 2 = 2.0`).\nIn binary searches, list indices must be integers! Using `mid = (low + high) / 2` causes: `TypeError: list indices must be integers or slices, not float`.\nAlways use floor division: **`mid = (low + high) // 2`**.\n\n### 2. The .sort() Wipeout Trap:\n`list.sort()` sorts in-place and returns **`None`**!\nIf you write `my_list = my_list.sort()`, you wipe out your list and set it to `None`! Use `sorted_list = sorted(my_list)` instead.",
-                "syntaxBlueprint": "# Binary Search Midpoint:\nmid = (low + high) // 2 # integer!\n\n# Proper sorting:\nnumbers.sort()          # in-place (don't re-assign!)\n# or:\nnew_list = sorted(numbers)",
+                "bugCategory": "Logical Error",
+                "summary": "Master graph traversal with Depth-First Search (DFS) and prevent the critical visited-set omission bug that triggers infinite recursion.",
+                "explanation": "**Depth-First Search (DFS)** is a fundamental graph traversal algorithm that explores as deep as possible along each branch before backtracking.\n\nIn Python, DFS is commonly implemented using recursion or an explicit stack. However, graph debugging introduces three distinct failure modes:\n\n### 1. The Visited-Set Omission (Logical Error)\nIf a graph contains cycles (e.g. A connects to B, and B connects back to A), omitting the `visited` check will trap Python in an infinite recursive loop:\n```python\n# FATAL: No visited check causes infinite oscillation A -> B -> A -> B...\ndef dfs(graph, node):\n    print(node)\n    for neighbor in graph[node]:\n        dfs(graph, neighbor)\n```\nEventually, Python hits its recursion ceiling and crashes with: `RecursionError: maximum recursion depth exceeded`.\n\n### 2. The Unhandled Node Access (Runtime Error)\nIf an edge points to a node that has no outgoing entries in your adjacency dictionary, calling `graph[neighbor]` raises a `KeyError`. Always use `graph.get(node, [])` or ensure all nodes exist.\n\n### 3. Syntax Traps in Graph Definitions\nGraph adjacency lists often use nested dictionaries and sets. Missing commas between neighbors or omitting colons on the traversal header will immediately raise `SyntaxError`.",
+                "syntaxBlueprint": "# Production-Grade Recursive Depth-First Search Template:\ndef dfs(graph, start, visited=None):\n    if visited is None:\n        visited = set()\n    \n    # 1. Mark current node as visited\n    visited.add(start)\n    print(f\"Visited: {start}\")\n    \n    # 2. Explore unvisited adjacent neighbors\n    for neighbor in graph.get(start, []):\n        if neighbor not in visited:\n            dfs(graph, neighbor, visited)\n            \n    return visited",
                 "bugExample": {
-                    "title": "Float Index in Binary Search and .sort() Re-assignment",
-                    "errorType": "TypeError / Logical Bug",
-                    "badCode": "mid = (low + high) / 2\nnums = nums.sort()",
-                    "explanation": "Division / gives float index. Also nums.sort() returns None so nums is wiped out.",
-                    "goodCode": "mid = (low + high) // 2\nnums.sort()",
-                    "fixExplanation": "Used // for integer index and called nums.sort() without re-assigning."
+                    "title": "DFS Missing Visited Set (Infinite Recursion)",
+                    "errorType": "Logical Error -> RecursionError",
+                    "badCode": "def dfs(graph, node):\n    print(node)\n    for neighbor in graph[node]:\n        dfs(graph, neighbor)",
+                    "explanation": "Because there is no visited tracking, cyclic graphs cause infinite recursive calls between interconnected nodes until Python crashes.",
+                    "goodCode": "def dfs(graph, node, visited=None):\n    if visited is None:\n        visited = set()\n    visited.add(node)\n    for neighbor in graph.get(node, []):\n        if neighbor not in visited:\n            dfs(graph, neighbor, visited)\n    return visited",
+                    "fixExplanation": "Initialized a persistent visited set, recorded the current node upon entry, and only recursed on neighbors not yet in visited."
                 },
                 "goldenRules": [
-                    "Always use '//' for index calculations.",
-                    "Remember: 'list.sort()' returns None! Don't re-assign it to the variable.",
-                    "Use 'sorted(list)' if you want a brand new sorted list."
+                    "Always track visited nodes using a set() to prevent infinite cycles.",
+                    "Use graph.get(node, []) instead of graph[node] to avoid unexpected KeyErrors.",
+                    "Never use a mutable default like 'visited=set()' in function headers; initialize it with 'visited is None' inside the function!"
                 ],
                 "quiz": {
-                    "question": "What is the value of data after running: data = [3, 1, 2]; data = data.sort()?",
-                    "code": "data = [3, 1, 2]\ndata = data.sort()",
+                    "question": "Why is a set() preferred over a list [] for storing visited nodes in DFS?",
+                    "code": "visited = set() # O(1) membership lookup\nvisited = []    # O(N) membership lookup",
                     "options": [
-                        "[1, 2, 3]",
-                        "[3, 1, 2]",
-                        "None"
+                        "Sets automatically sort nodes in alphabetical order.",
+                        "Checking 'if node not in visited' runs in O(1) average time with a set vs O(N) with a list.",
+                        "Lists cannot store strings in Python."
                     ],
-                    "correctIndex": 2,
-                    "solution": "None. list.sort() sorts in-place and returns None. Re-assigning it wipes out the variable."
+                    "correctIndex": 1,
+                    "solution": "Option B is correct. Hash sets allow instant O(1) membership lookup, preventing DFS traversal from slowing down asymptotically on large graphs."
                 }
             },
             "fil": {
-                "title": "Algorithms: Integer Division // at .sort()",
-                "category": "Algorithms",
-                "summary": "Bakit kailangan ng integer division // sa midpoint, at pag-iwas sa .sort() wipeout bug.",
-                "explanation": "Sa mga search at sort algorithms, may dalawang bitag sa Python:\n\n### 1. Integer Division `//` vs Normal Division `/`:\nAng regular division `/` ay laging nagbabalik ng float (`4 / 2 = 2.0`).\nSa Binary Search, kailangang buong numero (integer) ang index! Kapag ginamit mo ang `mid = (low + high) / 2`, mag-e-error ka sa: `TypeError: list indices must be integers, not float`.\nLaging gamitin ang floor division: **`mid = (low + high) // 2`**.\n\n### 2. Ang .sort() Wipeout Trap:\nAng `list.sort()` ay nag-aayos in-place at nagbabalik ng **`None`**!\nKapag sinulat mo ang `data = data.sort()`, magiging `None` ang variable mo! Gamitin ang `sorted(data)` kung gusto mo ng bagong list.",
-                "syntaxBlueprint": "# Binary Search Midpoint:\nmid = (low + high) // 2 # integer!\n\n# Tamang pag-sort:\nnumbers.sort()          # in-place (huwag i-re-assign!)\n# o kaya:\nnew_list = sorted(numbers)",
+                "title": "Depth-First Search (DFS) at Graph Traversal",
+                "category": "Mga Algorithm",
+                "bugCategory": "Logical Error",
+                "summary": "Matutunan ang graph traversal gamit ang Depth-First Search (DFS) at iwasan ang omission bug sa visited set na nagdudulot ng infinite recursion.",
+                "explanation": "Ang **Depth-First Search (DFS)** ay isang pangunahing algorithm sa pag-traverse ng graphs kung saan sinusuyod muna nang malaliman ang bawat sangay bago mag-backtrack.\n\nSa Python, karaniwang ginagamit ang recursion o explicit stack para sa DFS. Ngunit may 3 pangunahing uri ng bugs na dapat bantayan:\n\n### 1. Kawalan ng Visited Set (Logical Error)\nKapag may cycle ang graph (hal. nakakonekta ang A sa B, at ang B ay pabalik sa A), kapag walang `visited` set, maiipit ang Python sa walang katapusang recursive loop:\n```python\n# DELIKADO: Walang visited set kaya pabalik-balik A -> B -> A -> B...\ndef dfs(graph, node):\n    print(node)\n    for neighbor in graph[node]:\n        dfs(graph, neighbor)\n```\nDahil dito, lalampas ang Python sa recursion limit at magka-crash bilang: `RecursionError: maximum recursion depth exceeded`.\n\n### 2. Nawawalang Node sa Dictionary (Runtime Error)\nKapag ang isang neighbor ay walang tala sa adjacency dictionary, ang pagtawag sa `graph[neighbor]` ay maglalabas ng `KeyError`. Laging gamitin ang `graph.get(node, [])`.\n\n### 3. Syntax Errors sa Graph\nNangyayari kapag may kulang na colon sa `for neighbor in graph:` o nakalimutang kuwit sa pagitan ng mga nodes sa adjacency list.",
+                "syntaxBlueprint": "# Tamang Template para sa Recursive DFS sa Python:\ndef dfs(graph, start, visited=None):\n    if visited is None:\n        visited = set()\n    \n    # 1. Markahan ang kasalukuyang node\n    visited.add(start)\n    print(f\"Nabisita: {start}\")\n    \n    # 2. Puntahan ang mga kapitbahay na hindi pa nabibisita\n    for neighbor in graph.get(start, []):\n        if neighbor not in visited:\n            dfs(graph, neighbor, visited)\n            \n    return visited",
                 "bugExample": {
-                    "title": "Float Index sa Search at Maling .sort()",
-                    "errorType": "TypeError / Logical Bug",
-                    "badCode": "mid = (low + high) / 2\nnums = nums.sort()",
-                    "explanation": "Float ang sagot ng / kaya nag-error. At ang .sort() ay nagbabalik ng None kaya nawala ang laman ng nums.",
-                    "goodCode": "mid = (low + high) // 2\nnums.sort()",
-                    "fixExplanation": "Pinalitan ng // ang division at hindi na ini-assign pabalik ang nums.sort()."
+                    "title": "DFS na Walang Visited Set (Infinite Recursion)",
+                    "errorType": "Logical Error -> RecursionError",
+                    "badCode": "def dfs(graph, node):\n    print(node)\n    for neighbor in graph[node]:\n        dfs(graph, neighbor)",
+                    "explanation": "Dahil walang sinusubaybayang visited set, magpabalik-balik ang tawag sa interconnected nodes hanggang sa mag-crash ang Python.",
+                    "goodCode": "def dfs(graph, node, visited=None):\n    if visited is None:\n        visited = set()\n    visited.add(node)\n    for neighbor in graph.get(node, []):\n        if neighbor not in visited:\n            dfs(graph, neighbor, visited)\n    return visited",
+                    "fixExplanation": "Nagdagdag ng persistent visited set at tinatawag lamang ang dfs() sa mga kapitbahay na wala pa sa visited."
                 },
                 "goldenRules": [
-                    "Laging gamitin ang '//' para sa index calculations.",
-                    "Tandaan: ang 'list.sort()' ay nagbabalik ng None! Huwag itong i-assign pabalik.",
-                    "Gamitin ang 'sorted(list)' para sa bagong sorted list."
+                    "Laging magtala ng mga nabisitang node gamit ang set() upang maiwasan ang walang katapusang loops.",
+                    "Gamitin ang graph.get(node, []) sa halip na graph[node] para maiwasan ang KeyError.",
+                    "Huwag gumamit ng mutable default tulad ng 'visited=set()' sa function header; i-initialize ito sa loob gamit ang 'visited is None'!"
                 ],
                 "quiz": {
-                    "question": "Ano ang magiging laman ng data pagkatapos patakbuhin: data = [3, 1, 2]; data = data.sort()?",
-                    "code": "data = [3, 1, 2]\ndata = data.sort()",
+                    "question": "Bakit mas mainam gamitin ang set() kaysa list [] para sa visited collection sa DFS?",
+                    "code": "visited = set() # O(1) membership lookup\nvisited = []    # O(N) membership lookup",
                     "options": [
-                        "[1, 2, 3]",
-                        "[3, 1, 2]",
-                        "None"
+                        "Awtomatikong naka-alphabetical order ang sets.",
+                        "Ang pagsusuri ng 'if node not in visited' ay O(1) average time sa set kumpara sa O(N) sa listahan.",
+                        "Hindi tumatanggap ng strings ang list sa Python."
                     ],
-                    "correctIndex": 2,
-                    "solution": "None. Nagbabalik ng None ang list.sort(). Kapag ini-assign mo pabalik, magiging None ang variable."
+                    "correctIndex": 1,
+                    "solution": "Tama ang Option B. Ang hash set ay nagbibigay ng instant O(1) lookup speed, kaya hindi babagal ang DFS kahit libo-libo pa ang nodes sa graph."
                 }
-            }
+            },
+            "bugCategory": "Logical Error"
         },
         {
             "id": "hell_async",
@@ -1405,7 +1463,8 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "Forgot the 'await' keyword. Coroutines must be awaited to actually execute."
-                }
+                },
+                "bugCategory": "Runtime Error"
             },
             "fil": {
                 "title": "Concurrency: async, await at Threading",
@@ -1436,8 +1495,10 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "Nakalimutan ang 'await' keyword. Kailangang i-await ang coroutine para aktwal na tumakbo ito."
-                }
-            }
+                },
+                "bugCategory": "Runtime Error"
+            },
+            "bugCategory": "Runtime Error"
         },
         {
             "id": "hell_security",
@@ -1473,7 +1534,8 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "It allows arbitrary code execution. Anyone can run malicious commands on your computer."
-                }
+                },
+                "bugCategory": "Runtime Error"
             },
             "fil": {
                 "title": "Defensive Coding: Panganib ng eval() at Sanitization",
@@ -1504,8 +1566,10 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "Nagpapahintulot ito ng arbitrary code execution kung saan pwedeng sirain ng attacker ang sistema."
-                }
-            }
+                },
+                "bugCategory": "Runtime Error"
+            },
+            "bugCategory": "Runtime Error"
         },
         {
             "id": "hell_ml",
@@ -1541,7 +1605,8 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "B: model.fit(X, y). The standard scikit-learn workflow uses .fit(X, y) for training."
-                }
+                },
+                "bugCategory": "Runtime Error"
             },
             "fil": {
                 "title": "Machine Learning: .fit() vs .predict()",
@@ -1572,8 +1637,10 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "B: model.fit(X, y). Ang standard na paraan ay .fit(X, y) na may features at labels."
-                }
-            }
+                },
+                "bugCategory": "Runtime Error"
+            },
+            "bugCategory": "Runtime Error"
         },
         {
             "id": "hell_compiler",
@@ -1608,7 +1675,8 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "Read the error message and line number carefully to understand what kind of bug happened."
-                }
+                },
+                "bugCategory": "Logical Error"
             },
             "fil": {
                 "title": "The Final Arbiter: Buod ng Lahat",
@@ -1638,8 +1706,10 @@ const PYTHON_CODEX_DATA = {
                     ],
                     "correctIndex": 1,
                     "solution": "Basahin ang error message at line number para malaman kung anong uri ng error ang naganap."
-                }
-            }
+                },
+                "bugCategory": "Logical Error"
+            },
+            "bugCategory": "Logical Error"
         }
     ],
     "cheatsheet": [
@@ -1691,10 +1761,7 @@ const PYTHON_CODEX_DATA = {
     ]
 };
 
-// Helper to get localized topic data based on active language
-function getLocalizedTopic(topic) {
-    if (!topic) return null;
-    const lang = (typeof getLanguage === 'function') ? getLanguage() : 'en';
-    const localized = topic[lang] || topic.en || topic.fil || {};
-    return Object.assign({}, topic, localized);
+// Expose globally for both browser and Node environments
+if (typeof module !== "undefined" && module.exports) {
+    module.exports = { PYTHON_CODEX_DATA };
 }

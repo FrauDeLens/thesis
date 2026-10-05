@@ -16,14 +16,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Press+Start+2P&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/base.css?v=57">
-    <link rel="stylesheet" href="css/auth.css?v=57">
-    <link rel="stylesheet" href="css/menu.css?v=57">
-    <link rel="stylesheet" href="css/difficulty.css?v=57">
-    <link rel="stylesheet" href="css/battle.css?v=57">
-    <link rel="stylesheet" href="css/enemy-showcase.css?v=57">
-    <link rel="stylesheet" href="css/study.css?v=57">
-    <link rel="stylesheet" href="css/admin.css?v=57">
+    <link rel="stylesheet" href="css/base.css?v=58">
+    <link rel="stylesheet" href="css/auth.css?v=58">
+    <link rel="stylesheet" href="css/menu.css?v=58">
+    <link rel="stylesheet" href="css/difficulty.css?v=58">
+    <link rel="stylesheet" href="css/battle.css?v=58">
+    <link rel="stylesheet" href="css/enemy-showcase.css?v=58">
+    <link rel="stylesheet" href="css/study.css?v=58">
+    <link rel="stylesheet" href="css/admin.css?v=58">
 
 </head>
 
@@ -437,6 +437,13 @@
                 <div class="codex-sidebar-header">
                     <span id="codex-topic-count">6 Topics</span>
                     <span class="codex-sidebar-hint" data-i18n="codex_topic_hint">Select a topic</span>
+                </div>
+                <!-- Category Filter Bar for Codex -->
+                <div class="codex-category-filter-bar" id="codex-cat-filters">
+                    <button class="codex-cat-filter-btn active" data-cat="all" type="button">All</button>
+                    <button class="codex-cat-filter-btn cat-syntax" data-cat="Syntax Error" type="button">⚡ Syntax</button>
+                    <button class="codex-cat-filter-btn cat-logical" data-cat="Logical Error" type="button">🧠 Logic</button>
+                    <button class="codex-cat-filter-btn cat-runtime" data-cat="Runtime Error" type="button">💥 Runtime</button>
                 </div>
                 <div id="codex-topic-list" class="codex-topic-list">
                     <!-- Populated dynamically via js/study.js -->
@@ -1482,8 +1489,8 @@
 
                                 <div id="question-form" class="question-form-body">
 
-                                    <!-- Row 1: Difficulty & Target Enemy -->
-                                    <div class="form-grid-2cols">
+                                    <!-- Row 1: Difficulty, Target Monster & Error Category -->
+                                    <div class="form-grid-3cols">
                                         <div class="form-field-group">
                                             <label for="question-difficulty">Difficulty Tier</label>
                                             <select id="question-difficulty" class="admin-select">
@@ -1498,39 +1505,79 @@
                                             <label for="question-enemy">Target Monster / Bug</label>
                                             <select id="question-enemy" class="admin-select"></select>
                                         </div>
+
+                                        <div class="form-field-group">
+                                            <label for="question-category">Error Category</label>
+                                            <select id="question-category" class="admin-select">
+                                                <option value="Syntax Error">⚡ Syntax Error</option>
+                                                <option value="Logical Error">🧠 Logical Error</option>
+                                                <option value="Runtime Error">💥 Runtime Error</option>
+                                            </select>
+                                        </div>
                                     </div>
 
-                                    <!-- Row 2: Buggy Python Code (Challenge) -->
+                                    <!-- Row 2: Specific Error Type / Bug Classification -->
                                     <div class="form-field-group">
                                         <div class="field-label-row">
-                                            <label for="question-code">Buggy Python Code</label>
+                                            <label for="question-error-type">Specific Error Type / Classification</label>
+                                            <span class="field-pill pill-category">BUG LABEL</span>
+                                        </div>
+                                        <input id="question-error-type" type="text" placeholder="e.g., SyntaxError: expected ':' or KeyError: missing node" list="error-type-datalist">
+                                        <datalist id="error-type-datalist">
+                                            <option value="SyntaxError: expected ':'">
+                                            <option value="SyntaxError: EOL while scanning string literal">
+                                            <option value="SyntaxError: unexpected EOF while parsing">
+                                            <option value="SyntaxError: closing bracket ']' missing">
+                                            <option value="SyntaxError: invalid syntax">
+                                            <option value="Logical Error: Infinite Cycle / Unmarked Visited">
+                                            <option value="Logical Error: Inverted Traversal Condition">
+                                            <option value="Logical Error: FIFO Queue instead of LIFO Stack">
+                                            <option value="Logical Error: Shared Mutable Default Argument Trap">
+                                            <option value="Logical Error: Missing Return Value">
+                                            <option value="Runtime Error: KeyError on missing dict key">
+                                            <option value="Runtime Error: AttributeError: object has no attribute">
+                                            <option value="Runtime Error: IndexError: list index out of range">
+                                            <option value="Runtime Error: RecursionError: maximum recursion depth exceeded">
+                                            <option value="Runtime Error: ZeroDivisionError: division by zero">
+                                            <option value="Runtime Error: NameError: name is not defined">
+                                        </datalist>
+                                        <span class="field-help">Categorizes the exact diagnostic reason for structured student practice.</span>
+                                    </div>
+
+                                    <!-- Row 3: Buggy Python Code (Challenge) -->
+                                    <div class="form-field-group">
+                                        <div class="field-label-row">
+                                            <label for="question-code">Buggy Python Code (Challenge)</label>
                                             <span class="field-pill pill-challenge">CHALLENGE CODE</span>
                                         </div>
-                                        <textarea id="question-code" rows="5" spellcheck="false" placeholder="# Buggy Python snippet for student challenge&#10;print(&quot;Hello World&quot;"></textarea>
-                                        <span class="field-help">This code will be presented to the student in battle.</span>
+                                        <textarea id="question-code" rows="5" spellcheck="false" placeholder="# Buggy Python snippet for student challenge&#10;def dfs(graph, node, visited)&#10;    visited.add(node)"></textarea>
+                                        <span class="field-help">This code will be presented to the student in the battle terminal.</span>
                                     </div>
 
-                                    <!-- Row 3: Corrected Answer (Solution) -->
+                                    <!-- Row 4: Corrected Answer (Solution) -->
                                     <div class="form-field-group">
                                         <div class="field-label-row">
-                                            <label for="question-answer">Correct Python Answer</label>
+                                            <label for="question-answer">Correct Python Answer (Solution)</label>
                                             <span class="field-pill pill-solution">CORRECT SOLUTION</span>
                                         </div>
-                                        <textarea id="question-answer" rows="5" spellcheck="false" placeholder="# Corrected Python solution required to pass&#10;print(&quot;Hello World&quot;)"></textarea>
-                                        <span class="field-help">Student input is validated against this answer.</span>
+                                        <textarea id="question-answer" rows="5" spellcheck="false" placeholder="# Corrected Python solution required to pass&#10;def dfs(graph, node, visited):&#10;    visited.add(node)"></textarea>
+                                        <span class="field-help">Student input is validated against this answer using equivalence checks.</span>
                                     </div>
 
-                                    <!-- Row 4: Hint -->
+                                    <!-- Row 5: Hint -->
                                     <div class="form-field-group">
                                         <div class="field-label-row">
                                             <label for="question-hint">Helpful Hint (Optional)</label>
                                             <span class="field-pill pill-hint">STUDENT CLUE</span>
                                         </div>
-                                        <input id="question-hint" type="text" placeholder="e.g., Don't forget to close the print parenthesis.">
+                                        <input id="question-hint" type="text" placeholder="e.g., Function headers must end with a colon (:).">
                                     </div>
 
-                                    <!-- Form Action & Status Message -->
+                                    <!-- Form Action & Live Validation Test -->
                                     <div class="form-footer-area">
+                                        <button id="test-question-button" type="button" class="admin-secondary-action-btn" title="Validate answer equivalence">
+                                            <span>🧪 Test Fix &amp; Validate</span>
+                                        </button>
                                         <button id="add-question-button" type="button" class="admin-primary-action-btn">
                                             <span>✨ Add to Question Pool</span>
                                         </button>
@@ -1608,7 +1655,8 @@
                 <div class="admin-modal-body">
                     <input type="hidden" id="edit-question-id">
 
-                    <div class="form-grid-2cols">
+                    <!-- Row 1: Tier, Enemy, and Category -->
+                    <div class="form-grid-3cols">
                         <div class="form-field-group">
                             <label for="edit-question-difficulty">Difficulty Tier</label>
                             <select id="edit-question-difficulty" class="admin-select">
@@ -1623,8 +1671,27 @@
                             <label for="edit-question-enemy">Target Monster / Bug</label>
                             <select id="edit-question-enemy" class="admin-select"></select>
                         </div>
+
+                        <div class="form-field-group">
+                            <label for="edit-question-category">Error Category</label>
+                            <select id="edit-question-category" class="admin-select">
+                                <option value="Syntax Error">⚡ Syntax Error</option>
+                                <option value="Logical Error">🧠 Logical Error</option>
+                                <option value="Runtime Error">💥 Runtime Error</option>
+                            </select>
+                        </div>
                     </div>
 
+                    <!-- Row 2: Error Type -->
+                    <div class="form-field-group">
+                        <div class="field-label-row">
+                            <label for="edit-question-error-type">Specific Error Type / Classification</label>
+                            <span class="field-pill pill-category">BUG LABEL</span>
+                        </div>
+                        <input id="edit-question-error-type" type="text" placeholder="e.g., SyntaxError: expected ':' or KeyError">
+                    </div>
+
+                    <!-- Row 3: Buggy Code -->
                     <div class="form-field-group">
                         <div class="field-label-row">
                             <label for="edit-question-code">Buggy Python Code (Challenge)</label>
@@ -1634,6 +1701,7 @@
                         <span class="field-help">This code will be presented to the student in battle.</span>
                     </div>
 
+                    <!-- Row 4: Correct Solution -->
                     <div class="form-field-group">
                         <div class="field-label-row">
                             <label for="edit-question-answer">Correct Python Answer (Solution)</label>
@@ -1643,6 +1711,7 @@
                         <span class="field-help">Student input is validated against this answer.</span>
                     </div>
 
+                    <!-- Row 5: Hint -->
                     <div class="form-field-group">
                         <div class="field-label-row">
                             <label for="edit-question-hint">Helpful Hint (Optional)</label>
@@ -1655,6 +1724,9 @@
                 </div>
 
                 <div class="admin-modal-footer">
+                    <button id="test-edit-question-btn" class="admin-secondary-action-btn" type="button" title="Test fix equivalence">
+                        <span>🧪 Test Fix</span>
+                    </button>
                     <button id="cancel-edit-modal-btn" class="admin-action-btn" type="button">
                         <span>Cancel</span>
                     </button>
@@ -1930,34 +2002,34 @@
 <!-- ==========================
      LOCALIZATION & I18N SYSTEM
 ========================== -->
-<script src="js/i18n.js?v=57"></script>
-<script src="data/easy.js?v=57"></script>
-<script src="data/normal.js?v=57"></script>
-<script src="data/hard.js?v=57"></script>
-<script src="data/hell.js?v=57"></script>
-<script src="data/enemyGuides.js?v=57"></script>
-<script src="data/pythonLessons.js?v=57"></script>
+<script src="js/i18n.js?v=58"></script>
+<script src="data/easy.js?v=58"></script>
+<script src="data/normal.js?v=58"></script>
+<script src="data/hard.js?v=58"></script>
+<script src="data/hell.js?v=58"></script>
+<script src="data/enemyGuides.js?v=58"></script>
+<script src="data/pythonLessons.js?v=58"></script>
 
 <!-- ==========================
      FIREBASE CLOUD DATABASE
 ========================== -->
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
-<script src="js/firebase-config.js?v=57"></script>
-<script src="js/firebase-db.js?v=57"></script>
+<script src="js/firebase-config.js?v=58"></script>
+<script src="js/firebase-db.js?v=58"></script>
 
 <!-- ==========================
      MODULAR JAVASCRIPT SYSTEM
 ========================== -->
-<script src="js/auth.js?v=57"></script>
-<script src="js/save.js?v=57"></script>
-<script src="js/points.js?v=57"></script>
-<script src="js/difficulty.js?v=57"></script>
-<script src="js/enemyShowcase.js?v=57"></script>
-<script src="js/game.js?v=57"></script>
-<script src="js/study.js?v=57"></script>
-<script src="js/admin.js?v=57"></script>
-<script src="js/app.js?v=57"></script>
+<script src="js/auth.js?v=58"></script>
+<script src="js/save.js?v=58"></script>
+<script src="js/points.js?v=58"></script>
+<script src="js/difficulty.js?v=58"></script>
+<script src="js/enemyShowcase.js?v=58"></script>
+<script src="js/game.js?v=58"></script>
+<script src="js/study.js?v=58"></script>
+<script src="js/admin.js?v=58"></script>
+<script src="js/app.js?v=58"></script>
 
 
 </body>
