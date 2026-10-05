@@ -1,4 +1,3 @@
-
 // =========================================================
 // PYTHON QUESTION SYNTAX & EQUIVALENCE VALIDATOR
 // =========================================================
@@ -184,8 +183,10 @@ function updateBankEnemyFilter(selectedTier) {
         });
     }
 
-    const optionExists = Array.from(bankFilter.options).some(function (o) { return o.value === previousValue; });
-    bankFilter.value = optionExists ? previousValue : "all";
+    const optionExists = (bankFilter && bankFilter.options)
+        ? Array.from(bankFilter.options).some(function (o) { return o.value === previousValue; })
+        : false;
+    if (bankFilter) bankFilter.value = optionExists ? previousValue : "all";
 }
 
 function fillEnemySelect() {
@@ -308,6 +309,149 @@ function renderStudentTable() {
     });
 
     if (countBadge) {
+        countBadge.textContent = list.length + " Student" + (list.length === 1 ? "" : "s") + " Listed";
+    }
+
+    if (list.length === 0) {
+        container.innerHTML = "<div class='table-empty-notice'><p style='color:#d9a8ff'>🔍 No student records match the search or filter criteria.</p></div>";
+        return;
+    }
+
+    let html = "<table class='student-data-table'>";
+    html += "<thead><tr>";
+    html += "<th style='width:60px;text-align:center'>Rank</th>";
+    html += "<th style='min-width:220px'>Student Information</th>";
+    html += "<th style='min-width:140px;text-align:center'>True Points (Score)</th>";
+    html += "<th style='min-width:240px'>Stage Clearances</th>";
+    html += "<th style='min-width:180px'>Trophies Won</th>";
+    html += "<th style='min-width:160px'>Upgrades & Stats</th>";
+    html += "<th style='min-width:150px'>Last Activity</th>";
+    html += "</tr></thead><tbody>";
+
+    list.forEach(function (s, index) {
+        const rank = index + 1;
+        let rankClass = "rank-default";
+        let rankLabel = "#" + rank;
+        if (sortBy === "tp-desc") {
+            if (rank === 1) { rankClass = "rank-gold"; rankLabel = "🥇 1"; }
+            else if (rank === 2) { rankClass = "rank-silver"; rankLabel = "🥈 2"; }
+            else if (rank === 3) { rankClass = "rank-bronze"; rankLabel = "🥉 3"; }
+        }
+
+        const unlocks = s.unlocks || {};
+        const isEasy = unlocks.easy !== false;
+        const isNormal = !!unlocks.normal;
+        const isHard = !!unlocks.hard;
+        const isHell = !!unlocks.hell;
+
+        const trophies = s.trophies || {};
+        const eTrophies = (trophies.easy || []).length;
+        const nTrophies = (trophies.normal || []).length;
+        const hTrophies = (trophies.hard || []).length;
+        const hlTrophies = (trophies.hell || []).length;
+        const totalTrophies = eTrophies + nTrophies + hTrophies + hlTrophies;
+
+        const shop = s.shop || {};
+        const maxHp = shop.maxHp || 5;
+        const freeHints = shop.freeHints || 0;
+
+        let lastActiveStr = "Never";
+        if (s.last_seen) {
+            const d = new Date(s.last_seen);
+            if (!isNaN(d.getTime())) {
+                lastActiveStr = d.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }) +
+                    " " + d.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" });
+            }
+        } else if (s.created_at) {
+            const d = new Date(s.created_at);
+            if (!isNaN(d.getTime())) {
+                lastActiveStr = "Joined " + d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+            }
+        }
+
+        html += "<tr>";
+        html += "<td style='text-align:center'><span class='student-rank-badge " + rankClass + "'>" + rankLabel + "</span></td>";
+        html += "<td><div class='student-name-cell'><span class='student-username'>" + escapeHtml(s.username) + "</span>";
+        if (s.full_name) {
+            html += "<span class='student-fullname'>" + escapeHtml(s.full_name) + "</span>";
+        }
+        html += "</div></td>";
+        html += "<td style='text-align:center'><span class='tp-score-badge'>⭐ " + (s.truePoints || 0).toLocaleString() + " TP</span></td>";
+        html += "<td><div class='clearance-chips-group'>";
+        html += "<span class='stage-chip stage-easy " + (isEasy ? "unlocked" : "locked") + "'>" + (isEasy ? "EASY ✓" : "EASY 🔒") + "</span>";
+        html += "<span class='stage-chip stage-normal " + (isNormal ? "unlocked" : "locked") + "'>" + (isNormal ? "NORMAL ✓" : "NORMAL 🔒") + "</span>";
+        html += "<span class='stage-chip stage-hard " + (isHard ? "unlocked" : "locked") + "'>" + (isHard ? "HARD ✓" : "HARD 🔒") + "</span>";
+        html += "<span class='stage-chip stage-hell " + (isHell ? "unlocked" : "locked") + "'>" + (isHell ? "HELL ✓" : "HELL 🔒") + "</span>";
+        html += "</div></td>";
+        html += "<td><div class='trophies-summary-pill'><span class='trophy-total-count'>🏆 " + totalTrophies + "</span>";
+        html += "<span class='trophy-mini-breakdown'>(E:" + eTrophies + " N:" + nTrophies + " H:" + hTrophies + " Hell:" + hlTrophies + ")</span></div></td>";
+        html += "<td><div style='font-size:12px;color:#d9c0e5;display:flex;flex-direction:column;gap:2px'>";
+        html += "<span>❤️ Max HP: <strong style='color:#ffffff'>" + maxHp + " / 10</strong></span>";
+        html += "<span>💡 Free Hints: <strong style='color:#ffffff'>" + freeHints + "</strong></span>";
+        html += "</div></td>";
+        html += "<td><span class='student-time-text'>" + lastActiveStr + "</span></td>";
+        html += "</tr>";
+    });
+
+    html += "</tbody></table>";
+    container.innerHTML = html;
+}
+
+// ==========================
+// QUESTION & ANSWER BANK LOGIC
+// ==========================
+
+async function loadQuestionPoolList() {
+    const container = document.getElementById("question-pool-list");
+    if (!container) return;
+    container.innerHTML = "<div class='table-empty-notice'><p style='color:#e5b3ff;font-family:monospace'>Loading question bank...</p></div>";
+
+    try {
+        const data = await api("questions.php", "GET");
+        cachedAdminQuestions = data.questions || [];
+
+        const navQBadge = document.getElementById("nav-question-count");
+        if (navQBadge) navQBadge.textContent = cachedAdminQuestions.length;
+
+        renderQuestionBank();
+    } catch (e) {
+        container.innerHTML = "<div class='table-empty-notice'><p style='color:#ff6b6b'>Failed to load questions: " + escapeHtml(e.message) + "</p></div>";
+    }
+}
+
+function renderQuestionBank() {
+    const container = document.getElementById("question-pool-list");
+    const countBadge = document.getElementById("question-bank-count");
+    if (!container) return;
+
+    const keyword = (document.getElementById("question-search-input") ? document.getElementById("question-search-input").value : "").trim().toLowerCase();
+    const enemyFilter = document.getElementById("question-bank-enemy-filter") ? document.getElementById("question-bank-enemy-filter").value : "all";
+
+    let list = cachedAdminQuestions.slice();
+
+    if (currentQuestionFilterTier !== "all") {
+        list = list.filter(function (q) {
+            return (q.difficulty || "").toLowerCase() === currentQuestionFilterTier;
+        });
+    }
+
+    if (enemyFilter !== "all") {
+        list = list.filter(function (q) {
+            return q.enemy_id === enemyFilter;
+        });
+    }
+
+    if (keyword) {
+        list = list.filter(function (q) {
+            const code = (q.code || "").toLowerCase();
+            const ans = (q.answer || "").toLowerCase();
+            const hint = (q.hint || "").toLowerCase();
+            const enemy = (q.enemy_id || "").toLowerCase();
+            return code.includes(keyword) || ans.includes(keyword) || hint.includes(keyword) || enemy.includes(keyword);
+        });
+    }
+
+    if (countBadge) {
         countBadge.textContent = list.length + " Challenge" + (list.length === 1 ? "" : "s");
     }
 
@@ -335,23 +479,9 @@ function renderStudentTable() {
         const diffLower = (q.difficulty || "easy").toLowerCase();
         const friendlyEnemy = getEnemyFriendlyName(q.enemy_id);
 
-        const cat = q.category || "";
-        let catBadgeHtml = "";
-        if (cat) {
-            const catLower = cat.toLowerCase();
-            const catClass = catLower.includes("syntax") ? "cat-syntax" :
-                             catLower.includes("log") ? "cat-logical" : "cat-runtime";
-            const icon = catLower.includes("syntax") ? "⚡ " : catLower.includes("log") ? "🧠 " : "💥 ";
-            catBadgeHtml = "<span class='qcard-category-badge " + catClass + "'>" + icon + escapeHtml(cat) + "</span>";
-        }
-
         html += "<div class='admin-qcard'>";
         html += "<div class='qcard-header'>";
         html += "<span class='qcard-tier-badge tier-" + diffLower + "-badge'>" + diffLower.toUpperCase() + "</span>";
-        if (catBadgeHtml) html += catBadgeHtml;
-        if (q.error_type) {
-            html += "<span class='qcard-error-type-tag'>🏷️ " + escapeHtml(q.error_type) + "</span>";
-        }
         html += "<span class='qcard-enemy-name'>" + escapeHtml(friendlyEnemy) + "</span>";
         html += "<span class='qcard-id-tag'>ID #" + q.id + "</span>";
         html += "<div class='qcard-actions-group'>";
@@ -443,12 +573,6 @@ function adminOpenEditModal(id) {
 
     fillEditEnemySelect(diff);
     document.getElementById("edit-question-enemy").value = q.enemy_id;
-    if (document.getElementById("edit-question-category")) {
-        document.getElementById("edit-question-category").value = q.category || "Syntax Error";
-    }
-    if (document.getElementById("edit-question-error-type")) {
-        document.getElementById("edit-question-error-type").value = q.error_type || "";
-    }
     document.getElementById("edit-question-code").value = q.code || "";
     document.getElementById("edit-question-answer").value = q.answer || "";
     document.getElementById("edit-question-hint").value = q.hint || "";
@@ -501,14 +625,10 @@ async function adminSaveEditedQuestion() {
             msg.textContent = "Saving changes to database...";
         }
 
-        const category = document.getElementById("edit-question-category") ? document.getElementById("edit-question-category").value : "Syntax Error";
-        const error_type = document.getElementById("edit-question-error-type") ? document.getElementById("edit-question-error-type").value.trim() : "";
         await api("questions.php", "PUT", {
             id: id,
             difficulty: difficulty,
             enemy_id: enemy_id,
-            category: category,
-            error_type: error_type,
             code: code,
             answer: answer,
             hint: hint
@@ -518,8 +638,6 @@ async function adminSaveEditedQuestion() {
         if (item) {
             item.difficulty = difficulty;
             item.enemy_id = enemy_id;
-            item.category = category;
-            item.error_type = error_type;
             item.code = code;
             item.answer = answer;
             item.hint = hint;
@@ -580,9 +698,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const questionBankEnemyFilter = document.getElementById("question-bank-enemy-filter");
     if (questionBankEnemyFilter) questionBankEnemyFilter.addEventListener("change", renderQuestionBank);
 
-    const questionBankCategoryFilter = document.getElementById("question-bank-category-filter");
-    if (questionBankCategoryFilter) questionBankCategoryFilter.addEventListener("change", renderQuestionBank);
-
     const tierButtons = document.querySelectorAll(".tier-tab-btn");
     tierButtons.forEach(function (btn) {
         btn.addEventListener("click", function () {
@@ -622,20 +737,6 @@ document.addEventListener("DOMContentLoaded", function () {
             if (adminViewTitle) adminViewTitle.textContent = "QUESTION & ANSWER BANK";
             if (adminViewSubtitle) adminViewSubtitle.textContent = "Manage Python bug challenges, answers, and hints for all difficulty levels.";
             fillEnemySelect();
-
-    // Attach click listeners to category KPI pills
-    document.querySelectorAll(".bank-pill-mini").forEach(function (pill) {
-        pill.addEventListener("click", function () {
-            const cat = this.getAttribute("data-cat") || "all";
-            const catSelect = document.getElementById("question-bank-category-filter");
-            if (catSelect) {
-                catSelect.value = cat;
-                renderQuestionBank();
-            }
-        });
-    });
-    // kpi-pill-listener-attached
-
             loadQuestionPoolList();
         });
     }
@@ -682,19 +783,15 @@ document.addEventListener("DOMContentLoaded", function () {
             const codeInput = document.getElementById("question-code");
             const answerInput = document.getElementById("question-answer");
             const hintInput = document.getElementById("question-hint");
-            const errorTypeInput = document.getElementById("question-error-type");
             const msg = document.getElementById("question-form-message");
 
             const code = codeInput ? codeInput.value.trim() : "";
             const answer = answerInput ? answerInput.value.trim() : "";
             const hint = hintInput ? hintInput.value.trim() : "";
-            const error_type = errorTypeInput ? errorTypeInput.value.trim() : "";
-            const category = document.getElementById("question-category") ? document.getElementById("question-category").value : "Syntax Error";
 
             if (!code || !answer) {
                 if (msg) {
                     msg.className = "admin-form-message error";
-                    msg.style.display = "block";
                     msg.textContent = "⚠️ Please provide both the Buggy Code and Correct Answer.";
                 }
                 return;
@@ -709,8 +806,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 await api("questions.php", "POST", {
                     difficulty: diff,
                     enemy_id: enemy,
-                    category: category,
-                    error_type: error_type,
                     code: code,
                     answer: answer,
                     hint: hint
@@ -724,7 +819,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (codeInput) codeInput.value = "";
                 if (answerInput) answerInput.value = "";
                 if (hintInput) hintInput.value = "";
-                if (errorTypeInput) errorTypeInput.value = "";
 
                 loadQuestionPoolList();
 
@@ -742,21 +836,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    const testQuestionBtn = document.getElementById("test-question-button");
-    if (testQuestionBtn) {
-        testQuestionBtn.addEventListener("click", function () {
-            const codeInput = document.getElementById("question-code");
-            const answerInput = document.getElementById("question-answer");
-            const msg = document.getElementById("question-form-message");
-            const res = testQuestionDiffAndSyntax(codeInput ? codeInput.value : "", answerInput ? answerInput.value : "");
-            if (msg) {
-                msg.style.display = "block";
-                msg.className = "admin-form-message " + (res.valid ? "success" : "error");
-                msg.textContent = res.message;
-            }
-        });
-    }
-
     const adminLogoutBtn = document.getElementById("admin-logout-button");
     if (adminLogoutBtn) {
         adminLogoutBtn.addEventListener("click", async function () {
@@ -768,4 +847,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Initial populate of enemies based on defaults
     fillEnemySelect();
+
+    // Attach click listeners to category KPI pills
+    document.querySelectorAll(".bank-pill-mini").forEach(function (pill) {
+        pill.addEventListener("click", function () {
+            const cat = this.getAttribute("data-cat") || "all";
+            const catSelect = document.getElementById("question-bank-category-filter");
+            if (catSelect) {
+                catSelect.value = cat;
+                renderQuestionBank();
+            }
+        });
+    });
 });
