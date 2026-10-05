@@ -136,6 +136,17 @@
                 }
             });
         }
+
+        // Category Filter Selection Buttons (All, Syntax, Logic, Runtime)
+        const catButtons = Array.from(document.querySelectorAll(".codex-cat-filter-btn"));
+        catButtons.forEach(btn => {
+            btn.addEventListener("click", () => {
+                catButtons.forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                currentCategoryFilter = btn.getAttribute("data-cat") || "all";
+                renderTopicList();
+            });
+        });
     }
 
     // Switch Difficulty Tab
@@ -200,6 +211,7 @@
                     <span class="no-results-icon">🔍</span>
                     <p>${noResultsMsg}</p>
                     <button id="codex-clear-filter-btn" class="codex-clear-filter-btn" type="button">${clearSearchLabel}</button>
+                    ${currentCategoryFilter !== "all" ? `<button id="codex-reset-cat-btn" class="codex-clear-filter-btn" style="margin-top:6px" type="button">Reset Category to All</button>` : ""}
                 </div>
             `;
             const clearBtn = codexTopicList.querySelector("#codex-clear-filter-btn");

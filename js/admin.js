@@ -426,8 +426,16 @@ function renderQuestionBank() {
 
     const keyword = (document.getElementById("question-search-input") ? document.getElementById("question-search-input").value : "").trim().toLowerCase();
     const enemyFilter = document.getElementById("question-bank-enemy-filter") ? document.getElementById("question-bank-enemy-filter").value : "all";
+    const categoryFilter = document.getElementById("question-bank-category-filter") ? document.getElementById("question-bank-category-filter").value : "all";
 
     let list = cachedAdminQuestions.slice();
+
+    if (categoryFilter !== "all") {
+        list = list.filter(function (q) {
+            const cat = (q.category || "").toLowerCase();
+            return cat.includes(categoryFilter.toLowerCase());
+        });
+    }
 
     if (currentQuestionFilterTier !== "all") {
         list = list.filter(function (q) {
@@ -479,9 +487,20 @@ function renderQuestionBank() {
         const diffLower = (q.difficulty || "easy").toLowerCase();
         const friendlyEnemy = getEnemyFriendlyName(q.enemy_id);
 
+        const cat = q.category || "Syntax Error";
+        const catLower = cat.toLowerCase();
+        const catClass = catLower.includes("syntax") ? "cat-syntax" :
+                         catLower.includes("log") ? "cat-logical" : "cat-runtime";
+        const icon = catLower.includes("syntax") ? "⚡ " :
+                     catLower.includes("log") ? "🧠 " : "💥 ";
+
         html += "<div class='admin-qcard'>";
         html += "<div class='qcard-header'>";
         html += "<span class='qcard-tier-badge tier-" + diffLower + "-badge'>" + diffLower.toUpperCase() + "</span>";
+        html += "<span class='qcard-category-badge " + catClass + "'>" + icon + escapeHtml(cat) + "</span>";
+        if (q.error_type) {
+            html += "<span class='qcard-error-type-tag'>🏷️ " + escapeHtml(q.error_type) + "</span>";
+        }
         html += "<span class='qcard-enemy-name'>" + escapeHtml(friendlyEnemy) + "</span>";
         html += "<span class='qcard-id-tag'>ID #" + q.id + "</span>";
         html += "<div class='qcard-actions-group'>";
@@ -697,6 +716,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const questionBankEnemyFilter = document.getElementById("question-bank-enemy-filter");
     if (questionBankEnemyFilter) questionBankEnemyFilter.addEventListener("change", renderQuestionBank);
+    // questionBankCatFilterListener
+    const questionBankCatFilter = document.getElementById("question-bank-category-filter");
+    if (questionBankCatFilter) questionBankCatFilter.addEventListener("change", renderQuestionBank);
 
     const tierButtons = document.querySelectorAll(".tier-tab-btn");
     tierButtons.forEach(function (btn) {
@@ -737,6 +759,34 @@ document.addEventListener("DOMContentLoaded", function () {
             if (adminViewTitle) adminViewTitle.textContent = "QUESTION & ANSWER BANK";
             if (adminViewSubtitle) adminViewSubtitle.textContent = "Manage Python bug challenges, answers, and hints for all difficulty levels.";
             fillEnemySelect();
+
+    // question-error-type-custom-listener
+    const qErrorTypeSelect = document.getElementById("question-error-type");
+    const qErrorTypeCustom = document.getElementById("question-error-type-custom");
+    if (qErrorTypeSelect && qErrorTypeCustom) {
+        qErrorTypeSelect.addEventListener("change", function () {
+            if (this.value === "custom") {
+                qErrorTypeCustom.style.display = "block";
+                qErrorTypeCustom.focus();
+            } else {
+                qErrorTypeCustom.style.display = "none";
+            }
+        });
+    }
+
+    const editErrorTypeSelect = document.getElementById("edit-question-error-type");
+    const editErrorTypeCustom = document.getElementById("edit-question-error-type-custom");
+    if (editErrorTypeSelect && editErrorTypeCustom) {
+        editErrorTypeSelect.addEventListener("change", function () {
+            if (this.value === "custom") {
+                editErrorTypeCustom.style.display = "block";
+                editErrorTypeCustom.focus();
+            } else {
+                editErrorTypeCustom.style.display = "none";
+            }
+        });
+    }
+
             loadQuestionPoolList();
         });
     }
