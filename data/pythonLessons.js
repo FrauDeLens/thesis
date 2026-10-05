@@ -220,7 +220,7 @@ const PYTHON_CODEX_DATA = {
                 "id": "bugtypes_matrix",
                 "enemyId": "chaos_dragon",
                 "enemyName": "Chaos Dragon",
-                "sprite": "css/Sprites/Hell/chaosDragon.png",
+                "sprite": "css/Sprites/Hell/hellBoss.png",
                 "en": {
                         "title": "4. Bug Classification Matrix & Diagnostic Guide",
                         "category": "Quick Reference",
@@ -498,7 +498,7 @@ const PYTHON_CODEX_DATA = {
                 "id": "roadmap_phase3",
                 "enemyId": "loop_lurker",
                 "enemyName": "Loop Lurker",
-                "sprite": "css/Sprites/Easy/loopLurker.png",
+                "sprite": "css/Sprites/Easy/loopGoblin.png",
                 "en": {
                         "title": "Phase 3: Control Flow & Iterations",
                         "category": "Phase 3",
@@ -566,7 +566,7 @@ const PYTHON_CODEX_DATA = {
                 "id": "roadmap_phase4",
                 "enemyId": "function_fairy",
                 "enemyName": "Function Fairy",
-                "sprite": "css/Sprites/Normal/functionFairy.png",
+                "sprite": "css/Sprites/Easy/functionFairy.png",
                 "en": {
                         "title": "Phase 4: Modular Code & Libraries",
                         "category": "Phase 4",
@@ -634,7 +634,7 @@ const PYTHON_CODEX_DATA = {
                 "id": "roadmap_phase5",
                 "enemyId": "list_ogre",
                 "enemyName": "List Ogre",
-                "sprite": "css/Sprites/Normal/listOgre.png",
+                "sprite": "css/Sprites/Normal/arrayOgre.png",
                 "en": {
                         "title": "Phase 5: Collections & Data Structures",
                         "category": "Phase 5",
@@ -702,7 +702,7 @@ const PYTHON_CODEX_DATA = {
                 "id": "roadmap_phase6",
                 "enemyId": "class_mage",
                 "enemyName": "Class Mage",
-                "sprite": "css/Sprites/Hard/classMage.png",
+                "sprite": "css/Sprites/Normal/classMage.png",
                 "en": {
                         "title": "Phase 6: Object-Oriented Architecture",
                         "category": "Phase 6",
@@ -770,7 +770,7 @@ const PYTHON_CODEX_DATA = {
                 "id": "roadmap_phase7",
                 "enemyId": "exception_knight",
                 "enemyName": "Exception Knight",
-                "sprite": "css/Sprites/Hard/exceptionKnight.png",
+                "sprite": "css/Sprites/Normal/exceptionKnight.png",
                 "en": {
                         "title": "Phase 7: Exception Handling & Robustness",
                         "category": "Phase 7",

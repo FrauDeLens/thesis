@@ -8,6 +8,7 @@
     let selectedTopicId = null;
     let searchQuery = "";
     let currentCategoryFilter = "all";
+    let currentLessonTab = "concept"; // "concept" | "bugfix" | "quiz" | "all"
 
     // DOM Elements Cache
     let codexScreen = null;
@@ -31,6 +32,18 @@
     // Helper: Simple Markdown to HTML Formatter
     function formatMarkdown(text) {
         if (!text) return "";
+
+        // If the text contains markdown tables, format table portions cleanly
+        if (text.includes("|") && text.includes("---")) {
+            const parts = text.split("\n\n");
+            return parts.map(part => {
+                if (part.includes("|") && part.includes("---")) {
+                    return formatMarkdownTable(part);
+                }
+                return formatMarkdown(part);
+            }).join("");
+        }
+
         let html = text
             // Escape HTML tags to prevent XSS
             .replace(/&/g, "&amp;")
@@ -54,7 +67,16 @@
             html = html.replace(/(<li>[\s\S]*?<\/li>)/g, "<ul>$1</ul>");
         }
 
-        return `<p>${html}</p>`;
+        html = `<p>${html}</p>`
+            .replace(/<p>\s*<h3>/gi, "<h3>")
+            .replace(/<\/h3>\s*<\/p>/gi, "</h3>")
+            .replace(/<p>\s*<h2>/gi, "<h2>")
+            .replace(/<\/h2>\s*<\/p>/gi, "</h2>")
+            .replace(/<p>\s*<ul>/gi, "<ul>")
+            .replace(/<\/ul>\s*<\/p>/gi, "</ul>")
+            .replace(/<p>\s*<\/p>/gi, "");
+
+        return html;
     }
 
     // Helper: Parse Markdown Table for Cheat Sheet
@@ -152,6 +174,7 @@
     // Switch Difficulty Tab
     function setDifficulty(diff) {
         currentDifficulty = diff;
+        currentLessonTab = "concept";
         codexTabs.forEach(t => {
             if (t.getAttribute("data-diff") === diff) {
                 t.classList.add("active");
@@ -247,7 +270,7 @@
 
             // Sprite or default icon
             const spriteHtml = topic.sprite
-                ? `<img class="topic-sprite-thumb" src="${topic.sprite}" alt="${topic.enemyName || 'Topic'}" onerror="this.style.display='none'">`
+                ? `<img class="topic-sprite-thumb" src="${topic.sprite}" alt="${topic.enemyName || 'Topic'}" onerror="this.onerror=null; this.src='css/Sprites/Easy/beginnerDragon.png';">`
                 : `<div class="topic-sprite-thumb fallback-icon">&#9733;</div>`;
 
             const enemyLabel = topic.enemyName ? `👾 ${topic.enemyName}` : "";
@@ -315,16 +338,46 @@
 
         let diffBadgeClass = `badge-${currentDifficulty}`;
 
-        // Quick Jump Bar Labels
-        const jumpLabels = {
-            concept: lang === "fil" ? "Konsepto" : "Concept",
-            blueprint: lang === "fil" ? "Balangkas" : "Blueprint",
-            comparison: lang === "fil" ? "Mali vs Tama" : "Bug vs Fix",
-            rules: lang === "fil" ? "Mga Tuntunin" : "Checklist",
-            quiz: lang === "fil" ? "Pagsusulit" : "Quiz"
-        };
+        // Section 1: Concept Overview HTML
+        const conceptTitle = typeof t === "function" ? t("codex_sec_concept") : "CONCEPT OVERVIEW";
+        const blueprintTitle = typeof t === "function" ? t("codex_sec_blueprint") : "SYNTAX BLUEPRINT";
+        const templateLabel = lang === "fil" ? "TEMPLATE NG ISTRUKTURA" : "PYTHON SYNTAX BLUEPRINT";
+        const copyBlueprintText = typeof t === "function" ? t("codex_copy_btn") : "📋 Copy";
 
-        // Section 3: Bug Hunt Comparison
+        const conceptSectionHtml = `
+            <div id="codex-sec-concept" class="lesson-section-header">
+                <span class="lesson-section-badge">[01]</span>
+                <h3 class="lesson-section-title">${conceptTitle}</h3>
+            </div>
+            <div class="lesson-prose">
+                ${formatMarkdown(topic.explanation)}
+            </div>
+        `;
+
+        // Section 2: Syntax Blueprint HTML
+        let blueprintSectionHtml = "";
+        if (topic.syntaxBlueprint) {
+            blueprintSectionHtml = `
+                <div id="codex-sec-blueprint" class="lesson-section-header">
+                    <span class="lesson-section-badge">[02]</span>
+                    <h3 class="lesson-section-title">${blueprintTitle}</h3>
+                </div>
+                <div class="syntax-blueprint-card">
+                    <div class="blueprint-terminal-bar">
+                        <div class="terminal-dots">
+                            <span class="term-dot dot-red"></span>
+                            <span class="term-dot dot-yellow"></span>
+                            <span class="term-dot dot-green"></span>
+                        </div>
+                        <span class="blueprint-label">${templateLabel}</span>
+                        <button class="copy-code-btn copy-blueprint-btn" data-code="${encodeURIComponent(topic.syntaxBlueprint)}">${copyBlueprintText}</button>
+                    </div>
+                    <pre class="codex-code-block blueprint-code"><code>${escapeHtml(topic.syntaxBlueprint)}</code></pre>
+                </div>
+            `;
+        }
+
+        // Section 3: Bug Hunt Comparison HTML
         let bugComparisonHtml = "";
         if (topic.bugExample) {
             const bug = topic.bugExample;
@@ -380,7 +433,84 @@
             `;
         }
 
-        // Section 4: Golden Rules / Battle Checklist
+        // Bug Diagnostics Card HTML
+        const diagnosticsHtml = (() => {
+            const cat = (topic.bugCategory || topic.category || "Syntax Error").toLowerCase();
+            const isSyntax = cat.includes("syntax");
+            const isLogical = cat.includes("log");
+            const borderClass = isSyntax ? "syntax-border" : isLogical ? "logical-border" : "runtime-border";
+            const badgeClass = isSyntax ? "syntax" : isLogical ? "logical" : "runtime";
+            const catLabel = isSyntax ? "⚡ SYNTAX ERROR" : isLogical ? "🧠 LOGICAL ERROR" : "💥 RUNTIME ERROR";
+
+            const phaseEn = isSyntax ? "Parsing / Compile Phase" : isLogical ? "Post-Run Execution Logic" : "Mid-Execution Phase";
+            const phaseFil = isSyntax ? "Yugto ng Parsing (Bago Patakbuhin)" : isLogical ? "Yugto ng Lohika (Walang Crash pero Mali)" : "Yugto ng Pagpapatakbo (Unhandled Exception)";
+
+            const causeEn = isSyntax 
+                ? "Violates Python formal grammar rules (missing colons, unclosed quotes, parentheses mismatch, or invalid indentation)."
+                : isLogical
+                ? "Valid syntax and completes without crashing, but outputs wrong answers, loops endlessly, or mishandles algorithm state."
+                : "Valid syntax that crashes mid-execution when illegal operations occur (e.g., dividing by zero, missing dictionary key, or list index out of range).";
+
+            const causeFil = isSyntax
+                ? "Lumalabag sa baririla ng Python (kulang na colon, bukas na quote o parenthesis, o maling indentation)."
+                : isLogical
+                ? "Wastong syntax at hindi nag-crash, ngunit mali ang kinalabasan, walang katapusang loop, o maling DFS traversal."
+                : "Wastong syntax ngunit biglang nag-crash sa gitna dahil sa bawal na operasyon (hal. divide by zero, KeyError, o IndexError).";
+
+            const reactionEn = isSyntax
+                ? "Python stops parsing immediately and halts before executing line 1."
+                : isLogical
+                ? "Python runs silently to the end; programmer must trace variable state or use debugger to locate the flaw."
+                : "Python halts immediately and prints an explicit Traceback with line numbers and exception name.";
+
+            const reactionFil = isSyntax
+                ? "Agad na humihinto ang Python at hindi man lang magsisimula ang execution."
+                : isLogical
+                ? "Tahimik na tatakbo ang Python hanggang dulo; kailangang i-trace ng programmer ang variable state."
+                : "Biglang hihinto ang Python at maglalabas ng Traceback na may numero ng linya at pangalan ng Exception.";
+
+            const fixEn = isSyntax
+                ? "Match all opening/closing pairs, add colons to control statements, and maintain consistent 4-space indentation."
+                : isLogical
+                ? "Audit loop boundaries, verify algorithm preconditions, track visited sets in graph DFS, and test edge cases."
+                : "Validate inputs before use, use safe accessors like dict.get(), and wrap risky operations in try-except blocks.";
+
+            const fixFil = isSyntax
+                ? "Ipares ang lahat ng panaklong at quotes, maglagay ng colon sa header, at panatilihin ang 4-space indentation."
+                : isLogical
+                ? "Suriin ang loop conditions, tiyakin ang visited set sa graph DFS, at mag-test gamit ang boundary values."
+                : "Suriin muna ang input, gamitin ang dict.get(), o kaya ay saluhin gamit ang try-except block.";
+
+            return `
+                <div class="lesson-bug-classification-card ${borderClass}">
+                    <div class="classification-header">
+                        <div class="classification-badges-left">
+                            <span class="classification-badge ${badgeClass}">${catLabel}</span>
+                            <span class="classification-phase">${lang === 'fil' ? phaseFil : phaseEn}</span>
+                        </div>
+                        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#d9c0e5">
+                            <strong>TARGET ERROR:</strong> ${escapeHtml(topic.bugExample?.errorType || 'Python Bug')}
+                        </span>
+                    </div>
+                    <div class="classification-grid">
+                        <div class="classification-col">
+                            <span class="classification-col-title">⚠️ ${lang === 'fil' ? 'Ano ang Sanhi?' : 'Root Cause'}</span>
+                            <p class="classification-col-desc">${lang === 'fil' ? causeFil : causeEn}</p>
+                        </div>
+                        <div class="classification-col">
+                            <span class="classification-col-title">⚙️ ${lang === 'fil' ? 'Reaksyon ng Python' : 'Interpreter Reaction'}</span>
+                            <p class="classification-col-desc">${lang === 'fil' ? reactionFil : reactionEn}</p>
+                        </div>
+                        <div class="classification-col">
+                            <span class="classification-col-title">🛡️ ${lang === 'fil' ? 'Paraan ng Pag-ayos' : 'Resolution Defense'}</span>
+                            <p class="classification-col-desc">${lang === 'fil' ? fixFil : fixEn}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        })();
+
+        // Section 4: Golden Rules / Battle Checklist HTML
         let goldenRulesHtml = "";
         if (Array.isArray(topic.goldenRules) && topic.goldenRules.length > 0) {
             const rulesTitle = typeof t === "function" ? t("codex_sec_rules") : "BATTLE CHECKLIST (KEY RULES)";
@@ -400,7 +530,7 @@
             `;
         }
 
-        // Section 5: Interactive Quiz
+        // Section 5: Interactive Quiz HTML
         let quizHtml = "";
         if (topic.quiz) {
             const q = topic.quiz;
@@ -428,33 +558,20 @@
             `;
         }
 
-        const conceptTitle = typeof t === "function" ? t("codex_sec_concept") : "CONCEPT OVERVIEW";
-        const blueprintTitle = typeof t === "function" ? t("codex_sec_blueprint") : "SYNTAX BLUEPRINT";
-        const templateLabel = lang === "fil" ? "TEMPLATE NG ISTRUKTURA" : "PYTHON SYNTAX BLUEPRINT";
-        const copyBlueprintText = typeof t === "function" ? t("codex_copy_btn") : "📋 Copy";
+        // View Mode Tabs Data
+        const viewTabs = [
+            { id: "concept", icon: "💡", label: lang === "fil" ? "Konsepto & Syntax" : "Concept & Syntax" },
+            { id: "bugfix", icon: "⚔️", label: lang === "fil" ? "Mali vs Tama" : "Bug vs Fix" },
+            { id: "quiz", icon: "🎯", label: lang === "fil" ? "Pagsusulit & Rules" : "Quiz & Rules" },
+            { id: "all", icon: "📜", label: lang === "fil" ? "Lahat" : "View All" }
+        ];
 
-        codexContentArea.innerHTML = `
-            <!-- Hero Banner -->
+        // Hero Banner HTML (Clean, single container)
+        const heroBannerHtml = `
             <div class="lesson-hero-banner">
-                ${topic.sprite ? `
-                    <div class="hero-sprite-frame">
-                        <img class="lesson-hero-sprite" src="${topic.sprite}" alt="${topic.enemyName || 'Enemy'}">
-                    </div>
-                ` : ""}
-                <div class="lesson-hero-details">
-                    <div class="lesson-hero-tags">
-                        <span class="lesson-badge ${diffBadgeClass}">${currentDifficulty.toUpperCase()}</span>
-                        ${topic.enemyName ? `<span class="lesson-badge badge-enemy">👾 ${topic.enemyName}</span>` : ""}
-                        ${topic.bugExample?.errorType ? `<span class="lesson-badge badge-error">⚡ ${escapeHtml(topic.bugExample.errorType)}</span>` : ""}
-                        <span class="lesson-badge badge-category">${topic.category || "Basics"}</span>
-                    </div>
-                    <!-- Hero Banner -->
-            <div class="lesson-hero-banner">
-                ${topic.sprite ? `
-                    <div class="hero-sprite-frame">
-                        <img class="lesson-hero-sprite" src="${topic.sprite}" alt="${topic.enemyName || 'Enemy'}">
-                    </div>
-                ` : ""}
+                <div class="hero-sprite-frame">
+                    <img class="lesson-hero-sprite" src="${topic.sprite || 'css/Sprites/Easy/beginnerDragon.png'}" alt="${topic.enemyName || 'Enemy'}" onerror="this.onerror=null; this.src='css/Sprites/Easy/beginnerDragon.png';">
+                </div>
                 <div class="lesson-hero-details">
                     <div class="lesson-hero-tags">
                         <span class="lesson-badge ${diffBadgeClass}">${currentDifficulty.toUpperCase()}</span>
@@ -466,139 +583,89 @@
                     <p class="lesson-hero-summary">${escapeHtml(topic.summary)}</p>
                 </div>
             </div>
-
-            <!-- Bug Classification & Diagnostics Overview -->
-            ${(() => {
-                const cat = (topic.bugCategory || topic.category || "Syntax Error").toLowerCase();
-                const isSyntax = cat.includes("syntax");
-                const isLogical = cat.includes("log");
-                const isRuntime = !isSyntax && !isLogical;
-
-                const borderClass = isSyntax ? "syntax-border" : isLogical ? "logical-border" : "runtime-border";
-                const badgeClass = isSyntax ? "syntax" : isLogical ? "logical" : "runtime";
-                const catLabel = isSyntax ? "⚡ SYNTAX ERROR" : isLogical ? "🧠 LOGICAL ERROR" : "💥 RUNTIME ERROR";
-
-                const phaseEn = isSyntax ? "Parsing / Compile Phase" : isLogical ? "Post-Run Execution Logic" : "Mid-Execution Phase";
-                const phaseFil = isSyntax ? "Yugto ng Parsing (Bago Patakbuhin)" : isLogical ? "Yugto ng Lohika (Walang Crash pero Mali)" : "Yugto ng Pagpapatakbo (Unhandled Exception)";
-
-                const causeEn = isSyntax 
-                    ? "Violates Python formal grammar rules (missing colons, unclosed quotes, parentheses mismatch, or invalid indentation)."
-                    : isLogical
-                    ? "Valid syntax and completes without crashing, but outputs wrong answers, loops endlessly, or mishandles algorithm state."
-                    : "Valid syntax that crashes mid-execution when illegal operations occur (e.g., dividing by zero, missing dictionary key, or list index out of range).";
-
-                const causeFil = isSyntax
-                    ? "Lumalabag sa baririla ng Python (kulang na colon, bukas na quote o parenthesis, o maling indentation)."
-                    : isLogical
-                    ? "Wastong syntax at hindi nag-crash, ngunit mali ang kinalabasan, walang katapusang loop, o maling DFS traversal."
-                    : "Wastong syntax ngunit biglang nag-crash sa gitna dahil sa bawal na operasyon (hal. divide by zero, KeyError, o IndexError).";
-
-                const reactionEn = isSyntax
-                    ? "Python stops parsing immediately and halts before executing line 1."
-                    : isLogical
-                    ? "Python runs silently to the end; programmer must trace variable state or use debugger to locate the flaw."
-                    : "Python halts immediately and prints an explicit Traceback with line numbers and exception name.";
-
-                const reactionFil = isSyntax
-                    ? "Agad na humihinto ang Python at hindi man lang magsisimula ang execution."
-                    : isLogical
-                    ? "Tahimik na tatakbo ang Python hanggang dulo; kailangang i-trace ng programmer ang variable state."
-                    : "Biglang hihinto ang Python at maglalabas ng Traceback na may numero ng linya at pangalan ng Exception.";
-
-                const fixEn = isSyntax
-                    ? "Match all opening/closing pairs, add colons to control statements, and maintain consistent 4-space indentation."
-                    : isLogical
-                    ? "Audit loop boundaries, verify algorithm preconditions, track visited sets in graph DFS, and test edge cases."
-                    : "Validate inputs before use, use safe accessors like dict.get(), and wrap risky operations in try-except blocks.";
-
-                const fixFil = isSyntax
-                    ? "Ipares ang lahat ng panaklong at quotes, maglagay ng colon sa header, at panatilihin ang 4-space indentation."
-                    : isLogical
-                    ? "Suriin ang loop conditions, tiyakin ang visited set sa graph DFS, at mag-test gamit ang boundary values."
-                    : "Suriin muna ang input, gamitin ang dict.get(), o kaya ay saluhin gamit ang try-except block.";
-
-                return `
-                    <div class="lesson-bug-classification-card ${borderClass}">
-                        <div class="classification-header">
-                            <div class="classification-badges-left">
-                                <span class="classification-badge ${badgeClass}">${catLabel}</span>
-                                <span class="classification-phase">${lang === 'fil' ? phaseFil : phaseEn}</span>
-                            </div>
-                            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#d9c0e5">
-                                <strong>TARGET ERROR:</strong> ${escapeHtml(topic.bugExample?.errorType || 'Python Bug')}
-                            </span>
-                        </div>
-                        <div class="classification-grid">
-                            <div class="classification-col">
-                                <span class="classification-col-title">⚠️ ${lang === 'fil' ? 'Ano ang Sanhi?' : 'Root Cause'}</span>
-                                <p class="classification-col-desc">${lang === 'fil' ? causeFil : causeEn}</p>
-                            </div>
-                            <div class="classification-col">
-                                <span class="classification-col-title">⚙️ ${lang === 'fil' ? 'Reaksyon ng Python' : 'Interpreter Reaction'}</span>
-                                <p class="classification-col-desc">${lang === 'fil' ? reactionFil : reactionEn}</p>
-                            </div>
-                            <div class="classification-col">
-                                <span class="classification-col-title">🛡️ ${lang === 'fil' ? 'Paraan ng Pag-ayos' : 'Resolution Defense'}</span>
-                                <p class="classification-col-desc">${lang === 'fil' ? fixFil : fixEn}</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            })()}
-
-            <!-- Quick Navigation Jump Bar -->
-            <div class="codex-jump-bar">
-                <button class="jump-pill" data-target="codex-sec-concept">📖 ${jumpLabels.concept}</button>
-                ${topic.syntaxBlueprint ? `<button class="jump-pill" data-target="codex-sec-blueprint">📋 ${jumpLabels.blueprint}</button>` : ""}
-                ${bugComparisonHtml ? `<button class="jump-pill" data-target="codex-sec-comparison">⚔️ ${jumpLabels.comparison}</button>` : ""}
-                ${goldenRulesHtml ? `<button class="jump-pill" data-target="codex-sec-rules">🛡️ ${jumpLabels.rules}</button>` : ""}
-                ${quizHtml ? `<button class="jump-pill" data-target="codex-sec-quiz">🧠 ${jumpLabels.quiz}</button>` : ""}
-            </div>
-
-            <!-- Section 1: Core Concept Overview -->
-            <div id="codex-sec-concept" class="lesson-section-header">
-                <span class="lesson-section-badge">[01]</span>
-                <h3 class="lesson-section-title">${conceptTitle}</h3>
-            </div>
-            <div class="lesson-prose">
-                ${formatMarkdown(topic.explanation)}
-            </div>
-
-            <!-- Section 2: Syntax Blueprint -->
-            ${topic.syntaxBlueprint ? `
-                <div id="codex-sec-blueprint" class="lesson-section-header">
-                    <span class="lesson-section-badge">[02]</span>
-                    <h3 class="lesson-section-title">${blueprintTitle}</h3>
-                </div>
-                <div class="syntax-blueprint-card">
-                    <div class="blueprint-terminal-bar">
-                        <div class="terminal-dots">
-                            <span class="term-dot dot-red"></span>
-                            <span class="term-dot dot-yellow"></span>
-                            <span class="term-dot dot-green"></span>
-                        </div>
-                        <span class="blueprint-label">${templateLabel}</span>
-                        <button class="copy-code-btn copy-blueprint-btn" data-code="${encodeURIComponent(topic.syntaxBlueprint)}">${copyBlueprintText}</button>
-                    </div>
-                    <pre class="codex-code-block blueprint-code"><code>${escapeHtml(topic.syntaxBlueprint)}</code></pre>
-                </div>
-            ` : ""}
-
-            <!-- Section 3: Bug Hunt Comparison -->
-            ${bugComparisonHtml}
-
-            <!-- Section 4: Golden Rules / Checklist -->
-            ${goldenRulesHtml}
-
-            <!-- Section 5: Interactive Quiz -->
-            ${quizHtml}
         `;
 
-        // Attach Jump Bar Click Listeners
-        codexContentArea.querySelectorAll(".jump-pill").forEach(btn => {
-            btn.addEventListener("click", () => {
-                const targetId = btn.getAttribute("data-target");
-                scrollToCodexSection(targetId);
+        // Segmented View Switcher Tabs HTML
+        const viewTabsHtml = `
+            <div class="codex-view-tabs" role="tablist">
+                ${viewTabs.map(vt => `
+                    <button class="codex-view-tab ${currentLessonTab === vt.id ? 'active' : ''}" data-view="${vt.id}" type="button">
+                        <span class="view-tab-icon">${vt.icon}</span>
+                        <span class="view-tab-label">${vt.label}</span>
+                    </button>
+                `).join("")}
+            </div>
+        `;
+
+        // Compose Body based on active sub-tab
+        let activeBodyHtml = "";
+        if (currentLessonTab === "concept") {
+            activeBodyHtml = `
+                ${conceptSectionHtml}
+                ${blueprintSectionHtml}
+                <div class="codex-view-footer">
+                    <button class="codex-next-step-btn" data-next="bugfix" type="button">
+                        <span>⚔️ ${lang === 'fil' ? 'Susunod: Tingnan ang Bug & Ayos' : 'Next: Bug vs Fix Comparison'} ➔</span>
+                    </button>
+                </div>
+            `;
+        } else if (currentLessonTab === "bugfix") {
+            activeBodyHtml = `
+                ${bugComparisonHtml}
+                <div class="lesson-section-header">
+                    <span class="lesson-section-badge">[DIAG]</span>
+                    <h3 class="lesson-section-title">${lang === 'fil' ? 'DIAGNOSTIC ARCHITECTURE' : 'DIAGNOSTIC ARCHITECTURE'}</h3>
+                </div>
+                ${diagnosticsHtml}
+                <div class="codex-view-footer">
+                    <button class="codex-next-step-btn" data-next="quiz" type="button">
+                        <span>🎯 ${lang === 'fil' ? 'Susunod: Pagsusulit & Rules' : 'Next: Test Knowledge & Rules'} ➔</span>
+                    </button>
+                </div>
+            `;
+        } else if (currentLessonTab === "quiz") {
+            activeBodyHtml = `
+                ${goldenRulesHtml}
+                ${quizHtml}
+            `;
+        } else {
+            // "all" mode
+            activeBodyHtml = `
+                ${conceptSectionHtml}
+                ${blueprintSectionHtml}
+                ${bugComparisonHtml}
+                <div class="lesson-section-header">
+                    <span class="lesson-section-badge">[DIAG]</span>
+                    <h3 class="lesson-section-title">${lang === 'fil' ? 'DIAGNOSTIC ARCHITECTURE' : 'DIAGNOSTIC ARCHITECTURE'}</h3>
+                </div>
+                ${diagnosticsHtml}
+                ${goldenRulesHtml}
+                ${quizHtml}
+            `;
+        }
+
+        // Render to DOM
+        codexContentArea.innerHTML = `
+            ${heroBannerHtml}
+            ${viewTabsHtml}
+            <div class="codex-active-panel">
+                ${activeBodyHtml}
+            </div>
+        `;
+
+        // Attach View Mode Switcher Listeners
+        codexContentArea.querySelectorAll(".codex-view-tab").forEach(tabBtn => {
+            tabBtn.addEventListener("click", () => {
+                currentLessonTab = tabBtn.getAttribute("data-view");
+                renderLessonDetail(topic);
+            });
+        });
+
+        // Attach Next Step Button Listeners
+        codexContentArea.querySelectorAll(".codex-next-step-btn").forEach(nextBtn => {
+            nextBtn.addEventListener("click", () => {
+                currentLessonTab = nextBtn.getAttribute("data-next");
+                renderLessonDetail(topic);
             });
         });
 
@@ -620,7 +687,7 @@
         });
 
         // Attach Quiz Option Listeners
-        if (topic.quiz) {
+        if (topic.quiz && (currentLessonTab === "quiz" || currentLessonTab === "all")) {
             setupQuizInteractions(topic.quiz, lang);
         }
     }
