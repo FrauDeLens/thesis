@@ -823,3 +823,209 @@
 .showcase-tab-panel::-webkit-scrollbar-thumb:hover {
     background: #8e44ad;
 }
+
+
+
+/* =========================================================
+   BUGHUNT MASTER THEME ALIGNMENT FOR ENEMY SHOWCASE
+========================================================= */
+
+#enemy-intro-overlay.enemy-showcase-screen {
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.78) 0%,
+            rgba(0, 0, 0, 0.48) 35%,
+            rgba(0, 0, 0, 0.20) 100%
+        ),
+        url("bgassets/mainmenu.png") !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    position: absolute !important;
+}
+
+#enemy-intro-overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at 50% 50%,
+        rgba(110, 0, 160, 0.16),
+        transparent 42%
+    );
+    box-shadow:
+        inset 0 0 180px rgba(0, 0, 0, 0.9),
+        inset 0 0 70px rgba(100, 0, 150, 0.25);
+    pointer-events: none;
+    z-index: 1;
+}
+
+#enemy-intro-overlay::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.018) 0px,
+        rgba(255, 255, 255, 0.018) 1px,
+        transparent 1px,
+        transparent 5px
+    );
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.showcase-topbar {
+    border-bottom: 1.5px solid rgba(168, 85, 247, 0.45) !important;
+    background: rgba(22, 12, 42, 0.8) !important;
+    border-radius: 12px !important;
+    padding: 10px 20px !important;
+    backdrop-filter: blur(10px) !important;
+}
+
+.showcase-pill {
+    border-radius: 20px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+}
+
+.showcase-left-pillar .char-spotlight-frame {
+    background: rgba(22, 12, 42, 0.92) !important;
+    border: 1.5px solid rgba(168, 85, 247, 0.5) !important;
+    border-radius: 16px !important;
+    backdrop-filter: blur(14px) !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(124, 58, 237, 0.25) !important;
+}
+
+.showcase-enemy-title {
+    font-family: 'Press Start 2P', monospace !important;
+    font-size: 22px !important;
+    color: #f0c8ff !important;
+    text-shadow:
+        4px 4px 0 #31004c,
+        0 0 12px #b800ff,
+        0 0 25px rgba(212, 0, 255, 0.8) !important;
+}
+
+.showcase-enemy-subtitle {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: #c4b5fd !important;
+    text-shadow: 0 0 10px rgba(168, 85, 247, 0.8) !important;
+}
+
+.vital-card {
+    background: linear-gradient(135deg, rgba(32, 20, 52, 0.95), rgba(16, 10, 30, 0.98)) !important;
+    border: 1px solid #5a388a !important;
+    border-radius: 10px !important;
+}
+
+.vital-card:hover {
+    border-color: #a855f7 !important;
+    box-shadow: 0 4px 14px rgba(168, 85, 247, 0.3) !important;
+}
+
+.vital-title {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    color: #c084fc !important;
+    letter-spacing: 0.5px !important;
+}
+
+.vital-value {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+}
+
+.showcase-right-pillar {
+    background: rgba(22, 12, 42, 0.92) !important;
+    border: 1.5px solid rgba(168, 85, 247, 0.5) !important;
+    border-radius: 16px !important;
+    backdrop-filter: blur(14px) !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(124, 58, 237, 0.25) !important;
+}
+
+.showcase-tabs-nav {
+    border-bottom: 1.5px solid rgba(168, 85, 247, 0.35) !important;
+}
+
+.showcase-tab-btn {
+    background: linear-gradient(135deg, rgba(32, 20, 52, 0.95), rgba(16, 10, 30, 0.98)) !important;
+    border: 1px solid #5a388a !important;
+    border-radius: 10px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #e9d5ff !important;
+    transition: all 0.2s ease !important;
+}
+
+.showcase-tab-btn:hover {
+    border-color: #a855f7 !important;
+    background: linear-gradient(135deg, rgba(55, 30, 95, 0.95), rgba(28, 16, 52, 0.98)) !important;
+    color: #ffffff !important;
+}
+
+.showcase-tab-btn.active {
+    background: linear-gradient(135deg, #7c3aed, #9333ea) !important;
+    border: 1px solid #c084fc !important;
+    color: #ffffff !important;
+    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.45) !important;
+}
+
+.showcase-footer-bar {
+    border-top: 1.5px solid rgba(168, 85, 247, 0.4) !important;
+    background: rgba(22, 12, 42, 0.8) !important;
+    border-radius: 12px !important;
+    padding: 10px 20px !important;
+    backdrop-filter: blur(10px) !important;
+}
+
+.showcase-btn.retreat-btn {
+    background: linear-gradient(135deg, rgba(32, 20, 52, 0.95), rgba(16, 10, 30, 0.98)) !important;
+    border: 1px solid #5a388a !important;
+    border-radius: 10px !important;
+    color: #e9d5ff !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    transition: all 0.2s ease !important;
+    height: 48px !important;
+    padding: 0 24px !important;
+}
+
+.showcase-btn.retreat-btn:hover {
+    border-color: #a855f7 !important;
+    background: linear-gradient(135deg, rgba(55, 30, 95, 0.95), rgba(28, 16, 52, 0.98)) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.35) !important;
+}
+
+.showcase-btn.engage-btn {
+    background: linear-gradient(135deg, #7c3aed, #9333ea) !important;
+    border: 1px solid #c084fc !important;
+    border-radius: 12px !important;
+    color: #ffffff !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    letter-spacing: 1px !important;
+    box-shadow: 0 6px 25px rgba(124, 58, 237, 0.55) !important;
+    height: 48px !important;
+    padding: 0 32px !important;
+    transition: all 0.2s ease !important;
+    animation: none !important;
+}
+
+.showcase-btn.engage-btn:hover {
+    background: linear-gradient(135deg, #8b5cf6, #a855f7) !important;
+    transform: translateY(-2px) scale(1.02) !important;
+    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.75) !important;
+}

@@ -1,0 +1,527 @@
+/* =========================================================
+   BUGHUNT: BATTLE END SCREENS (VICTORY & DEFEAT)
+   Ultra-sleek, professional cyber-arcade victory & defeat UI
+========================================================= */
+
+/* ---------------------------------------------------------
+   1. VICTORY SCREEN
+--------------------------------------------------------- */
+#victory-screen {
+    display: none;
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    z-index: 250;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-image:
+        radial-gradient(circle at 75% 35%, rgba(250, 204, 21, 0.15) 0%, transparent 45%),
+        radial-gradient(circle at 25% 65%, rgba(124, 58, 237, 0.25) 0%, transparent 50%),
+        linear-gradient(
+            90deg,
+            rgba(10, 4, 22, 0.92) 0%,
+            rgba(18, 8, 36, 0.85) 50%,
+            rgba(10, 4, 22, 0.95) 100%
+        ),
+        url("bgassets/mainmenu.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#victory-screen:not([style*="display: none"]),
+#victory-screen[style*="display: flex"],
+#victory-screen[style*="display: block"] {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Master Dark Vignette */
+#victory-screen::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at 50% 50%,
+        rgba(110, 0, 160, 0.12),
+        transparent 45%
+    );
+    box-shadow:
+        inset 0 0 180px rgba(0, 0, 0, 0.92),
+        inset 0 0 80px rgba(250, 204, 21, 0.15);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Master Scanlines */
+#victory-screen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.015) 0px,
+        rgba(255, 255, 255, 0.015) 1px,
+        transparent 1px,
+        transparent 5px
+    );
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Golden Victory Particles Container */
+#victory-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+    overflow: hidden;
+}
+
+/* Floating Frau Character on the Left Stage */
+#victory-frau {
+    position: absolute;
+    left: 120px;
+    bottom: 90px;
+    max-height: 720px;
+    width: auto;
+    object-fit: contain;
+    z-index: 10;
+    filter: drop-shadow(0 0 35px rgba(250, 204, 21, 0.65)) drop-shadow(0 20px 40px rgba(0, 0, 0, 0.9));
+    animation: victoryFrauFloat 3.6s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes victoryFrauFloat {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-16px) scale(1.015);
+    }
+}
+
+/* Glowing Character Aura Platform */
+.end-screen-vignette {
+    position: absolute;
+    left: 80px;
+    bottom: 40px;
+    width: 600px;
+    height: 120px;
+    background: radial-gradient(ellipse at center, rgba(250, 204, 21, 0.45) 0%, rgba(124, 58, 237, 0.25) 45%, transparent 75%);
+    border-radius: 50%;
+    filter: blur(8px);
+    z-index: 5;
+    pointer-events: none;
+}
+
+/* Victory Right Content Card */
+.victory-panel {
+    position: absolute;
+    right: 140px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 680px;
+    max-width: 45%;
+    z-index: 20;
+    background: rgba(22, 12, 42, 0.94);
+    border: 1.5px solid rgba(250, 204, 21, 0.55);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    box-shadow:
+        0 15px 50px rgba(0, 0, 0, 0.85),
+        0 0 40px rgba(250, 204, 21, 0.25),
+        inset 0 0 25px rgba(250, 204, 21, 0.08);
+    padding: 44px 50px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+    animation: victoryCardEntry 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes victoryCardEntry {
+    from {
+        opacity: 0;
+        transform: translateY(-45%) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(-50%) scale(1);
+    }
+}
+
+.end-panel-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: #fde047;
+    text-shadow: 0 0 12px rgba(250, 204, 21, 0.8);
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.victory-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 46px;
+    letter-spacing: 4px;
+    color: #fef08a;
+    margin: 0;
+    text-shadow:
+        4px 4px 0 #713f12,
+        8px 8px 0 #180028,
+        0 0 20px #eab308,
+        0 0 35px rgba(234, 179, 8, 0.85);
+}
+
+.end-panel-divider {
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(90deg, transparent 0%, rgba(250, 204, 21, 0.6) 50%, transparent 100%);
+    margin: 4px 0;
+}
+
+.end-panel-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 17.5px;
+    font-weight: 600;
+    line-height: 1.55;
+    color: #f3e8ff;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+/* Stats Container */
+.end-panel-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.end-stat-row {
+    background: linear-gradient(135deg, rgba(32, 20, 52, 0.95), rgba(16, 10, 30, 0.98));
+    border: 1px solid rgba(250, 204, 21, 0.35);
+    border-radius: 12px;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.25s ease;
+}
+
+.end-stat-row:hover {
+    border-color: #facc15;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(250, 204, 21, 0.3);
+}
+
+.end-stat-icon {
+    font-size: 26px;
+    filter: drop-shadow(0 0 10px rgba(250, 204, 21, 0.6));
+}
+
+.end-stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: #e9d5ff;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.end-stat-value {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fef08a;
+    line-height: 1.35;
+    text-shadow: 0 0 10px rgba(250, 204, 21, 0.5);
+}
+
+/* Next Enemy Button */
+.victory-btn {
+    width: 100%;
+    height: 56px;
+    background: linear-gradient(135deg, #eab308, #ca8a04) !important;
+    border: 1.5px solid #fef08a !important;
+    border-radius: 12px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 17px !important;
+    font-weight: 800 !important;
+    letter-spacing: 1px !important;
+    color: #1a0d02 !important;
+    box-shadow: 0 8px 30px rgba(234, 179, 8, 0.5) !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    margin-top: 6px !important;
+}
+
+.victory-btn:hover {
+    background: linear-gradient(135deg, #facc15, #eab308) !important;
+    box-shadow: 0 12px 40px rgba(234, 179, 8, 0.75) !important;
+    transform: translateY(-3px) scale(1.02) !important;
+    color: #000000 !important;
+}
+
+
+/* ---------------------------------------------------------
+   2. DEFEAT SCREEN
+--------------------------------------------------------- */
+#defeat-screen {
+    display: none;
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    z-index: 250;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-image:
+        radial-gradient(circle at 75% 35%, rgba(239, 68, 68, 0.2) 0%, transparent 45%),
+        radial-gradient(circle at 25% 65%, rgba(150, 10, 30, 0.3) 0%, transparent 50%),
+        linear-gradient(
+            90deg,
+            rgba(20, 4, 12, 0.95) 0%,
+            rgba(26, 6, 16, 0.88) 50%,
+            rgba(18, 3, 10, 0.96) 100%
+        ),
+        url("bgassets/mainmenu.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#defeat-screen:not([style*="display: none"]),
+#defeat-screen[style*="display: flex"],
+#defeat-screen[style*="display: block"] {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Master Dark Vignette (Emergency Crimson) */
+#defeat-screen::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at 50% 50%,
+        rgba(180, 20, 40, 0.15),
+        transparent 45%
+    );
+    box-shadow:
+        inset 0 0 180px rgba(0, 0, 0, 0.94),
+        inset 0 0 80px rgba(239, 68, 68, 0.2);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Master Scanlines */
+#defeat-screen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.015) 0px,
+        rgba(255, 255, 255, 0.015) 1px,
+        transparent 1px,
+        transparent 5px
+    );
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 2;
+}
+
+#defeat-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+    overflow: hidden;
+}
+
+/* Floating Frau Character (Defeated Pose) */
+#defeat-frau {
+    position: absolute;
+    left: 120px;
+    bottom: 90px;
+    max-height: 700px;
+    width: auto;
+    object-fit: contain;
+    z-index: 10;
+    filter: drop-shadow(0 0 30px rgba(239, 68, 68, 0.5)) drop-shadow(0 20px 40px rgba(0, 0, 0, 0.95));
+    animation: defeatFrauBreath 3.4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes defeatFrauBreath {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-10px) scale(0.99);
+    }
+}
+
+.defeat-vignette {
+    position: absolute;
+    left: 80px;
+    bottom: 40px;
+    width: 600px;
+    height: 120px;
+    background: radial-gradient(ellipse at center, rgba(239, 68, 68, 0.45) 0%, rgba(100, 10, 20, 0.25) 45%, transparent 75%);
+    border-radius: 50%;
+    filter: blur(8px);
+    z-index: 5;
+    pointer-events: none;
+}
+
+/* Defeat Right Content Card */
+.defeat-panel {
+    position: absolute;
+    right: 140px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 680px;
+    max-width: 45%;
+    z-index: 20;
+    background: rgba(26, 8, 16, 0.95);
+    border: 1.5px solid rgba(239, 68, 68, 0.55);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    box-shadow:
+        0 15px 50px rgba(0, 0, 0, 0.9),
+        0 0 40px rgba(239, 68, 68, 0.25),
+        inset 0 0 25px rgba(239, 68, 68, 0.08);
+    padding: 44px 50px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+    animation: defeatCardEntry 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes defeatCardEntry {
+    from {
+        opacity: 0;
+        transform: translateY(-45%) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(-50%) scale(1);
+    }
+}
+
+.defeat-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 44px;
+    letter-spacing: 4px;
+    color: #fecaca;
+    margin: 0;
+    text-shadow:
+        4px 4px 0 #450a0a,
+        8px 8px 0 #180000,
+        0 0 20px #ef4444,
+        0 0 35px rgba(239, 68, 68, 0.85);
+}
+
+.defeat-divider {
+    background: linear-gradient(90deg, transparent 0%, rgba(239, 68, 68, 0.6) 50%, transparent 100%);
+}
+
+#defeat-message {
+    color: #fecdd3;
+    white-space: pre-line;
+}
+
+/* Defeat Tactical Recovery Box */
+.defeat-tip-box {
+    background: rgba(18, 4, 10, 0.85);
+    border: 1px dashed rgba(239, 68, 68, 0.45);
+    border-radius: 12px;
+    padding: 14px 18px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.defeat-tip-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.defeat-tip-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #fca5a5;
+    margin: 0;
+}
+
+/* Return to Difficulty Button */
+.defeat-btn {
+    width: 100%;
+    height: 56px;
+    background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
+    border: 1.5px solid #fca5a5 !important;
+    border-radius: 12px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 17px !important;
+    font-weight: 800 !important;
+    letter-spacing: 1px !important;
+    color: #ffffff !important;
+    box-shadow: 0 8px 30px rgba(239, 68, 68, 0.5) !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    margin-top: 6px !important;
+}
+
+.defeat-btn:hover {
+    background: linear-gradient(135deg, #f87171, #dc2626) !important;
+    box-shadow: 0 12px 40px rgba(239, 68, 68, 0.75) !important;
+    transform: translateY(-3px) scale(1.02) !important;
+}
+
+/* Floating Particle Animations */
+.end-particle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: particleFlyUp 6s linear infinite;
+}
+
+@keyframes particleFlyUp {
+    0% {
+        transform: translateY(0) scale(0.5);
+        opacity: 0;
+    }
+    15% {
+        opacity: 0.9;
+    }
+    85% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(-1100px) scale(1.3);
+        opacity: 0;
+    }
+}
