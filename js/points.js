@@ -18,8 +18,13 @@ function updateHintCostDisplay() {
     const hintCostDisplay = document.getElementById("hint-cost-display");
     if (!hintCostDisplay) return;
 
-    const lang = (typeof getLanguage === "function") ? getLanguage() : "en";
-    const isFil = lang === "fil";
+    const diff = (typeof getCurrentDifficultyName === "function") ? getCurrentDifficultyName() : "easy";
+    const isEasyOrNormal = (diff === "easy" || diff === "normal");
+
+    if (isEasyOrNormal) {
+        hintCostDisplay.textContent = isFil ? "💡 Hint: LIBRE" : "💡 Hint: FREE";
+        return;
+    }
 
     if (freeHintsRemaining > 0) {
         hintCostDisplay.textContent = isFil 
@@ -122,7 +127,18 @@ function showHint() {
         return;
     }
 
-    // Free hint first
+    const diff = (typeof getCurrentDifficultyName === "function") ? getCurrentDifficultyName() : "easy";
+    const isEasyOrNormal = (diff === "easy" || diff === "normal");
+
+    // Easy and Normal modes: Hints are 100% FREE (No TP used or deducted)
+    if (isEasyOrNormal) {
+        if (playerSprite) playerSprite.src = "css/Sprites/user/talking.png";
+        if (dialogueText) dialogueText.textContent = (isFil ? "💡 LIBRENG HINT: " : "💡 FREE HINT: ") + currentBugData.hint;
+        if (hintButton) hintButton.disabled = true;
+        return;
+    }
+
+    // Free hint first (Hard & Hell modes with shop upgrades)
     if (freeHintsRemaining > 0) {
         freeHintsRemaining--;
         if (playerSprite) playerSprite.src = "css/Sprites/user/talking.png";

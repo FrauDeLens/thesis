@@ -12,6 +12,8 @@ function analyzeBugPedagogy(bugData, enemy, lang) {
     const category = (bugData && bugData.category) ? bugData.category : "General Bug";
     const errorType = (bugData && bugData.error_type) ? bugData.error_type : "";
     const topic = (enemy && enemy.topic) ? enemy.topic : "";
+    const enemyId = (enemy && enemy.id) ? enemy.id : "";
+    const guide = (typeof ENEMY_GUIDE_DATA !== "undefined" && ENEMY_GUIDE_DATA[enemyId]) ? ENEMY_GUIDE_DATA[enemyId] : null;
 
     let whatItIs = "";
     let whatItShouldDo = "";
@@ -52,8 +54,8 @@ function analyzeBugPedagogy(bugData, enemy, lang) {
             ? "Standard console print output command sa Python."
             : "Standard console print output command in Python.";
         whatItShouldDo = isFil
-            ? "Dapat nitong i-display ang ibinigay na mensahe o variable sa output console."
-            : "Format and display the provided message or variable onto the terminal.";
+            ? "Dapat nitong i-display ang ibinigay na mensahe o kalkulasyon sa output console."
+            : "Format and display the provided message or expression onto the terminal.";
     } else if (/\[.*?\]|\bappend\b|\bsort\b|\blen\b/.test(code) || /list/i.test(topic)) {
         whatItIs = isFil
             ? "Python list indexing o data manipulation statement."
@@ -77,11 +79,13 @@ function analyzeBugPedagogy(bugData, enemy, lang) {
             : "Execute the command instructions cleanly without failing.";
     }
 
-    // 2. Identify Why It Broke
+    // 2. Identify Why It Broke (leveraging Enemy Guide behavior if available)
     const catLower = category.toLowerCase();
     const cleanError = errorType || category;
 
-    if (catLower.includes("syntax")) {
+    if (guide && guide.behavior && guide.behavior[lang]) {
+        whyItBroke = guide.behavior[lang] + (errorType ? " (" + errorType + ")" : "");
+    } else if (catLower.includes("syntax")) {
         whyItBroke = isFil
             ? ("May Syntax Error (" + cleanError + "). May bawal na bantas, nawawalang colon (:), o hindi saradong panaklong/quote kaya hindi ma-parse ng Python.")
             : ("Syntax Error detected (" + cleanError + "). Invalid tokens, unclosed quotes/brackets, or a missing colon (:) prevent Python from parsing this line.");
@@ -102,6 +106,8 @@ function analyzeBugPedagogy(bugData, enemy, lang) {
     // 3. Small Tactical Hint for Wrong Answer Feedback
     if (hint) {
         smallHint = hint;
+    } else if (guide && guide.tip && guide.tip[lang]) {
+        smallHint = guide.tip[lang];
     } else if (catLower.includes("syntax")) {
         smallHint = isFil ? 'Suriin ang mga colons (:), quotes (\' o "), o parentheses () sa bawat linya.' : 'Inspect colons (:), quotation marks, or closing parentheses ().';
     } else if (catLower.includes("log")) {
