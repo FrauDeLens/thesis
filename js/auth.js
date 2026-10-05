@@ -159,7 +159,7 @@ function checkLockoutStatus() {
         if (passwordInp) passwordInp.disabled = true;
 
         if (loginMsg) {
-            loginMsg.innerHTML = '<span class="lockout-warning">⚠️ Too many failed attempts! Timed out: please wait <strong>' + remainingSec + 's</strong> before trying again. <a href="javascript:void(0)" onclick="clearFailedLogins()" style="color: #93c5fd; text-decoration: underline; margin-left: 8px; font-weight: 700;">Reset Cooldown</a></span>';
+            loginMsg.innerHTML = '<span class="lockout-warning">⚠️ Too many failed attempts! Timed out: please wait <strong>' + remainingSec + 's</strong> before trying again.</span>';
         }
 
         if (!lockoutTimerInterval) {
@@ -171,7 +171,7 @@ function checkLockoutStatus() {
                 } else {
                     const secLeft = Math.ceil((lockoutUntil - updatedNow) / 1000);
                     if (loginMsg) {
-                        loginMsg.innerHTML = '<span class="lockout-warning">⚠️ Too many failed attempts! Timed out: please wait <strong>' + secLeft + 's</strong> before trying again. <a href="javascript:void(0)" onclick="clearFailedLogins()" style="color: #93c5fd; text-decoration: underline; margin-left: 8px; font-weight: 700;">Reset Cooldown</a></span>';
+                        loginMsg.innerHTML = '<span class="lockout-warning">⚠️ Too many failed attempts! Timed out: please wait <strong>' + secLeft + 's</strong> before trying again.</span>';
                     }
                 }
             }, 1000);
@@ -243,52 +243,7 @@ async function handleLoginSubmit() {
     }
 }
 
-async function handleResetPasswordSubmit() {
-    const resetUserInp = document.getElementById("reset-username");
-    const resetPassInp = document.getElementById("reset-new-password");
-    const resetConfirmInp = document.getElementById("reset-confirm-password");
-    const resetMsg = document.getElementById("reset-password-message");
 
-    const username = resetUserInp ? resetUserInp.value.trim() : "";
-    const newPassword = resetPassInp ? resetPassInp.value : "";
-    const confirm = resetConfirmInp ? resetConfirmInp.value : "";
-
-    if (!username || !newPassword || !confirm) {
-        if (resetMsg) resetMsg.textContent = "Please fill in all fields.";
-        return;
-    }
-    if (newPassword.length < 4) {
-        if (resetMsg) resetMsg.textContent = "New password must be at least 4 characters.";
-        return;
-    }
-    if (newPassword !== confirm) {
-        if (resetMsg) resetMsg.textContent = "Passwords do not match.";
-        return;
-    }
-
-    if (resetMsg) resetMsg.textContent = "Updating password...";
-    try {
-        const data = await api("auth.php", "POST", {
-            action: "reset_password",
-            username: username,
-            new_password: newPassword,
-            confirm: confirm
-        });
-        if (resetMsg) {
-            resetMsg.innerHTML = '<span style="color: #4ade80;">' + (data.message || "Password updated successfully!") + '</span>';
-        }
-        setTimeout(function () {
-            const modal = document.getElementById("reset-password-modal");
-            if (modal) modal.style.display = "none";
-            const loginMsg = document.getElementById("login-message");
-            if (loginMsg) loginMsg.textContent = "Password reset! Please log in with your new password.";
-            const usernameInp = document.getElementById("username");
-            if (usernameInp) usernameInp.value = username;
-        }, 1500);
-    } catch (e) {
-        if (resetMsg) resetMsg.textContent = e.message;
-    }
-}
 
 async function handleRegisterSubmit() {
     const regUsernameInp = document.getElementById("register-username") || document.getElementById("register-username-input");
@@ -341,11 +296,6 @@ function initAuth() {
     const backToLoginBtn = document.getElementById("back-to-login-button");
     const createAccountBtn = document.getElementById("create-account-button");
 
-    const forgotPassBtn = document.getElementById("forgot-password-button");
-    const resetModal = document.getElementById("reset-password-modal");
-    const resetCancelBtn = document.getElementById("reset-cancel-button");
-    const resetSubmitBtn = document.getElementById("reset-submit-button");
-
     const usernameInp = document.getElementById("username") || document.getElementById("username-input");
     const passwordInp = document.getElementById("password") || document.getElementById("password-input");
     const loginMsg = document.getElementById("login-message");
@@ -363,42 +313,6 @@ function initAuth() {
     document.addEventListener("dragstart", function (e) {
         if (e.target && e.target.tagName === "IMG") {
             e.preventDefault();
-        }
-    });
-
-    // Open Reset Password Modal
-    if (forgotPassBtn && resetModal) {
-        forgotPassBtn.addEventListener("click", function () {
-            resetModal.style.display = "flex";
-            const resetMsg = document.getElementById("reset-password-message");
-            if (resetMsg) resetMsg.textContent = "";
-            const resetUserInp = document.getElementById("reset-username");
-            if (resetUserInp && usernameInp && usernameInp.value) {
-                resetUserInp.value = usernameInp.value.trim();
-            }
-        });
-    }
-
-    if (resetCancelBtn && resetModal) {
-        resetCancelBtn.addEventListener("click", function () {
-            resetModal.style.display = "none";
-        });
-    }
-
-    if (resetSubmitBtn) {
-        resetSubmitBtn.addEventListener("click", handleResetPasswordSubmit);
-    }
-
-    const resetInputs = [
-        document.getElementById("reset-username"),
-        document.getElementById("reset-new-password"),
-        document.getElementById("reset-confirm-password")
-    ];
-    resetInputs.forEach(function (inp) {
-        if (inp) {
-            inp.addEventListener("keydown", function (e) {
-                if (e.key === "Enter") handleResetPasswordSubmit();
-            });
         }
     });
 

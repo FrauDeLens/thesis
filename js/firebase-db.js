@@ -141,38 +141,6 @@ async function executeFirebaseApi(path, method, body) {
             return { ok: true, message: "Account created! Please log in." };
         }
 
-        // --- Reset Password ---
-        if (action === "reset_password") {
-            const username = (body.username || "").trim();
-            const newPassword = body.new_password || "";
-            const confirm = body.confirm || "";
-
-            if (!username || !newPassword) {
-                throw new Error("Please enter your username and new password.");
-            }
-            if (newPassword.length < 4) {
-                throw new Error("New password must be at least 4 characters.");
-            }
-            if (confirm && newPassword !== confirm) {
-                throw new Error("Passwords do not match.");
-            }
-
-            const docId = username.toLowerCase();
-            const userRef = db.collection("users").doc(docId);
-            const snap = await userRef.get();
-            if (!snap.exists) {
-                throw new Error("Account with username '" + username + "' not found.");
-            }
-
-            const hashed = await firebaseHashPassword(newPassword);
-            await userRef.update({
-                password_hash: hashed,
-                updated_at: new Date().toISOString()
-            });
-
-            return { ok: true, message: "Password reset successfully! Please log in." };
-        }
-
         // --- Update Profile (Full Name / Display Name, Username & Password) ---
         if (action === "update_profile") {
             const currentUsername = localStorage.getItem("username");
