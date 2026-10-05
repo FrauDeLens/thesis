@@ -1332,72 +1332,110 @@
   {
     "enemy_id": "algorithm_wraith",
     "difficulty": "hell",
-    "code": "left = 0\nright = 10\nmid = (left + right) / 2",
-    "answer": "left = 0\nright = 10\nmid = (left + right) // 2",
-    "hint": "Array indexing requires integer midpoints. Use integer division: (left + right) // 2."
+    "category": "Syntax Error",
+    "error_type": "SyntaxError: expected ':'",
+    "code": "def dfs(graph, node, visited)\n    visited.add(node)",
+    "answer": "def dfs(graph, node, visited):\n    visited.add(node)",
+    "hint": "Syntax Error: Function headers must end with a colon (:). Add ':' after visited)."
   },
   {
     "enemy_id": "algorithm_wraith",
     "difficulty": "hell",
-    "code": "items = [(\"b\", 2), (\"a\", 1)]\nitems.sort(key=item[1])",
-    "answer": "items = [(\"b\", 2), (\"a\", 1)]\nitems.sort(key=lambda item: item[1])",
-    "hint": "The key parameter in sort() expects a function: key=lambda item: item[1]."
+    "category": "Syntax Error",
+    "error_type": "SyntaxError: closing bracket ']' missing",
+    "code": "stack = [start_node\nvisited = set()",
+    "answer": "stack = [start_node]\nvisited = set()",
+    "hint": "Syntax Error: The stack list was opened with '[' but never closed with ']'."
   },
   {
     "enemy_id": "algorithm_wraith",
     "difficulty": "hell",
-    "code": "queue = [1, 2, 3]\nfirst = queue.pop()",
-    "answer": "from collections import deque\nqueue = deque([1, 2, 3])\nfirst = queue.popleft()",
-    "hint": "Queue FIFO behavior pops from the front. Use collections.deque and popleft()."
+    "category": "Syntax Error",
+    "error_type": "SyntaxError: expected ':'",
+    "code": "for neighbor in graph.get(node, [])\n    if neighbor not in visited:\n        dfs(graph, neighbor, visited)",
+    "answer": "for neighbor in graph.get(node, []):\n    if neighbor not in visited:\n        dfs(graph, neighbor, visited)",
+    "hint": "Syntax Error: For-loop headers iterating over neighbors must end with a colon (:)."
   },
   {
     "enemy_id": "algorithm_wraith",
     "difficulty": "hell",
-    "code": "stack = [1, 2, 3]\nstack.dequeue()",
-    "answer": "stack = [1, 2, 3]\ntop = stack.pop()",
-    "hint": "Python lists used as LIFO stacks use pop() to remove the top element."
+    "category": "Syntax Error",
+    "error_type": "SyntaxError: invalid syntax",
+    "code": "if neighbor not visited:\n    visited.add(neighbor)",
+    "answer": "if neighbor not in visited:\n    visited.add(neighbor)",
+    "hint": "Syntax Error: In Python, membership checks use 'not in': if neighbor not in visited:."
   },
   {
     "enemy_id": "algorithm_wraith",
     "difficulty": "hell",
+    "category": "Logical Error",
+    "error_type": "Logical Error: Infinite Cycle / Unmarked Visited",
+    "code": "def dfs(graph, node, visited):\n    for neighbor in graph.get(node, []):\n        if neighbor not in visited:\n            dfs(graph, neighbor, visited)",
+    "answer": "def dfs(graph, node, visited):\n    visited.add(node)\n    for neighbor in graph.get(node, []):\n        if neighbor not in visited:\n            dfs(graph, neighbor, visited)",
+    "hint": "Logical Error: 'node' is never marked as visited (visited.add(node)), causing cyclic graphs to loop forever."
+  },
+  {
+    "enemy_id": "algorithm_wraith",
+    "difficulty": "hell",
+    "category": "Logical Error",
+    "error_type": "Logical Error: Inverted Traversal Condition",
+    "code": "for neighbor in graph[node]:\n    if neighbor in visited:\n        dfs(graph, neighbor, visited)",
+    "answer": "for neighbor in graph[node]:\n    if neighbor not in visited:\n        dfs(graph, neighbor, visited)",
+    "hint": "Logical Error: DFS must only traverse unvisited nodes. Change 'in visited' to 'not in visited'."
+  },
+  {
+    "enemy_id": "algorithm_wraith",
+    "difficulty": "hell",
+    "category": "Logical Error",
+    "error_type": "Logical Error: Wrong Traversal Argument",
+    "code": "for neighbor in graph.get(node, []):\n    if neighbor not in visited:\n        dfs(graph, node, visited)",
+    "answer": "for neighbor in graph.get(node, []):\n    if neighbor not in visited:\n        dfs(graph, neighbor, visited)",
+    "hint": "Logical Error: The recursive call passes 'node' instead of 'neighbor', endlessly re-exploring the same node."
+  },
+  {
+    "enemy_id": "algorithm_wraith",
+    "difficulty": "hell",
+    "category": "Logical Error",
+    "error_type": "Logical Error: FIFO Queue instead of LIFO Stack",
+    "code": "stack = [start]\nwhile stack:\n    curr = stack.pop(0)",
+    "answer": "stack = [start]\nwhile stack:\n    curr = stack.pop()",
+    "hint": "Logical Error: pop(0) behaves like a FIFO queue (BFS). Iterative Depth-First Search requires LIFO stack.pop()."
+  },
+  {
+    "enemy_id": "algorithm_wraith",
+    "difficulty": "hell",
+    "category": "Runtime Error",
+    "error_type": "KeyError: missing graph adjacency key",
+    "code": "for neighbor in graph[node]:\n    dfs(graph, neighbor, visited)",
+    "answer": "for neighbor in graph.get(node, []):\n    dfs(graph, neighbor, visited)",
+    "hint": "Runtime Error (KeyError): If 'node' has no outgoing edges, graph[node] crashes. Use graph.get(node, [])."
+  },
+  {
+    "enemy_id": "algorithm_wraith",
+    "difficulty": "hell",
+    "category": "Runtime Error",
+    "error_type": "AttributeError: 'set' object has no attribute 'append'",
+    "code": "visited = set()\nvisited.append(node)",
+    "answer": "visited = set()\nvisited.add(node)",
+    "hint": "Runtime Error (AttributeError): Python sets do not have an .append() method. Use visited.add(node)."
+  },
+  {
+    "enemy_id": "algorithm_wraith",
+    "difficulty": "hell",
+    "category": "Runtime Error",
+    "error_type": "RecursionError: maximum recursion depth exceeded",
+    "code": "def dfs(root):\n    return 1 + max(dfs(root.left), dfs(root.right))",
+    "answer": "def dfs(root):\n    if root is None:\n        return 0\n    return 1 + max(dfs(root.left), dfs(root.right))",
+    "hint": "Runtime Error (RecursionError): Tree DFS is missing a base case ('if root is None: return 0'), causing stack overflow."
+  },
+  {
+    "enemy_id": "algorithm_wraith",
+    "difficulty": "hell",
+    "category": "Runtime Error",
+    "error_type": "NameError: name 'visited' is not defined",
     "code": "graph = {\"A\": [\"B\"]}\nfor node in graph:\n    visited.add(node)",
     "answer": "graph = {\"A\": [\"B\"]}\nvisited = set()\nfor node in graph:\n    visited.add(node)",
-    "hint": "visited must be initialized as a set (visited = set()) before adding nodes."
-  },
-  {
-    "enemy_id": "algorithm_wraith",
-    "difficulty": "hell",
-    "code": "nums = [5, 2, 8, 1]\nnums = nums.sort()",
-    "answer": "nums = [5, 2, 8, 1]\nnums.sort()",
-    "hint": "list.sort() sorts in place and returns None. Do not reassign nums = nums.sort()."
-  },
-  {
-    "enemy_id": "algorithm_wraith",
-    "difficulty": "hell",
-    "code": "arr = [1, 2, 3]\nfor i in range(len(arr)):\n    if arr[i] == 2:\n        arr.pop(i)",
-    "answer": "arr = [1, 2, 3]\narr = [x for x in arr if x != 2]",
-    "hint": "Do not remove elements from a list while iterating over its indices. Use a comprehension."
-  },
-  {
-    "enemy_id": "algorithm_wraith",
-    "difficulty": "hell",
-    "code": "def search(arr, target):\n    for i in arr:\n        if i == target: return i",
-    "answer": "def search(arr, target):\n    for idx, val in enumerate(arr):\n        if val == target:\n            return idx\n    return -1",
-    "hint": "Search algorithms typically return the index of the found element or -1."
-  },
-  {
-    "enemy_id": "algorithm_wraith",
-    "difficulty": "hell",
-    "code": "dist = {}\ndist[\"A\"] = infinity",
-    "answer": "dist = {}\ndist[\"A\"] = float(\"inf\")",
-    "hint": "Represent infinity in Python using float(\"inf\")."
-  },
-  {
-    "enemy_id": "algorithm_wraith",
-    "difficulty": "hell",
-    "code": "nums = [1, 3, 5]\npos = bisect.bisect(nums, 4)",
-    "answer": "import bisect\nnums = [1, 3, 5]\npos = bisect.bisect(nums, 4)",
-    "hint": "Import the bisect module before calling bisect.bisect()."
+    "hint": "Runtime Error (NameError): 'visited' must be initialized as a set (visited = set()) before adding nodes."
   },
   {
     "enemy_id": "concurrency_beast",

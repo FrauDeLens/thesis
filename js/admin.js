@@ -349,8 +349,16 @@ function renderQuestionBank() {
 
     const keyword = (document.getElementById("question-search-input") ? document.getElementById("question-search-input").value : "").trim().toLowerCase();
     const enemyFilter = document.getElementById("question-bank-enemy-filter") ? document.getElementById("question-bank-enemy-filter").value : "all";
+    const categoryFilter = document.getElementById("question-bank-category-filter") ? document.getElementById("question-bank-category-filter").value : "all";
 
     let list = cachedAdminQuestions.slice();
+
+    if (categoryFilter !== "all") {
+        list = list.filter(function (q) {
+            const cat = (q.category || "").toLowerCase();
+            return cat.includes(categoryFilter.toLowerCase());
+        });
+    }
 
     if (currentQuestionFilterTier !== "all") {
         list = list.filter(function (q) {
@@ -388,9 +396,20 @@ function renderQuestionBank() {
         const diffLower = (q.difficulty || "easy").toLowerCase();
         const friendlyEnemy = getEnemyFriendlyName(q.enemy_id);
 
+        const cat = q.category || "";
+        let catBadgeHtml = "";
+        if (cat) {
+            const catLower = cat.toLowerCase();
+            const catClass = catLower.includes("syntax") ? "cat-syntax" :
+                             catLower.includes("log") ? "cat-logical" : "cat-runtime";
+            const icon = catLower.includes("syntax") ? "⚡ " : catLower.includes("log") ? "🧠 " : "💥 ";
+            catBadgeHtml = "<span class='qcard-category-badge " + catClass + "'>" + icon + escapeHtml(cat) + "</span>";
+        }
+
         html += "<div class='admin-qcard'>";
         html += "<div class='qcard-header'>";
         html += "<span class='qcard-tier-badge tier-" + diffLower + "-badge'>" + diffLower.toUpperCase() + "</span>";
+        if (catBadgeHtml) html += catBadgeHtml;
         html += "<span class='qcard-enemy-name'>" + escapeHtml(friendlyEnemy) + "</span>";
         html += "<span class='qcard-id-tag'>ID #" + q.id + "</span>";
         html += "<div class='qcard-actions-group'>";
@@ -482,6 +501,9 @@ function adminOpenEditModal(id) {
 
     fillEditEnemySelect(diff);
     document.getElementById("edit-question-enemy").value = q.enemy_id;
+    if (document.getElementById("edit-question-category")) {
+        document.getElementById("edit-question-category").value = q.category || "Syntax Error";
+    }
     document.getElementById("edit-question-code").value = q.code || "";
     document.getElementById("edit-question-answer").value = q.answer || "";
     document.getElementById("edit-question-hint").value = q.hint || "";
@@ -534,10 +556,12 @@ async function adminSaveEditedQuestion() {
             msg.textContent = "Saving changes to database...";
         }
 
+        const category = document.getElementById("edit-question-category") ? document.getElementById("edit-question-category").value : "Syntax Error";
         await api("questions.php", "PUT", {
             id: id,
             difficulty: difficulty,
             enemy_id: enemy_id,
+            category: category,
             code: code,
             answer: answer,
             hint: hint
@@ -547,6 +571,7 @@ async function adminSaveEditedQuestion() {
         if (item) {
             item.difficulty = difficulty;
             item.enemy_id = enemy_id;
+            item.category = category;
             item.code = code;
             item.answer = answer;
             item.hint = hint;
@@ -606,6 +631,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const questionBankEnemyFilter = document.getElementById("question-bank-enemy-filter");
     if (questionBankEnemyFilter) questionBankEnemyFilter.addEventListener("change", renderQuestionBank);
+
+    const questionBankCategoryFilter = document.getElementById("question-bank-category-filter");
+    if (questionBankCategoryFilter) questionBankCategoryFilter.addEventListener("change", renderQuestionBank);
 
     const tierButtons = document.querySelectorAll(".tier-tab-btn");
     tierButtons.forEach(function (btn) {
@@ -697,9 +725,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     msg.style.display = "block";
                     msg.textContent = "Submitting challenge...";
                 }
+                const category = document.getElementById("question-category") ? document.getElementById("question-category").value : "Syntax Error";
                 await api("questions.php", "POST", {
                     difficulty: diff,
                     enemy_id: enemy,
+                    category: category,
                     code: code,
                     answer: answer,
                     hint: hint

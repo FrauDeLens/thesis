@@ -387,6 +387,8 @@ async function executeFirebaseApi(path, method, body) {
             await db.collection("questions").doc(updateId).update({
                 enemy_id: body.enemy_id,
                 difficulty: body.difficulty,
+                category: body.category || "Syntax Error",
+                error_type: body.error_type || "",
                 code: body.code,
                 answer: body.answer,
                 hint: body.hint || ""
@@ -399,6 +401,8 @@ async function executeFirebaseApi(path, method, body) {
             const newQuestion = {
                 enemy_id: body.enemy_id,
                 difficulty: body.difficulty,
+                category: body.category || "Syntax Error",
+                error_type: body.error_type || "",
                 code: body.code,
                 answer: body.answer,
                 hint: body.hint || "",
@@ -426,12 +430,43 @@ async function executeFirebaseApi(path, method, body) {
                 id: data.id || doc.id,
                 enemy_id: data.enemy_id,
                 difficulty: data.difficulty,
+                category: data.category || (data.enemy_id === "syntax_slime" ? "Syntax Error" : "Logical Error"),
+                error_type: data.error_type || "",
                 code: data.code,
                 answer: data.answer,
                 hint: data.hint || "",
                 created_at: data.created_at || null
             });
         });
+
+        // Fallback to static seed question_pool.json if Firestore questions collection is empty
+        if (rows.length === 0) {
+            try {
+                const resp = await fetch("data/question_pool.json");
+                if (resp.ok) {
+                    const pool = await resp.json();
+                    if (Array.isArray(pool)) {
+                        let filtered = pool;
+                        if (enemyId) filtered = filtered.filter(q => q.enemy_id === enemyId);
+                        else if (difficulty) filtered = filtered.filter(q => q.difficulty === difficulty);
+
+                        rows = filtered.map((q, idx) => ({
+                            id: "seed_" + (idx + 1),
+                            enemy_id: q.enemy_id,
+                            difficulty: q.difficulty,
+                            category: q.category || (q.enemy_id === "syntax_slime" ? "Syntax Error" : "Logical Error"),
+                            error_type: q.error_type || "",
+                            code: q.code,
+                            answer: q.answer,
+                            hint: q.hint || "",
+                            created_at: new Date().toISOString()
+                        }));
+                    }
+                }
+            } catch (err) {
+                console.warn("Could not load fallback question_pool.json:", err);
+            }
+        }
 
         // Filter / shuffle for enemy battles
         if (enemyId && count > 0 && rows.length > 0) {

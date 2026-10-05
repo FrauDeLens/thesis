@@ -481,27 +481,27 @@ const ENEMY_GUIDE_DATA = {
     },
     "algorithm_wraith": {
         "behavior": {
-            "en": "Causes float index crashes in binary searches and wipes out lists by re-assigning .sort() results.",
-            "fil": "Nagdudulot ng float index error sa binary search at nagbubura ng listahan dahil sa maling paggamit ng .sort()."
+            "en": "Corrupts Depth-First Search (DFS) traversals with SyntaxErrors (unclosed brackets & missing colons), Logical bugs (unmarked visited cycles & inverted conditions), and RuntimeErrors (KeyError & AttributeError).",
+            "fil": "Sinisira ang Depth-First Search (DFS) gamit ang SyntaxErrors (kulang na colon at unclosed bracket), Logical bugs (walang visited mark kaya nag-i-infinite loop), at RuntimeErrors (KeyError at AttributeError)."
         },
         "rules": {
             "en": [
-                "Use integer division '//' for midpoint indices: 'mid = (low + high) // 2'.",
-                "The '.sort()' method sorts in-place and returns None! Use 'sorted(lst)' for a new list.",
-                "Ensure search boundaries stop infinite loops ('low <= high')."
+                "Syntax: Function headers 'def dfs(...):' and loops 'for neighbor in graph[node]:' must end with a colon (:).",
+                "Logic: Always add current node to visited ('visited.add(node)') and check 'if neighbor not in visited:' to prevent infinite loops.",
+                "Runtime: Use 'graph.get(node, [])' to safely handle nodes without neighbors, and use 'visited.add()' (not .append) for sets."
             ],
             "fil": [
-                "Gamitin ang '//' (integer division) para sa midpoint: 'mid = (low + high) // 2'.",
-                "Ang '.sort()' ay nag-aayos in-place at nagbabalik ng None! Gamitin ang 'sorted(lst)' para sa bagong list.",
-                "Tiyaking tama ang search condition ('low <= high') para hindi mag-loop nang walang hanggan."
+                "Syntax: Ang 'def dfs(...):' at 'for neighbor in graph[node]:' ay dapat may colon (:) sa dulo.",
+                "Logic: Laging idagdag ang node sa visited ('visited.add(node)') at tingnan kung 'not in visited' upang hindi mag-infinite loop.",
+                "Runtime: Gamitin ang 'graph.get(node, [])' para sa mga dulo ng graph, at 'visited.add()' (hindi .append) dahil set ang gamit."
             ]
         },
-        "bad": "mid = (low + high) / 2",
-        "good": "mid = (low + high) // 2",
-        "errorType": "TypeError / Logic Error",
+        "bad": "def dfs(graph, node, visited)\n    for neighbor in graph[node]:\n        dfs(graph, neighbor, visited)",
+        "good": "def dfs(graph, node, visited):\n    visited.add(node)\n    for neighbor in graph.get(node, []):\n        if neighbor not in visited:\n            dfs(graph, neighbor, visited)",
+        "errorType": "SyntaxError / Logical Bug / RuntimeError",
         "tip": {
-            "en": "Use integer floor division // for index calculations, and remember .sort() returns None.",
-            "fil": "Gamitin ang // sa paghati ng index, at tandaang None ang ibinabalik ng .sort()."
+            "en": "Categorize DFS bugs: (1) Check syntax (colons/brackets), (2) check logic (visited set tracking & not in visited), (3) check runtime methods (.add() on set, .get() on dict).",
+            "fil": "I-categorize ang DFS bugs: (1) Suriin ang syntax (colon/brackets), (2) lohika (naka-mark ba ang visited at not in visited), (3) runtime errors (add sa set, get sa dict)."
         }
     },
     "concurrency_beast": {

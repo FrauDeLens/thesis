@@ -86,16 +86,31 @@ function usePowerup(type) {
         battlePowerupsLeft--;
         if (currentEnemy && currentEnemy.bugs && currentEnemy.bugs[currentBug]) {
             const currentBugData = currentEnemy.bugs[currentBug];
-            let errorType = "General Python Error";
+            let errorType = currentBugData.error_type || "";
+            let category = currentBugData.category || "";
             const code = currentBugData.code || "";
-            if (code.includes('"') && (code.match(/"/g) || []).length % 2 !== 0) errorType = "Missing Closing Quote (\")";
-            else if (code.includes("'") && (code.match(/'/g) || []).length % 2 !== 0) errorType = "Missing Closing Quote (')";
-            else if (code.includes("(") && !code.includes(")")) errorType = "Unclosed Parenthesis ()";
-            else if (code.match(/\b(if|for|while|def|class|else|elif)\b/) && !code.includes(":")) errorType = "Missing Colon (:) at end of statement";
-            else if (currentBugData.hint) errorType = currentBugData.hint;
 
-            if (dialogueText) dialogueText.textContent = "⚡ Bug Scanner: Detected [" + errorType + "]";
-            if (typeof showGameToast === "function") showGameToast("⚡ Scanner: " + errorType, "success");
+            if (!category) {
+                if (code.includes('"') && (code.match(/"/g) || []).length % 2 !== 0) {
+                    category = "Syntax Error";
+                    errorType = "Missing Closing Quote (\")";
+                } else if (code.includes("'") && (code.match(/'/g) || []).length % 2 !== 0) {
+                    category = "Syntax Error";
+                    errorType = "Missing Closing Quote (')";
+                } else if (code.includes("(") && !code.includes(")")) {
+                    category = "Syntax Error";
+                    errorType = "Unclosed Parenthesis ()";
+                } else if (code.match(/\b(if|for|while|def|class|else|elif)\b/) && !code.includes(":")) {
+                    category = "Syntax Error";
+                    errorType = "Missing Colon (:) at end of statement";
+                }
+            }
+            if (!errorType && currentBugData.hint) errorType = currentBugData.hint;
+
+            const categoryPrefix = category ? "[" + category.toUpperCase() + "] " : "";
+            const scanResult = categoryPrefix + (errorType || "General Python Error");
+            if (dialogueText) dialogueText.textContent = "⚡ Bug Scanner: Detected " + scanResult;
+            if (typeof showGameToast === "function") showGameToast("⚡ Scanner: " + scanResult, "success");
         }
     } else if (type === "hint") {
         battlePowerupsLeft--;
@@ -147,7 +162,9 @@ async function loadEnemyQuestions(enemy) {
                 return {
                     code: question.code,
                     answer: question.answer,
-                    hint: question.hint
+                    hint: question.hint,
+                    category: question.category,
+                    error_type: question.error_type
                 };
             });
         }
@@ -160,9 +177,39 @@ function loadBug() {
     const bugCode = document.getElementById("bug-code");
     const hintBtn = document.getElementById("hint-button");
     const challengeBox = document.getElementById("challenge-box");
+    const catBadge = document.getElementById("bug-category-badge");
 
-    if (bugCode && currentEnemy && currentEnemy.bugs && currentEnemy.bugs[currentBug]) {
-        bugCode.textContent = currentEnemy.bugs[currentBug].code;
+    const currentBugData = (currentEnemy && currentEnemy.bugs && currentEnemy.bugs[currentBug]) ? currentEnemy.bugs[currentBug] : null;
+
+    if (bugCode && currentBugData) {
+        bugCode.textContent = currentBugData.code;
+    }
+
+    if (catBadge) {
+        let cat = (currentBugData && currentBugData.category) ? currentBugData.category : "";
+        if (!cat && currentBugData) {
+            const code = currentBugData.code || "";
+            if (code.includes('"') && (code.match(/"/g) || []).length % 2 !== 0) cat = "Syntax Error";
+            else if (code.includes("'") && (code.match(/'/g) || []).length % 2 !== 0) cat = "Syntax Error";
+            else if (code.includes("(") && !code.includes(")")) cat = "Syntax Error";
+            else if (code.match(/\b(if|for|while|def|class|else|elif)\b/) && !code.includes(":")) cat = "Syntax Error";
+            else if (currentEnemy && currentEnemy.id === "syntax_slime") cat = "Syntax Error";
+            else if (currentEnemy && (currentEnemy.id === "recursion_wolf" || currentEnemy.id === "recursion_phantom")) cat = "Logical Error";
+            else if (currentEnemy && (currentEnemy.id === "exception_knight" || currentEnemy.id === "exception_reaper")) cat = "Runtime Error";
+        }
+
+        if (cat) {
+            const catLower = cat.toLowerCase();
+            const icon = catLower.includes("syntax") ? "⚡ " : catLower.includes("log") ? "🧠 " : "💥 ";
+            catBadge.textContent = icon + cat.toUpperCase();
+            catBadge.style.display = "inline-flex";
+            catBadge.className = "terminal-category-badge " + (
+                catLower.includes("syntax") ? "cat-syntax" :
+                catLower.includes("log") ? "cat-logical" : "cat-runtime"
+            );
+        } else {
+            catBadge.style.display = "none";
+        }
     }
 
     // Disable text selection and copying on the question to maintain game integrity

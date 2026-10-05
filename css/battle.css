@@ -470,6 +470,39 @@
     letter-spacing: 0.5px;
 }
 
+.terminal-category-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 12px;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.terminal-category-badge.cat-syntax {
+    background: rgba(234, 179, 8, 0.18);
+    border: 1px solid rgba(234, 179, 8, 0.6);
+    color: #fef08a;
+    box-shadow: 0 0 8px rgba(234, 179, 8, 0.3);
+}
+
+.terminal-category-badge.cat-logical {
+    background: rgba(168, 85, 247, 0.18);
+    border: 1px solid rgba(168, 85, 247, 0.6);
+    color: #e9d5ff;
+    box-shadow: 0 0 8px rgba(168, 85, 247, 0.3);
+}
+
+.terminal-category-badge.cat-runtime {
+    background: rgba(239, 68, 68, 0.18);
+    border: 1px solid rgba(239, 68, 68, 0.6);
+    color: #fca5a5;
+    box-shadow: 0 0 8px rgba(239, 68, 68, 0.3);
+}
+
 .terminal-protect-badge {
     font-family: 'Inter', sans-serif;
     font-size: 11px;
