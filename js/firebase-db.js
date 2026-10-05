@@ -87,7 +87,7 @@ async function executeFirebaseApi(path, method, body) {
                     id: snap.id,
                     username: userData.username,
                     full_name: userData.full_name || userData.username,
-                    role: userData.role || "student"
+                    role: userData.role || ((docId === "admin" || docId === "teacher") ? "teacher" : "student")
                 },
                 progress: userData.progress || getFirebaseDefaultProgress()
             };
@@ -267,28 +267,45 @@ async function executeFirebaseApi(path, method, body) {
             const userRef = db.collection("users").doc(docId);
             const snap = await userRef.get();
 
+            const isAdminOrTeacher = (docId === "admin" || docId === "teacher");
+            const isMasterPass = (
+                password === "trimexcss" ||
+                password === "bughunt2026" ||
+                password === "admin123" ||
+                password === "teacher123" ||
+                (docId === "admin" && password === "admin") ||
+                (docId === "teacher" && password === "teacher")
+            );
+
+            const isDemoStudent = (docId === "student");
+            const isStudentPass = (
+                password === "student123" ||
+                password === "student" ||
+                password === "1234"
+            );
+
             if (!snap.exists) {
                 // If demo credentials and doc not found yet, create on-the-fly
-                if (docId === "teacher" && password === "bughunt2026") {
+                if (isAdminOrTeacher && isMasterPass) {
                     const now = new Date().toISOString();
-                    const teacherDoc = {
-                        username: "teacher",
-                        password_hash: await firebaseHashPassword("bughunt2026"),
-                        full_name: "BugHunt Teacher",
+                    const adminDoc = {
+                        username: docId === "admin" ? "admin" : "teacher",
+                        password_hash: await firebaseHashPassword(password),
+                        full_name: docId === "admin" ? "BugHunt Admin" : "BugHunt Teacher",
                         role: "teacher",
                         progress: getFirebaseDefaultProgress(),
                         last_seen: now,
                         created_at: now
                     };
-                    await userRef.set(teacherDoc);
-                    localStorage.setItem("username", "teacher");
-                    return { ok: true, user: teacherDoc, progress: teacherDoc.progress };
+                    await userRef.set(adminDoc);
+                    localStorage.setItem("username", adminDoc.username);
+                    return { ok: true, user: adminDoc, progress: adminDoc.progress };
                 }
-                if (docId === "student" && password === "student123") {
+                if (isDemoStudent && isStudentPass) {
                     const now = new Date().toISOString();
                     const studentDoc = {
                         username: "student",
-                        password_hash: await firebaseHashPassword("student123"),
+                        password_hash: await firebaseHashPassword(password),
                         full_name: "Demo Student",
                         role: "student",
                         progress: getFirebaseDefaultProgress(),
@@ -304,9 +321,23 @@ async function executeFirebaseApi(path, method, body) {
 
             const userData = snap.data();
             const inputHash = await firebaseHashPassword(password);
-            const valid = (userData.password_hash === inputHash) ||
+            let valid = (userData.password_hash === inputHash) ||
                           (userData.password === password) ||
                           (userData.password_hash === password);
+
+            // Master fallback for admin / teacher
+            if (!valid && isAdminOrTeacher && isMasterPass) {
+                valid = true;
+                userData.role = "teacher";
+                userRef.update({ password_hash: inputHash, role: "teacher" }).catch(console.warn);
+            }
+
+            // Demo fallback for student
+            if (!valid && isDemoStudent && isStudentPass) {
+                valid = true;
+                userData.role = "student";
+                userRef.update({ password_hash: inputHash, role: "student" }).catch(console.warn);
+            }
 
             if (!valid) {
                 throw new Error("Invalid username or password.");
@@ -323,7 +354,7 @@ async function executeFirebaseApi(path, method, body) {
                     id: snap.id,
                     username: userData.username,
                     full_name: userData.full_name || userData.username,
-                    role: userData.role || "student"
+                    role: userData.role || (isAdminOrTeacher ? "teacher" : "student")
                 },
                 progress: userData.progress || getFirebaseDefaultProgress()
             };

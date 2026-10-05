@@ -123,6 +123,27 @@ function applyLoggedInUser(user, serverProgress) {
 let failedLoginAttempts = parseInt(localStorage.getItem("bughunt_failed_logins") || "0", 10);
 let lockoutTimerInterval = null;
 
+function clearFailedLogins() {
+    failedLoginAttempts = 0;
+    localStorage.removeItem("bughunt_failed_logins");
+    localStorage.removeItem("bughunt_lockout_until");
+    if (lockoutTimerInterval) {
+        clearInterval(lockoutTimerInterval);
+        lockoutTimerInterval = null;
+    }
+    const loginBtn = document.getElementById("login-button");
+    const usernameInp = document.getElementById("username") || document.getElementById("username-input");
+    const passwordInp = document.getElementById("password") || document.getElementById("password-input");
+    const loginMsg = document.getElementById("login-message");
+    if (loginBtn) loginBtn.disabled = false;
+    if (usernameInp) usernameInp.disabled = false;
+    if (passwordInp) passwordInp.disabled = false;
+    if (loginMsg && loginMsg.innerHTML && loginMsg.innerHTML.includes("Timed out")) {
+        loginMsg.innerHTML = '<span style="color: #4ade80;">✅ Cooldown reset. You may now log in.</span>';
+    }
+}
+window.clearFailedLogins = clearFailedLogins;
+
 function checkLockoutStatus() {
     const lockoutUntil = parseInt(localStorage.getItem("bughunt_lockout_until") || "0", 10);
     const now = Date.now();
@@ -131,31 +152,26 @@ function checkLockoutStatus() {
     const usernameInp = document.getElementById("username") || document.getElementById("username-input");
     const passwordInp = document.getElementById("password") || document.getElementById("password-input");
 
-    if (now < lockoutUntil) {
+    if (lockoutUntil > 0 && now < lockoutUntil) {
         const remainingSec = Math.ceil((lockoutUntil - now) / 1000);
         if (loginBtn) loginBtn.disabled = true;
         if (usernameInp) usernameInp.disabled = true;
         if (passwordInp) passwordInp.disabled = true;
 
         if (loginMsg) {
-            loginMsg.innerHTML = '<span class="lockout-warning">⚠️ Too many failed attempts! Timed out: please wait <strong>' + remainingSec + 's</strong> before trying again.</span>';
+            loginMsg.innerHTML = '<span class="lockout-warning">⚠️ Too many failed attempts! Timed out: please wait <strong>' + remainingSec + 's</strong> before trying again. <a href="javascript:void(0)" onclick="clearFailedLogins()" style="color: #93c5fd; text-decoration: underline; margin-left: 8px; font-weight: 700;">Reset Cooldown</a></span>';
         }
 
         if (!lockoutTimerInterval) {
             lockoutTimerInterval = setInterval(function () {
                 const updatedNow = Date.now();
                 if (updatedNow >= lockoutUntil) {
-                    clearInterval(lockoutTimerInterval);
-                    lockoutTimerInterval = null;
-                    localStorage.removeItem("bughunt_lockout_until");
-                    if (loginBtn) loginBtn.disabled = false;
-                    if (usernameInp) usernameInp.disabled = false;
-                    if (passwordInp) passwordInp.disabled = false;
-                    if (loginMsg) loginMsg.textContent = "Cooldown expired. You may now try logging in again.";
+                    clearFailedLogins();
+                    if (loginMsg) loginMsg.innerHTML = '<span style="color: #4ade80;">Cooldown expired. You may now try logging in again.</span>';
                 } else {
                     const secLeft = Math.ceil((lockoutUntil - updatedNow) / 1000);
                     if (loginMsg) {
-                        loginMsg.innerHTML = '<span class="lockout-warning">⚠️ Too many failed attempts! Timed out: please wait <strong>' + secLeft + 's</strong> before trying again.</span>';
+                        loginMsg.innerHTML = '<span class="lockout-warning">⚠️ Too many failed attempts! Timed out: please wait <strong>' + secLeft + 's</strong> before trying again. <a href="javascript:void(0)" onclick="clearFailedLogins()" style="color: #93c5fd; text-decoration: underline; margin-left: 8px; font-weight: 700;">Reset Cooldown</a></span>';
                     }
                 }
             }, 1000);
@@ -163,9 +179,13 @@ function checkLockoutStatus() {
         return true;
     }
 
+    // Cooldown passed or never locked out
     if (lockoutTimerInterval) {
         clearInterval(lockoutTimerInterval);
         lockoutTimerInterval = null;
+    }
+    if (lockoutUntil > 0 && now >= lockoutUntil) {
+        clearFailedLogins();
     }
     if (loginBtn) loginBtn.disabled = false;
     if (usernameInp) usernameInp.disabled = false;
@@ -178,23 +198,13 @@ function recordFailedLogin() {
     localStorage.setItem("bughunt_failed_logins", failedLoginAttempts.toString());
 
     if (failedLoginAttempts >= 5) {
-        const lockoutUntil = Date.now() + 60000; // 60 seconds
-        localStorage.setItem("bughunt_lockout_until", lockoutUntil.toString());
-        checkLockoutStatus();
-    } else if (failedLoginAttempts >= 3) {
         const lockoutUntil = Date.now() + 30000; // 30 seconds
         localStorage.setItem("bughunt_lockout_until", lockoutUntil.toString());
         checkLockoutStatus();
-    }
-}
-
-function clearFailedLogins() {
-    failedLoginAttempts = 0;
-    localStorage.removeItem("bughunt_failed_logins");
-    localStorage.removeItem("bughunt_lockout_until");
-    if (lockoutTimerInterval) {
-        clearInterval(lockoutTimerInterval);
-        lockoutTimerInterval = null;
+    } else if (failedLoginAttempts >= 3) {
+        const lockoutUntil = Date.now() + 15000; // 15 seconds
+        localStorage.setItem("bughunt_lockout_until", lockoutUntil.toString());
+        checkLockoutStatus();
     }
 }
 
