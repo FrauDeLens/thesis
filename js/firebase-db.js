@@ -415,57 +415,70 @@ async function executeFirebaseApi(path, method, body) {
         }
 
         // --- GET questions ---
-        let query = db.collection("questions");
-        if (enemyId) {
-            query = query.where("enemy_id", "==", enemyId);
-        } else if (difficulty) {
-            query = query.where("difficulty", "==", difficulty);
+        // 1. Load canonical curated curriculum questions from data/question_pool.json
+        let baseQuestions = [];
+        try {
+            const resp = await fetch("data/question_pool.json");
+            if (resp.ok) {
+                const pool = await resp.json();
+                if (Array.isArray(pool)) {
+                    let filtered = pool;
+                    if (enemyId) filtered = filtered.filter(q => q.enemy_id === enemyId);
+                    else if (difficulty) filtered = filtered.filter(q => q.difficulty === difficulty);
+
+                    baseQuestions = filtered.map((q, idx) => ({
+                        id: q.id ? String(q.id) : ("seed_" + (idx + 1)),
+                        enemy_id: q.enemy_id,
+                        difficulty: q.difficulty,
+                        category: q.category || (q.enemy_id === "syntax_slime" ? "Syntax Error" : "Logical Error"),
+                        error_type: q.error_type || "",
+                        code: q.code,
+                        answer: q.answer,
+                        hint: q.hint || "",
+                        created_at: new Date().toISOString()
+                    }));
+                }
+            }
+        } catch (err) {
+            console.warn("Could not load canonical question_pool.json:", err);
         }
 
-        const snap = await query.get();
-        let rows = [];
-        snap.forEach(function (doc) {
-            const data = doc.data();
-            rows.push({
-                id: data.id || doc.id,
-                enemy_id: data.enemy_id,
-                difficulty: data.difficulty,
-                category: data.category || (data.enemy_id === "syntax_slime" ? "Syntax Error" : "Logical Error"),
-                error_type: data.error_type || "",
-                code: data.code,
-                answer: data.answer,
-                hint: data.hint || "",
-                created_at: data.created_at || null
-            });
-        });
-
-        // Fallback to static seed question_pool.json if Firestore questions collection is empty
-        if (rows.length === 0) {
-            try {
-                const resp = await fetch("data/question_pool.json");
-                if (resp.ok) {
-                    const pool = await resp.json();
-                    if (Array.isArray(pool)) {
-                        let filtered = pool;
-                        if (enemyId) filtered = filtered.filter(q => q.enemy_id === enemyId);
-                        else if (difficulty) filtered = filtered.filter(q => q.difficulty === difficulty);
-
-                        rows = filtered.map((q, idx) => ({
-                            id: "seed_" + (idx + 1),
-                            enemy_id: q.enemy_id,
-                            difficulty: q.difficulty,
-                            category: q.category || (q.enemy_id === "syntax_slime" ? "Syntax Error" : "Logical Error"),
-                            error_type: q.error_type || "",
-                            code: q.code,
-                            answer: q.answer,
-                            hint: q.hint || "",
-                            created_at: new Date().toISOString()
-                        }));
-                    }
-                }
-            } catch (err) {
-                console.warn("Could not load fallback question_pool.json:", err);
+        // 2. Fetch custom teacher-created questions from Firestore
+        let customRows = [];
+        try {
+            let query = db.collection("questions");
+            if (enemyId) {
+                query = query.where("enemy_id", "==", enemyId);
+            } else if (difficulty) {
+                query = query.where("difficulty", "==", difficulty);
             }
+            const snap = await query.get();
+            snap.forEach(function (doc) {
+                const data = doc.data();
+                // Only include if explicitly created/edited by a teacher/user
+                if (data.created_by) {
+                    customRows.push({
+                        id: data.id || doc.id,
+                        enemy_id: data.enemy_id,
+                        difficulty: data.difficulty,
+                        category: data.category || "Syntax Error",
+                        error_type: data.error_type || "",
+                        code: data.code,
+                        answer: data.answer,
+                        hint: data.hint || "",
+                        created_at: data.created_at || null,
+                        created_by: data.created_by
+                    });
+                }
+            });
+        } catch (dbErr) {
+            console.warn("Could not query Firestore questions:", dbErr);
+        }
+
+        // 3. Merge: Curated curriculum pool + Teacher additions
+        let rows = [...baseQuestions, ...customRows];
+        if (rows.length === 0 && customRows.length > 0) {
+            rows = customRows;
         }
 
         // Filter / shuffle for enemy battles

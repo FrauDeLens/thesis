@@ -7,7 +7,7 @@
         "error_type": "SyntaxError: unexpected EOF while parsing",
         "code": "print(\"Hello World\"",
         "answer": "print(\"Hello World\")",
-        "hint": "A parenthesis was opened in print(). Close it with )."
+        "hint": "A parenthesis was opened in print(). Close it with a closing parenthesis )."
     },
     {
         "id": 2,
@@ -15,8 +15,8 @@
         "difficulty": "easy",
         "category": "Syntax Error",
         "error_type": "SyntaxError: EOL while scanning string literal",
-        "code": "message = \"BugHunt\nprint(message)",
-        "answer": "message = \"BugHunt\"\nprint(message)",
+        "code": "print(\"Welcome to BugHunt",
+        "answer": "print(\"Welcome to BugHunt\")",
         "hint": "The string literal is missing a closing double quotation mark (\")."
     },
     {
@@ -25,8 +25,8 @@
         "difficulty": "easy",
         "category": "Syntax Error",
         "error_type": "SyntaxError: EOL while scanning string literal",
-        "code": "name = 'Frau\"\nprint(name)",
-        "answer": "name = 'Frau'\nprint(name)",
+        "code": "print('BugHunter\")",
+        "answer": "print('BugHunter')",
         "hint": "Mismatched quotation marks. Strings must begin and end with the same quote type."
     },
     {
@@ -55,8 +55,8 @@
         "difficulty": "easy",
         "category": "Syntax Error",
         "error_type": "SyntaxError: invalid syntax",
-        "code": "print(\"Score:\" score)",
-        "answer": "print(\"Score:\", score)",
+        "code": "print(\"Score:\" 100)",
+        "answer": "print(\"Score:\", 100)",
         "hint": "Separate multiple arguments inside print() with a comma (,)."
     },
     {
@@ -65,8 +65,8 @@
         "difficulty": "easy",
         "category": "Syntax Error",
         "error_type": "SyntaxError: unexpected EOF while parsing",
-        "code": "print(\"Welcome to BugHunt\"",
-        "answer": "print(\"Welcome to BugHunt\")",
+        "code": "print(\"Player 1\", \"Ready\"",
+        "answer": "print(\"Player 1\", \"Ready\")",
         "hint": "Close the print() function call with a closing parenthesis )."
     },
     {
@@ -75,8 +75,8 @@
         "difficulty": "easy",
         "category": "Syntax Error",
         "error_type": "SyntaxError: EOL while scanning string literal",
-        "code": "title = 'BugHunt\nprint(title)",
-        "answer": "title = 'BugHunt'\nprint(title)",
+        "code": "print('Press Start",
+        "answer": "print('Press Start')",
         "hint": "The string opened with a single quote (') is missing its closing single quote."
     },
     {
@@ -84,10 +84,10 @@
         "enemy_id": "syntax_slime",
         "difficulty": "easy",
         "category": "Syntax Error",
-        "error_type": "SyntaxError: EOL while scanning string literal",
-        "code": "greeting = \"Hello \" + World\"\nprint(greeting)",
-        "answer": "greeting = \"Hello \" + \"World\"\nprint(greeting)",
-        "hint": "The second string operand is missing an opening quotation mark (\")."
+        "error_type": "SyntaxError: unexpected EOF while parsing",
+        "code": "print(\"Level: \" + \"One\"",
+        "answer": "print(\"Level: \" + \"One\")",
+        "hint": "Close the print() function call with a closing parenthesis )."
     },
     {
         "id": 10,
