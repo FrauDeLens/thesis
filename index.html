@@ -16,14 +16,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Press+Start+2P&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/base.css?v=63">
-    <link rel="stylesheet" href="css/auth.css?v=63">
-    <link rel="stylesheet" href="css/menu.css?v=63">
-    <link rel="stylesheet" href="css/difficulty.css?v=63">
-    <link rel="stylesheet" href="css/battle.css?v=63">
-    <link rel="stylesheet" href="css/enemy-showcase.css?v=63">
-    <link rel="stylesheet" href="css/study.css?v=63">
-    <link rel="stylesheet" href="css/admin.css?v=63">
+    <link rel="stylesheet" href="css/base.css?v=64">
+    <link rel="stylesheet" href="css/auth.css?v=64">
+    <link rel="stylesheet" href="css/menu.css?v=64">
+    <link rel="stylesheet" href="css/difficulty.css?v=64">
+    <link rel="stylesheet" href="css/battle.css?v=64">
+    <link rel="stylesheet" href="css/enemy-showcase.css?v=64">
+    <link rel="stylesheet" href="css/study.css?v=64">
+    <link rel="stylesheet" href="css/admin.css?v=64">
 
 </head>
 
@@ -1471,8 +1471,8 @@
 
                                 <div id="question-form" class="question-form-body">
 
-                                    <!-- Row 1: Difficulty, Target Monster & Error Category -->
-                                    <div class="form-grid-3cols">
+                                    <!-- Row 1: Difficulty Tier & Error Category / Type -->
+                                    <div class="form-grid-2cols">
                                         <div class="form-field-group">
                                             <label for="question-difficulty">Difficulty Tier</label>
                                             <select id="question-difficulty" class="admin-select">
@@ -1484,32 +1484,27 @@
                                         </div>
 
                                         <div class="form-field-group">
-                                            <label for="question-enemy">Target Monster / Bug</label>
-                                            <select id="question-enemy" class="admin-select"></select>
-                                        </div>
-
-                                        <div class="form-field-group">
-                                            <label for="question-category">Error Category</label>
-                                            <select id="question-category" class="admin-select">
+                                            <div class="field-label-row">
+                                                <label for="question-error-type">Error Category / Type</label>
+                                                <span class="field-pill pill-category">BUG TYPE</span>
+                                            </div>
+                                            <select id="question-error-type" class="admin-select">
                                                 <option value="Syntax Error">⚡ Syntax Error</option>
                                                 <option value="Logical Error">🧠 Logical Error</option>
                                                 <option value="Runtime Error">💥 Runtime Error</option>
                                             </select>
+                                            <input type="hidden" id="question-category" value="Syntax Error">
                                         </div>
                                     </div>
 
-                                    <!-- Row 2: Specific Error Type / Bug Classification -->
+                                    <!-- Row 2: Target Monster / Bug (Full Width, No Overextending) -->
                                     <div class="form-field-group">
                                         <div class="field-label-row">
-                                            <label for="question-error-type">Specific Error Type / Classification</label>
-                                            <span class="field-pill pill-category">BUG LABEL</span>
+                                            <label for="question-enemy">Target Monster / Bug</label>
+                                            <span class="field-pill pill-challenge">TARGET ENEMY</span>
                                         </div>
-                                        <select id="question-error-type" class="admin-select" style="width: 100%;">
-                                            <option value="Syntax Error">⚡ Syntax Error</option>
-                                            <option value="Logical Error">🧠 Logical Error</option>
-                                            <option value="Runtime Error">💥 Runtime Error</option>
-                                        </select>
-                                        <span class="field-help">General error category for this challenge.</span>
+                                        <select id="question-enemy" class="admin-select" style="width: 100%;"></select>
+                                        <span class="field-help">Select the monster or bug guarded by this challenge.</span>
                                     </div>
 
                                     <!-- Row 3: Buggy Python Code (Challenge) -->
@@ -1623,8 +1618,8 @@
                 <div class="admin-modal-body">
                     <input type="hidden" id="edit-question-id">
 
-                    <!-- Row 1: Tier, Enemy, and Category -->
-                    <div class="form-grid-3cols">
+                    <!-- Row 1: Tier and Error Category -->
+                    <div class="form-grid-2cols">
                         <div class="form-field-group">
                             <label for="edit-question-difficulty">Difficulty Tier</label>
                             <select id="edit-question-difficulty" class="admin-select">
@@ -1636,31 +1631,26 @@
                         </div>
 
                         <div class="form-field-group">
-                            <label for="edit-question-enemy">Target Monster / Bug</label>
-                            <select id="edit-question-enemy" class="admin-select"></select>
-                        </div>
-
-                        <div class="form-field-group">
-                            <label for="edit-question-category">Error Category</label>
-                            <select id="edit-question-category" class="admin-select">
+                            <div class="field-label-row">
+                                <label for="edit-question-error-type">Error Category / Type</label>
+                                <span class="field-pill pill-category">BUG TYPE</span>
+                            </div>
+                            <select id="edit-question-error-type" class="admin-select">
                                 <option value="Syntax Error">⚡ Syntax Error</option>
                                 <option value="Logical Error">🧠 Logical Error</option>
                                 <option value="Runtime Error">💥 Runtime Error</option>
                             </select>
+                            <input type="hidden" id="edit-question-category" value="Syntax Error">
                         </div>
                     </div>
 
-                    <!-- Row 2: Error Type -->
+                    <!-- Row 2: Target Monster / Bug (Full Width) -->
                     <div class="form-field-group">
                         <div class="field-label-row">
-                            <label for="edit-question-error-type">Specific Error Type / Classification</label>
-                            <span class="field-pill pill-category">BUG LABEL</span>
+                            <label for="edit-question-enemy">Target Monster / Bug</label>
+                            <span class="field-pill pill-challenge">TARGET ENEMY</span>
                         </div>
-                        <select id="edit-question-error-type" class="admin-select" style="width: 100%;">
-                            <option value="Syntax Error">⚡ Syntax Error</option>
-                            <option value="Logical Error">🧠 Logical Error</option>
-                            <option value="Runtime Error">💥 Runtime Error</option>
-                        </select>
+                        <select id="edit-question-enemy" class="admin-select" style="width: 100%;"></select>
                     </div>
 
                     <!-- Row 3: Buggy Code -->
@@ -1974,34 +1964,34 @@
 <!-- ==========================
      LOCALIZATION & I18N SYSTEM
 ========================== -->
-<script src="js/i18n.js?v=63"></script>
-<script src="data/easy.js?v=63"></script>
-<script src="data/normal.js?v=63"></script>
-<script src="data/hard.js?v=63"></script>
-<script src="data/hell.js?v=63"></script>
-<script src="data/enemyGuides.js?v=63"></script>
-<script src="data/pythonLessons.js?v=63"></script>
+<script src="js/i18n.js?v=64"></script>
+<script src="data/easy.js?v=64"></script>
+<script src="data/normal.js?v=64"></script>
+<script src="data/hard.js?v=64"></script>
+<script src="data/hell.js?v=64"></script>
+<script src="data/enemyGuides.js?v=64"></script>
+<script src="data/pythonLessons.js?v=64"></script>
 
 <!-- ==========================
      FIREBASE CLOUD DATABASE
 ========================== -->
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
-<script src="js/firebase-config.js?v=63"></script>
-<script src="js/firebase-db.js?v=63"></script>
+<script src="js/firebase-config.js?v=64"></script>
+<script src="js/firebase-db.js?v=64"></script>
 
 <!-- ==========================
      MODULAR JAVASCRIPT SYSTEM
 ========================== -->
-<script src="js/auth.js?v=63"></script>
-<script src="js/save.js?v=63"></script>
-<script src="js/points.js?v=63"></script>
-<script src="js/difficulty.js?v=63"></script>
-<script src="js/enemyShowcase.js?v=63"></script>
-<script src="js/game.js?v=63"></script>
-<script src="js/study.js?v=63"></script>
-<script src="js/admin.js?v=63"></script>
-<script src="js/app.js?v=63"></script>
+<script src="js/auth.js?v=64"></script>
+<script src="js/save.js?v=64"></script>
+<script src="js/points.js?v=64"></script>
+<script src="js/difficulty.js?v=64"></script>
+<script src="js/enemyShowcase.js?v=64"></script>
+<script src="js/game.js?v=64"></script>
+<script src="js/study.js?v=64"></script>
+<script src="js/admin.js?v=64"></script>
+<script src="js/app.js?v=64"></script>
 
 
 </body>

@@ -804,9 +804,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const qCatSelect = document.getElementById("question-category");
     const qErrorTypeSelect = document.getElementById("question-error-type");
     if (qCatSelect && qErrorTypeSelect) {
-        qCatSelect.addEventListener("change", function () {
-            qErrorTypeSelect.value = this.value;
-        });
         qErrorTypeSelect.addEventListener("change", function () {
             qCatSelect.value = this.value;
         });
@@ -816,9 +813,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const editCatSelect = document.getElementById("edit-question-category");
     const editErrorTypeSelect = document.getElementById("edit-question-error-type");
     if (editCatSelect && editErrorTypeSelect) {
-        editCatSelect.addEventListener("change", function () {
-            editErrorTypeSelect.value = this.value;
-        });
         editErrorTypeSelect.addEventListener("change", function () {
             editCatSelect.value = this.value;
         });
