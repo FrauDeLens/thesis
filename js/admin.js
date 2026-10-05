@@ -603,6 +603,23 @@ function adminOpenEditModal(id) {
         msg.textContent = "";
     }
 
+    const editCatSelect = document.getElementById("edit-question-category");
+    const editErrTypeSelect = document.getElementById("edit-question-error-type");
+    const catVal = q.category || "Syntax Error";
+    const errVal = q.error_type || catVal;
+
+    if (editCatSelect) {
+        if (catVal.toLowerCase().includes("syntax")) editCatSelect.value = "Syntax Error";
+        else if (catVal.toLowerCase().includes("log")) editCatSelect.value = "Logical Error";
+        else editCatSelect.value = "Runtime Error";
+    }
+
+    if (editErrTypeSelect) {
+        if (errVal.toLowerCase().includes("syntax")) editErrTypeSelect.value = "Syntax Error";
+        else if (errVal.toLowerCase().includes("log")) editErrTypeSelect.value = "Logical Error";
+        else editErrTypeSelect.value = "Runtime Error";
+    }
+
     const titleEl = document.getElementById("admin-edit-modal-title");
     if (titleEl) {
         titleEl.textContent = "EDIT CHALLENGE #" + q.id;
@@ -620,6 +637,10 @@ async function adminSaveEditedQuestion() {
     const id = Number(document.getElementById("edit-question-id").value);
     const difficulty = document.getElementById("edit-question-difficulty").value;
     const enemy_id = document.getElementById("edit-question-enemy").value;
+    const catEl = document.getElementById("edit-question-category");
+    const errTypeEl = document.getElementById("edit-question-error-type");
+    const category = catEl ? catEl.value : "Syntax Error";
+    const error_type = errTypeEl ? errTypeEl.value : category;
     const code = document.getElementById("edit-question-code").value.trim();
     const answer = document.getElementById("edit-question-answer").value.trim();
     const hint = document.getElementById("edit-question-hint").value.trim();
@@ -648,6 +669,8 @@ async function adminSaveEditedQuestion() {
             id: id,
             difficulty: difficulty,
             enemy_id: enemy_id,
+            category: category,
+            error_type: error_type,
             code: code,
             answer: answer,
             hint: hint
@@ -657,6 +680,8 @@ async function adminSaveEditedQuestion() {
         if (item) {
             item.difficulty = difficulty;
             item.enemy_id = enemy_id;
+            item.category = category;
+            item.error_type = error_type;
             item.code = code;
             item.answer = answer;
             item.hint = hint;
@@ -760,30 +785,27 @@ document.addEventListener("DOMContentLoaded", function () {
             if (adminViewSubtitle) adminViewSubtitle.textContent = "Manage Python bug challenges, answers, and hints for all difficulty levels.";
             fillEnemySelect();
 
-    // question-error-type-custom-listener
+    // Sync Error Category & Specific Error Type selects in Add Form
+    const qCatSelect = document.getElementById("question-category");
     const qErrorTypeSelect = document.getElementById("question-error-type");
-    const qErrorTypeCustom = document.getElementById("question-error-type-custom");
-    if (qErrorTypeSelect && qErrorTypeCustom) {
+    if (qCatSelect && qErrorTypeSelect) {
+        qCatSelect.addEventListener("change", function () {
+            qErrorTypeSelect.value = this.value;
+        });
         qErrorTypeSelect.addEventListener("change", function () {
-            if (this.value === "custom") {
-                qErrorTypeCustom.style.display = "block";
-                qErrorTypeCustom.focus();
-            } else {
-                qErrorTypeCustom.style.display = "none";
-            }
+            qCatSelect.value = this.value;
         });
     }
 
+    // Sync in Edit Modal
+    const editCatSelect = document.getElementById("edit-question-category");
     const editErrorTypeSelect = document.getElementById("edit-question-error-type");
-    const editErrorTypeCustom = document.getElementById("edit-question-error-type-custom");
-    if (editErrorTypeSelect && editErrorTypeCustom) {
+    if (editCatSelect && editErrorTypeSelect) {
+        editCatSelect.addEventListener("change", function () {
+            editErrorTypeSelect.value = this.value;
+        });
         editErrorTypeSelect.addEventListener("change", function () {
-            if (this.value === "custom") {
-                editErrorTypeCustom.style.display = "block";
-                editErrorTypeCustom.focus();
-            } else {
-                editErrorTypeCustom.style.display = "none";
-            }
+            editCatSelect.value = this.value;
         });
     }
 
@@ -830,6 +852,10 @@ document.addEventListener("DOMContentLoaded", function () {
         addQuestionBtn.addEventListener("click", async function () {
             const diff = document.getElementById("question-difficulty").value;
             const enemy = document.getElementById("question-enemy").value;
+            const catEl = document.getElementById("question-category");
+            const errTypeEl = document.getElementById("question-error-type");
+            const category = catEl ? catEl.value : "Syntax Error";
+            const error_type = errTypeEl ? errTypeEl.value : category;
             const codeInput = document.getElementById("question-code");
             const answerInput = document.getElementById("question-answer");
             const hintInput = document.getElementById("question-hint");
@@ -856,6 +882,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 await api("questions.php", "POST", {
                     difficulty: diff,
                     enemy_id: enemy,
+                    category: category,
+                    error_type: error_type,
                     code: code,
                     answer: answer,
                     hint: hint

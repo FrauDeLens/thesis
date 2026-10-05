@@ -16,14 +16,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Press+Start+2P&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/base.css?v=60">
-    <link rel="stylesheet" href="css/auth.css?v=60">
-    <link rel="stylesheet" href="css/menu.css?v=60">
-    <link rel="stylesheet" href="css/difficulty.css?v=60">
-    <link rel="stylesheet" href="css/battle.css?v=60">
-    <link rel="stylesheet" href="css/enemy-showcase.css?v=60">
-    <link rel="stylesheet" href="css/study.css?v=60">
-    <link rel="stylesheet" href="css/admin.css?v=60">
+    <link rel="stylesheet" href="css/base.css?v=62">
+    <link rel="stylesheet" href="css/auth.css?v=62">
+    <link rel="stylesheet" href="css/menu.css?v=62">
+    <link rel="stylesheet" href="css/difficulty.css?v=62">
+    <link rel="stylesheet" href="css/battle.css?v=62">
+    <link rel="stylesheet" href="css/enemy-showcase.css?v=62">
+    <link rel="stylesheet" href="css/study.css?v=62">
+    <link rel="stylesheet" href="css/admin.css?v=62">
 
 </head>
 
@@ -462,83 +462,65 @@
          ABOUT SCREEN
     ========================== -->
 
-    <div
-        id="about-screen"
-        style="display: none;"
-    >
-
-        <h2>
-            About BugHunt
-        </h2>
-
-
-        <p>
-
-            BugHunt is a project developed in
-            accordance with our thesis at
-
-            <strong>
-                [College Name]
-            </strong>.
-
-        </p>
-
-
-        <p>
-
-            The game is designed to help students
-            develop one of the most important
-            skills in programming:
-
-            <strong>
-                debugging
-            </strong>.
-
-        </p>
-
-
-        <p>
-
-            Throughout the game, players will
-            encounter different Python bugs
-            and learn how to identify and fix
-            them through interactive challenges.
-
-        </p>
-
-
-        <p>
-
-            Developed by:<br>
-
-            <strong>
-                [Your Name]
-            </strong>
-
-            <br>
-
-            <strong>
-                [Groupmate Name]
-            </strong>
-
-        </p>
-
-
-        <p>
-
-            Thesis Adviser:<br>
-
-            <strong>
-                [Adviser Name]
-            </strong>
-
-        </p>
-
-
-        <button id="about-back-button" data-i18n="about_back_btn">
-            Back
+    <div id="about-screen" style="display: none;">
+        <button id="about-back-button" class="menu-btn about-back-nav-btn" data-i18n="about_back_btn" type="button">
+            <span>⬅️</span>
+            <span>Back to Menu</span>
         </button>
 
+        <div class="about-card-container">
+            <div class="about-card-header">
+                <div class="about-icon-badge">👾</div>
+                <h2 data-i18n="about_title">ABOUT BUGHUNT</h2>
+                <div class="about-subtitle">✦ PYTHON DEBUGGING &amp; EDUCATIONAL BATTLE PLATFORM ✦</div>
+            </div>
+
+            <div class="about-card-body">
+                <div class="about-description-box">
+                    <p class="about-main-text" data-i18n="about_desc_1">
+                        BugHunt is an interactive educational debugging platform engineered to help computing students master Python through practical error diagnosis, traceback analysis, and code repair.
+                    </p>
+                    <p class="about-secondary-text" data-i18n="about_desc_2">
+                        By spotting and fixing categorized bugs across multiple difficulty tiers, players build diagnostic confidence and develop mastery over Depth-First Search (DFS) algorithms.
+                    </p>
+                </div>
+
+                <!-- 3 Pillars Grid -->
+                <div class="about-pillars-grid">
+                    <div class="about-pillar-card pillar-syntax">
+                        <div class="pillar-icon">⚡</div>
+                        <div class="pillar-title">Syntax Errors</div>
+                        <div class="pillar-desc">Grammar traps, missing colons, unclosed quotes, brackets, and block indentation errors.</div>
+                    </div>
+                    <div class="about-pillar-card pillar-logical">
+                        <div class="pillar-icon">🧠</div>
+                        <div class="pillar-title">Logical Errors</div>
+                        <div class="pillar-desc">Infinite loops, unmarked visited nodes in DFS, boundary conditions, and off-by-one errors.</div>
+                    </div>
+                    <div class="about-pillar-card pillar-runtime">
+                        <div class="pillar-icon">💥</div>
+                        <div class="pillar-title">Runtime Errors</div>
+                        <div class="pillar-desc">Execution crashes, ZeroDivisionError, KeyError, IndexError, and Recursion depth limits.</div>
+                    </div>
+                </div>
+
+                <!-- Academic Research Attribution -->
+                <div class="about-credits-card">
+                    <div class="credit-item">
+                        <span class="credit-label">ACADEMIC RESEARCH:</span>
+                        <span class="credit-val">Undergraduate Thesis Project</span>
+                    </div>
+                    <div class="credit-item">
+                        <span class="credit-label">FOCUS AREA:</span>
+                        <span class="credit-val">Pedagogical Python Debugging &amp; DFS Algorithms</span>
+                    </div>
+                    <div class="credit-item">
+                        <span class="credit-label">CORE SYSTEM:</span>
+                        <span class="credit-val">BugHunt Interactive Arena Engine</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -1523,36 +1505,11 @@
                                             <span class="field-pill pill-category">BUG LABEL</span>
                                         </div>
                                         <select id="question-error-type" class="admin-select" style="width: 100%;">
-                                            <option value="">-- Select Specific Error Type --</option>
-                                            <optgroup label="⚡ SYNTAX ERRORS">
-                                                <option value="SyntaxError: expected ':' (Missing Colon)">SyntaxError: expected ':' (Missing Colon)</option>
-                                                <option value="SyntaxError: EOL while scanning string literal (Unclosed Quote)">SyntaxError: EOL while scanning string literal (Unclosed Quote)</option>
-                                                <option value="SyntaxError: closing bracket ']' / ')' missing">SyntaxError: closing bracket ']' / ')' missing</option>
-                                                <option value="SyntaxError: invalid syntax">SyntaxError: invalid syntax</option>
-                                                <option value="IndentationError: expected an indented block">IndentationError: expected an indented block</option>
-                                            </optgroup>
-                                            <optgroup label="🧠 LOGICAL ERRORS">
-                                                <option value="Logical Error: Infinite Cycle / Unmarked Visited (DFS)">Logical Error: Infinite Cycle / Unmarked Visited (DFS)</option>
-                                                <option value="Logical Error: Inverted Traversal Condition / Boundary">Logical Error: Inverted Traversal Condition / Boundary</option>
-                                                <option value="Logical Error: Off-By-One Loop Index Boundary">Logical Error: Off-By-One Loop Index Boundary</option>
-                                                <option value="Logical Error: Missing Return Value (Returns None)">Logical Error: Missing Return Value (Returns None)</option>
-                                                <option value="Logical Error: Shared Mutable Default Argument Trap">Logical Error: Shared Mutable Default Argument Trap</option>
-                                                <option value="Logical Error: FIFO Queue instead of LIFO Stack">Logical Error: FIFO Queue instead of LIFO Stack</option>
-                                            </optgroup>
-                                            <optgroup label="💥 RUNTIME ERRORS">
-                                                <option value="Runtime Error: KeyError on missing dictionary key">Runtime Error: KeyError on missing dictionary key</option>
-                                                <option value="Runtime Error: IndexError: list index out of range">Runtime Error: IndexError: list index out of range</option>
-                                                <option value="Runtime Error: AttributeError: object has no attribute">Runtime Error: AttributeError: object has no attribute</option>
-                                                <option value="Runtime Error: TypeError: unsupported operand type / missing self">Runtime Error: TypeError: unsupported operand type / missing self</option>
-                                                <option value="Runtime Error: RecursionError: maximum recursion depth exceeded">Runtime Error: RecursionError: maximum recursion depth exceeded</option>
-                                                <option value="Runtime Error: ZeroDivisionError: division by zero">Runtime Error: ZeroDivisionError: division by zero</option>
-                                                <option value="Runtime Error: NameError: name is not defined">Runtime Error: NameError: name is not defined</option>
-                                            </optgroup>
-                                            <optgroup label="✍️ CUSTOM CLASSIFICATION">
-                                                <option value="custom">✏️ Enter Custom Error Label...</option>
-                                            </optgroup></select>
-                                        <input id="question-error-type-custom" type="text" class="admin-select" placeholder="Type custom error label..." style="display: none; margin-top: 8px; width: 100%;">
-                                        <span class="field-help">Categorizes the exact diagnostic reason for structured student practice.</span>
+                                            <option value="Syntax Error">⚡ Syntax Error</option>
+                                            <option value="Logical Error">🧠 Logical Error</option>
+                                            <option value="Runtime Error">💥 Runtime Error</option>
+                                        </select>
+                                        <span class="field-help">General error category for this challenge.</span>
                                     </div>
 
                                     <!-- Row 3: Buggy Python Code (Challenge) -->
@@ -1699,7 +1656,11 @@
                             <label for="edit-question-error-type">Specific Error Type / Classification</label>
                             <span class="field-pill pill-category">BUG LABEL</span>
                         </div>
-                        <input id="edit-question-error-type" type="text" placeholder="e.g., SyntaxError: expected ':' or KeyError">
+                        <select id="edit-question-error-type" class="admin-select" style="width: 100%;">
+                            <option value="Syntax Error">⚡ Syntax Error</option>
+                            <option value="Logical Error">🧠 Logical Error</option>
+                            <option value="Runtime Error">💥 Runtime Error</option>
+                        </select>
                     </div>
 
                     <!-- Row 3: Buggy Code -->
@@ -2013,34 +1974,34 @@
 <!-- ==========================
      LOCALIZATION & I18N SYSTEM
 ========================== -->
-<script src="js/i18n.js?v=60"></script>
-<script src="data/easy.js?v=60"></script>
-<script src="data/normal.js?v=60"></script>
-<script src="data/hard.js?v=60"></script>
-<script src="data/hell.js?v=60"></script>
-<script src="data/enemyGuides.js?v=60"></script>
-<script src="data/pythonLessons.js?v=60"></script>
+<script src="js/i18n.js?v=62"></script>
+<script src="data/easy.js?v=62"></script>
+<script src="data/normal.js?v=62"></script>
+<script src="data/hard.js?v=62"></script>
+<script src="data/hell.js?v=62"></script>
+<script src="data/enemyGuides.js?v=62"></script>
+<script src="data/pythonLessons.js?v=62"></script>
 
 <!-- ==========================
      FIREBASE CLOUD DATABASE
 ========================== -->
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
-<script src="js/firebase-config.js?v=60"></script>
-<script src="js/firebase-db.js?v=60"></script>
+<script src="js/firebase-config.js?v=62"></script>
+<script src="js/firebase-db.js?v=62"></script>
 
 <!-- ==========================
      MODULAR JAVASCRIPT SYSTEM
 ========================== -->
-<script src="js/auth.js?v=60"></script>
-<script src="js/save.js?v=60"></script>
-<script src="js/points.js?v=60"></script>
-<script src="js/difficulty.js?v=60"></script>
-<script src="js/enemyShowcase.js?v=60"></script>
-<script src="js/game.js?v=60"></script>
-<script src="js/study.js?v=60"></script>
-<script src="js/admin.js?v=60"></script>
-<script src="js/app.js?v=60"></script>
+<script src="js/auth.js?v=62"></script>
+<script src="js/save.js?v=62"></script>
+<script src="js/points.js?v=62"></script>
+<script src="js/difficulty.js?v=62"></script>
+<script src="js/enemyShowcase.js?v=62"></script>
+<script src="js/game.js?v=62"></script>
+<script src="js/study.js?v=62"></script>
+<script src="js/admin.js?v=62"></script>
+<script src="js/app.js?v=62"></script>
 
 
 </body>

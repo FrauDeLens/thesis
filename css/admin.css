@@ -1574,3 +1574,333 @@
     align-items: center;
     gap: 4px;
 }
+
+
+/* =========================================================
+   BUGHUNT MASTER THEME ALIGNMENT FOR ADMIN SIDE (MAIN MENU HARMONY)
+========================================================= */
+
+#admin-screen {
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.78) 0%,
+            rgba(0, 0, 0, 0.48) 35%,
+            rgba(0, 0, 0, 0.20) 100%
+        ),
+        url("bgassets/mainmenu.png") !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    position: relative !important;
+}
+
+#admin-screen::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at 50% 50%,
+        rgba(110, 0, 160, 0.16),
+        transparent 42%
+    );
+    box-shadow:
+        inset 0 0 180px rgba(0, 0, 0, 0.9),
+        inset 0 0 70px rgba(100, 0, 150, 0.25);
+    pointer-events: none;
+    z-index: 1;
+}
+
+#admin-screen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.018) 0px,
+        rgba(255, 255, 255, 0.018) 1px,
+        transparent 1px,
+        transparent 5px
+    );
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.admin-shell {
+    position: relative;
+    z-index: 10;
+}
+
+/* Sidebar Navigation */
+.admin-sidebar {
+    background: linear-gradient(180deg, rgba(22, 12, 42, 0.98) 0%, rgba(12, 6, 24, 0.99) 100%) !important;
+    border-right: 1.5px solid #5a388a !important;
+    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.6) !important;
+}
+
+.admin-brand-title {
+    font-family: 'Press Start 2P', monospace !important;
+    font-size: 16px !important;
+    color: #f0c8ff !important;
+    letter-spacing: 2px !important;
+    text-shadow:
+        4px 4px 0 #31004c,
+        0 0 10px #b800ff,
+        0 0 25px rgba(212, 0, 255, 0.8) !important;
+}
+
+.admin-brand-subtitle {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    color: #c4b5fd !important;
+    text-shadow: 0 0 10px rgba(168, 85, 247, 0.8) !important;
+    letter-spacing: 1.5px !important;
+}
+
+.admin-profile-card {
+    background: rgba(32, 20, 52, 0.85) !important;
+    border: 1px solid rgba(168, 85, 247, 0.45) !important;
+    border-radius: 10px !important;
+}
+
+.admin-profile-card .profile-avatar {
+    background: linear-gradient(135deg, #7c3aed, #9333ea) !important;
+    border: 1px solid #c084fc !important;
+}
+
+.admin-nav-item {
+    background: linear-gradient(135deg, rgba(32, 20, 52, 0.95), rgba(16, 10, 30, 0.98)) !important;
+    border: 1px solid #5a388a !important;
+    border-radius: 10px !important;
+    color: #e9d5ff !important;
+    transition: all 0.2s ease !important;
+}
+
+.admin-nav-item:hover {
+    background: linear-gradient(135deg, rgba(55, 30, 95, 0.95), rgba(28, 16, 52, 0.98)) !important;
+    border-color: #a855f7 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3) !important;
+    transform: translateX(4px) !important;
+}
+
+.admin-nav-item.active {
+    background: linear-gradient(135deg, #7c3aed, #9333ea) !important;
+    border: 1px solid #c084fc !important;
+    border-left: 4px solid #f3e8ff !important;
+    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.45) !important;
+    color: #ffffff !important;
+}
+
+.nav-item-badge {
+    background: rgba(32, 20, 52, 0.9) !important;
+    border: 1px solid rgba(168, 85, 247, 0.6) !important;
+    color: #f3e8ff !important;
+}
+
+/* Workspace Header */
+.admin-workspace-header {
+    background: rgba(22, 12, 42, 0.85) !important;
+    border-bottom: 1.5px solid rgba(168, 85, 247, 0.4) !important;
+    backdrop-filter: blur(12px) !important;
+}
+
+.admin-page-title {
+    font-family: 'Press Start 2P', monospace !important;
+    font-size: 20px !important;
+    color: #f0c8ff !important;
+    letter-spacing: 2px !important;
+    text-shadow:
+        4px 4px 0 #31004c,
+        0 0 10px #b800ff,
+        0 0 25px rgba(212, 0, 255, 0.8) !important;
+}
+
+.admin-page-subtitle {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 13px !important;
+    color: #c4b5fd !important;
+}
+
+.admin-badge-faculty {
+    background: rgba(32, 20, 52, 0.9) !important;
+    border: 1px solid rgba(168, 85, 247, 0.5) !important;
+    border-radius: 20px !important;
+    color: #f3e8ff !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 600 !important;
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.25) !important;
+}
+
+/* KPI Cards */
+.kpi-card {
+    background: rgba(22, 12, 42, 0.88) !important;
+    border: 1px solid rgba(168, 85, 247, 0.4) !important;
+    border-radius: 12px !important;
+    backdrop-filter: blur(10px) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65), 0 0 15px rgba(168, 85, 247, 0.15) !important;
+}
+
+.kpi-card:hover {
+    border-color: #a855f7 !important;
+    box-shadow: 0 10px 35px rgba(168, 85, 247, 0.3) !important;
+    transform: translateY(-2px) !important;
+}
+
+.kpi-value {
+    color: #ffffff !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    text-shadow: 0 0 12px rgba(168, 85, 247, 0.6) !important;
+}
+
+/* Cards & Panels */
+.admin-controls-card,
+.admin-table-card,
+.question-form-panel,
+.question-bank-panel {
+    background: rgba(22, 12, 42, 0.88) !important;
+    border: 1px solid rgba(168, 85, 247, 0.4) !important;
+    border-radius: 12px !important;
+    backdrop-filter: blur(10px) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65), 0 0 15px rgba(168, 85, 247, 0.15) !important;
+}
+
+/* Primary Action Buttons */
+.admin-primary-action-btn {
+    background: linear-gradient(135deg, #7c3aed, #9333ea) !important;
+    border: 1px solid #c084fc !important;
+    border-radius: 10px !important;
+    color: #ffffff !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px !important;
+    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.45) !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+}
+
+.admin-primary-action-btn:hover {
+    background: linear-gradient(135deg, #8b5cf6, #a855f7) !important;
+    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.65) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Secondary Action Buttons */
+.admin-secondary-action-btn,
+.admin-action-btn,
+.btn-test-question {
+    background: linear-gradient(135deg, rgba(32, 20, 52, 0.95), rgba(16, 10, 30, 0.98)) !important;
+    border: 1px solid #5a388a !important;
+    border-radius: 10px !important;
+    color: #e9d5ff !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 700 !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5) !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+}
+
+.admin-secondary-action-btn:hover,
+.admin-action-btn:hover,
+.btn-test-question:hover {
+    border-color: #a855f7 !important;
+    background: linear-gradient(135deg, rgba(55, 30, 95, 0.95), rgba(28, 16, 52, 0.98)) !important;
+    color: #ffffff !important;
+    box-shadow: 0 6px 20px rgba(168, 85, 247, 0.35) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Form Inputs, Selects & Textareas */
+.admin-select,
+.search-input-wrap input,
+.filter-controls-wrap select,
+.question-form-body input,
+.question-form-body textarea,
+.admin-modal-body input,
+.admin-modal-body select,
+.admin-modal-body textarea {
+    background: rgba(16, 10, 30, 0.95) !important;
+    border: 1.5px solid #5a388a !important;
+    border-radius: 8px !important;
+    color: #f3e8ff !important;
+    font-family: 'Inter', sans-serif !important;
+    transition: all 0.2s ease !important;
+}
+
+.admin-select:focus,
+.search-input-wrap input:focus,
+.filter-controls-wrap select:focus,
+.question-form-body input:focus,
+.question-form-body textarea:focus,
+.admin-modal-body input:focus,
+.admin-modal-body select:focus,
+.admin-modal-body textarea:focus {
+    border-color: #a855f7 !important;
+    box-shadow: 0 0 12px rgba(168, 85, 247, 0.4) !important;
+    outline: none !important;
+}
+
+/* Bank Category KPI Pills */
+.bank-pill-mini {
+    background: rgba(32, 20, 52, 0.9) !important;
+    border: 1px solid #5a388a !important;
+    color: #d8b4fe !important;
+    border-radius: 20px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease !important;
+}
+
+.bank-pill-mini:hover {
+    background: linear-gradient(135deg, rgba(55, 30, 95, 0.95), rgba(28, 16, 52, 0.98)) !important;
+    border-color: #a855f7 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(168, 85, 247, 0.3) !important;
+}
+
+.bank-pill-mini.active {
+    background: linear-gradient(135deg, #7c3aed, #9333ea) !important;
+    border-color: #c084fc !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 16px rgba(124, 58, 237, 0.5) !important;
+}
+
+/* Question Cards in Bank */
+.admin-qcard {
+    background: linear-gradient(135deg, rgba(32, 20, 52, 0.85), rgba(16, 10, 30, 0.9)) !important;
+    border: 1px solid #5a388a !important;
+    border-radius: 10px !important;
+    transition: all 0.2s ease !important;
+}
+
+.admin-qcard:hover {
+    border-color: #a855f7 !important;
+    box-shadow: 0 6px 20px rgba(168, 85, 247, 0.35) !important;
+}
+
+.qcard-code-block {
+    background: #0f081d !important;
+    border: 1px solid #5a388a !important;
+    border-radius: 8px !important;
+}
+
+/* Edit Modal */
+.admin-modal-dialog {
+    background: rgba(22, 12, 42, 0.98) !important;
+    border: 1.5px solid rgba(168, 85, 247, 0.6) !important;
+    border-radius: 16px !important;
+    backdrop-filter: blur(16px) !important;
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.8),
+        0 0 30px rgba(124, 58, 237, 0.3) !important;
+}
+
+.admin-modal-header {
+    border-bottom: 1.5px solid rgba(168, 85, 247, 0.4) !important;
+}
+
+.admin-modal-footer {
+    border-top: 1.5px solid rgba(168, 85, 247, 0.4) !important;
+}
