@@ -5,6 +5,906 @@
 // =========================================================
 
 const PYTHON_CODEX_DATA = {
+    "bugtypes": [
+        {
+                "id": "bugtypes_syntax",
+                "enemyId": "syntax_slime",
+                "enemyName": "Syntax Slime",
+                "sprite": "css/Sprites/Easy/syntaxSlime.png",
+                "en": {
+                        "title": "1. Syntax Errors: The Grammar of Python",
+                        "category": "Syntax Error",
+                        "summary": "Understand how the Python parser inspects your code before execution. Learn to spot unclosed quotes, missing parentheses, and absent colons.",
+                        "explanation": "### What is a Syntax Error?\nA **Syntax Error** occurs when your code violates the structural grammar rules of the Python language. Before Python executes a single line of your program, its internal **parser** reads through your entire script to convert text into bytecode.\n\nIf Python encounters a token it does not understand — such as an unclosed string quote, a missing closing parenthesis, or an `if` statement missing its colon (`:`) — it halts immediately. **Not a single line of code will run.**\n\n### Hallmark Characteristics:\n1. **Detected Pre-Execution**: Python catches syntax errors before running any statements.\n2. **The Caret (`^`) Indicator**: Python points a little arrow `^` at the exact character where it became confused.\n3. **Immediate Stop**: Your script halts immediately with `SyntaxError` or `IndentationError`.\n\n### The Most Common Syntax Pitfalls:\n- **Unclosed Quotes**: `message = \"BugHunt` (missing closing quote).\n- **Unbalanced Parentheses**: `print(len(items)` (two opened, only one closed).\n- **Missing Header Colons**: `if health <= 0` (every header requires a colon `:` at the end).\n- **Invalid Keywords**: `function say_hi():` (Python uses `def`, not `function`).",
+                        "syntaxBlueprint": "# Syntax Check Rulebook:\n# 1. Balanced quotes on strings\nmessage = \"Hello World\"\n\n# 2. Balanced parentheses on calls\nprint(10 + (5 * 2))\n\n# 3. Mandatory colons on headers\nif score >= 100:\n    print(\"Level Up!\")",
+                        "bugExample": {
+                                "title": "Unclosed Parenthesis & Missing Colon",
+                                "errorType": "SyntaxError: expected ':'",
+                                "badCode": "score = 100\nif score >= 100\n    print(\"Congratulations\"",
+                                "explanation": "Line 2 is missing the mandatory colon (:) after the if condition, and line 3 is missing a closing parenthesis on print().",
+                                "goodCode": "score = 100\nif score >= 100:\n    print(\"Congratulations\")",
+                                "fixExplanation": "Added the colon at the end of the if header and closed the parenthesis on the print statement."
+                        },
+                        "goldenRules": [
+                                "Always check the line indicated by Python AND the line directly above it.",
+                                "Verify that all '(', '[', and '{' have a matching closing pair.",
+                                "Ensure every 'if', 'elif', 'else', 'for', 'while', 'def', and 'class' ends with a colon ':'."
+                        ],
+                        "quiz": {
+                                "question": "When does Python detect a SyntaxError?",
+                                "code": "print(\"Game Started!\")\nif score = 10:\n    print(\"Winner\")",
+                                "options": [
+                                        "A) After printing 'Game Started!' onto the terminal",
+                                        "B) Before running any code at all, during the parse phase",
+                                        "C) Only when score actually equals 10"
+                                ],
+                                "correctIndex": 1,
+                                "solution": "B is correct. Python validates syntax before executing any statements. 'Game Started!' will never print because parsing halts immediately."
+                        },
+                        "bugCategory": "Syntax Error"
+                },
+                "fil": {
+                        "title": "1. Syntax Errors: Ang Gramatika ng Python",
+                        "category": "Syntax Error",
+                        "summary": "Unawain kung paano sinusuri ng parser ang code mo bago patakbuhin. Matutong magbasa ng unclosed quotes, kulang na panaklong, at nakalimutang colon.",
+                        "explanation": "### Ano ang Syntax Error?\nAng **Syntax Error** ay nangyayari kapag nilabag ng code mo ang gramatika ng Python. Bago patakbuhin ng computer ang kahit isang linya ng programa, binabasa muna ng Python **parser** ang buong file.\n\nKapag may nakitang mali — tulad ng hindi nasaradong panipi, kulang na panaklong (), o nakalimutang colon (:) sa dulo ng `if` o `for` — agad na hihinto ang Python. **Walang kahit isang linyang tatakbo.**\n\n### Mga Katangian ng Syntax Error:\n1. **Nahuhuli Bago Tumakbo**: Hindi magsisimula ang programa kapag may syntax error.\n2. **May Arrow na Caret (`^`)**: Itinuturo ng Python ang linyang may problema gamit ang `^`.\n3. **Madaling Ayusin**: Karaniwang bantas lang ang kulang (panaklong, colon, o quote).\n\n### Mga Karaniwang Halimbawa:\n- **Bukas na Panipi**: `message = \"BugHunt` (kulang ng pansarang quote).\n- **Kulang na Panaklong**: `print(len(items)` (dalawang binuksan, isa lang isinara).\n- **Walang Colon**: `if score > 10` (kailangan ng colon sa dulo ng header).",
+                        "syntaxBlueprint": "# Tamang Syntax Template:\n# 1. Saradong quotes\nmessage = \"Hello World\"\n\n# 2. Saradong panaklong\nprint(10 + (5 * 2))\n\n# 3. May colon sa dulo ng headers\nif score >= 100:\n    print(\"Panalo!\")",
+                        "bugExample": {
+                                "title": "Kulang na Colon at Hindi Saradong Panaklong",
+                                "errorType": "SyntaxError: expected ':'",
+                                "badCode": "score = 100\nif score >= 100\n    print(\"Congratulations\"",
+                                "explanation": "Walang colon (:) sa dulo ng if condition, at kulang ng pansarang panaklong sa print().",
+                                "goodCode": "score = 100\nif score >= 100:\n    print(\"Congratulations\")",
+                                "fixExplanation": "Naglagay ng colon sa dulo ng if header at isinara ang panaklong sa print."
+                        },
+                        "goldenRules": [
+                                "Tingnan ang linyang itinuro ng Python pati na ang linyang nasa itaas nito.",
+                                "Siguraduhing may kapares ang bawat '(', '[', at '{'.",
+                                "Laging lagyan ng colon ':' ang dulo ng 'if', 'elif', 'else', 'for', 'while', at 'def'."
+                        ],
+                        "quiz": {
+                                "question": "Kailan nalalaman ng Python na may SyntaxError sa script?",
+                                "code": "print(\"Nagsimula ang Game!\")\nif score = 10:\n    print(\"Panalo\")",
+                                "options": [
+                                        "A) Pagkatapos mai-print ang 'Nagsimula ang Game!' sa terminal",
+                                        "B) Bago pa man patakbuhin ang kahit isang linya, sa parse phase",
+                                        "C) Kapag naging 10 na ang score ng player"
+                                ],
+                                "correctIndex": 1,
+                                "solution": "Tama ang B. Sinusuri muna ng Python ang buong file bago simulan ang execution. Walang mai-print dahil agad itong haharangin ng parser."
+                        },
+                        "bugCategory": "Syntax Error"
+                }
+        },
+        {
+                "id": "bugtypes_logical",
+                "enemyId": "algorithm_wraith",
+                "enemyName": "Algorithm Wraith",
+                "sprite": "css/Sprites/Hell/algorithmWraith.png",
+                "en": {
+                        "title": "2. Logical Errors: The Silent Defect",
+                        "category": "Logical Error",
+                        "summary": "Why code runs without crashing but produces the wrong output. Explore infinite recursion, missing visited sets in DFS, and flawed conditions.",
+                        "explanation": "### What is a Logical Error?\nA **Logical Error** is the most dangerous defect in programming. The code is 100% syntactically valid and executes without any error from Python. However, the program behaves incorrectly, gives the wrong answer, or runs forever.\n\nBecause the Python interpreter cannot read your mind, **it raises no warnings**. As far as Python is concerned, it simply followed your instructions — even if those instructions were wrong!\n\n### Classic Examples of Logical Flaws:\n1. **The DFS Missing Visited Set**: Traversing a cyclic graph without marking nodes as `visited` traps the algorithm in an infinite recursive oscillation ($A \\to B \\to A \\to B...$) until the stack explodes.\n2. **Off-By-One Errors**: Using `<` instead of `<=` or iterating over the wrong range bounds.\n3. **Flawed Branching**: Writing `if score > 50:` when the requirement states `score >= 50:`.\n4. **Unintended Infinite Loops**: Forgetting to increment or decrement a counter inside a `while` loop.",
+                        "syntaxBlueprint": "# Logical Defense: Defensive Depth-First Search Template\ndef dfs(graph, start, visited=None):\n    if visited is None:\n        visited = set()\n    \n    # Crucial Logic: Mark node visited to prevent infinite loops!\n    visited.add(start)\n    \n    for neighbor in graph.get(start, []):\n        if neighbor not in visited:\n            dfs(graph, neighbor, visited)\n            \n    return visited",
+                        "bugExample": {
+                                "title": "DFS Missing Visited Set (Infinite Recursion)",
+                                "errorType": "Logical Error: Infinite Cycle Recursion",
+                                "badCode": "def dfs(graph, node):\n    print(node)\n    for neighbor in graph[node]:\n        # LOGICAL FLAW: Visits neighbors even if already visited!\n        dfs(graph, neighbor)",
+                                "explanation": "Without checking if neighbor is already in visited, cyclical graphs cause infinite back-and-forth recursive calls.",
+                                "goodCode": "def dfs(graph, node, visited=None):\n    if visited is None:\n        visited = set()\n    visited.add(node)\n    for neighbor in graph.get(node, []):\n        if neighbor not in visited:\n            dfs(graph, neighbor, visited)\n    return visited",
+                                "fixExplanation": "Added a persistent visited set and only recursively explored neighbors that have not been visited."
+                        },
+                        "goldenRules": [
+                                "Always verify algorithm base cases and loop termination conditions.",
+                                "In graph traversal (DFS), ALWAYS track visited nodes using a set().",
+                                "Trace edge values on paper (0, 1, empty collections, negative numbers)."
+                        ],
+                        "quiz": {
+                                "question": "Why does Python NOT show an error message when a logical error occurs?",
+                                "code": "def calculate_average(a, b):\n    return a + b / 2  # Missing parentheses around (a + b)!",
+                                "options": [
+                                        "A) Because Python's syntax parser is defective",
+                                        "B) Because the code syntax is completely valid, but the developer's math formula is wrong",
+                                        "C) Because averages cannot be computed in Python"
+                                ],
+                                "correctIndex": 1,
+                                "solution": "B is correct. Python followed standard operator precedence (division before addition). The syntax is legal, but the human logic was flawed."
+                        },
+                        "bugCategory": "Logical Error"
+                },
+                "fil": {
+                        "title": "2. Logical Errors: Ang Tahimik na Depekto",
+                        "category": "Logical Error",
+                        "summary": "Bakit tumatakbo ang code pero mali ang resulta. Pag-aralan ang infinite loops, nawawalang visited set sa DFS, at maling kondisyon.",
+                        "explanation": "### Ano ang Logical Error?\nAng **Logical Error** ang pinakamapanganib na bug sa software. Ang code ay 100% tama ang syntax at tumatakbo nang walang error mula sa Python. Ngunit, **mali ang nagiging sagot o hindi natatapos ang execution**.\n\nDahil hindi kayang basahin ng computer ang isip mo, **walang error na ipinapakita ang Python**. Sinunod lamang nito ang iyong instruction — kahit mali ang lohika nito!\n\n### Mga Karaniwang Halimbawa:\n1. **DFS na Walang Visited Set**: Sa graph traversal, kapag walang `visited` set, magpabalik-balik ang function sa magkakonektang nodes ($A \\to B \\to A \\to B$) hanggang mag-hang o mag-crash.\n2. **Off-By-One Error**: Gumamit ng `<` imbes na `<=` kaya kulang ng isa ang bilang.\n3. **Infinite While Loop**: Nakalimutang magdagdag ng `count += 1` kaya hindi na matapos ang loop.\n4. **Maling Formula**: Pagkukulang ng panaklong tulad ng `a + b / 2` imbes na `(a + b) / 2`.",
+                        "syntaxBlueprint": "# Tamang Template: Defensive DFS sa Python\ndef dfs(graph, start, visited=None):\n    if visited is None:\n        visited = set()\n    \n    # Markahan ang nabisitang node upang hindi mag-infinite loop!\n    visited.add(start)\n    \n    for neighbor in graph.get(start, []):\n        if neighbor not in visited:\n            dfs(graph, neighbor, visited)\n            \n    return visited",
+                        "bugExample": {
+                                "title": "DFS na Walang Visited Check (Infinite Recursion)",
+                                "errorType": "Logical Error: Infinite Cycle Recursion",
+                                "badCode": "def dfs(graph, node):\n    print(node)\n    for neighbor in graph[node]:\n        # MALI: Pinupuntahan ulit kahit napuntahan na!\n        dfs(graph, neighbor)",
+                                "explanation": "Dahil walang visited set, kapag nag-connect pabalik ang mga nodes, maiipit ang Python sa walang katapusang recursive loop.",
+                                "goodCode": "def dfs(graph, node, visited=None):\n    if visited is None:\n        visited = set()\n    visited.add(node)\n    for neighbor in graph.get(node, []):\n        if neighbor not in visited:\n            dfs(graph, neighbor, visited)\n    return visited",
+                                "fixExplanation": "Naglagay ng persistent visited set at pinuntahan lamang ang mga kapitbahay na hindi pa nabibisita."
+                        },
+                        "goldenRules": [
+                                "Laging suriin ang base case at kung kailan hihinto ang loop o recursion.",
+                                "Sa DFS at graph algorithms, LAGING mag-track ng binisitang nodes gamit ang set().",
+                                "I-trace ang code gamit ang papel o print statements bago mag-submit."
+                        ],
+                        "quiz": {
+                                "question": "Bakit walang inilalabas na warning ang Python kapag may Logical Error?",
+                                "code": "def calculate_average(a, b):\n    return a + b / 2  # Walang panaklong sa (a + b)!",
+                                "options": [
+                                        "A) Dahil may depekto ang Python interpreter",
+                                        "B) Dahil legal ang syntax, pero mali ang formula o logic ng developer",
+                                        "C) Dahil hindi marunong mag-compute ng average ang computer"
+                                ],
+                                "correctIndex": 1,
+                                "solution": "Tama ang B. Sinunod lamang ng Python ang PEMDAS (unang hinati ang b/2 bago idinagdag sa a). Wasto ang syntax pero mali ang pormula."
+                        },
+                        "bugCategory": "Logical Error"
+                }
+        },
+        {
+                "id": "bugtypes_runtime",
+                "enemyId": "exception_knight",
+                "enemyName": "Exception Knight",
+                "sprite": "css/Sprites/Normal/exceptionKnight.png",
+                "en": {
+                        "title": "3. Runtime Errors: Execution-Time Exceptions",
+                        "category": "Runtime Error",
+                        "summary": "Master why syntactically valid code crashes while running. Learn to defend against IndexError, KeyError, ZeroDivisionError, and TypeError.",
+                        "explanation": "### What is a Runtime Error?\nA **Runtime Error** happens while your program is actively running. The syntax was perfectly legal, so Python happily started executing line by line. But midway through, your program attempted an **impossible or illegal operation**.\n\nWhen this happens, Python immediately halts execution and raises an **Exception**. If you don't handle the exception, your program crashes with a multi-line **Traceback**.\n\n### The Major Runtime Exception Rogues Gallery:\n- **`IndexError`**: Attempting to access an index that doesn't exist (`items[10]` when the list only has 3 items).\n- **`KeyError`**: Looking up a dictionary key that isn't present (`user['email']`).\n- **`ZeroDivisionError`**: Dividing any number by zero (`100 / 0`).\n- **`TypeError`**: Combining incompatible data types (`\"Score: \" + 50`).\n- **`NameError`**: Referencing a variable name that was never assigned or is misspelled (`print(scrore)`).\n- **`RecursionError`**: A function calling itself too many times until exceeding Python's call stack limit (usually 1,000 frames).",
+                        "syntaxBlueprint": "# Defensive Runtime Blueprint:\n# 1. Safe list access\nif index < len(items):\n    val = items[index]\n\n# 2. Safe dictionary lookup with default fallback\nemail = user.get(\"email\", \"no-email@domain.com\")\n\n# 3. Defensive Exception Containment\ntry:\n    result = 100 / divisor\nexcept ZeroDivisionError:\n    result = 0",
+                        "bugExample": {
+                                "title": "IndexError on Empty List Access",
+                                "errorType": "IndexError: list index out of range",
+                                "badCode": "players = []\n# CRASH: Accessing index 0 on an empty list throws IndexError!\nfirst_player = players[0]\nprint(first_player)",
+                                "explanation": "An empty list has length 0. Index 0 does not exist, so Python crashes immediately.",
+                                "goodCode": "players = []\nif len(players) > 0:\n    first_player = players[0]\n    print(first_player)\nelse:\n    print(\"No players registered.\")",
+                                "fixExplanation": "Checked if the list contains elements before accessing index 0, preventing the IndexError crash."
+                        },
+                        "goldenRules": [
+                                "Read tracebacks from the bottom up — the last line tells you the exact exception type.",
+                                "Remember Python lists are 0-indexed: a list with 5 items only goes from index 0 to index 4.",
+                                "Use dict.get(key, default) instead of dict[key] when keys might be missing."
+                        ],
+                        "quiz": {
+                                "question": "Which Python exception will be raised by this code?",
+                                "code": "stats = {\"hp\": 100}\nprint(stats[\"mana\"])",
+                                "options": [
+                                        "A) SyntaxError",
+                                        "B) KeyError",
+                                        "C) IndexError"
+                                ],
+                                "correctIndex": 1,
+                                "solution": "B is correct. Looking up a missing key in a dictionary using square brackets raises a KeyError. Use stats.get('mana', 0) to prevent this."
+                        },
+                        "bugCategory": "Runtime Error"
+                },
+                "fil": {
+                        "title": "3. Runtime Errors: Exceptions Habang Tumatakbo",
+                        "category": "Runtime Error",
+                        "summary": "Alamin kung bakit nagka-crash ang code habang tumatakbo. Matutong mag-defend laban sa IndexError, KeyError, ZeroDivisionError, at TypeError.",
+                        "explanation": "### Ano ang Runtime Error?\nAng **Runtime Error** ay nangyayari habang aktibong tumatakbo ang iyong programa. Tanggap ng Python ang syntax kaya sinimulan nito ang pag-execute. Ngunit sa kalagitnaan, may tinangkang **bawal o imposibleng operasyon**.\n\nKapag nangyari ito, agad na hihinto ang Python at maglalabas ng **Exception** at **Traceback**.\n\n### Mga Pangunahing Runtime Errors:\n- **`IndexError`**: Sumubok kumuha ng index na lagpas sa haba ng listahan (hal. `items[5]` pero 3 lang ang laman).\n- **`KeyError`**: Naghanap ng key sa dictionary na wala naman (`user['email']`).\n- **`ZeroDivisionError`**: Nag-divide sa zero (`10 / 0`).\n- **`TypeError`**: Pinagsama ang magkaibang uri ng data (hal. string at number: `\"HP: \" + 100`).\n- **`NameError`**: Ginamit ang variable bago ito ginawa o may typo sa pangalan (`print(scrore)`).\n- **`RecursionError`**: Walang katapusang recursion na lumampas sa stack limit ng Python.",
+                        "syntaxBlueprint": "# Defensive Coding Template:\n# 1. Ligtas na pagkuha sa listahan\nif index < len(items):\n    val = items[index]\n\n# 2. Ligtas na pagkuha sa dictionary gamit ang .get()\nemail = user.get(\"email\", \"Walang email\")\n\n# 3. Pagsalo ng posibleng crash gamit ang try/except\ntry:\n    res = 100 / divisor\nexcept ZeroDivisionError:\n    res = 0",
+                        "bugExample": {
+                                "title": "IndexError sa Pag-access ng Listahan",
+                                "errorType": "IndexError: list index out of range",
+                                "badCode": "players = []\n# CRASH: Walang laman ang listahan kaya maglalabas ng IndexError!\nfirst_player = players[0]\nprint(first_player)",
+                                "explanation": "Walang element sa index 0 dahil walang laman ang listahan.",
+                                "goodCode": "players = []\nif len(players) > 0:\n    first_player = players[0]\n    print(first_player)\nelse:\n    print(\"Walang manlalaro.\")",
+                                "fixExplanation": "Tiniyak muna na may laman ang listahan bago kunin ang index 0 upang maiwasan ang crash."
+                        },
+                        "goldenRules": [
+                                "Basahin ang traceback mula sa pinaka-ibaba — doon nakasulat ang eksaktong uri ng error.",
+                                "Tandaan: 0-indexed ang Python lists. Ang 5 items ay may index mula 0 hanggang 4 lamang.",
+                                "Gamitin ang dict.get(key, fallback) sa halip na dict[key] kapag hindi sigurado kung umiiral ang key."
+                        ],
+                        "quiz": {
+                                "question": "Anong exception ang ilalabas ng Python sa linyang ito?",
+                                "code": "stats = {\"hp\": 100}\nprint(stats[\"mana\"])",
+                                "options": [
+                                        "A) SyntaxError",
+                                        "B) KeyError",
+                                        "C) IndexError"
+                                ],
+                                "correctIndex": 1,
+                                "solution": "Tama ang B. Ang paghahanap ng wala sa dictionary gamit ang square brackets ay naglalabas ng KeyError. Gamitin ang stats.get('mana', 0) para maiwasan ito."
+                        },
+                        "bugCategory": "Runtime Error"
+                }
+        },
+        {
+                "id": "bugtypes_matrix",
+                "enemyId": "chaos_dragon",
+                "enemyName": "Chaos Dragon",
+                "sprite": "css/Sprites/Hell/chaosDragon.png",
+                "en": {
+                        "title": "4. Bug Classification Matrix & Diagnostic Guide",
+                        "category": "Quick Reference",
+                        "summary": "A side-by-side diagnostic decision matrix comparing Syntax, Logical, and Runtime errors for rapid in-combat classification.",
+                        "explanation": "### The Master Bug Classification Matrix\nUse this diagnostic decision matrix whenever you encounter a defect in BugHunt or real-world Python applications:\n\n| Diagnostic Dimension | ⚡ Syntax Error | 🧠 Logical Error | 💥 Runtime Error |\n| :--- | :--- | :--- | :--- |\n| **When Caught?** | Before execution begins (Parsing phase) | Never caught by interpreter (Silent) | Mid-execution (Running phase) |\n| **Interpreter Reaction** | Immediate abort, shows `SyntaxError` | None; program completes or freezes | Crash with multi-line `Traceback` |\n| **Code Execution** | **0 lines executed** (Pre-run stop) | **All lines run** (with wrong results) | **Partial** (Runs until the faulty line) |\n| **Primary Causes** | Missing `:`, unclosed quotes, bad `()` | Inverted `< >`, missing visited set in DFS, bad math | `IndexError`, `KeyError`, `ZeroDivisionError`, `TypeError` |\n| **Ease of Detection** | Easy (Python shows line & `^` caret) | **Hardest** (Requires manual tracing) | Moderate (Traceback gives stack line) |\n| **Best Prevention Tool** | Syntax highlighter, linter, strict checking | Unit tests, assertions, algorithm tracing | Defensive checks (`.get()`, `try/except`, bounds check) |\n\n### Instant Diagnostic Flowchart:\n1. Did the program print anything at all? If **NO** and Python complains about text structure $\\to$ **Syntax Error**.\n2. Did the program crash with an Exception name (e.g. `IndexError`, `TypeError`)? $\\to$ **Runtime Error**.\n3. Did the program run cleanly but gave the wrong answer or looped forever without crashing? $\\to$ **Logical Error**.",
+                        "syntaxBlueprint": "# Diagnostic Self-Check Protocol:\n# 1. Syntax Check: Valid grammar?\n# 2. Logic Check: Formula and conditions correct?\n# 3. Runtime Check: Bounds, types, and keys safe?",
+                        "bugExample": {
+                                "title": "Three Manifestations of the Same Bug",
+                                "errorType": "Comparative Analysis",
+                                "badCode": "# Syntax: Missing colon\n# if x > 0\n\n# Logic: Wrong condition operator (silent)\n# if x < 0: print(\"Positive\")\n\n# Runtime: Unbound variable (crashes)\n# print(x_undefined)",
+                                "explanation": "Demonstrates how the same feature can fail as Syntax, Logic, or Runtime depending on the flaw.",
+                                "goodCode": "x = 10\nif x > 0:\n    print(\"Positive\")",
+                                "fixExplanation": "Resolved all three failure modes: valid syntax with colon, correct logical comparison, and properly defined variable."
+                        },
+                        "goldenRules": [
+                                "Categorize before fixing: Know if you are debugging syntax, logic, or runtime.",
+                                "If no error message appears but output is wrong, it is ALWAYS a Logical Error.",
+                                "If Python crashes midway, jump straight to the bottom of the Traceback."
+                        ],
+                        "quiz": {
+                                "question": "A script calculates a player's final score as -50 instead of 150, but finishes with 0 errors. What bug type is this?",
+                                "code": "# Script finished execution with returncode 0\nFinal Score: -50",
+                                "options": [
+                                        "A) Syntax Error",
+                                        "B) Logical Error",
+                                        "C) Runtime Error"
+                                ],
+                                "correctIndex": 1,
+                                "solution": "B is correct. The program ran to completion without crashing, but the output formula was mathematically incorrect — a textbook Logical Error."
+                        },
+                        "bugCategory": "Logical Error"
+                },
+                "fil": {
+                        "title": "4. Matrix ng Uri ng Bugs at Gabay sa Diagnosis",
+                        "category": "Quick Reference",
+                        "summary": "Talaan at matrix na naghahambing sa Syntax, Logical, at Runtime errors para sa mabilis na pag-diagnose habang naglalaro.",
+                        "explanation": "### Master Matrix ng Pag-uuri ng mga Bugs\nGamitin ang talahanayang ito upang mabilis na mauri ang kahit anong bug sa Python:\n\n| Katangian | ⚡ Syntax Error | 🧠 Logical Error | 💥 Runtime Error |\n| :--- | :--- | :--- | :--- |\n| **Kailan Nahuhuli?** | Bago pa patakbuhin (Parsing phase) | Hindi nahuhuli ng interpreter (Tahimik) | Sa kalagitnaan ng pagtakbo (Runtime) |\n| **Reaksyon ng Python** | Agad na hihinto, magpapakita ng `SyntaxError` | Walang babala; tatakbo o mag-i-infinite loop | Magka-crash at maglalabas ng `Traceback` |\n| **Pagtakbo ng Code** | **Walang linyang tatakbo** | **Tatakbo ang buong code** (pero mali ang sagot) | **Bahagya lang** (hihinto sa sirang linya) |\n| **Karaniwang Dahilan** | Kulang na `:`, bukas na quotes, maling `()` | Baliktad na `< >`, walang visited set sa DFS | `IndexError`, `KeyError`, `ZeroDivisionError`, `TypeError` |\n| **Dali ng Paghahanap** | Madali (itinuturo ng `^` caret) | **Pinakamahirap** (kailangang i-trace ang logic) | Katamtaman (nakaturo sa linya ng crash) |\n| **Pang-iwas** | Syntax checker, maingat na bantas | Unit tests, pag-trace sa papel | Bounds check, `.get()`, `try/except` |\n\n### Mabilis na Flowchart sa Pagsusuri:\n1. May na-print ba bago huminto? Kapag **WALA** at bantas ang itinuturo $\\to$ **Syntax Error**.\n2. Nag-crash ba at may pangalan ng Exception (`IndexError`, `KeyError`)? $\\to$ **Runtime Error**.\n3. Natapos ba nang maayos pero mali ang sagot o nag-hang sa loop? $\\to$ **Logical Error**.",
+                        "syntaxBlueprint": "# Tatlong Hakbang sa Pagsusuri:\n# 1. Syntax Check: Tama ba ang bantas at gramatika?\n# 2. Logic Check: Tama ba ang formula at conditions?\n# 3. Runtime Check: Ligtas ba ang indexes, keys, at types?",
+                        "bugExample": {
+                                "title": "Tatlong Anyo ng Pagkakamali",
+                                "errorType": "Comparative Analysis",
+                                "badCode": "# Syntax: Walang colon\n# if x > 0\n\n# Logic: Maling operator\n# if x < 0: print(\"Positibo\")\n\n# Runtime: Hindi pa na-define ang variable\n# print(x_undefined)",
+                                "explanation": "Ipinapakita kung paano maaaring maging Syntax, Logic, o Runtime error ang parehong feature.",
+                                "goodCode": "x = 10\nif x > 0:\n    print(\"Positibo\")",
+                                "fixExplanation": "Naayos ang lahat: may colon, tamang logic comparison, at may assigned value ang variable."
+                        },
+                        "goldenRules": [
+                                "Alamin muna ang kategorya bago ayusin: Syntax ba, Logic, o Runtime?",
+                                "Kapag walang error message pero mali ang sagot, siguradong Logical Error iyon.",
+                                "Kapag nag-crash ang script, tingnan agad ang pinaka-ibabang linya ng Traceback."
+                        ],
+                        "quiz": {
+                                "question": "Nagkalkula ang script ng score na -50 imbes na 150, pero natapos nang walang error message. Anong uri ng bug ito?",
+                                "code": "# Natapos ang script nang may exit code 0\nFinal Score: -50",
+                                "options": [
+                                        "A) Syntax Error",
+                                        "B) Logical Error",
+                                        "C) Runtime Error"
+                                ],
+                                "correctIndex": 1,
+                                "solution": "Tama ang B. Natapos ang programa nang walang crash, ngunit mali ang naging formula — halimbawa ng Logical Error."
+                        },
+                        "bugCategory": "Logical Error"
+                }
+        }
+],
+    "roadmap": [
+        {
+                "id": "roadmap_overview",
+                "enemyId": "beginner_dragon",
+                "enemyName": "Beginner Dragon",
+                "sprite": "css/Sprites/Easy/beginnerDragon.png",
+                "en": {
+                        "title": "Master Roadmap: 8 Phases of Debugging",
+                        "category": "Curriculum",
+                        "summary": "An 8-Phase progressive mastery curriculum tracing the path from introductory syntax to advanced algorithmic graph traversal (DFS).",
+                        "explanation": "### The 8-Phase Python Mastery & Debugging Journey\nBugHunt is systematically organized into 8 progressive mastery phases, each mapped to specific monsters and error categories:\n\n1. **Phase 1: Foundations & Token Syntax** (Enemy: *Syntax Slime*)\n   - Master print statements, quotation mark pairs, balancing parentheses `()`, and token syntax.\n2. **Phase 2: Variables & State Management** (Enemy: *Variable Goblin*)\n   - Master identifier naming rules, case sensitivity, type assignment, and invalid operators (no `++`).\n3. **Phase 3: Control Flow & Loops** (Enemies: *Loop Lurker* & *Beginner Dragon*)\n   - Master `if`/`elif`/`else` branches, comparison operators (`==`, `!=`), `for` loops with `range()`, and `while` loops.\n4. **Phase 4: Modular Code & Libraries** (Enemies: *Function Fairy* & *Import Imp*)\n   - Master `def` functions, parameter passing, `return` values, and importing standard modules (`math`, `random`).\n5. **Phase 5: Data Structures & Indexing** (Enemies: *List Ogre* & *Dict Wizard*)\n   - Master 0-indexed Lists, slicing `[start:stop]`, and Dictionaries with safe `.get()` methods.\n6. **Phase 6: Object-Oriented Architecture** (Enemies: *Class Mage* & *Normal Titan*)\n   - Master Classes, constructors `__init__`, `self` references, instance methods, and attributes.\n7. **Phase 7: Exception Handling & Robustness** (Enemies: *Exception Knight* & *Error Reaper*)\n   - Master defensive coding with `try`, `except`, and `finally` blocks to catch specific exception types.\n8. **Phase 8: Advanced Algorithms & Graph Traversal** (Enemies: *Recursion Wolf* & *Algorithm Wraith*)\n   - Master recursive stack frames, base cases, and Depth-First Search (DFS) with visited set tracking.",
+                        "syntaxBlueprint": "# The Progression Blueprint:\n# Syntax -> Variables -> Control Flow -> Functions -> Collections -> OOP -> Exceptions -> DFS Algorithms",
+                        "bugExample": {
+                                "title": "Curriculum Progression Example",
+                                "errorType": "Pedagogical Flow",
+                                "badCode": "# Jumping straight to complex algorithms before mastering syntax causes confusion!",
+                                "explanation": "Students must learn syntax rules before tackling loops, functions, and graph recursion.",
+                                "goodCode": "# Step 1: print(\"Hello\")\n# Step 2: count = 10\n# Step 3: if count > 0: ...\n# Step 4: def dfs(graph, node, visited): ...",
+                                "fixExplanation": "Following the 8-phase roadmap builds rock-solid debugging instincts step by step."
+                        },
+                        "goldenRules": [
+                                "Master each phase's target enemy before advancing to higher sectors.",
+                                "Always diagnose whether a bug is Syntax, Logical, or Runtime.",
+                                "Practice writing the corrected line cleanly with correct indentation."
+                        ],
+                        "quiz": {
+                                "question": "Which phase covers Depth-First Search (DFS) and recursive graph traversal in BugHunt?",
+                                "code": "# Algorithm Wraith: Call Stack & Visited Set Mastery",
+                                "options": [
+                                        "A) Phase 1: Foundations",
+                                        "B) Phase 3: Control Flow",
+                                        "C) Phase 8: Advanced Algorithms & Graph Traversal"
+                                ],
+                                "correctIndex": 2,
+                                "solution": "C is correct. DFS graph traversal and recursive call-stack management are the pinnacle of Phase 8 under Algorithm Wraith."
+                        },
+                        "bugCategory": "Logical Error"
+                },
+                "fil": {
+                        "title": "Master Roadmap: 8 Yugto ng Pagkatuto",
+                        "category": "Curriculum",
+                        "summary": "Isang 8-Yugto na gabay sa sistematikong pagkatuto ng Python mula basic syntax hanggang sa Depth-First Search (DFS) graph traversal.",
+                        "explanation": "### Ang 8 Yugto ng Pagkatuto sa BugHunt\nAng kurikulum ng BugHunt ay hinati sa 8 sunod-sunod na yugto upang maging madali at organisado ang iyong pag-aaral:\n\n1. **Yugto 1: Mga Batayan at Syntax** (Kalaban: *Syntax Slime*)\n   - Matutunan ang print, quotes, panaklong (), at tamang bantas.\n2. **Yugto 2: Variables at State** (Kalaban: *Variable Goblin*)\n   - Matutunan ang variable names, case sensitivity, at bawal na operators (walang `++`).\n3. **Yugto 3: Control Flow at Loops** (Kalaban: *Loop Lurker* at *Beginner Dragon*)\n   - Matutunan ang `if`/`elif`/`else`, `for` loop gamit ang `range()`, at `while` loops.\n4. **Yugto 4: Functions at Modules** (Kalaban: *Function Fairy* at *Import Imp*)\n   - Matutunan ang `def`, parameters, `return`, at `import math`, `random`.\n5. **Yugto 5: Data Structures at Indexing** (Kalaban: *List Ogre* at *Dict Wizard*)\n   - Matutunan ang 0-indexed Lists, slicing, at Dictionaries gamit ang `.get()`.\n6. **Yugto 6: Object-Oriented Programming** (Kalaban: *Class Mage* at *Normal Titan*)\n   - Matutunan ang Classes, `__init__`, `self`, at methods.\n7. **Yugto 7: Exception Handling** (Kalaban: *Exception Knight* at *Error Reaper*)\n   - Matutunan ang `try`, `except`, at `finally` para hindi mag-crash ang app.\n8. **Yugto 8: Advanced Algorithms at DFS** (Kalaban: *Recursion Wolf* at *Algorithm Wraith*)\n   - Matutunan ang recursion base cases at Depth-First Search (DFS) gamit ang visited set.",
+                        "syntaxBlueprint": "# Sunod-sunod na Yugto:\n# Syntax -> Variables -> Control Flow -> Functions -> Collections -> OOP -> Exceptions -> DFS Algorithms",
+                        "bugExample": {
+                                "title": "Halimbawa ng Pag-usad sa Roadmap",
+                                "errorType": "Pedagogical Flow",
+                                "badCode": "# Huwag lumundag agad sa DFS nang hindi pa kabisado ang syntax at loops!",
+                                "explanation": "Kailangang matutunan muna ang mga batayan bago sumabak sa mas kumplikadong algorithms.",
+                                "goodCode": "# Hakbang 1: print(\"Hello\")\n# Hakbang 2: count = 10\n# Hakbang 3: if count > 0: ...\n# Hakbang 4: def dfs(graph, node, visited): ...",
+                                "fixExplanation": "Ang pagsunod sa 8-yugto na roadmap ay nagbibigay ng matibay na pundasyon sa Python."
+                        },
+                        "goldenRules": [
+                                "Tapusin muna ang bawat yugto bago lumipat sa mas mataas na difficulty.",
+                                "Laging tukuyin kung Syntax, Logical, o Runtime error ang hinaharap.",
+                                "Sanayin ang sarili sa pagsulat ng malinis na Python code na may tamang indentation."
+                        ],
+                        "quiz": {
+                                "question": "Sa aling yugto itinuturo ang Depth-First Search (DFS) at graph traversal sa BugHunt?",
+                                "code": "# Algorithm Wraith: Call Stack at Visited Set Mastery",
+                                "options": [
+                                        "A) Yugto 1: Mga Batayan",
+                                        "B) Yugto 3: Control Flow",
+                                        "C) Yugto 8: Advanced Algorithms at Graph Traversal"
+                                ],
+                                "correctIndex": 2,
+                                "solution": "Tama ang C. Ang DFS graph traversal at recursive call stack management ay ang pinakatampok sa Yugto 8 sa ilalim ni Algorithm Wraith."
+                        },
+                        "bugCategory": "Logical Error"
+                }
+        },
+        {
+                "id": "roadmap_phase1",
+                "enemyId": "syntax_slime",
+                "enemyName": "Syntax Slime",
+                "sprite": "css/Sprites/Easy/syntaxSlime.png",
+                "en": {
+                        "title": "Phase 1: Foundations & Token Syntax",
+                        "category": "Phase 1",
+                        "summary": "Master print calls, matching quotes, balanced parentheses, and argument commas.",
+                        "explanation": "### Phase 1: Foundations & Token Syntax (Syntax Slime)\nEvery programmer begins here. In Phase 1, you master the foundational mechanics of how Python parses program tokens:\n\n- **Print Invocation**: Executing Python's built-in `print()` function.\n- **String Literals**: Enclosing text in matching double (`\"...\"`) or single (`'...'`) quotes.\n- **Parenthesis Integrity**: Balancing every opening `(` with a closing `)`.\n- **Argument Commas**: Using `,` to separate multiple print parameters.\n\n### Primary Bug Defenses:\n- Preventing `SyntaxError: unexpected EOF while parsing`\n- Preventing `SyntaxError: EOL while scanning string literal`\n- Upgrading legacy Python 2 `print \"text\"` to `print(\"text\")`.",
+                        "syntaxBlueprint": "print(\"Hello, BugHunter!\")\nprint(\"Level:\", 1)",
+                        "bugExample": {
+                                "title": "Phase 1 Syntax Milestone",
+                                "errorType": "SyntaxError",
+                                "badCode": "print(\"Player Ready\"\nprint('Frau\")",
+                                "explanation": "Unclosed parenthesis on line 1 and mismatched quotes on line 2.",
+                                "goodCode": "print(\"Player Ready\")\nprint('Frau')",
+                                "fixExplanation": "Balanced parentheses and matched single quotes."
+                        },
+                        "goldenRules": [
+                                "Always check parentheses matching before running.",
+                                "Never mix single and double quotes on the same string."
+                        ],
+                        "quiz": {
+                                "question": "Which statement correctly separates multiple items inside print()?",
+                                "code": "A) print(\"Score:\" 100)\nB) print(\"Score:\", 100)\nC) print \"Score:\", 100",
+                                "options": [
+                                        "A",
+                                        "B",
+                                        "C"
+                                ],
+                                "correctIndex": 1,
+                                "solution": "B is correct: print takes multiple arguments separated by commas."
+                        },
+                        "bugCategory": "Syntax Error"
+                },
+                "fil": {
+                        "title": "Yugto 1: Mga Batayan at Syntax",
+                        "category": "Phase 1",
+                        "summary": "Matutunan ang print, panipi ng text, pagsasara ng panaklong (), at kuwit sa pagitan ng mga salita.",
+                        "explanation": "### Yugto 1: Mga Batayan at Syntax (Syntax Slime)\nDito nagsisimula ang bawat programmer. Sa Yugto 1, pinag-aaralan ang pundasyon kung paano binabasa ng Python ang text:\n\n- **Paggamit ng Print**: Pagtawag sa built-in `print()` function.\n- **String Literals**: Paglalagay ng text sa loob ng magkapares na double (`\"...\"`) o single (`'...'`) quotes.\n- **Saradong Panaklong**: Tiyaking may kapares na `)` ang bawat binuksang `(`.\n- **Kuwit sa Argument**: Paggamit ng `,` para paghiwalayin ang mga datos sa print.",
+                        "syntaxBlueprint": "print(\"Hello, BugHunter!\")\nprint(\"Level:\", 1)",
+                        "bugExample": {
+                                "title": "Yugto 1 Syntax Milestone",
+                                "errorType": "SyntaxError",
+                                "badCode": "print(\"Player Ready\"\nprint('Frau\")",
+                                "explanation": "Kulang ang panaklong sa linya 1 at magkaiba ang quote sa linya 2.",
+                                "goodCode": "print(\"Player Ready\")\nprint('Frau')",
+                                "fixExplanation": "Isinara ang panaklong at itinugma ang single quote."
+                        },
+                        "goldenRules": [
+                                "Laging suriin ang panaklong bago patakbuhin ang code.",
+                                "Huwag paghaluin ang single at double quote sa parehong salita."
+                        ],
+                        "quiz": {
+                                "question": "Alin ang tamang print statement sa Python?",
+                                "code": "A) print(\"Score:\" 100)\nB) print(\"Score:\", 100)\nC) print \"Score:\", 100",
+                                "options": [
+                                        "A",
+                                        "B",
+                                        "C"
+                                ],
+                                "correctIndex": 1,
+                                "solution": "Tama ang B: Gumagamit ng kuwit para paghiwalayin ang mga arguments sa loob ng print()."
+                        },
+                        "bugCategory": "Syntax Error"
+                }
+        },
+        {
+                "id": "roadmap_phase2",
+                "enemyId": "variable_goblin",
+                "enemyName": "Variable Goblin",
+                "sprite": "css/Sprites/Easy/variableGoblin.png",
+                "en": {
+                        "title": "Phase 2: Variables & State Management",
+                        "category": "Phase 2",
+                        "summary": "Master legal identifier naming, snake_case convention, case sensitivity, and type assignment.",
+                        "explanation": "### Phase 2: Variables & State Management (Variable Goblin)\nVariables hold program state in memory. In this phase, you master:\n\n- **Identifier Rules**: Variable names cannot start with numbers (`1hero` is illegal; `hero_1` is legal).\n- **Case Sensitivity**: `score`, `Score`, and `SCORE` are three completely different variables.\n- **Operator Awareness**: Python does NOT have `++` or `--` increment operators! Use `+= 1` instead.\n- **Reserved Keywords**: Never use Python keywords like `def`, `class`, `for`, or `return` as variable names.",
+                        "syntaxBlueprint": "player_score = 100\nplayer_score += 10\nprint(player_score)",
+                        "bugExample": {
+                                "title": "Variable Goblin Pitfall",
+                                "errorType": "SyntaxError / NameError",
+                                "badCode": "2nd_player = \"Bob\"\nscore++",
+                                "explanation": "Cannot start variable with digit '2', and '++' is invalid syntax in Python.",
+                                "goodCode": "player_2 = \"Bob\"\nscore += 1",
+                                "fixExplanation": "Used legal snake_case naming and '+=' operator."
+                        },
+                        "goldenRules": [
+                                "Use snake_case for Python variables (e.g. max_health).",
+                                "Remember that Python is strictly case-sensitive."
+                        ],
+                        "quiz": {
+                                "question": "Which variable declaration is valid in Python?",
+                                "code": "A) 1st_place = 'Gold'\nB) first_place = 'Gold'\nC) class = 'Gold'",
+                                "options": [
+                                        "A",
+                                        "B",
+                                        "C"
+                                ],
+                                "correctIndex": 1,
+                                "solution": "B is valid. Variable names cannot start with digits (A) and cannot use reserved keywords like class (C)."
+                        },
+                        "bugCategory": "Syntax Error"
+                },
+                "fil": {
+                        "title": "Yugto 2: Variables at State Management",
+                        "category": "Phase 2",
+                        "summary": "Matutunan ang tamang pagpapangalan ng variables, case sensitivity, at tamang operators.",
+                        "explanation": "### Yugto 2: Variables at State Management (Variable Goblin)\nAng variables ang nagtatago ng datos sa memory. Sa yugtong ito, pag-aaralan:\n\n- **Tuntunin sa Pangalan**: Bawal magsimula sa numero ang variable name (`1hero` ay mali; `hero_1` ay tama).\n- **Case Sensitivity**: Magkaibang variable ang `score`, `Score`, at `SCORE`.\n- **Walang ++ Operator**: Walang `count++` sa Python! Gamitin ang `count += 1`.\n- **Reserved Keywords**: Bawal gamitin ang `def`, `for`, `class` bilang variable name.",
+                        "syntaxBlueprint": "player_score = 100\nplayer_score += 10\nprint(player_score)",
+                        "bugExample": {
+                                "title": "Maling Variable Name",
+                                "errorType": "SyntaxError",
+                                "badCode": "2nd_player = \"Bob\"\nscore++",
+                                "explanation": "Nagsimula sa numero 2 at gumamit ng ++ na bawal sa Python.",
+                                "goodCode": "player_2 = \"Bob\"\nscore += 1",
+                                "fixExplanation": "Inilagay ang numero sa dulo at pinalitan ng += 1."
+                        },
+                        "goldenRules": [
+                                "Gumamit ng snake_case (hal. player_hp).",
+                                "Tandaan na maselan sa malalaki at maliliit na titik ang Python."
+                        ],
+                        "quiz": {
+                                "question": "Aling variable name ang tama at legal sa Python?",
+                                "code": "A) 1st_place = 'Gold'\nB) first_place = 'Gold'\nC) class = 'Gold'",
+                                "options": [
+                                        "A",
+                                        "B",
+                                        "C"
+                                ],
+                                "correctIndex": 1,
+                                "solution": "Tama ang B. Bawal magsimula sa numero (A) at bawal ang keyword na 'class' (C)."
+                        },
+                        "bugCategory": "Syntax Error"
+                }
+        },
+        {
+                "id": "roadmap_phase3",
+                "enemyId": "loop_lurker",
+                "enemyName": "Loop Lurker",
+                "sprite": "css/Sprites/Easy/loopLurker.png",
+                "en": {
+                        "title": "Phase 3: Control Flow & Iterations",
+                        "category": "Phase 3",
+                        "summary": "Master conditional branching (if/elif/else), comparison operators, and loop termination.",
+                        "explanation": "### Phase 3: Control Flow & Iterations (Loop Lurker & Beginner Dragon)\nPrograms must make decisions and repeat actions:\n\n- **Conditionals**: `if condition:`, `elif:`, `else:` with trailing colons.\n- **Equality Testing**: `==` is for comparison; `=` is for assignment!\n- **For Loops**: Using `for i in range(n):` for deterministic repetitions.\n- **While Loops & Invariants**: Always increment your loop counter inside `while` to prevent freezing infinite loops!",
+                        "syntaxBlueprint": "for i in range(5):\n    if i % 2 == 0:\n        print(f\"{i} is even\")",
+                        "bugExample": {
+                                "title": "Assignment vs Equality in If",
+                                "errorType": "SyntaxError / Infinite Loop",
+                                "badCode": "if hp = 0:\n    print(\"Game Over\")",
+                                "explanation": "Used single '=' assignment inside if statement condition.",
+                                "goodCode": "if hp == 0:\n    print(\"Game Over\")",
+                                "fixExplanation": "Replaced assignment '=' with comparison '=='."
+                        },
+                        "goldenRules": [
+                                "Always place a colon ':' at the end of if/for/while lines.",
+                                "Ensure every while loop has a guaranteed exit condition."
+                        ],
+                        "quiz": {
+                                "question": "Which operator checks if two values are equal in Python?",
+                                "code": "if x ?? y:",
+                                "options": [
+                                        "A) =",
+                                        "B) ==",
+                                        "C) equals"
+                                ],
+                                "correctIndex": 1,
+                                "solution": "B is correct: == is the equality comparison operator."
+                        },
+                        "bugCategory": "Syntax Error"
+                },
+                "fil": {
+                        "title": "Yugto 3: Control Flow at Loops",
+                        "category": "Phase 3",
+                        "summary": "Matutunan ang if/elif/else, comparison operator (==), at pag-iwas sa infinite loops.",
+                        "explanation": "### Yugto 3: Control Flow at Loops (Loop Lurker)\nKailangang marunong magdesisyon at mag-ulit ang iyong program:\n\n- **Conditionals**: `if`, `elif`, `else` na may tutuldok `:` sa dulo.\n- **Equality vs Assignment**: Ang `==` ay pansuri; ang `=` ay pampasa ng value!\n- **For Loops**: Paggamit ng `for i in range(n):` para sa pag-uulit.\n- **Infinite Loops**: Laging i-update ang counter sa loob ng `while` loop para hindi mag-freeze.",
+                        "syntaxBlueprint": "for i in range(5):\n    if i % 2 == 0:\n        print(f\"{i} is even\")",
+                        "bugExample": {
+                                "title": "Pagkakamali sa If Condition",
+                                "errorType": "SyntaxError",
+                                "badCode": "if hp = 0:\n    print(\"Game Over\")",
+                                "explanation": "Gumamit ng iisang '=' sa loob ng if condition sa halip na '=='.",
+                                "goodCode": "if hp == 0:\n    print(\"Game Over\")",
+                                "fixExplanation": "Pinalitan ng double equals '==' para sa equality check."
+                        },
+                        "goldenRules": [
+                                "Laging lagyan ng colon ':' ang dulo ng if/for/while.",
+                                "Siguraduhing may kondisyon para matapos ang while loop."
+                        ],
+                        "quiz": {
+                                "question": "Alin ang tamang operator para sa pagsuri ng equality?",
+                                "code": "if x ?? y:",
+                                "options": [
+                                        "A) =",
+                                        "B) ==",
+                                        "C) equals"
+                                ],
+                                "correctIndex": 1,
+                                "solution": "Tama ang B: Ang '==' ang ginagamit sa pagsuri kung pantay ang dalawang values."
+                        },
+                        "bugCategory": "Syntax Error"
+                }
+        },
+        {
+                "id": "roadmap_phase4",
+                "enemyId": "function_fairy",
+                "enemyName": "Function Fairy",
+                "sprite": "css/Sprites/Normal/functionFairy.png",
+                "en": {
+                        "title": "Phase 4: Modular Code & Libraries",
+                        "category": "Phase 4",
+                        "summary": "Master def statements, parameter passing, return values, variable scope, and module imports.",
+                        "explanation": "### Phase 4: Modular Code & Libraries (Function Fairy & Import Imp)\nWriting clean, reusable code requires modular design:\n\n- **Function Definition**: Using `def function_name(param1, param2):`.\n- **Return vs Print**: `return` yields a value to the caller; `print` only outputs to the screen!\n- **Scope Isolation**: Variables defined inside a function are local to that function.\n- **Imports**: Using `import math` or `from random import randint` to leverage existing libraries.",
+                        "syntaxBlueprint": "def calculate_damage(base, buff):\n    return base + buff\n\ntotal = calculate_damage(50, 15)",
+                        "bugExample": {
+                                "title": "Missing Return in Function",
+                                "errorType": "Logical Error",
+                                "badCode": "def double(num):\n    result = num * 2\n\nval = double(10)  # val becomes None!",
+                                "explanation": "Function calculated result but never returned it, so caller receives None.",
+                                "goodCode": "def double(num):\n    return num * 2\n\nval = double(10)",
+                                "fixExplanation": "Added return keyword to deliver the output."
+                        },
+                        "goldenRules": [
+                                "Functions that calculate data should always use 'return'.",
+                                "Do not confuse print() with return."
+                        ],
+                        "quiz": {
+                                "question": "What is the return value of a Python function that has no return statement?",
+                                "code": "def test():\n    x = 5",
+                                "options": [
+                                        "A) 0",
+                                        "B) None",
+                                        "C) 5"
+                                ],
+                                "correctIndex": 1,
+                                "solution": "B is correct. In Python, functions without an explicit return statement return None by default."
+                        },
+                        "bugCategory": "Logical Error"
+                },
+                "fil": {
+                        "title": "Yugto 4: Functions at Libraries",
+                        "category": "Phase 4",
+                        "summary": "Matutunan ang def, return values, local scope, at pag-import ng modules.",
+                        "explanation": "### Yugto 4: Functions at Libraries (Function Fairy)\nPara sa malinis at re-usable na code:\n\n- **Paggawa ng Function**: Gamit ang `def function_name(param1, param2):`.\n- **Return vs Print**: Ang `return` ay nagbabalik ng datos sa tumawag; ang `print` ay nagpapakita lang sa screen!\n- **Scope**: Ang variables sa loob ng function ay pribado sa loob nito.\n- **Imports**: Paggamit ng `import math` para magamit ang mga built-in libraries.",
+                        "syntaxBlueprint": "def calculate_damage(base, buff):\n    return base + buff\n\ntotal = calculate_damage(50, 15)",
+                        "bugExample": {
+                                "title": "Nakalimutang Return",
+                                "errorType": "Logical Error",
+                                "badCode": "def double(num):\n    result = num * 2\n\nval = double(10)  # Walang return, kaya None ang val!",
+                                "explanation": "Kinalkula ang value pero hindi ibinalik, kaya None ang natanggap.",
+                                "goodCode": "def double(num):\n    return num * 2\n\nval = double(10)",
+                                "fixExplanation": "Naglagay ng return statement."
+                        },
+                        "goldenRules": [
+                                "Laging maglagay ng 'return' kung may kinakalkulang resulta.",
+                                "Huwag ipagpalit ang print() sa return."
+                        ],
+                        "quiz": {
+                                "question": "Ano ang ibinabalik ng function na walang return statement sa Python?",
+                                "code": "def test():\n    x = 5",
+                                "options": [
+                                        "A) 0",
+                                        "B) None",
+                                        "C) 5"
+                                ],
+                                "correctIndex": 1,
+                                "solution": "Tama ang B. Ang function na walang return statement ay nagbabalik ng None."
+                        },
+                        "bugCategory": "Logical Error"
+                }
+        },
+        {
+                "id": "roadmap_phase5",
+                "enemyId": "list_ogre",
+                "enemyName": "List Ogre",
+                "sprite": "css/Sprites/Normal/listOgre.png",
+                "en": {
+                        "title": "Phase 5: Collections & Data Structures",
+                        "category": "Phase 5",
+                        "summary": "Master 0-indexed Lists, slicing, Dict key-value pairs, and safe access via .get().",
+                        "explanation": "### Phase 5: Collections & Data Structures (List Ogre & Dict Wizard)\nHandling multiple items requires ordered sequences and key-value mappings:\n\n- **Zero-Indexing**: The first element in Python lists is `items[0]`, not `items[1]`.\n- **Length Boundary**: A list with 5 items has valid indices from `0` to `4`. Accessing `items[5]` raises `IndexError`.\n- **List Slicing**: `items[start:stop]` includes `start` up to but NOT including `stop`.\n- **Dictionary Safety**: Direct access `data['key']` crashes with `KeyError` if key is missing; use `data.get('key', default)` instead.",
+                        "syntaxBlueprint": "inventory = [\"Potion\", \"Shield\", \"Sword\"]\nstats = {\"hp\": 100, \"mp\": 50}\n\nprint(inventory[0])\nprint(stats.get(\"atk\", 10))",
+                        "bugExample": {
+                                "title": "IndexError on Last Element",
+                                "errorType": "IndexError",
+                                "badCode": "items = [\"A\", \"B\", \"C\"]\nlast = items[3]  # Crashes!",
+                                "explanation": "List has 3 items (indices 0, 1, 2). Index 3 is out of range.",
+                                "goodCode": "items = [\"A\", \"B\", \"C\"]\nlast = items[-1]  # or items[2]",
+                                "fixExplanation": "Used index -1 to safely access the last item."
+                        },
+                        "goldenRules": [
+                                "Remember that Python collections are 0-indexed.",
+                                "Use dict.get(key, default) to prevent KeyErrors."
+                        ],
+                        "quiz": {
+                                "question": "What is the index of the first element in a Python list?",
+                                "code": "fruits = ['Apple', 'Banana', 'Cherry']",
+                                "options": [
+                                        "A) 1",
+                                        "B) 0",
+                                        "C) -1"
+                                ],
+                                "correctIndex": 1,
+                                "solution": "B is correct: Python sequences are 0-indexed."
+                        },
+                        "bugCategory": "Runtime Error"
+                },
+                "fil": {
+                        "title": "Yugto 5: Collections at Data Structures",
+                        "category": "Phase 5",
+                        "summary": "Matutunan ang 0-indexed Lists, slicing, Dictionaries, at safe access gamit ang .get().",
+                        "explanation": "### Yugto 5: Collections at Data Structures (List Ogre)\nPara sa maramihang datos:\n\n- **Zero-Indexing**: Ang unang elemento ay laging nasa index 0: `items[0]`.\n- **IndexError**: Kung may 3 items ang listahan, ang valid indices ay 0, 1, 2. Kapag humingi ka ng index 3, magka-crash ito.\n- **Slicing**: Ang `items[0:2]` ay kukunin ang index 0 at 1 lamang.\n- **Dictionary Safety**: Gamitin ang `dict.get('key', default)` para hindi magka-KeyError kung wala ang hinahanap.",
+                        "syntaxBlueprint": "inventory = [\"Potion\", \"Shield\", \"Sword\"]\nstats = {\"hp\": 100, \"mp\": 50}\n\nprint(inventory[0])\nprint(stats.get(\"atk\", 10))",
+                        "bugExample": {
+                                "title": "IndexError sa Listahan",
+                                "errorType": "IndexError",
+                                "badCode": "items = [\"A\", \"B\", \"C\"]\nlast = items[3]  # Magka-crash!",
+                                "explanation": "May 3 items lamang (0, 1, 2). Walang index 3.",
+                                "goodCode": "items = [\"A\", \"B\", \"C\"]\nlast = items[-1]  # o items[2]",
+                                "fixExplanation": "Ginamit ang index -1 para ligtas na makuha ang dulo."
+                        },
+                        "goldenRules": [
+                                "Laging tandaan na nagsisimula sa 0 ang index.",
+                                "Gamitin ang .get() sa dictionaries para maiwasan ang crash."
+                        ],
+                        "quiz": {
+                                "question": "Ano ang index ng unang elemento sa isang Python list?",
+                                "code": "fruits = ['Apple', 'Banana', 'Cherry']",
+                                "options": [
+                                        "A) 1",
+                                        "B) 0",
+                                        "C) -1"
+                                ],
+                                "correctIndex": 1,
+                                "solution": "Tama ang B: Nagsisimula sa 0 ang indexing sa Python."
+                        },
+                        "bugCategory": "Runtime Error"
+                }
+        },
+        {
+                "id": "roadmap_phase6",
+                "enemyId": "class_mage",
+                "enemyName": "Class Mage",
+                "sprite": "css/Sprites/Hard/classMage.png",
+                "en": {
+                        "title": "Phase 6: Object-Oriented Architecture",
+                        "category": "Phase 6",
+                        "summary": "Master class definitions, __init__ constructor, self reference, and instance attributes.",
+                        "explanation": "### Phase 6: Object-Oriented Architecture (Class Mage & Normal Titan)\nOrganizing large software demands custom types and encapsulation:\n\n- **Class Declaration**: `class Character:` initializes a blueprint.\n- **Constructor**: `def __init__(self, name, hp):` initializes instance attributes.\n- **The self Parameter**: `self` refers to the specific instance being operated on. Omitting `self` from method parameters causes `TypeError` during invocation!\n- **Instance Methods**: Every instance method must accept `self` as its first parameter.",
+                        "syntaxBlueprint": "class Hero:\n    def __init__(self, name, hp):\n        self.name = name\n        self.hp = hp\n\n    def take_damage(self, amount):\n        self.hp -= amount",
+                        "bugExample": {
+                                "title": "Missing self in Method",
+                                "errorType": "TypeError",
+                                "badCode": "class Hero:\n    def attack(target):\n        print(\"Attacking\", target)",
+                                "explanation": "When hero.attack(enemy) is called, Python automatically passes self as the 1st argument, causing TypeError.",
+                                "goodCode": "class Hero:\n    def attack(self, target):\n        print(\"Attacking\", target)",
+                                "fixExplanation": "Added 'self' as the first parameter."
+                        },
+                        "goldenRules": [
+                                "Always include 'self' as the first parameter of all instance methods.",
+                                "Use double underscores for __init__."
+                        ],
+                        "quiz": {
+                                "question": "What is the mandatory first parameter for instance methods in a Python class?",
+                                "code": "def attack(???, target):",
+                                "options": [
+                                        "A) this",
+                                        "B) self",
+                                        "C) cls"
+                                ],
+                                "correctIndex": 1,
+                                "solution": "B is correct: In Python, 'self' represents the instance of the class."
+                        },
+                        "bugCategory": "Runtime Error"
+                },
+                "fil": {
+                        "title": "Yugto 6: Object-Oriented Architecture",
+                        "category": "Phase 6",
+                        "summary": "Matutunan ang classes, __init__ constructor, self parameter, at methods.",
+                        "explanation": "### Yugto 6: Object-Oriented Architecture (Class Mage)\nPara sa maayos na pagbuo ng malalaking sistema:\n\n- **Class Declaration**: `class Character:` bilang hulmahan o blueprint.\n- **Constructor**: `def __init__(self, name, hp):` para sa pag-initialize ng mga katangian.\n- **Ang self Parameter**: Ang `self` ang tumutukoy sa mismong instance. Kapag kinalimutan ito sa method, magka-crash ito ng `TypeError`.\n- **Double Underscore**: Tiyaking dalawang underscore ang `__init__`.",
+                        "syntaxBlueprint": "class Hero:\n    def __init__(self, name, hp):\n        self.name = name\n        self.hp = hp\n\n    def take_damage(self, amount):\n        self.hp -= amount",
+                        "bugExample": {
+                                "title": "Nawawalang self Parameter",
+                                "errorType": "TypeError",
+                                "badCode": "class Hero:\n    def attack(target):\n        print(\"Attacking\", target)",
+                                "explanation": "Kulang ng 'self' sa parameter kaya mag-eerror kapag tinawag.",
+                                "goodCode": "class Hero:\n    def attack(self, target):\n        print(\"Attacking\", target)",
+                                "fixExplanation": "Idinagdag ang 'self' bilang unang parameter."
+                        },
+                        "goldenRules": [
+                                "Laging ilagay ang 'self' bilang unang parameter ng instance methods.",
+                                "Dalawang underscore ang gamitin sa __init__."
+                        ],
+                        "quiz": {
+                                "question": "Ano ang unang parameter ng isang instance method sa Python class?",
+                                "code": "def attack(???, target):",
+                                "options": [
+                                        "A) this",
+                                        "B) self",
+                                        "C) cls"
+                                ],
+                                "correctIndex": 1,
+                                "solution": "Tama ang B: 'self' ang karaniwang ginagamit sa Python para tukuyin ang instance."
+                        },
+                        "bugCategory": "Runtime Error"
+                }
+        },
+        {
+                "id": "roadmap_phase7",
+                "enemyId": "exception_knight",
+                "enemyName": "Exception Knight",
+                "sprite": "css/Sprites/Hard/exceptionKnight.png",
+                "en": {
+                        "title": "Phase 7: Exception Handling & Robustness",
+                        "category": "Phase 7",
+                        "summary": "Master defensive programming with try, except, else, and finally blocks to build crash-resilient code.",
+                        "explanation": "### Phase 7: Exception Handling & Robustness (Exception Knight & Error Reaper)\nReal-world applications encounter unpredictable inputs and environment failures:\n\n- **Try Blocks**: Wrap risky operations that might fail (I/O, network, user input, math conversions).\n- **Specific Except Clauses**: Catch specific exception types (`except ValueError:`, `except ZeroDivisionError:`) rather than bare `except:`.\n- **Finally Guarantee**: Code inside `finally:` runs no matter what, ideal for closing files and cleaning up resources.\n- **Raising Exceptions**: Using `raise ValueError(\"message\")` to enforce business logic invariants.",
+                        "syntaxBlueprint": "try:\n    value = int(user_input)\n    result = 100 / value\nexcept ValueError:\n    print(\"Invalid number!\")\nexcept ZeroDivisionError:\n    print(\"Cannot divide by zero!\")\nfinally:\n    print(\"Operation attempted.\")",
+                        "bugExample": {
+                                "title": "Crashing on Bad Input",
+                                "errorType": "ValueError",
+                                "badCode": "num = int(input(\"Enter number: \"))\n# Crashes if user inputs 'hello'!",
+                                "explanation": "Without try/except, any invalid input immediately terminates the application.",
+                                "goodCode": "try:\n    num = int(input(\"Enter number: \"))\nexcept ValueError:\n    num = 0",
+                                "fixExplanation": "Protected conversion with try/except block."
+                        },
+                        "goldenRules": [
+                                "Never leave bare 'except:' without specifying the error type.",
+                                "Use 'finally' blocks to release resources like open files."
+                        ],
+                        "quiz": {
+                                "question": "Which block executes regardless of whether an exception was raised or not?",
+                                "code": "try: ... except: ... finally: ...",
+                                "options": [
+                                        "A) else",
+                                        "B) finally",
+                                        "C) catch"
+                                ],
+                                "correctIndex": 1,
+                                "solution": "B is correct: The finally block is guaranteed to execute whether an exception occurred or not."
+                        },
+                        "bugCategory": "Runtime Error"
+                },
+                "fil": {
+                        "title": "Yugto 7: Exception Handling at Katatagan",
+                        "category": "Phase 7",
+                        "summary": "Matutunan ang try, except, at finally para maiwasan ang biglaang pag-crash ng iyong programa.",
+                        "explanation": "### Yugto 7: Exception Handling at Katatagan (Exception Knight)\nPara sa mga programang hindi basta-basta bumabagsak:\n\n- **Try Block**: Balutin ang mga operasyong posibleng mag-error (user input, division, file reading).\n- **Tiyak na Except**: Saluhin ang partikular na error tulad ng `except ValueError:` o `except ZeroDivisionError:`.\n- **Finally Block**: Laging tumatakbo ang `finally:` may error man o wala, para sa paglilinis ng memory o files.\n- **Raise**: Pagpapalabas ng sariling error kapag nilabag ang patakaran ng laro.",
+                        "syntaxBlueprint": "try:\n    value = int(user_input)\n    result = 100 / value\nexcept ValueError:\n    print(\"Invalid number!\")\nexcept ZeroDivisionError:\n    print(\"Cannot divide by zero!\")\nfinally:\n    print(\"Operation attempted.\")",
+                        "bugExample": {
+                                "title": "Biglaang Crash sa Input",
+                                "errorType": "ValueError",
+                                "badCode": "num = int(input(\"Enter number: \"))\n# Bumabagsak kapag nag-type ng 'abc'!",
+                                "explanation": "Walang proteksyon kaya mamamatay ang app kapag mali ang input.",
+                                "goodCode": "try:\n    num = int(input(\"Enter number: \"))\nexcept ValueError:\n    num = 0",
+                                "fixExplanation": "Sinalo ang error gamit ang try/except."
+                        },
+                        "goldenRules": [
+                                "Iwasan ang bare 'except:' na walang tinutukoy na error type.",
+                                "Gamitin ang 'finally' para sa pagsasara ng files."
+                        ],
+                        "quiz": {
+                                "question": "Aling block ang garantisadong tatakbo may error man o wala?",
+                                "code": "try: ... except: ... finally: ...",
+                                "options": [
+                                        "A) else",
+                                        "B) finally",
+                                        "C) catch"
+                                ],
+                                "correctIndex": 1,
+                                "solution": "Tama ang B: Ang 'finally' block ay laging pinapatakbo bago lumabas sa try/except structure."
+                        },
+                        "bugCategory": "Runtime Error"
+                }
+        },
+        {
+                "id": "roadmap_phase8",
+                "enemyId": "algorithm_wraith",
+                "enemyName": "Algorithm Wraith",
+                "sprite": "css/Sprites/Hell/algorithmWraith.png",
+                "en": {
+                        "title": "Phase 8: Advanced Algorithms & Graph Traversal (DFS)",
+                        "category": "Phase 8",
+                        "summary": "The pinnacle of BugHunt mastery: recursive call stack management, Depth-First Search, and the critical visited set defense.",
+                        "explanation": "### Phase 8: Advanced Algorithms & Graph Traversal (Algorithm Wraith)\nIn the final mastery phase, you transition from statement debugging to **Algorithmic Graph Theory**:\n\n- **Depth-First Search (DFS)**: Exploring deeply along graph branches before backtracking.\n- **Adjacency Structure**: Representing nodes and neighbors using dictionaries and lists: `graph = {'A': ['B', 'C']}`.\n- **The Visited Set Invariant**: Keeping a persistent `visited = set()` across recursive frames to prevent infinite cycle traps.\n- **Base Case Termination**: Halting recursion immediately when visiting already-seen nodes or reaching empty leaf nodes.\n\n### Primary Failure Modes in DFS:\n1. **Syntax**: Missing colons on traversal loops `for neighbor in graph[node]:`.\n2. **Logical**: Omitting `visited.add(node)` or checking `if neighbor in visited:` instead of `if neighbor not in visited:`.\n3. **Runtime**: Unhandled KeyError using `graph[node]` on dead-end nodes instead of `graph.get(node, [])`.",
+                        "syntaxBlueprint": "def dfs(graph, start, visited=None):\n    if visited is None:\n        visited = set()\n    visited.add(start)\n    for neighbor in graph.get(start, []):\n        if neighbor not in visited:\n            dfs(graph, neighbor, visited)\n    return visited",
+                        "bugExample": {
+                                "title": "Phase 8 Capstone Traversal Bug",
+                                "errorType": "Logical Error: Cycle Traversal",
+                                "badCode": "def dfs(graph, node, visited):\n    # CRITICAL OMISSION: Node is never marked visited!\n    for neighbor in graph[node]:\n        if neighbor not in visited:\n            dfs(graph, neighbor, visited)",
+                                "explanation": "If node is never added to visited, cyclical connections cause infinite recursive oscillation.",
+                                "goodCode": "def dfs(graph, node, visited):\n    visited.add(node)\n    for neighbor in graph.get(node, []):\n        if neighbor not in visited:\n            dfs(graph, neighbor, visited)",
+                                "fixExplanation": "Added visited.add(node) at entry and used graph.get() for safe adjacency access."
+                        },
+                        "goldenRules": [
+                                "In all recursive graph algorithms, ALWAYS maintain a visited set.",
+                                "Use graph.get(node, []) instead of graph[node] to avoid KeyErrors.",
+                                "Use a set() instead of a list [] for visited nodes to achieve instant O(1) lookups."
+                        ],
+                        "quiz": {
+                                "question": "What computational complexity benefit does using set() over list [] provide for tracking visited nodes in DFS?",
+                                "code": "# visited = set() vs visited = []",
+                                "options": [
+                                        "A) None, they perform identically",
+                                        "B) set() provides O(1) average lookup time, preventing DFS from slowing down asymptotically",
+                                        "C) list [] is faster because it preserves insertion order"
+                                ],
+                                "correctIndex": 1,
+                                "solution": "B is correct. Hash sets allow instant O(1) containment checks (`node not in visited`), whereas lists require O(N) linear scans."
+                        },
+                        "bugCategory": "Logical Error"
+                },
+                "fil": {
+                        "title": "Yugto 8: Advanced Algorithms at Graph Traversal (DFS)",
+                        "category": "Phase 8",
+                        "summary": "Ang pinakamataas na antas ng mastery sa BugHunt: recursive call stack management, Depth-First Search, at ang mahalagang visited set defense.",
+                        "explanation": "### Yugto 8: Advanced Algorithms at Graph Traversal (Algorithm Wraith)\nSa huling yugto ng pagkatuto, lumilipat ka mula sa simpleng syntax patungo sa **Algorithmic Graph Theory**:\n\n- **Depth-First Search (DFS)**: Pagsuyod nang malaliman sa bawat sangay ng graph bago mag-backtrack.\n- **Adjacency Representation**: Pag-imbak ng koneksyon ng mga nodes gamit ang dictionary: `graph = {'A': ['B', 'C']}`.\n- **Ang Visited Set Invariant**: Pagpapanatili ng `visited = set()` upang hindi maipit sa walang katapusang pabalik-balik na cycle.\n- **Base Case Termination**: Pagpapahinto sa recursion kapag napuntahan na ang node o walang nang kapitbahay.\n\n### Tatlong Uri ng Bugs sa DFS:\n1. **Syntax**: Kulang na colon sa `for neighbor in graph[node]:`.\n2. **Logical**: Nakalimutang ilagay ang `visited.add(node)` o baliktad na `if neighbor in visited:`.\n3. **Runtime**: KeyError kapag ginamit ang `graph[node]` sa halip na `graph.get(node, [])`.",
+                        "syntaxBlueprint": "def dfs(graph, start, visited=None):\n    if visited is None:\n        visited = set()\n    visited.add(start)\n    for neighbor in graph.get(start, []):\n        if neighbor not in visited:\n            dfs(graph, neighbor, visited)\n    return visited",
+                        "bugExample": {
+                                "title": "Yugto 8 Capstone Traversal Bug",
+                                "errorType": "Logical Error: Cycle Traversal",
+                                "badCode": "def dfs(graph, node, visited):\n    # DELIKADO: Hindi namarkahan ang node bilang visited!\n    for neighbor in graph[node]:\n        if neighbor not in visited:\n            dfs(graph, neighbor, visited)",
+                                "explanation": "Kapag hindi minarkahan ang node sa visited, magpapabalik-balik ang recursion hanggang mag-crash.",
+                                "goodCode": "def dfs(graph, node, visited):\n    visited.add(node)\n    for neighbor in graph.get(node, []):\n        if neighbor not in visited:\n            dfs(graph, neighbor, visited)",
+                                "fixExplanation": "Naglagay ng visited.add(node) sa simula at ginamit ang graph.get() para ligtas."
+                        },
+                        "goldenRules": [
+                                "Sa lahat ng recursive graph algorithms, LAGING mag-maintain ng visited set.",
+                                "Gamitin ang graph.get(node, []) sa halip na graph[node] para maiwasan ang KeyError.",
+                                "Gamitin ang set() sa halip na list [] para instant O(1) ang bilis ng pag-check."
+                        ],
+                        "quiz": {
+                                "question": "Bakit mas mainam gamitin ang set() kaysa list [] para sa visited collection sa DFS?",
+                                "code": "# visited = set() vs visited = []",
+                                "options": [
+                                        "A) Pareho lang sila ng bilis",
+                                        "B) Ang set() ay may O(1) instant lookup time, kaya hindi babagal ang DFS kahit lumaki ang graph",
+                                        "C) Mas mabilis ang list [] dahil may index ito"
+                                ],
+                                "correctIndex": 1,
+                                "solution": "Tama ang B. Ang hash set ay nagbibigay ng agarang O(1) lookup speed sa pagsuri kung nabisita na ang node."
+                        },
+                        "bugCategory": "Logical Error"
+                }
+        }
+],
     "easy": [
         {
             "id": "easy_syntax",
