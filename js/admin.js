@@ -1,3 +1,13 @@
+
+function getTierThemeIcon(tier) {
+    const t = (tier || "").toLowerCase();
+    if (t === "easy") return "🟢";
+    if (t === "normal") return "🔵";
+    if (t === "hard") return "🟣";
+    if (t === "hell") return "🔴";
+    return "👾";
+}
+
 // =========================================================
 // PYTHON QUESTION SYNTAX & EQUIVALENCE VALIDATOR
 // =========================================================
@@ -130,11 +140,12 @@ function updateQuestionFormEnemies(diffTier) {
     const tier = (diffTier || (document.getElementById("question-difficulty") ? document.getElementById("question-difficulty").value : "easy")).toLowerCase();
     select.innerHTML = "";
 
+    const icon = getTierThemeIcon(tier);
     const list = getEnemiesForTier(tier);
     list.forEach(function (enemy) {
         const opt = document.createElement("option");
         opt.value = enemy.id;
-        opt.textContent = enemy.name + (enemy.topic ? " — " + enemy.topic : "");
+        opt.textContent = icon + " " + enemy.name + (enemy.topic ? " — " + enemy.topic : "");
         select.appendChild(opt);
     });
 }
@@ -151,34 +162,36 @@ function updateBankEnemyFilter(selectedTier) {
     if (tier === "all") {
         const allOpt = document.createElement("option");
         allOpt.value = "all";
-        allOpt.textContent = "All Monsters (24 Total)";
+        allOpt.textContent = "👾 All Monsters (24 Total)";
         bankFilter.appendChild(allOpt);
 
         const groups = getAllEnemyGroups();
         groups.forEach(function (group) {
+            const icon = getTierThemeIcon(group.difficulty);
             const optgroup = document.createElement("optgroup");
-            optgroup.label = group.name + " Tier";
+            optgroup.label = "── " + icon + " " + group.name.toUpperCase() + " TIER MONSTERS ──";
             group.list.forEach(function (enemy) {
                 const opt = document.createElement("option");
                 opt.value = enemy.id;
-                opt.textContent = enemy.name + (enemy.topic ? " (" + enemy.topic + ")" : "");
+                opt.textContent = icon + " " + enemy.name + (enemy.topic ? " — " + enemy.topic : "");
                 optgroup.appendChild(opt);
             });
             bankFilter.appendChild(optgroup);
         });
     } else {
         const tierName = tier.charAt(0).toUpperCase() + tier.slice(1);
+        const icon = getTierThemeIcon(tier);
         const list = getEnemiesForTier(tier);
 
         const allInTierOpt = document.createElement("option");
         allInTierOpt.value = "all";
-        allInTierOpt.textContent = "All " + tierName + " Monsters (" + list.length + ")";
+        allInTierOpt.textContent = icon + " All " + tierName + " Monsters (" + list.length + ")";
         bankFilter.appendChild(allInTierOpt);
 
         list.forEach(function (enemy) {
             const opt = document.createElement("option");
             opt.value = enemy.id;
-            opt.textContent = enemy.name + (enemy.topic ? " — " + enemy.topic : "");
+            opt.textContent = icon + " " + enemy.name + (enemy.topic ? " — " + enemy.topic : "");
             bankFilter.appendChild(opt);
         });
     }
@@ -568,11 +581,13 @@ function fillEditEnemySelect(tier) {
     const select = document.getElementById("edit-question-enemy");
     if (!select) return;
     select.innerHTML = "";
-    const list = typeof enemiesByDifficulty === "function" ? enemiesByDifficulty(tier || "easy") : [];
+    const t = (tier || "easy").toLowerCase();
+    const icon = getTierThemeIcon(t);
+    const list = typeof enemiesByDifficulty === "function" ? enemiesByDifficulty(t) : getEnemiesForTier(t);
     list.forEach(function (enemy) {
         const opt = document.createElement("option");
         opt.value = enemy.id;
-        opt.textContent = enemy.name + " (" + (enemy.topic || "Bug") + ")";
+        opt.textContent = icon + " " + enemy.name + (enemy.topic ? " — " + enemy.topic : "");
         select.appendChild(opt);
     });
 }
