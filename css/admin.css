@@ -2244,3 +2244,86 @@ select.admin-select,
     }
 }
 
+/* =========================================================
+   ADMIN CREDENTIAL SETTINGS FORM
+========================================================= */
+.admin-cred-form-card {
+    background: rgba(26, 9, 38, 0.75);
+    border: 1px solid #74368e;
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-top: 20px;
+    box-sizing: border-box;
+    max-width: 650px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.admin-cred-row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+    gap: 6px;
+}
+
+.admin-cred-row label {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #e5d4ed;
+    letter-spacing: 0.5px;
+}
+
+.admin-input-disabled {
+    background: rgba(18, 5, 28, 0.6) !important;
+    border: 1px solid #4a1e5c !important;
+    color: #a78bfa !important;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: not-allowed;
+}
+
+.admin-input-text {
+    background: rgba(18, 5, 28, 0.95);
+    border: 1.5px solid #74368e;
+    color: #ffffff;
+    padding: 11px 16px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.admin-input-text:focus {
+    border-color: #00f0ff;
+    box-shadow: 0 0 14px rgba(0, 240, 255, 0.35);
+    background: rgba(28, 9, 44, 0.98);
+}
+
+.admin-input-hint {
+    font-size: 12px;
+    color: #9d8ba9;
+    margin-top: 2px;
+}
+
+.admin-cred-divider {
+    height: 1px;
+    background: linear-gradient(90deg, rgba(116, 54, 142, 0.6), transparent);
+    margin: 22px 0 20px 0;
+}
+
+.admin-cred-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+}
+
+.admin-cred-msg {
+    font-size: 13.5px;
+    font-weight: 600;
+}
+

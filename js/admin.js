@@ -385,13 +385,12 @@ function renderStudentTable() {
             else if (rank === 3) { rankClass = "rank-bronze"; rankLabel = "🥉 3"; }
         }
 
+        const trophies = s.trophies || {};
         const unlocks = s.unlocks || {};
         const isEasy = unlocks.easy !== false;
         const isNormal = !!unlocks.normal || (trophies.normal && trophies.normal.length > 0) || !!unlocks.hard || !!unlocks.hell;
         const isHard = !!unlocks.hard || (trophies.hard && trophies.hard.length > 0) || !!unlocks.hell;
         const isHell = !!unlocks.hell || (trophies.hell && trophies.hell.length > 0);
-
-        const trophies = s.trophies || {};
         const eTrophies = (trophies.easy || []).length;
         const nTrophies = (trophies.normal || []).length;
         const hTrophies = (trophies.hard || []).length;
@@ -1160,8 +1159,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const adminStudentsTab = document.getElementById("admin-students-tab");
     const adminQuestionsTab = document.getElementById("admin-questions-tab");
+    const adminSettingsTab = document.getElementById("admin-settings-tab");
     const adminStudentsPanel = document.getElementById("admin-students-panel");
     const adminQuestionsPanel = document.getElementById("admin-questions-panel");
+    const adminSettingsPanel = document.getElementById("admin-settings-panel");
     const adminViewTitle = document.getElementById("admin-view-title");
     const adminViewSubtitle = document.getElementById("admin-view-subtitle");
 
@@ -1169,8 +1170,10 @@ document.addEventListener("DOMContentLoaded", function () {
         adminStudentsTab.addEventListener("click", function () {
             adminStudentsTab.classList.add("active");
             if (adminQuestionsTab) adminQuestionsTab.classList.remove("active");
+            if (adminSettingsTab) adminSettingsTab.classList.remove("active");
             if (adminStudentsPanel) adminStudentsPanel.style.display = "flex";
             if (adminQuestionsPanel) adminQuestionsPanel.style.display = "none";
+            if (adminSettingsPanel) adminSettingsPanel.style.display = "none";
             if (adminViewTitle) adminViewTitle.textContent = "STUDENT PERFORMANCE & SCORES";
             if (adminViewSubtitle) adminViewSubtitle.textContent = "Track registered student rankings, True Points (TP), difficulty progress, and unlocked trophies.";
             loadStudentProgressTable();
@@ -1181,8 +1184,10 @@ document.addEventListener("DOMContentLoaded", function () {
         adminQuestionsTab.addEventListener("click", function () {
             adminQuestionsTab.classList.add("active");
             if (adminStudentsTab) adminStudentsTab.classList.remove("active");
+            if (adminSettingsTab) adminSettingsTab.classList.remove("active");
             if (adminQuestionsPanel) adminQuestionsPanel.style.display = "flex";
             if (adminStudentsPanel) adminStudentsPanel.style.display = "none";
+            if (adminSettingsPanel) adminSettingsPanel.style.display = "none";
             if (adminViewTitle) adminViewTitle.textContent = "QUESTION & ANSWER BANK";
             if (adminViewSubtitle) adminViewSubtitle.textContent = "Manage Python bug challenges, answers, and hints for all difficulty levels.";
             fillEnemySelect();
@@ -1206,6 +1211,107 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             loadQuestionPoolList();
+        });
+    }
+
+    if (adminSettingsTab) {
+        adminSettingsTab.addEventListener("click", function () {
+            adminSettingsTab.classList.add("active");
+            if (adminStudentsTab) adminStudentsTab.classList.remove("active");
+            if (adminQuestionsTab) adminQuestionsTab.classList.remove("active");
+            if (adminSettingsPanel) adminSettingsPanel.style.display = "flex";
+            if (adminStudentsPanel) adminStudentsPanel.style.display = "none";
+            if (adminQuestionsPanel) adminQuestionsPanel.style.display = "none";
+            if (adminViewTitle) adminViewTitle.textContent = "ADMIN CREDENTIAL SETTINGS";
+            if (adminViewSubtitle) adminViewSubtitle.textContent = "Update administrator credentials for admin1 and admin2, change passwords, and customize instructor names.";
+
+            const curUser = (typeof currentUser !== "undefined" && currentUser) ? currentUser : null;
+            const savedUser = localStorage.getItem("username") || (curUser ? curUser.username : "admin1");
+            const curFullName = curUser ? (curUser.full_name || curUser.username) : (savedUser === "admin2" ? "Administrator 2" : "Administrator 1");
+
+            const curDisp = document.getElementById("admin-cred-current-display");
+            const userInp = document.getElementById("admin-cred-username");
+            const nameInp = document.getElementById("admin-cred-fullname");
+            const badge = document.getElementById("admin-account-badge");
+            const msgEl = document.getElementById("admin-cred-status-msg");
+            const newPassInp = document.getElementById("admin-cred-new-password");
+            const confPassInp = document.getElementById("admin-cred-confirm-password");
+
+            if (curDisp) curDisp.value = savedUser;
+            if (userInp) userInp.value = savedUser;
+            if (nameInp) nameInp.value = curFullName;
+            if (badge) badge.textContent = "Account: " + savedUser;
+            if (newPassInp) newPassInp.value = "";
+            if (confPassInp) confPassInp.value = "";
+            if (msgEl) msgEl.innerHTML = "";
+        });
+    }
+
+    const saveAdminCredBtn = document.getElementById("admin-save-credentials-btn");
+    if (saveAdminCredBtn) {
+        saveAdminCredBtn.addEventListener("click", async function () {
+            const curDisp = document.getElementById("admin-cred-current-display");
+            const userInp = document.getElementById("admin-cred-username");
+            const nameInp = document.getElementById("admin-cred-fullname");
+            const newPassInp = document.getElementById("admin-cred-new-password");
+            const confPassInp = document.getElementById("admin-cred-confirm-password");
+            const msgEl = document.getElementById("admin-cred-status-msg");
+
+            const currentUsername = localStorage.getItem("username") || (curDisp ? curDisp.value : "admin1");
+            const newUsername = userInp ? userInp.value.trim() : "";
+            const newFullName = nameInp ? nameInp.value.trim() : "";
+            const newPass = newPassInp ? newPassInp.value : "";
+            const confPass = confPassInp ? confPassInp.value : "";
+
+            if (!newUsername) {
+                if (msgEl) msgEl.innerHTML = '<span style="color:#f87171;">⚠️ Username cannot be empty.</span>';
+                return;
+            }
+            if (newPass) {
+                if (newPass.length < 4) {
+                    if (msgEl) msgEl.innerHTML = '<span style="color:#f87171;">⚠️ New password must be at least 4 characters.</span>';
+                    return;
+                }
+                if (newPass !== confPass) {
+                    if (msgEl) msgEl.innerHTML = '<span style="color:#f87171;">⚠️ Passwords do not match.</span>';
+                    return;
+                }
+            }
+
+            saveAdminCredBtn.disabled = true;
+            if (msgEl) msgEl.innerHTML = '<span style="color:#c4b5fd;">Saving credential changes...</span>';
+
+            try {
+                const res = await api("auth.php", "POST", {
+                    action: "update_admin_credentials",
+                    current_username: currentUsername,
+                    new_username: newUsername,
+                    full_name: newFullName,
+                    new_password: newPass,
+                    confirm: confPass
+                });
+
+                if (msgEl) msgEl.innerHTML = '<span style="color:#4ade80;">✅ ' + (res.message || "Admin credentials updated successfully!") + '</span>';
+
+                if (res.user) {
+                    if (typeof currentUser !== "undefined") {
+                        currentUser = res.user;
+                    }
+                    localStorage.setItem("username", res.user.username);
+                    const welcomeEl = document.getElementById("admin-welcome");
+                    if (welcomeEl) welcomeEl.textContent = res.user.full_name || res.user.username;
+                    const badge = document.getElementById("admin-account-badge");
+                    if (badge) badge.textContent = "Account: " + res.user.username;
+                    if (curDisp) curDisp.value = res.user.username;
+                }
+
+                if (newPassInp) newPassInp.value = "";
+                if (confPassInp) confPassInp.value = "";
+            } catch (err) {
+                if (msgEl) msgEl.innerHTML = '<span style="color:#f87171;">❌ ' + (err.message || "Failed to update admin credentials.") + '</span>';
+            } finally {
+                saveAdminCredBtn.disabled = false;
+            }
         });
     }
 

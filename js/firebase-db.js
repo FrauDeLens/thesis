@@ -76,33 +76,38 @@ async function executeFirebaseApi(path, method, body) {
                 return { ok: true, user: null };
             }
             const docId = savedUsername.trim().toLowerCase();
-            if (docId === "admin" || docId === "teacher") {
+            const isAdminDoc = (docId === "admin" || docId === "teacher" || docId === "admin1" || docId === "admin2");
+
+            const snap = await db.collection("users").doc(docId).get();
+            if (snap.exists) {
+                const userData = snap.data();
+                const isRoleAdmin = userData.role === "teacher" || userData.role === "admin" || isAdminDoc;
+                return {
+                    ok: true,
+                    user: {
+                        id: snap.id,
+                        username: userData.username || docId,
+                        full_name: userData.full_name || (isRoleAdmin ? (docId === "admin2" ? "Administrator 2" : "Administrator 1") : userData.username),
+                        role: isRoleAdmin ? "teacher" : (userData.role || "student")
+                    },
+                    progress: userData.progress || getFirebaseDefaultProgress()
+                };
+            }
+
+            if (isAdminDoc) {
                 return {
                     ok: true,
                     user: {
                         id: docId,
                         username: docId,
-                        full_name: docId === "admin" ? "BugHunt Admin" : "BugHunt Teacher",
+                        full_name: docId === "admin2" ? "Administrator 2" : (docId === "admin1" ? "Administrator 1" : (docId === "admin" ? "BugHunt Admin" : "BugHunt Teacher")),
                         role: "teacher"
                     },
                     progress: getFirebaseDefaultProgress()
                 };
             }
-            const snap = await db.collection("users").doc(docId).get();
-            if (!snap.exists) {
-                return { ok: true, user: null };
-            }
-            const userData = snap.data();
-            return {
-                ok: true,
-                user: {
-                    id: snap.id,
-                    username: userData.username,
-                    full_name: userData.full_name || userData.username,
-                    role: userData.role || "student"
-                },
-                progress: userData.progress || getFirebaseDefaultProgress()
-            };
+
+            return { ok: true, user: null };
         }
 
         // --- Logout ---
@@ -111,24 +116,32 @@ async function executeFirebaseApi(path, method, body) {
             return { ok: true };
         }
 
-        // --- Register ---
+        // --- Register (with Security Question & 6-Digit Password) ---
         if (action === "register") {
             const username = (body.username || "").trim();
             const password = body.password || "";
             const confirm = body.confirm || "";
             const fullName = (body.full_name || "").trim();
+            const securityQuestion = (body.security_question || "").trim();
+            const securityAnswer = (body.security_answer || "").trim();
 
             if (!username || !password || !confirm) {
-                throw new Error("Please fill in all fields.");
+                throw new Error("Please fill in all required fields.");
             }
             if (!/^[A-Za-z0-9_]{3,24}$/.test(username)) {
                 throw new Error("Username must be 3-24 letters, numbers, or underscores.");
             }
-            if (password.length < 4) {
-                throw new Error("Password must be at least 4 characters.");
+            if (!/^\d{6}$/.test(password)) {
+                throw new Error("Password must be exactly 6 digits (numbers only, e.g. 123456).");
             }
             if (password !== confirm) {
                 throw new Error("Passwords do not match.");
+            }
+            if (!securityQuestion) {
+                throw new Error("Please select a security question.");
+            }
+            if (!securityAnswer || securityAnswer.length < 2) {
+                throw new Error("Please provide a valid security answer (at least 2 characters).");
             }
 
             const docId = username.toLowerCase();
@@ -143,6 +156,8 @@ async function executeFirebaseApi(path, method, body) {
                 username: username,
                 password_hash: hashed,
                 full_name: fullName,
+                security_question: securityQuestion,
+                security_answer: securityAnswer.toLowerCase(),
                 role: "student",
                 progress: getFirebaseDefaultProgress(),
                 last_seen: now,
@@ -151,6 +166,146 @@ async function executeFirebaseApi(path, method, body) {
 
             await db.collection("users").doc(docId).set(newUser);
             return { ok: true, message: "Account created! Please log in." };
+        }
+
+        // --- Get Security Question for Password Reset ---
+        if (action === "get_security_question") {
+            const username = (body.username || params.get("username") || "").trim();
+            if (!username) {
+                throw new Error("Please enter your username.");
+            }
+            const docId = username.toLowerCase();
+            const snap = await db.collection("users").doc(docId).get();
+            if (!snap.exists) {
+                throw new Error("Account '" + username + "' not found.");
+            }
+            const userData = snap.data();
+            if (!userData.security_question) {
+                throw new Error("No security question is registered for this account. Please ask your teacher to reset your password.");
+            }
+            return {
+                ok: true,
+                username: userData.username || username,
+                question: userData.security_question
+            };
+        }
+
+        // --- Reset Password via Security Question ---
+        if (action === "reset_password_security") {
+            const username = (body.username || "").trim();
+            const answer = (body.answer || "").trim().toLowerCase();
+            const newPassword = body.new_password || "";
+            const confirm = body.confirm || "";
+
+            if (!username || !answer || !newPassword || !confirm) {
+                throw new Error("Please fill in all fields.");
+            }
+            if (!/^\d{6}$/.test(newPassword)) {
+                throw new Error("New password must be exactly 6 digits (numbers only, e.g. 123456).");
+            }
+            if (newPassword !== confirm) {
+                throw new Error("New passwords do not match.");
+            }
+
+            const docId = username.toLowerCase();
+            const userRef = db.collection("users").doc(docId);
+            const snap = await userRef.get();
+            if (!snap.exists) {
+                throw new Error("Student account not found.");
+            }
+
+            const userData = snap.data();
+            const storedAnswer = (userData.security_answer || "").toLowerCase().trim();
+            if (!storedAnswer || storedAnswer !== answer) {
+                throw new Error("Incorrect security answer. Please check your answer.");
+            }
+
+            const hashed = await firebaseHashPassword(newPassword);
+            await userRef.update({
+                password_hash: hashed,
+                updated_at: new Date().toISOString()
+            });
+
+            return {
+                ok: true,
+                message: "Password reset successful! You may now log in with your new 6-digit password."
+            };
+        }
+
+        // --- Update Admin Credentials (Username, Password, Display Name) ---
+        if (action === "update_admin_credentials") {
+            const currentUsername = localStorage.getItem("username") || body.current_username;
+            if (!currentUsername) {
+                throw new Error("Admin session not found. Please log in.");
+            }
+            const oldDocId = currentUsername.trim().toLowerCase();
+            const newUsername = (body.new_username || "").trim();
+            const newFullName = (body.full_name || "").trim();
+            const newPassword = body.new_password || "";
+            const confirm = body.confirm || "";
+
+            if (newPassword) {
+                if (newPassword.length < 4) {
+                    throw new Error("New password must be at least 4 characters.");
+                }
+                if (newPassword !== confirm) {
+                    throw new Error("Passwords do not match.");
+                }
+            }
+
+            const oldUserRef = db.collection("users").doc(oldDocId);
+            const snap = await oldUserRef.get();
+            let userData = snap.exists ? snap.data() : {
+                username: currentUsername,
+                full_name: currentUsername === "admin2" ? "Administrator 2" : "Administrator 1",
+                role: "teacher",
+                progress: getFirebaseDefaultProgress()
+            };
+
+            const updatedFullName = newFullName || userData.full_name || currentUsername;
+            const updatedUsername = newUsername || userData.username || currentUsername;
+            const newDocId = updatedUsername.toLowerCase();
+
+            const updatePayload = {
+                full_name: updatedFullName,
+                role: "teacher",
+                updated_at: new Date().toISOString()
+            };
+
+            if (newPassword) {
+                updatePayload.password_hash = await firebaseHashPassword(newPassword);
+            }
+
+            if (newDocId !== oldDocId) {
+                if (!/^[A-Za-z0-9_]{3,24}$/.test(updatedUsername)) {
+                    throw new Error("Username must be 3-24 letters, numbers, or underscores.");
+                }
+                const existing = await db.collection("users").doc(newDocId).get();
+                if (existing.exists) {
+                    throw new Error("Username '" + updatedUsername + "' is already taken.");
+                }
+                const newDocData = Object.assign({}, userData, updatePayload, { username: updatedUsername });
+                await db.collection("users").doc(newDocId).set(newDocData);
+                if (snap.exists) {
+                    await oldUserRef.delete();
+                }
+                localStorage.setItem("username", updatedUsername);
+            } else {
+                updatePayload.username = updatedUsername;
+                await oldUserRef.set(Object.assign({}, userData, updatePayload), { merge: true });
+                localStorage.setItem("username", updatedUsername);
+            }
+
+            return {
+                ok: true,
+                message: "Admin credentials successfully updated!",
+                user: {
+                    id: newDocId,
+                    username: updatedUsername,
+                    full_name: updatedFullName,
+                    role: "teacher"
+                }
+            };
         }
 
         // --- Update Profile (Full Name / Display Name, Username & Password) ---
@@ -245,24 +400,33 @@ async function executeFirebaseApi(path, method, body) {
 
             const docId = username.toLowerCase();
             const cleanPass = (password || "").trim().toLowerCase();
-            const isAdminOrTeacher = (docId === "admin" || docId === "teacher");
+            const isAdminOrTeacher = (
+                docId === "admin" || 
+                docId === "teacher" || 
+                docId === "admin1" || 
+                docId === "admin2"
+            );
             const isMasterPass = (
                 cleanPass === "trimexccs" ||
                 cleanPass === "trimexcss" ||
                 cleanPass === "bughunt2026" ||
                 cleanPass === "admin123" ||
                 cleanPass === "teacher123" ||
+                cleanPass === "123456" ||
                 (docId === "admin" && (cleanPass === "admin" || cleanPass === "trimexccs")) ||
-                (docId === "teacher" && (cleanPass === "teacher" || cleanPass === "trimexccs"))
+                (docId === "teacher" && (cleanPass === "teacher" || cleanPass === "trimexccs")) ||
+                (docId === "admin1" && (cleanPass === "admin1" || cleanPass === "admin" || cleanPass === "trimexccs")) ||
+                (docId === "admin2" && (cleanPass === "admin2" || cleanPass === "admin" || cleanPass === "trimexccs"))
             );
 
             // INSTANT MASTER BYPASS: Never wait or fail for admin/trimexccs credentials
             if (isAdminOrTeacher && isMasterPass) {
                 const now = new Date().toISOString();
+                const defaultFullName = docId === "admin2" ? "Administrator 2" : (docId === "admin1" ? "Administrator 1" : (docId === "admin" ? "BugHunt Admin" : "BugHunt Teacher"));
                 const adminDoc = {
                     id: docId,
                     username: docId,
-                    full_name: docId === "admin" ? "BugHunt Admin" : "BugHunt Teacher",
+                    full_name: defaultFullName,
                     role: "teacher"
                 };
                 localStorage.setItem("username", adminDoc.username);
@@ -308,9 +472,9 @@ async function executeFirebaseApi(path, method, body) {
                 if (isAdminOrTeacher && isMasterPass) {
                     const now = new Date().toISOString();
                     const adminDoc = {
-                        username: docId === "admin" ? "admin" : "teacher",
+                        username: docId,
                         password_hash: await firebaseHashPassword(password),
-                        full_name: docId === "admin" ? "BugHunt Admin" : "BugHunt Teacher",
+                        full_name: docId === "admin2" ? "Administrator 2" : (docId === "admin1" ? "Administrator 1" : (docId === "admin" ? "BugHunt Admin" : "BugHunt Teacher")),
                         role: "teacher",
                         progress: getFirebaseDefaultProgress(),
                         last_seen: now,
@@ -645,7 +809,7 @@ async function executeFirebaseApi(path, method, body) {
                 const data = doc.data() || {};
                 const docId = (doc.id || "").toLowerCase();
                 const role = (data.role || "").toLowerCase();
-                if (role === "teacher" || role === "admin" || docId === "admin" || docId === "teacher") {
+                if (role === "teacher" || role === "admin" || docId === "admin" || docId === "teacher" || docId === "admin1" || docId === "admin2") {
                     return; // Skip faculty/teacher accounts
                 }
                 const prog = data.progress || {};

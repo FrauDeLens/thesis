@@ -479,4 +479,234 @@
     color: #d1fae5;
 }
 
+/* Forgot Password Link Button */
+.auth-aux-actions {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 420px;
+    margin: 6px auto 14px auto;
+}
+
+.auth-forgot-link {
+    background: none !important;
+    border: none !important;
+    color: #c4b5fd !important;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px !important;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    padding: 4px 8px !important;
+    height: auto !important;
+    width: auto !important;
+    max-width: none !important;
+    box-shadow: none !important;
+    transition: all 0.2s ease;
+}
+
+.auth-forgot-link:hover {
+    color: #ffffff !important;
+    text-shadow: 0 0 10px rgba(168, 85, 247, 0.8);
+    transform: translateY(-1px);
+}
+
+/* Security Question Select */
+.auth-field-box {
+    width: 100%;
+    max-width: 420px;
+    margin: 8px auto;
+}
+
+.auth-select {
+    position: relative;
+    z-index: 5;
+    display: block;
+    width: 100%;
+    height: clamp(44px, 5.5vmin, 54px);
+    margin: 0 auto;
+    padding: 10px 14px;
+    box-sizing: border-box;
+    background: rgba(18, 12, 32, 0.95);
+    color: #f3e8ff;
+    border: 2px solid #5a388a;
+    border-radius: 12px;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(13px, 1.4vmin, 15px);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.auth-select:focus {
+    border-color: #a855f7;
+    background: rgba(26, 18, 46, 0.98);
+    box-shadow: 0 0 16px rgba(168, 85, 247, 0.4);
+}
+
+.auth-select option {
+    background: #1a102a;
+    color: #ffffff;
+    padding: 8px;
+}
+
+.register-policy-hint {
+    position: relative;
+    z-index: 5;
+    max-width: 420px;
+    margin: 10px auto 14px auto;
+    font-size: 12.5px;
+    color: #c4b5fd;
+    line-height: 1.45;
+    text-align: center;
+    background: rgba(22, 13, 38, 0.7);
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px dashed rgba(168, 85, 247, 0.4);
+}
+
+/* =========================================================
+   FORGOT / RESET PASSWORD MODAL
+========================================================= */
+.auth-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(5, 2, 12, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    animation: modalFadeIn 0.2s ease-out;
+}
+
+.forgot-modal-box {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    background: linear-gradient(165deg, #1f1136 0%, #130a24 100%);
+    border: 2px solid #7c3aed;
+    border-radius: 20px;
+    padding: 28px 24px;
+    box-sizing: border-box;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), 0 0 30px rgba(124, 58, 237, 0.35);
+    animation: modalPopIn 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.forgot-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.forgot-header-titles {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.forgot-header-icon {
+    font-size: 26px;
+    filter: drop-shadow(0 0 8px #a855f7);
+}
+
+.forgot-header-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 1px;
+    margin: 0;
+    text-shadow: 0 0 12px rgba(168, 85, 247, 0.6);
+}
+
+.forgot-modal-close {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: #e9d5ff !important;
+    font-size: 20px !important;
+    line-height: 1 !important;
+    width: 32px !important;
+    height: 32px !important;
+    max-width: 32px !important;
+    border-radius: 50% !important;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.forgot-modal-close:hover {
+    background: #dc2626 !important;
+    color: #ffffff !important;
+    transform: rotate(90deg);
+}
+
+.forgot-modal-desc {
+    font-size: 13.5px;
+    color: #c4b5fd;
+    line-height: 1.5;
+    margin: 0 0 20px 0;
+    text-align: left;
+}
+
+.reset-step-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.reset-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e9d5ff;
+    text-align: left;
+    margin-top: 6px;
+}
+
+.forgot-modal-box input {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 2px 0 8px 0 !important;
+}
+
+.reset-question-banner {
+    background: rgba(124, 58, 237, 0.18);
+    border: 1.5px solid #a855f7;
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+    text-align: left;
+}
+
+.reset-q-tag {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #38bdf8;
+    margin-bottom: 4px;
+}
+
+.reset-q-prompt {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.reset-message-box {
+    margin-top: 10px;
+    font-size: 13.5px;
+    font-weight: 600;
+    text-align: center;
+}
+
 

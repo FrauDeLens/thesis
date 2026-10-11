@@ -17,15 +17,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Press+Start+2P&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/base.css?v=101">
-    <link rel="stylesheet" href="css/auth.css?v=101">
-    <link rel="stylesheet" href="css/menu.css?v=101">
-    <link rel="stylesheet" href="css/difficulty.css?v=101">
-    <link rel="stylesheet" href="css/battle.css?v=101">
-    <link rel="stylesheet" href="css/battle-end-screens.css?v=101">
-    <link rel="stylesheet" href="css/enemy-showcase.css?v=101">
-    <link rel="stylesheet" href="css/study.css?v=101">
-    <link rel="stylesheet" href="css/admin.css?v=101">
+    <link rel="stylesheet" href="css/base.css?v=102">
+    <link rel="stylesheet" href="css/auth.css?v=102">
+    <link rel="stylesheet" href="css/menu.css?v=102">
+    <link rel="stylesheet" href="css/difficulty.css?v=102">
+    <link rel="stylesheet" href="css/battle.css?v=102">
+    <link rel="stylesheet" href="css/battle-end-screens.css?v=102">
+    <link rel="stylesheet" href="css/enemy-showcase.css?v=102">
+    <link rel="stylesheet" href="css/study.css?v=102">
+    <link rel="stylesheet" href="css/admin.css?v=102">
 
 </head>
 
@@ -112,14 +112,22 @@
             <input
                 id="password"
                 type="password"
-                placeholder="Student Password"
+                placeholder="6-Digit Password (e.g. 123456)"
                 data-i18n-ph="login_password_ph"
                 autocomplete="current-password"
+                inputmode="numeric"
+                maxlength="6"
             >
 
             <button id="login-button" class="auth-main-btn" data-i18n="login_btn">
                 Log in as Student
             </button>
+
+            <div class="auth-aux-actions">
+                <button type="button" id="forgot-password-link" class="auth-forgot-link">
+                    🔑 Forgot Password? (Nakalimutan ang Password)
+                </button>
+            </div>
 
             <button id="register-button" class="auth-alt-btn" data-i18n="register_btn">
                 Register Student Account
@@ -137,7 +145,7 @@
             <input
                 id="teacher-username"
                 type="text"
-                placeholder="Teacher / Admin Username"
+                placeholder="Teacher / Admin Username (e.g. admin1, admin2)"
                 autocomplete="username"
             >
 
@@ -153,7 +161,7 @@
             </button>
 
             <p id="teacher-login-hint" class="login-hint">
-                Authorized academic access only. Enter your teacher/admin credentials.
+                Authorized academic access only. Enter admin1 or admin2 credentials.
             </p>
         </div>
 
@@ -185,21 +193,51 @@
             type="text"
             placeholder="Create Username"
             data-i18n-ph="reg_username_ph"
+            autocomplete="username"
         >
 
         <input
             id="register-password"
             type="password"
-            placeholder="Create Password"
+            placeholder="Create 6-Digit Password (e.g. 123456)"
             data-i18n-ph="reg_password_ph"
+            inputmode="numeric"
+            maxlength="6"
+            autocomplete="new-password"
         >
 
         <input
             id="register-confirm-password"
             type="password"
-            placeholder="Confirm Password"
+            placeholder="Confirm 6-Digit Password"
             data-i18n-ph="reg_confirm_ph"
+            inputmode="numeric"
+            maxlength="6"
+            autocomplete="new-password"
         >
+
+        <div class="auth-field-box">
+            <select id="register-security-question" class="auth-select">
+                <option value="" disabled selected>-- Select Security Question (Pang-reset) --</option>
+                <option value="What is the name of your first elementary school?">What is the name of your first elementary school?</option>
+                <option value="What is your favorite animal or pet?">What is your favorite animal or pet?</option>
+                <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+                <option value="What is your favorite food or dish?">What is your favorite food or dish?</option>
+                <option value="What city or town were you born in?">What city or town were you born in?</option>
+                <option value="What is your favorite subject or sport?">What is your favorite subject or sport?</option>
+            </select>
+        </div>
+
+        <input
+            id="register-security-answer"
+            type="text"
+            placeholder="Security Answer (Sagot sa Tanong)"
+            autocomplete="off"
+        >
+
+        <p class="register-policy-hint">
+            🔒 Ang password ay <strong>6 digits (numbers only)</strong>. Ang security question ay gagamitin kung sakaling makalimutan ang password.
+        </p>
 
         <button id="create-account-button" data-i18n="reg_create_btn">
             Create Account
@@ -211,6 +249,58 @@
 
         <p id="register-message"></p>
 
+    </div>
+
+
+    <!-- ==========================
+         STUDENT FORGOT / RESET PASSWORD MODAL
+    ========================== -->
+    <div id="forgot-password-modal" class="auth-modal-overlay" style="display: none;">
+        <div class="forgot-modal-box">
+            <div class="forgot-modal-header">
+                <div class="forgot-header-titles">
+                    <span class="forgot-header-icon">🔑</span>
+                    <h3 class="forgot-header-title">RESET STUDENT PASSWORD</h3>
+                </div>
+                <button type="button" id="close-reset-modal-btn" class="forgot-modal-close" title="Close">×</button>
+            </div>
+            
+            <p class="forgot-modal-desc">
+                Nakalimutan ang password? Ilagay ang iyong student username at sagutin ang napiling security question upang makagawa ng bagong 6-digit password.
+            </p>
+
+            <!-- STEP 1: Find Account -->
+            <div id="reset-step-1" class="reset-step-group">
+                <label for="reset-username-input" class="reset-label">Student Username:</label>
+                <input id="reset-username-input" type="text" placeholder="Enter student username" autocomplete="username">
+                <button type="button" id="reset-find-account-btn" class="auth-main-btn" style="margin-top: 10px;">
+                    🔍 Find Account / Hanapin
+                </button>
+                <div id="reset-step1-message" class="reset-message-box"></div>
+            </div>
+
+            <!-- STEP 2: Answer Question & Set New 6-Digit Password -->
+            <div id="reset-step-2" class="reset-step-group" style="display: none;">
+                <div class="reset-question-banner">
+                    <div class="reset-q-tag">SECURITY QUESTION:</div>
+                    <div id="reset-question-display" class="reset-q-prompt"></div>
+                </div>
+
+                <label for="reset-answer-input" class="reset-label">Your Security Answer (Sagot):</label>
+                <input id="reset-answer-input" type="text" placeholder="Enter security answer" autocomplete="off">
+
+                <label for="reset-new-password-input" class="reset-label">New 6-Digit Password:</label>
+                <input id="reset-new-password-input" type="password" inputmode="numeric" maxlength="6" placeholder="Enter 6 numbers (e.g. 123456)">
+
+                <label for="reset-confirm-password-input" class="reset-label">Confirm New 6-Digit Password:</label>
+                <input id="reset-confirm-password-input" type="password" inputmode="numeric" maxlength="6" placeholder="Re-type 6 numbers">
+
+                <button type="button" id="reset-submit-btn" class="auth-main-btn" style="margin-top: 14px;">
+                    ✅ Reset &amp; Save Password
+                </button>
+                <div id="reset-step2-message" class="reset-message-box"></div>
+            </div>
+        </div>
     </div>
 
 
@@ -1543,6 +1633,14 @@
                             </div>
                             <span id="nav-question-count" class="nav-item-badge">0</span>
                         </button>
+
+                        <button id="admin-settings-tab" class="admin-nav-item" type="button">
+                            <span class="nav-item-icon">⚙️</span>
+                            <div class="nav-item-content">
+                                <span class="nav-item-title">Admin Account</span>
+                                <span class="nav-item-caption">admin1 & admin2 settings</span>
+                            </div>
+                        </button>
                     </nav>
                 </div>
 
@@ -1746,6 +1844,62 @@
                             <div id="question-pool-list" class="question-cards-list-wrap"></div>
                         </div>
 
+                    </div>
+
+                    <!-- ==============================================
+                         PANEL 3: ADMIN CREDENTIALS & ACCOUNT SETTINGS
+                    =============================================== -->
+                    <div id="admin-settings-panel" class="admin-tab-panel" style="display: none;">
+                        <div class="question-bank-panel" style="width: 100%;">
+                            <div class="panel-header-box">
+                                <div class="panel-header-title-row">
+                                    <span class="panel-header-icon">🛡️</span>
+                                    <h3 class="panel-header-title">ADMIN CREDENTIAL SETTINGS</h3>
+                                    <span id="admin-account-badge" class="bank-count-pill">Account: admin1</span>
+                                </div>
+                                <p class="panel-header-desc">
+                                    Manage teacher and administrator credentials. Default authorized accounts: <strong>admin1</strong> and <strong>admin2</strong>. You can change your username, instructor display name, and password here.
+                                </p>
+                            </div>
+
+                            <div class="admin-cred-form-card">
+                                <div class="admin-cred-row">
+                                    <label for="admin-cred-current-display">Currently Logged-in Admin:</label>
+                                    <input id="admin-cred-current-display" type="text" readonly disabled class="admin-input-disabled">
+                                </div>
+
+                                <div class="admin-cred-row">
+                                    <label for="admin-cred-fullname">Instructor / Display Name:</label>
+                                    <input id="admin-cred-fullname" type="text" class="admin-input-text" placeholder="e.g. Administrator 1 / Teacher Garcia">
+                                    <span class="admin-input-hint">Displayed on console welcome greetings and student records.</span>
+                                </div>
+
+                                <div class="admin-cred-row">
+                                    <label for="admin-cred-username">Admin Username:</label>
+                                    <input id="admin-cred-username" type="text" class="admin-input-text" placeholder="e.g. admin1 or admin2">
+                                    <span class="admin-input-hint">Used when signing into the Teacher &amp; Admin portal.</span>
+                                </div>
+
+                                <div class="admin-cred-divider"></div>
+
+                                <div class="admin-cred-row">
+                                    <label for="admin-cred-new-password">New Password (leave blank to keep current):</label>
+                                    <input id="admin-cred-new-password" type="password" class="admin-input-text" placeholder="Enter new password">
+                                </div>
+
+                                <div class="admin-cred-row">
+                                    <label for="admin-cred-confirm-password">Confirm New Password:</label>
+                                    <input id="admin-cred-confirm-password" type="password" class="admin-input-text" placeholder="Re-type new password">
+                                </div>
+
+                                <div class="admin-cred-actions">
+                                    <button id="admin-save-credentials-btn" class="admin-primary-action-btn" type="button" style="padding: 10px 28px;">
+                                        💾 Save Credential Changes
+                                    </button>
+                                    <span id="admin-cred-status-msg" class="admin-cred-msg"></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -2358,34 +2512,34 @@
 <!-- ==========================
      LOCALIZATION & I18N SYSTEM
 ========================== -->
-<script src="js/i18n.js?v=101"></script>
-<script src="data/easy.js?v=101"></script>
-<script src="data/normal.js?v=101"></script>
-<script src="data/hard.js?v=101"></script>
-<script src="data/hell.js?v=101"></script>
-<script src="data/enemyGuides.js?v=101"></script>
-<script src="data/pythonLessons.js?v=101"></script>
+<script src="js/i18n.js?v=102"></script>
+<script src="data/easy.js?v=102"></script>
+<script src="data/normal.js?v=102"></script>
+<script src="data/hard.js?v=102"></script>
+<script src="data/hell.js?v=102"></script>
+<script src="data/enemyGuides.js?v=102"></script>
+<script src="data/pythonLessons.js?v=102"></script>
 
 <!-- ==========================
      FIREBASE CLOUD DATABASE
 ========================= -->
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
-<script src="js/firebase-config.js?v=101"></script>
-<script src="js/firebase-db.js?v=101"></script>
+<script src="js/firebase-config.js?v=102"></script>
+<script src="js/firebase-db.js?v=102"></script>
 
 <!-- ==========================
      MODULAR JAVASCRIPT SYSTEM
 ========================= -->
-<script src="js/auth.js?v=101"></script>
-<script src="js/save.js?v=101"></script>
-<script src="js/points.js?v=101"></script>
-<script src="js/difficulty.js?v=101"></script>
-<script src="js/enemyShowcase.js?v=101"></script>
-<script src="js/game.js?v=101"></script>
-<script src="js/study.js?v=101"></script>
-<script src="js/admin.js?v=101"></script>
-<script src="js/app.js?v=101"></script>
+<script src="js/auth.js?v=102"></script>
+<script src="js/save.js?v=102"></script>
+<script src="js/points.js?v=102"></script>
+<script src="js/difficulty.js?v=102"></script>
+<script src="js/enemyShowcase.js?v=102"></script>
+<script src="js/game.js?v=102"></script>
+<script src="js/study.js?v=102"></script>
+<script src="js/admin.js?v=102"></script>
+<script src="js/app.js?v=102"></script>
 
 
 </body>

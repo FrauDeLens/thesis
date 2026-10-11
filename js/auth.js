@@ -105,7 +105,12 @@ function applyLoggedInUser(user, serverProgress) {
     const isTeacherOrAdmin = (
         user.role === "teacher" || 
         user.role === "admin" || 
-        (user.username && (user.username.toLowerCase() === "admin" || user.username.toLowerCase() === "teacher"))
+        (user.username && (
+            user.username.toLowerCase() === "admin" || 
+            user.username.toLowerCase() === "teacher" ||
+            user.username.toLowerCase() === "admin1" ||
+            user.username.toLowerCase() === "admin2"
+        ))
     );
 
     if (isTeacherOrAdmin) {
@@ -275,7 +280,12 @@ async function handleTeacherLoginSubmit() {
         const isTeacherOrAdmin = (
             user.role === "teacher" || 
             user.role === "admin" || 
-            (user.username && (user.username.toLowerCase() === "admin" || user.username.toLowerCase() === "teacher"))
+            (user.username && (
+                user.username.toLowerCase() === "admin" || 
+                user.username.toLowerCase() === "teacher" ||
+                user.username.toLowerCase() === "admin1" ||
+                user.username.toLowerCase() === "admin2"
+            ))
         );
 
         if (!isTeacherOrAdmin) {
@@ -341,19 +351,35 @@ async function handleRegisterSubmit() {
     const regPasswordInp = document.getElementById("register-password") || document.getElementById("register-password-input");
     const regConfirmPassInp = document.getElementById("register-confirm-password") || document.getElementById("register-confirm-password-input");
     const regFullnameInp = document.getElementById("register-fullname");
+    const regSecQSelect = document.getElementById("register-security-question");
+    const regSecAnsInp = document.getElementById("register-security-answer");
     const regMsg = document.getElementById("register-message");
 
     const username = regUsernameInp ? regUsernameInp.value.trim() : "";
     const password = regPasswordInp ? regPasswordInp.value : "";
     const confirmPassword = regConfirmPassInp ? regConfirmPassInp.value : "";
     const fullName = regFullnameInp ? regFullnameInp.value.trim() : "";
+    const securityQuestion = regSecQSelect ? regSecQSelect.value : "";
+    const securityAnswer = regSecAnsInp ? regSecAnsInp.value.trim() : "";
 
     if (!username || !password || !confirmPassword) {
-        if (regMsg) regMsg.textContent = "Please fill in all fields.";
+        if (regMsg) regMsg.textContent = "Please fill in all required fields.";
+        return;
+    }
+    if (!/^\d{6}$/.test(password)) {
+        if (regMsg) regMsg.textContent = "Password must be exactly 6 digits (numbers only, e.g. 123456).";
         return;
     }
     if (password !== confirmPassword) {
         if (regMsg) regMsg.textContent = "Passwords do not match.";
+        return;
+    }
+    if (!securityQuestion) {
+        if (regMsg) regMsg.textContent = "Please choose a security question for password recovery.";
+        return;
+    }
+    if (!securityAnswer || securityAnswer.length < 2) {
+        if (regMsg) regMsg.textContent = "Please provide an answer to your security question.";
         return;
     }
 
@@ -363,13 +389,17 @@ async function handleRegisterSubmit() {
             username: username,
             password: password,
             confirm: confirmPassword,
-            full_name: fullName
+            full_name: fullName,
+            security_question: securityQuestion,
+            security_answer: securityAnswer
         });
         if (regMsg) regMsg.textContent = data.message || "Account created! Please log in.";
         if (regUsernameInp) regUsernameInp.value = "";
         if (regPasswordInp) regPasswordInp.value = "";
         if (regConfirmPassInp) regConfirmPassInp.value = "";
         if (regFullnameInp) regFullnameInp.value = "";
+        if (regSecQSelect) regSecQSelect.selectedIndex = 0;
+        if (regSecAnsInp) regSecAnsInp.value = "";
 
         setTimeout(function () {
             if (typeof showScreen === "function") {
@@ -378,6 +408,135 @@ async function handleRegisterSubmit() {
         }, 1200);
     } catch (e) {
         if (regMsg) regMsg.textContent = e.message;
+    }
+}
+
+// ==========================================
+// STUDENT FORGOT / RESET PASSWORD SYSTEM
+// ==========================================
+function openForgotPasswordModal() {
+    const modal = document.getElementById("forgot-password-modal");
+    if (!modal) return;
+    const step1 = document.getElementById("reset-step-1");
+    const step2 = document.getElementById("reset-step-2");
+    const userInp = document.getElementById("reset-username-input");
+    const ansInp = document.getElementById("reset-answer-input");
+    const passInp = document.getElementById("reset-new-password-input");
+    const confInp = document.getElementById("reset-confirm-password-input");
+    const msg1 = document.getElementById("reset-step1-message");
+    const msg2 = document.getElementById("reset-step2-message");
+
+    if (step1) step1.style.display = "block";
+    if (step2) step2.style.display = "none";
+    if (userInp) {
+        const currentLoginUser = document.getElementById("username");
+        userInp.value = currentLoginUser ? currentLoginUser.value.trim() : "";
+    }
+    if (ansInp) ansInp.value = "";
+    if (passInp) passInp.value = "";
+    if (confInp) confInp.value = "";
+    if (msg1) msg1.innerHTML = "";
+    if (msg2) msg2.innerHTML = "";
+
+    modal.style.display = "flex";
+    if (userInp) userInp.focus();
+}
+
+function closeForgotPasswordModal() {
+    const modal = document.getElementById("forgot-password-modal");
+    if (modal) modal.style.display = "none";
+}
+
+async function handleFindAccountForReset() {
+    const userInp = document.getElementById("reset-username-input");
+    const msg1 = document.getElementById("reset-step1-message");
+    const step1 = document.getElementById("reset-step-1");
+    const step2 = document.getElementById("reset-step-2");
+    const qDisplay = document.getElementById("reset-question-display");
+    const ansInp = document.getElementById("reset-answer-input");
+
+    const username = userInp ? userInp.value.trim() : "";
+    if (!username) {
+        if (msg1) msg1.innerHTML = '<span style="color:#f87171;">⚠️ Please enter your student username.</span>';
+        return;
+    }
+
+    if (msg1) msg1.innerHTML = '<span style="color:#c4b5fd;">Looking up student account...</span>';
+
+    try {
+        const data = await api("auth.php", "POST", {
+            action: "get_security_question",
+            username: username
+        });
+
+        if (msg1) msg1.innerHTML = "";
+        if (qDisplay) qDisplay.textContent = data.question;
+        if (step1) step1.style.display = "none";
+        if (step2) step2.style.display = "block";
+        if (ansInp) ansInp.focus();
+    } catch (err) {
+        if (msg1) msg1.innerHTML = '<span style="color:#f87171;">❌ ' + (err.message || "Account not found.") + '</span>';
+    }
+}
+
+async function handleResetPasswordSubmit() {
+    const userInp = document.getElementById("reset-username-input");
+    const ansInp = document.getElementById("reset-answer-input");
+    const passInp = document.getElementById("reset-new-password-input");
+    const confInp = document.getElementById("reset-confirm-password-input");
+    const msg2 = document.getElementById("reset-step2-message");
+    const submitBtn = document.getElementById("reset-submit-btn");
+
+    const username = userInp ? userInp.value.trim() : "";
+    const answer = ansInp ? ansInp.value.trim() : "";
+    const newPassword = passInp ? passInp.value : "";
+    const confirmPassword = confInp ? confInp.value : "";
+
+    if (!answer) {
+        if (msg2) msg2.innerHTML = '<span style="color:#f87171;">⚠️ Please enter your security answer.</span>';
+        return;
+    }
+    if (!newPassword || !confirmPassword) {
+        if (msg2) msg2.innerHTML = '<span style="color:#f87171;">⚠️ Please enter and confirm your new 6-digit password.</span>';
+        return;
+    }
+    if (!/^\d{6}$/.test(newPassword)) {
+        if (msg2) msg2.innerHTML = '<span style="color:#f87171;">⚠️ Password must be exactly 6 digits (numbers only, e.g. 123456).</span>';
+        return;
+    }
+    if (newPassword !== confirmPassword) {
+        if (msg2) msg2.innerHTML = '<span style="color:#f87171;">⚠️ Passwords do not match.</span>';
+        return;
+    }
+
+    if (submitBtn) submitBtn.disabled = true;
+    if (msg2) msg2.innerHTML = '<span style="color:#c4b5fd;">Verifying answer & updating password...</span>';
+
+    try {
+        const data = await api("auth.php", "POST", {
+            action: "reset_password_security",
+            username: username,
+            answer: answer,
+            new_password: newPassword,
+            confirm: confirmPassword
+        });
+
+        if (msg2) msg2.innerHTML = '<span style="color:#4ade80;">✅ ' + (data.message || "Password reset successful! You may now log in.") + '</span>';
+
+        const loginUserInp = document.getElementById("username");
+        const loginPassInp = document.getElementById("password");
+        if (loginUserInp) loginUserInp.value = username;
+        if (loginPassInp) loginPassInp.value = "";
+
+        setTimeout(function () {
+            closeForgotPasswordModal();
+            const loginMsg = document.getElementById("login-message");
+            if (loginMsg) loginMsg.innerHTML = '<span style="color:#4ade80;">✅ Password reset! Enter your new 6-digit password to log in.</span>';
+        }, 1800);
+    } catch (err) {
+        if (msg2) msg2.innerHTML = '<span style="color:#f87171;">❌ ' + (err.message || "Reset failed.") + '</span>';
+    } finally {
+        if (submitBtn) submitBtn.disabled = false;
     }
 }
 
@@ -489,11 +648,55 @@ function initAuth() {
     }
 
     // Enter key submission on Register fields
-    const regInputs = [regUsernameInp, regPasswordInp, regConfirmPassInp, regFullnameInp];
+    const regSecAnsInp = document.getElementById("register-security-answer");
+    const regInputs = [regUsernameInp, regPasswordInp, regConfirmPassInp, regFullnameInp, regSecAnsInp];
     regInputs.forEach(function (inp) {
         if (inp) {
             inp.addEventListener("keydown", function (e) {
                 if (e.key === "Enter") handleRegisterSubmit();
+            });
+        }
+    });
+
+    // =========================================================
+    // FORGOT / RESET PASSWORD MODAL EVENT LISTENERS
+    // =========================================================
+    const forgotPwLink = document.getElementById("forgot-password-link");
+    const closeResetModalBtn = document.getElementById("close-reset-modal-btn");
+    const resetModalOverlay = document.getElementById("forgot-password-modal");
+    const resetFindBtn = document.getElementById("reset-find-account-btn");
+    const resetSubmitBtn = document.getElementById("reset-submit-btn");
+    const resetUserInp = document.getElementById("reset-username-input");
+    const resetAnsInp = document.getElementById("reset-answer-input");
+    const resetPassInp = document.getElementById("reset-new-password-input");
+    const resetConfInp = document.getElementById("reset-confirm-password-input");
+
+    if (forgotPwLink) {
+        forgotPwLink.addEventListener("click", openForgotPasswordModal);
+    }
+    if (closeResetModalBtn) {
+        closeResetModalBtn.addEventListener("click", closeForgotPasswordModal);
+    }
+    if (resetModalOverlay) {
+        resetModalOverlay.addEventListener("click", function (e) {
+            if (e.target === resetModalOverlay) closeForgotPasswordModal();
+        });
+    }
+    if (resetFindBtn) {
+        resetFindBtn.addEventListener("click", handleFindAccountForReset);
+    }
+    if (resetUserInp) {
+        resetUserInp.addEventListener("keydown", function (e) {
+            if (e.key === "Enter") handleFindAccountForReset();
+        });
+    }
+    if (resetSubmitBtn) {
+        resetSubmitBtn.addEventListener("click", handleResetPasswordSubmit);
+    }
+    [resetAnsInp, resetPassInp, resetConfInp].forEach(function (inp) {
+        if (inp) {
+            inp.addEventListener("keydown", function (e) {
+                if (e.key === "Enter") handleResetPasswordSubmit();
             });
         }
     });
