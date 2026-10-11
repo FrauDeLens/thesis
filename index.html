@@ -17,15 +17,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Press+Start+2P&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/base.css?v=102">
-    <link rel="stylesheet" href="css/auth.css?v=102">
-    <link rel="stylesheet" href="css/menu.css?v=102">
-    <link rel="stylesheet" href="css/difficulty.css?v=102">
-    <link rel="stylesheet" href="css/battle.css?v=102">
-    <link rel="stylesheet" href="css/battle-end-screens.css?v=102">
-    <link rel="stylesheet" href="css/enemy-showcase.css?v=102">
-    <link rel="stylesheet" href="css/study.css?v=102">
-    <link rel="stylesheet" href="css/admin.css?v=102">
+    <link rel="stylesheet" href="css/base.css?v=103">
+    <link rel="stylesheet" href="css/auth.css?v=103">
+    <link rel="stylesheet" href="css/menu.css?v=103">
+    <link rel="stylesheet" href="css/difficulty.css?v=103">
+    <link rel="stylesheet" href="css/battle.css?v=103">
+    <link rel="stylesheet" href="css/battle-end-screens.css?v=103">
+    <link rel="stylesheet" href="css/enemy-showcase.css?v=103">
+    <link rel="stylesheet" href="css/study.css?v=103">
+    <link rel="stylesheet" href="css/admin.css?v=103">
 
 </head>
 
@@ -105,7 +105,6 @@
                 id="username"
                 type="text"
                 placeholder="Student Username"
-                data-i18n-ph="login_username_ph"
                 autocomplete="username"
             >
 
@@ -113,23 +112,22 @@
                 id="password"
                 type="password"
                 placeholder="6-Digit Password (e.g. 123456)"
-                data-i18n-ph="login_password_ph"
                 autocomplete="current-password"
                 inputmode="numeric"
                 maxlength="6"
             >
 
-            <button id="login-button" class="auth-main-btn" data-i18n="login_btn">
+            <button id="login-button" class="auth-main-btn">
                 Log in as Student
             </button>
 
             <div class="auth-aux-actions">
                 <button type="button" id="forgot-password-link" class="auth-forgot-link">
-                    🔑 Forgot Password? (Nakalimutan ang Password)
+                    Forgot Password?
                 </button>
             </div>
 
-            <button id="register-button" class="auth-alt-btn" data-i18n="register_btn">
+            <button id="register-button" class="auth-alt-btn">
                 Register Student Account
             </button>
 
@@ -179,20 +177,18 @@
         style="display: none;"
     >
 
-        <h1 data-i18n="reg_title">Register</h1>
+        <h1>Register</h1>
 
         <input
             id="register-fullname"
             type="text"
             placeholder="Full Name (optional)"
-            data-i18n-ph="reg_fullname_ph"
         >
 
         <input
             id="register-username"
             type="text"
             placeholder="Create Username"
-            data-i18n-ph="reg_username_ph"
             autocomplete="username"
         >
 
@@ -200,7 +196,6 @@
             id="register-password"
             type="password"
             placeholder="Create 6-Digit Password (e.g. 123456)"
-            data-i18n-ph="reg_password_ph"
             inputmode="numeric"
             maxlength="6"
             autocomplete="new-password"
@@ -210,7 +205,6 @@
             id="register-confirm-password"
             type="password"
             placeholder="Confirm 6-Digit Password"
-            data-i18n-ph="reg_confirm_ph"
             inputmode="numeric"
             maxlength="6"
             autocomplete="new-password"
@@ -218,7 +212,7 @@
 
         <div class="auth-field-box">
             <select id="register-security-question" class="auth-select">
-                <option value="" disabled selected>-- Select Security Question (Pang-reset) --</option>
+                <option value="" disabled selected>-- Select Security Question --</option>
                 <option value="What is the name of your first elementary school?">What is the name of your first elementary school?</option>
                 <option value="What is your favorite animal or pet?">What is your favorite animal or pet?</option>
                 <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
@@ -231,19 +225,19 @@
         <input
             id="register-security-answer"
             type="text"
-            placeholder="Security Answer (Sagot sa Tanong)"
+            placeholder="Security Answer"
             autocomplete="off"
         >
 
         <p class="register-policy-hint">
-            🔒 Ang password ay <strong>6 digits (numbers only)</strong>. Ang security question ay gagamitin kung sakaling makalimutan ang password.
+            Password must be exactly <strong>6 digits (numbers only)</strong>. Your security question will be used if you forget your password.
         </p>
 
-        <button id="create-account-button" data-i18n="reg_create_btn">
+        <button id="create-account-button">
             Create Account
         </button>
 
-        <button id="back-to-login-button" data-i18n="reg_back_btn">
+        <button id="back-to-login-button">
             Back to Login
         </button>
 
@@ -256,49 +250,77 @@
          STUDENT FORGOT / RESET PASSWORD MODAL
     ========================== -->
     <div id="forgot-password-modal" class="auth-modal-overlay" style="display: none;">
-        <div class="forgot-modal-box">
-            <div class="forgot-modal-header">
-                <div class="forgot-header-titles">
-                    <span class="forgot-header-icon">🔑</span>
-                    <h3 class="forgot-header-title">RESET STUDENT PASSWORD</h3>
+        <div class="auth-dialog-card forgot-modal-box">
+            <div class="auth-dialog-header">
+                <div class="auth-dialog-meta">
+                    <span class="auth-recovery-badge">RECOVERY PROTOCOL</span>
+                    <h3 class="auth-dialog-title">Reset Student Password</h3>
+                    <p class="auth-dialog-subtitle">Verify your student identity using your security question to set a new 6-digit password.</p>
                 </div>
-                <button type="button" id="close-reset-modal-btn" class="forgot-modal-close" title="Close">×</button>
+                <button type="button" id="close-reset-modal-btn" class="auth-dialog-close" title="Close" aria-label="Close dialog">&times;</button>
             </div>
-            
-            <p class="forgot-modal-desc">
-                Nakalimutan ang password? Ilagay ang iyong student username at sagutin ang napiling security question upang makagawa ng bagong 6-digit password.
-            </p>
+
+            <!-- Recovery Step Indicators -->
+            <div class="recovery-step-indicator">
+                <div id="recovery-step-tab-1" class="recovery-step-pill active">
+                    <span class="step-num">01</span>
+                    <span class="step-label">Find Account</span>
+                </div>
+                <div class="step-separator"></div>
+                <div id="recovery-step-tab-2" class="recovery-step-pill">
+                    <span class="step-num">02</span>
+                    <span class="step-label">Verify &amp; Reset</span>
+                </div>
+            </div>
 
             <!-- STEP 1: Find Account -->
             <div id="reset-step-1" class="reset-step-group">
-                <label for="reset-username-input" class="reset-label">Student Username:</label>
-                <input id="reset-username-input" type="text" placeholder="Enter student username" autocomplete="username">
+                <div class="auth-input-group">
+                    <label for="reset-username-input" class="auth-field-label">Student Username</label>
+                    <input id="reset-username-input" class="auth-dialog-input" type="text" placeholder="Enter student username" autocomplete="username">
+                    <span class="auth-field-hint">The username you created when registering your student account.</span>
+                </div>
                 <button type="button" id="reset-find-account-btn" class="auth-main-btn" style="margin-top: 10px;">
-                    🔍 Find Account / Hanapin
+                    Find Account
                 </button>
-                <div id="reset-step1-message" class="reset-message-box"></div>
+                <div id="reset-step1-message" class="auth-status-banner" style="display: none;"></div>
             </div>
 
             <!-- STEP 2: Answer Question & Set New 6-Digit Password -->
             <div id="reset-step-2" class="reset-step-group" style="display: none;">
                 <div class="reset-question-banner">
-                    <div class="reset-q-tag">SECURITY QUESTION:</div>
+                    <span class="reset-q-tag">SECURITY QUESTION</span>
                     <div id="reset-question-display" class="reset-q-prompt"></div>
                 </div>
 
-                <label for="reset-answer-input" class="reset-label">Your Security Answer (Sagot):</label>
-                <input id="reset-answer-input" type="text" placeholder="Enter security answer" autocomplete="off">
+                <div class="auth-input-group">
+                    <label for="reset-answer-input" class="auth-field-label">Your Security Answer</label>
+                    <input id="reset-answer-input" class="auth-dialog-input" type="text" placeholder="Enter your secret answer" autocomplete="off">
+                </div>
 
-                <label for="reset-new-password-input" class="reset-label">New 6-Digit Password:</label>
-                <input id="reset-new-password-input" type="password" inputmode="numeric" maxlength="6" placeholder="Enter 6 numbers (e.g. 123456)">
+                <div class="auth-input-row">
+                    <div class="auth-input-group">
+                        <label for="reset-new-password-input" class="auth-field-label">New 6-Digit Password</label>
+                        <input id="reset-new-password-input" class="auth-dialog-input" type="password" inputmode="numeric" maxlength="6" placeholder="e.g. 123456" autocomplete="new-password">
+                        <span class="auth-field-hint">Exactly 6 numbers.</span>
+                    </div>
 
-                <label for="reset-confirm-password-input" class="reset-label">Confirm New 6-Digit Password:</label>
-                <input id="reset-confirm-password-input" type="password" inputmode="numeric" maxlength="6" placeholder="Re-type 6 numbers">
+                    <div class="auth-input-group">
+                        <label for="reset-confirm-password-input" class="auth-field-label">Confirm Password</label>
+                        <input id="reset-confirm-password-input" class="auth-dialog-input" type="password" inputmode="numeric" maxlength="6" placeholder="Re-type 6 digits" autocomplete="new-password">
+                        <span class="auth-field-hint">Must match above.</span>
+                    </div>
+                </div>
 
-                <button type="button" id="reset-submit-btn" class="auth-main-btn" style="margin-top: 14px;">
-                    ✅ Reset &amp; Save Password
-                </button>
-                <div id="reset-step2-message" class="reset-message-box"></div>
+                <div class="auth-dialog-btn-row">
+                    <button type="button" id="reset-back-to-step1-btn" class="auth-alt-btn dialog-back-btn">
+                        Back
+                    </button>
+                    <button type="button" id="reset-submit-btn" class="auth-main-btn">
+                        Reset &amp; Save Password
+                    </button>
+                </div>
+                <div id="reset-step2-message" class="auth-status-banner" style="display: none;"></div>
             </div>
         </div>
     </div>
@@ -2386,14 +2408,14 @@
             <div class="profile-card-header">
                 <div class="profile-header-left">
                     <div class="profile-avatar-circle">
-                        <span class="profile-avatar-icon">👤</span>
+                        <span class="profile-avatar-icon">P</span>
                     </div>
                     <div class="profile-header-meta">
                         <div class="profile-title-row">
                             <h2 class="profile-title">Hunter Profile</h2>
-                            <span id="profile-role-badge" class="profile-role-badge badge-student">🎓 Student</span>
+                            <span id="profile-role-badge" class="profile-role-badge badge-student">Student</span>
                         </div>
-                        <p class="profile-subtitle">Update your BugHunt display name, login username, and account password.</p>
+                        <p class="profile-subtitle">Update your BugHunt display name, login username, password, and security question.</p>
                     </div>
                 </div>
                 <button id="profile-close-btn" class="profile-modal-close" type="button" aria-label="Close Profile Modal">&times;</button>
@@ -2468,10 +2490,12 @@
                                 id="profile-new-password"
                                 class="profile-text-input"
                                 type="password"
-                                placeholder="Enter new password (optional)"
+                                placeholder="Enter new 6-digit password (optional)"
+                                inputmode="numeric"
+                                maxlength="6"
                                 autocomplete="new-password"
                             >
-                            <span class="profile-input-hint">Minimum 4 characters. Leave empty if keeping current password.</span>
+                            <span class="profile-input-hint">Must be exactly 6 digits (numbers only, e.g. 123456). Leave empty to keep current password.</span>
                         </div>
 
                         <div class="profile-input-group">
@@ -2480,17 +2504,52 @@
                                 id="profile-confirm-password"
                                 class="profile-text-input"
                                 type="password"
-                                placeholder="Re-type new password"
+                                placeholder="Re-type new 6-digit password"
+                                inputmode="numeric"
+                                maxlength="6"
                                 autocomplete="new-password"
                             >
-                            <span class="profile-input-hint">Must match the new password entered on the left.</span>
+                            <span class="profile-input-hint">Must match the new 6-digit password entered on the left.</span>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 3: ACCOUNT RECOVERY (SECURITY QUESTION) -->
+                    <div class="profile-section-divider">
+                        <span class="section-tag">ACCOUNT RECOVERY (SECURITY QUESTION)</span>
+                    </div>
+
+                    <div class="profile-inputs-grid">
+                        <div class="profile-input-group">
+                            <label for="profile-security-question" class="profile-input-label">Security Question</label>
+                            <select id="profile-security-question" class="profile-text-input">
+                                <option value="" disabled selected>-- Select Security Question --</option>
+                                <option value="What is the name of your first elementary school?">What is the name of your first elementary school?</option>
+                                <option value="What is your favorite animal or pet?">What is your favorite animal or pet?</option>
+                                <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+                                <option value="What is your favorite food or dish?">What is your favorite food or dish?</option>
+                                <option value="What city or town were you born in?">What city or town were you born in?</option>
+                                <option value="What is your favorite subject or sport?">What is your favorite subject or sport?</option>
+                            </select>
+                            <span class="profile-input-hint">Used to reset your password if forgotten. Older accounts can set or update this anytime.</span>
+                        </div>
+
+                        <div class="profile-input-group">
+                            <label for="profile-security-answer" class="profile-input-label">Security Answer</label>
+                            <input
+                                id="profile-security-answer"
+                                class="profile-text-input"
+                                type="text"
+                                placeholder="Enter answer (or leave blank if unchanged)"
+                                autocomplete="off"
+                            >
+                            <span class="profile-input-hint">Case-insensitive secret answer for account recovery.</span>
                         </div>
                     </div>
 
                     <!-- BUTTONS -->
                     <div class="profile-buttons-row">
                         <button id="profile-save-btn" class="profile-action-save" type="button">
-                            💾 Save Profile Changes
+                            Save Profile Changes
                         </button>
                         <button id="profile-cancel-btn" class="profile-action-cancel" type="button">
                             Cancel
@@ -2512,34 +2571,34 @@
 <!-- ==========================
      LOCALIZATION & I18N SYSTEM
 ========================== -->
-<script src="js/i18n.js?v=102"></script>
-<script src="data/easy.js?v=102"></script>
-<script src="data/normal.js?v=102"></script>
-<script src="data/hard.js?v=102"></script>
-<script src="data/hell.js?v=102"></script>
-<script src="data/enemyGuides.js?v=102"></script>
-<script src="data/pythonLessons.js?v=102"></script>
+<script src="js/i18n.js?v=103"></script>
+<script src="data/easy.js?v=103"></script>
+<script src="data/normal.js?v=103"></script>
+<script src="data/hard.js?v=103"></script>
+<script src="data/hell.js?v=103"></script>
+<script src="data/enemyGuides.js?v=103"></script>
+<script src="data/pythonLessons.js?v=103"></script>
 
 <!-- ==========================
      FIREBASE CLOUD DATABASE
 ========================= -->
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
-<script src="js/firebase-config.js?v=102"></script>
-<script src="js/firebase-db.js?v=102"></script>
+<script src="js/firebase-config.js?v=103"></script>
+<script src="js/firebase-db.js?v=103"></script>
 
 <!-- ==========================
      MODULAR JAVASCRIPT SYSTEM
 ========================= -->
-<script src="js/auth.js?v=102"></script>
-<script src="js/save.js?v=102"></script>
-<script src="js/points.js?v=102"></script>
-<script src="js/difficulty.js?v=102"></script>
-<script src="js/enemyShowcase.js?v=102"></script>
-<script src="js/game.js?v=102"></script>
-<script src="js/study.js?v=102"></script>
-<script src="js/admin.js?v=102"></script>
-<script src="js/app.js?v=102"></script>
+<script src="js/auth.js?v=103"></script>
+<script src="js/save.js?v=103"></script>
+<script src="js/points.js?v=103"></script>
+<script src="js/difficulty.js?v=103"></script>
+<script src="js/enemyShowcase.js?v=103"></script>
+<script src="js/game.js?v=103"></script>
+<script src="js/study.js?v=103"></script>
+<script src="js/admin.js?v=103"></script>
+<script src="js/app.js?v=103"></script>
 
 
 </body>

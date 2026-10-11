@@ -412,6 +412,7 @@ async function handleRegisterSubmit() {
 }
 
 // ==========================================
+// ==========================================
 // STUDENT FORGOT / RESET PASSWORD SYSTEM
 // ==========================================
 function openForgotPasswordModal() {
@@ -419,6 +420,8 @@ function openForgotPasswordModal() {
     if (!modal) return;
     const step1 = document.getElementById("reset-step-1");
     const step2 = document.getElementById("reset-step-2");
+    const stepTab1 = document.getElementById("recovery-step-tab-1");
+    const stepTab2 = document.getElementById("recovery-step-tab-2");
     const userInp = document.getElementById("reset-username-input");
     const ansInp = document.getElementById("reset-answer-input");
     const passInp = document.getElementById("reset-new-password-input");
@@ -428,6 +431,9 @@ function openForgotPasswordModal() {
 
     if (step1) step1.style.display = "block";
     if (step2) step2.style.display = "none";
+    if (stepTab1) stepTab1.className = "recovery-step-pill active";
+    if (stepTab2) stepTab2.className = "recovery-step-pill";
+
     if (userInp) {
         const currentLoginUser = document.getElementById("username");
         userInp.value = currentLoginUser ? currentLoginUser.value.trim() : "";
@@ -435,8 +441,16 @@ function openForgotPasswordModal() {
     if (ansInp) ansInp.value = "";
     if (passInp) passInp.value = "";
     if (confInp) confInp.value = "";
-    if (msg1) msg1.innerHTML = "";
-    if (msg2) msg2.innerHTML = "";
+    if (msg1) {
+        msg1.style.display = "none";
+        msg1.textContent = "";
+        msg1.className = "auth-status-banner";
+    }
+    if (msg2) {
+        msg2.style.display = "none";
+        msg2.textContent = "";
+        msg2.className = "auth-status-banner";
+    }
 
     modal.style.display = "flex";
     if (userInp) userInp.focus();
@@ -452,16 +466,26 @@ async function handleFindAccountForReset() {
     const msg1 = document.getElementById("reset-step1-message");
     const step1 = document.getElementById("reset-step-1");
     const step2 = document.getElementById("reset-step-2");
+    const stepTab1 = document.getElementById("recovery-step-tab-1");
+    const stepTab2 = document.getElementById("recovery-step-tab-2");
     const qDisplay = document.getElementById("reset-question-display");
     const ansInp = document.getElementById("reset-answer-input");
 
     const username = userInp ? userInp.value.trim() : "";
     if (!username) {
-        if (msg1) msg1.innerHTML = '<span style="color:#f87171;">⚠️ Please enter your student username.</span>';
+        if (msg1) {
+            msg1.style.display = "block";
+            msg1.className = "auth-status-banner status-error";
+            msg1.textContent = "Please enter your student username.";
+        }
         return;
     }
 
-    if (msg1) msg1.innerHTML = '<span style="color:#c4b5fd;">Looking up student account...</span>';
+    if (msg1) {
+        msg1.style.display = "block";
+        msg1.className = "auth-status-banner status-info";
+        msg1.textContent = "Looking up student account...";
+    }
 
     try {
         const data = await api("auth.php", "POST", {
@@ -469,13 +493,22 @@ async function handleFindAccountForReset() {
             username: username
         });
 
-        if (msg1) msg1.innerHTML = "";
+        if (msg1) {
+            msg1.style.display = "none";
+            msg1.textContent = "";
+        }
         if (qDisplay) qDisplay.textContent = data.question;
         if (step1) step1.style.display = "none";
         if (step2) step2.style.display = "block";
+        if (stepTab1) stepTab1.className = "recovery-step-pill completed";
+        if (stepTab2) stepTab2.className = "recovery-step-pill active";
         if (ansInp) ansInp.focus();
     } catch (err) {
-        if (msg1) msg1.innerHTML = '<span style="color:#f87171;">❌ ' + (err.message || "Account not found.") + '</span>';
+        if (msg1) {
+            msg1.style.display = "block";
+            msg1.className = "auth-status-banner status-error";
+            msg1.textContent = err.message || "Account not found.";
+        }
     }
 }
 
@@ -492,25 +525,32 @@ async function handleResetPasswordSubmit() {
     const newPassword = passInp ? passInp.value : "";
     const confirmPassword = confInp ? confInp.value : "";
 
+    function showStep2Msg(txt, type) {
+        if (!msg2) return;
+        msg2.style.display = "block";
+        msg2.className = "auth-status-banner status-" + type;
+        msg2.textContent = txt;
+    }
+
     if (!answer) {
-        if (msg2) msg2.innerHTML = '<span style="color:#f87171;">⚠️ Please enter your security answer.</span>';
+        showStep2Msg("Please enter your security answer.", "error");
         return;
     }
     if (!newPassword || !confirmPassword) {
-        if (msg2) msg2.innerHTML = '<span style="color:#f87171;">⚠️ Please enter and confirm your new 6-digit password.</span>';
+        showStep2Msg("Please enter and confirm your new 6-digit password.", "error");
         return;
     }
     if (!/^\d{6}$/.test(newPassword)) {
-        if (msg2) msg2.innerHTML = '<span style="color:#f87171;">⚠️ Password must be exactly 6 digits (numbers only, e.g. 123456).</span>';
+        showStep2Msg("Password must be exactly 6 digits (numbers only, e.g. 123456).", "error");
         return;
     }
     if (newPassword !== confirmPassword) {
-        if (msg2) msg2.innerHTML = '<span style="color:#f87171;">⚠️ Passwords do not match.</span>';
+        showStep2Msg("Passwords do not match.", "error");
         return;
     }
 
     if (submitBtn) submitBtn.disabled = true;
-    if (msg2) msg2.innerHTML = '<span style="color:#c4b5fd;">Verifying answer & updating password...</span>';
+    showStep2Msg("Verifying answer & updating password...", "info");
 
     try {
         const data = await api("auth.php", "POST", {
@@ -521,7 +561,7 @@ async function handleResetPasswordSubmit() {
             confirm: confirmPassword
         });
 
-        if (msg2) msg2.innerHTML = '<span style="color:#4ade80;">✅ ' + (data.message || "Password reset successful! You may now log in.") + '</span>';
+        showStep2Msg(data.message || "Password reset successful! You may now log in.", "success");
 
         const loginUserInp = document.getElementById("username");
         const loginPassInp = document.getElementById("password");
@@ -531,10 +571,14 @@ async function handleResetPasswordSubmit() {
         setTimeout(function () {
             closeForgotPasswordModal();
             const loginMsg = document.getElementById("login-message");
-            if (loginMsg) loginMsg.innerHTML = '<span style="color:#4ade80;">✅ Password reset! Enter your new 6-digit password to log in.</span>';
+            if (loginMsg) {
+                loginMsg.style.display = "block";
+                loginMsg.className = "login-message status-success";
+                loginMsg.textContent = "Password reset! Enter your new 6-digit password to log in.";
+            }
         }, 1800);
     } catch (err) {
-        if (msg2) msg2.innerHTML = '<span style="color:#f87171;">❌ ' + (err.message || "Reset failed.") + '</span>';
+        showStep2Msg(err.message || "Reset failed.", "error");
     } finally {
         if (submitBtn) submitBtn.disabled = false;
     }
@@ -693,6 +737,24 @@ function initAuth() {
     if (resetSubmitBtn) {
         resetSubmitBtn.addEventListener("click", handleResetPasswordSubmit);
     }
+    const resetBackBtn = document.getElementById("reset-back-to-step1-btn");
+    if (resetBackBtn) {
+        resetBackBtn.addEventListener("click", function () {
+            const step1 = document.getElementById("reset-step-1");
+            const step2 = document.getElementById("reset-step-2");
+            const stepTab1 = document.getElementById("recovery-step-tab-1");
+            const stepTab2 = document.getElementById("recovery-step-tab-2");
+            const msg2 = document.getElementById("reset-step2-message");
+            if (step1) step1.style.display = "block";
+            if (step2) step2.style.display = "none";
+            if (stepTab1) stepTab1.className = "recovery-step-pill active";
+            if (stepTab2) stepTab2.className = "recovery-step-pill";
+            if (msg2) {
+                msg2.style.display = "none";
+                msg2.textContent = "";
+            }
+        });
+    }
     [resetAnsInp, resetPassInp, resetConfInp].forEach(function (inp) {
         if (inp) {
             inp.addEventListener("keydown", function (e) {
@@ -735,7 +797,8 @@ function initAuth() {
         document.getElementById("profile-fullname-input"),
         document.getElementById("profile-username-input"),
         document.getElementById("profile-new-password"),
-        document.getElementById("profile-confirm-password")
+        document.getElementById("profile-confirm-password"),
+        document.getElementById("profile-security-answer")
     ];
     profInputs.forEach(function (inp) {
         if (inp) {
@@ -777,13 +840,9 @@ function openUserProfileModal() {
 
     const roleBadge = document.getElementById("profile-role-badge");
     if (roleBadge) {
-        if (current.role === "teacher") {
-            roleBadge.textContent = "🛡️ Teacher / Admin";
-            roleBadge.className = "profile-role-badge badge-teacher";
-        } else {
-            roleBadge.textContent = "🎓 Student Hunter";
-            roleBadge.className = "profile-role-badge badge-student";
-        }
+        const isTeach = (current.role === "teacher" || current.role === "admin");
+        roleBadge.textContent = isTeach ? "Teacher / Admin" : "Student Hunter";
+        roleBadge.className = "profile-role-badge " + (isTeach ? "badge-teacher" : "badge-student");
     }
 
     const pointsEl = document.getElementById("profile-stat-points");
@@ -810,6 +869,19 @@ function openUserProfileModal() {
     const confirmPassInp = document.getElementById("profile-confirm-password");
     if (confirmPassInp) confirmPassInp.value = "";
 
+    const secQSelect = document.getElementById("profile-security-question");
+    if (secQSelect) {
+        secQSelect.value = current.security_question || "";
+    }
+
+    const secAInp = document.getElementById("profile-security-answer");
+    if (secAInp) {
+        secAInp.value = "";
+        secAInp.placeholder = current.security_question
+            ? "Saved (enter new answer to change)"
+            : "Enter recovery answer";
+    }
+
     const saveBtn = document.getElementById("profile-save-btn");
     if (saveBtn) saveBtn.disabled = false;
 
@@ -818,7 +890,8 @@ function openUserProfileModal() {
 
 function closeUserProfileModal() {
     const modal = document.getElementById("user-profile-modal");
-    if (modal) modal.style.display = "none";
+    if (!modal) return;
+    modal.style.display = "none";
 }
 
 async function handleSaveProfileSubmit() {
@@ -828,11 +901,15 @@ async function handleSaveProfileSubmit() {
     const usernameInp = document.getElementById("profile-username-input");
     const newPassInp = document.getElementById("profile-new-password");
     const confirmPassInp = document.getElementById("profile-confirm-password");
+    const secQSelect = document.getElementById("profile-security-question");
+    const secAInp = document.getElementById("profile-security-answer");
 
     const newFullName = fullnameInp ? fullnameInp.value.trim() : "";
     const newUsername = usernameInp ? usernameInp.value.trim() : "";
     const newPassword = newPassInp ? newPassInp.value : "";
     const confirm = confirmPassInp ? confirmPassInp.value : "";
+    const secQuestion = secQSelect ? secQSelect.value.trim() : "";
+    const secAnswer = secAInp ? secAInp.value.trim() : "";
 
     function showStatus(text, isError) {
         if (!statusMsg) return;
@@ -850,12 +927,28 @@ async function handleSaveProfileSubmit() {
         return;
     }
     if (newPassword || confirm) {
-        if (newPassword.length < 4) {
-            showStatus("New password must be at least 4 characters long.", true);
+        if (!/^\d{6}$/.test(newPassword)) {
+            showStatus("New password must be exactly 6 digits (numbers only, e.g. 123456).", true);
             return;
         }
         if (newPassword !== confirm) {
             showStatus("New passwords do not match.", true);
+            return;
+        }
+    }
+
+    if (secQuestion || secAnswer) {
+        if (!secQuestion) {
+            showStatus("Please select a valid security question.", true);
+            return;
+        }
+        const hasExistingQ = !!(currentUser && currentUser.security_question);
+        if (!secAnswer && !hasExistingQ) {
+            showStatus("Please provide a security answer for your recovery question.", true);
+            return;
+        }
+        if (secAnswer && secAnswer.length < 2) {
+            showStatus("Security answer must be at least 2 characters.", true);
             return;
         }
     }
@@ -873,6 +966,12 @@ async function handleSaveProfileSubmit() {
             payload.new_password = newPassword;
             payload.confirm = confirm;
         }
+        if (secQuestion) {
+            payload.security_question = secQuestion;
+        }
+        if (secAnswer) {
+            payload.security_answer = secAnswer;
+        }
 
         const res = await api("auth.php", "POST", payload);
 
@@ -882,6 +981,9 @@ async function handleSaveProfileSubmit() {
         if (currentUser) {
             currentUser.full_name = newFullName;
             currentUser.username = newUsername;
+            if (secQuestion) {
+                currentUser.security_question = secQuestion;
+            }
         }
         localStorage.setItem("username", newUsername);
 
@@ -900,7 +1002,7 @@ async function handleSaveProfileSubmit() {
         }
 
         if (typeof showGameToast === "function") {
-            showGameToast("✅ Profile updated successfully!", "success");
+            showGameToast("Profile updated successfully!", "success");
         }
 
         setTimeout(function () {

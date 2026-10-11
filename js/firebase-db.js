@@ -88,7 +88,8 @@ async function executeFirebaseApi(path, method, body) {
                         id: snap.id,
                         username: userData.username || docId,
                         full_name: userData.full_name || (isRoleAdmin ? (docId === "admin2" ? "Administrator 2" : "Administrator 1") : userData.username),
-                        role: isRoleAdmin ? "teacher" : (userData.role || "student")
+                        role: isRoleAdmin ? "teacher" : (userData.role || "student"),
+                        security_question: userData.security_question || ""
                     },
                     progress: userData.progress || getFirebaseDefaultProgress()
                 };
@@ -308,7 +309,7 @@ async function executeFirebaseApi(path, method, body) {
             };
         }
 
-        // --- Update Profile (Full Name / Display Name, Username & Password) ---
+        // --- Update Profile (Full Name / Display Name, Username, 6-Digit Password & Security Question) ---
         if (action === "update_profile") {
             const currentUsername = localStorage.getItem("username");
             if (!currentUsername) {
@@ -327,6 +328,8 @@ async function executeFirebaseApi(path, method, body) {
             const newUsername = body.username ? body.username.trim() : userData.username;
             const newPassword = body.new_password || "";
             const confirm = body.confirm || "";
+            const secQ = body.security_question !== undefined ? String(body.security_question).trim() : "";
+            const secA = body.security_answer !== undefined ? String(body.security_answer).trim() : "";
 
             if (!newFullName || newFullName.length < 2) {
                 throw new Error("Full name / Display name must be at least 2 characters.");
@@ -342,13 +345,28 @@ async function executeFirebaseApi(path, method, body) {
             };
 
             if (newPassword) {
-                if (newPassword.length < 4) {
-                    throw new Error("New password must be at least 4 characters.");
+                if (!/^\d{6}$/.test(newPassword)) {
+                    throw new Error("New password must be exactly 6 digits (numbers only, e.g. 123456).");
                 }
                 if (newPassword !== confirm) {
                     throw new Error("Passwords do not match.");
                 }
                 updatePayload.password_hash = await firebaseHashPassword(newPassword);
+            }
+
+            if (secQ || secA) {
+                if (!secQ) {
+                    throw new Error("Please select a security question.");
+                }
+                updatePayload.security_question = secQ;
+                if (secA) {
+                    if (secA.length < 2) {
+                        throw new Error("Security answer must be at least 2 characters.");
+                    }
+                    updatePayload.security_answer = secA.toLowerCase();
+                } else if (!userData.security_answer) {
+                    throw new Error("Please provide a security answer.");
+                }
             }
 
             const newDocId = newUsername.toLowerCase();
@@ -371,7 +389,8 @@ async function executeFirebaseApi(path, method, body) {
                         id: newDocId,
                         username: newUsername,
                         full_name: newFullName,
-                        role: userData.role || "student"
+                        role: userData.role || "student",
+                        security_question: updatedUser.security_question || ""
                     }
                 };
             } else {
@@ -383,7 +402,8 @@ async function executeFirebaseApi(path, method, body) {
                         id: oldDocId,
                         username: userData.username,
                         full_name: newFullName,
-                        role: userData.role || "student"
+                        role: userData.role || "student",
+                        security_question: updatePayload.security_question || userData.security_question || ""
                     }
                 };
             }
@@ -537,7 +557,8 @@ async function executeFirebaseApi(path, method, body) {
                     id: snap.id,
                     username: userData.username,
                     full_name: userData.full_name || userData.username,
-                    role: (userData.role === "admin" || isAdminOrTeacher) ? "teacher" : (userData.role || "student")
+                    role: (userData.role === "admin" || isAdminOrTeacher) ? "teacher" : (userData.role || "student"),
+                    security_question: userData.security_question || ""
                 },
                 progress: userData.progress || getFirebaseDefaultProgress()
             };
