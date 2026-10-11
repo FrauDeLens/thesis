@@ -132,8 +132,8 @@ async function executeFirebaseApi(path, method, body) {
             if (!/^[A-Za-z0-9_]{3,24}$/.test(username)) {
                 throw new Error("Username must be 3-24 letters, numbers, or underscores.");
             }
-            if (!/^\d{6}$/.test(password)) {
-                throw new Error("Password must be exactly 6 digits (numbers only, e.g. 123456).");
+            if (password.length < 6) {
+                throw new Error("Password must be at least 6 characters.");
             }
             if (password !== confirm) {
                 throw new Error("Passwords do not match.");
@@ -201,8 +201,8 @@ async function executeFirebaseApi(path, method, body) {
             if (!username || !answer || !newPassword || !confirm) {
                 throw new Error("Please fill in all fields.");
             }
-            if (!/^\d{6}$/.test(newPassword)) {
-                throw new Error("New password must be exactly 6 digits (numbers only, e.g. 123456).");
+            if (newPassword.length < 6) {
+                throw new Error("New password must be at least 6 characters.");
             }
             if (newPassword !== confirm) {
                 throw new Error("New passwords do not match.");
@@ -229,7 +229,7 @@ async function executeFirebaseApi(path, method, body) {
 
             return {
                 ok: true,
-                message: "Password reset successful! You may now log in with your new 6-digit password."
+                message: "Password reset successful! You may now log in with your new password."
             };
         }
 
@@ -345,8 +345,8 @@ async function executeFirebaseApi(path, method, body) {
             };
 
             if (newPassword) {
-                if (!/^\d{6}$/.test(newPassword)) {
-                    throw new Error("New password must be exactly 6 digits (numbers only, e.g. 123456).");
+                if (newPassword.length < 6) {
+                    throw new Error("New password must be at least 6 characters.");
                 }
                 if (newPassword !== confirm) {
                     throw new Error("Passwords do not match.");

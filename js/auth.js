@@ -316,7 +316,7 @@ async function handleLoginSubmit() {
     }
 
     if (!inputUsername || !inputPassword) {
-        if (loginMsg) loginMsg.innerHTML = '<span style="color: #f87171;">⚠️ Please enter your student username and password.</span>';
+        if (loginMsg) loginMsg.innerHTML = '<span style="color: #f87171;">Please enter your student username and password.</span>';
         return;
     }
 
@@ -330,14 +330,14 @@ async function handleLoginSubmit() {
             password: inputPassword
         });
         clearFailedLogins();
-        if (loginMsg) loginMsg.innerHTML = '<span style="color: #4ade80;">✅ Login Successful!</span>';
+        if (loginMsg) loginMsg.innerHTML = '<span style="color: #4ade80;">Login Successful!</span>';
         applyLoggedInUser(data.user, data.progress);
     } catch (e) {
         recordFailedLogin();
         if (!checkLockoutStatus()) {
             const attemptsLeft = failedLoginAttempts < 3 ? (3 - failedLoginAttempts) : 0;
             const attemptWarning = attemptsLeft > 0 ? " (" + attemptsLeft + " attempts left before timed out)" : "";
-            if (loginMsg) loginMsg.innerHTML = '<span style="color: #f87171;">❌ ' + (e.message || "Invalid credentials.") + attemptWarning + '</span>';
+            if (loginMsg) loginMsg.innerHTML = '<span style="color: #f87171;">' + (e.message || "Invalid credentials.") + attemptWarning + '</span>';
         }
     } finally {
         if (loginBtn && !checkLockoutStatus()) loginBtn.disabled = false;
@@ -366,8 +366,8 @@ async function handleRegisterSubmit() {
         if (regMsg) regMsg.textContent = "Please fill in all required fields.";
         return;
     }
-    if (!/^\d{6}$/.test(password)) {
-        if (regMsg) regMsg.textContent = "Password must be exactly 6 digits (numbers only, e.g. 123456).";
+    if (password.length < 6) {
+        if (regMsg) regMsg.textContent = "Password must be at least 6 characters.";
         return;
     }
     if (password !== confirmPassword) {
@@ -537,11 +537,11 @@ async function handleResetPasswordSubmit() {
         return;
     }
     if (!newPassword || !confirmPassword) {
-        showStep2Msg("Please enter and confirm your new 6-digit password.", "error");
+        showStep2Msg("Please enter and confirm your new password.", "error");
         return;
     }
-    if (!/^\d{6}$/.test(newPassword)) {
-        showStep2Msg("Password must be exactly 6 digits (numbers only, e.g. 123456).", "error");
+    if (newPassword.length < 6) {
+        showStep2Msg("Password must be at least 6 characters.", "error");
         return;
     }
     if (newPassword !== confirmPassword) {
@@ -574,7 +574,7 @@ async function handleResetPasswordSubmit() {
             if (loginMsg) {
                 loginMsg.style.display = "block";
                 loginMsg.className = "login-message status-success";
-                loginMsg.textContent = "Password reset! Enter your new 6-digit password to log in.";
+                loginMsg.textContent = "Password reset! Enter your new password to log in.";
             }
         }, 1800);
     } catch (err) {
@@ -927,8 +927,8 @@ async function handleSaveProfileSubmit() {
         return;
     }
     if (newPassword || confirm) {
-        if (!/^\d{6}$/.test(newPassword)) {
-            showStatus("New password must be exactly 6 digits (numbers only, e.g. 123456).", true);
+        if (newPassword.length < 6) {
+            showStatus("New password must be at least 6 characters.", true);
             return;
         }
         if (newPassword !== confirm) {
