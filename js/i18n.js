@@ -82,8 +82,10 @@ const BUGHUNT_TRANSLATIONS = {
         showcase_begin_battle: "Begin Battle",
         showcase_close_guide: "Close Guide",
         showcase_retreat: "Retreat to Menu",
-        showcase_bad_label: "BUGGY CODE (COMMON MISTAKE):",
-        showcase_good_label: "CORRECT FIX (PLAYER SOLUTION):",
+        showcase_retreat_btn: "🔙 Retreat to Stages",
+        showcase_engage_btn: "ENGAGE IN BATTLE",
+        showcase_bad_label: "❌ COMMON CORRUPTED BUG",
+        showcase_good_label: "✅ PURIFIED PYTHON FIX",
 
         // Battle Screen & HUD
         battle_back_btn: "Back",
@@ -93,7 +95,9 @@ const BUGHUNT_TRANSLATIONS = {
         hud_enemy_points: "Hit Points: {points}",
         hud_answer_tag: "YOUR PYTHON FIX // CODE WORKSPACE",
         hud_answer_placeholder: "Write the corrected Python code here...",
-        hud_submit_button: "SUBMIT",
+        hud_submit_button: "⩒ RUN & EXECUTE PATCH",
+        puzzle_goal_label: "FUNCTION GOAL",
+        puzzle_output_label: "EXPECTED OUTPUT",
         hud_hint_cost_free: "Free Hint Available!",
         hud_hint_cost_pay: "Cost: 1 Hit Point",
         hud_hint_cost_prefix: "Hint Cost:\n",
@@ -112,6 +116,7 @@ const BUGHUNT_TRANSLATIONS = {
         defeat_title: "DEFEATED...",
         defeat_message: "You ran out of hearts. Returning to difficulty selection.",
         defeat_btn: "Return to Difficulty",
+        defeat_retry_btn: "🔄 Retry Sector (Monster #1)",
 
         // Shop Screen
         shop_title: "Upgrade Shop",
@@ -189,8 +194,25 @@ const BUGHUNT_TRANSLATIONS = {
         showcase_tip_title: "FRAU'S FIELD GUIDE TIP",
         showcase_retreat_btn: "🔙 Retreat to Stages",
         showcase_engage_btn: "ENGAGE IN BATTLE",
-        showcase_resume_btn: "RESUME BATTLE",
-        showcase_return_btn: "✕ Return to Battle"
+        showcase_return_btn: "✕ Return to Battle",
+
+        // Python Codex & Memory Match Game
+        codex_memory_title: "Memory Match Game",
+        codex_memory_sub: "Pair concepts & test memory",
+        codex_memory_badge: "PLAY",
+        codex_topic_hint: "Select a topic",
+        codex_back_btn: "Back to Menu",
+        codex_title: "PYTHON CODEX",
+        codex_subtitle: "Comprehensive Python Guide & Bug Archive (Easy to Hell)",
+        codex_search_ph: "Search Python concept or bug...",
+        codex_tab_easy: "EASY",
+        codex_tab_easy_sub: "Fundamentals",
+        codex_tab_normal: "NORMAL",
+        codex_tab_normal_sub: "Data & OOP",
+        codex_tab_hard: "HARD",
+        codex_tab_hard_sub: "Advanced OOP",
+        codex_tab_hell: "HELL",
+        codex_tab_hell_sub: "Mastery & Async"
     },
 
     fil: {
@@ -271,8 +293,10 @@ const BUGHUNT_TRANSLATIONS = {
         showcase_begin_battle: "Simulan ang Laban",
         showcase_close_guide: "Isara ang Gabay",
         showcase_retreat: "Umatras sa Menu",
-        showcase_bad_label: "MALI NA KODIGO (KARANIWANG BUG):",
-        showcase_good_label: "TAMANG AYOS (SOLUSYON):",
+        showcase_retreat_btn: "🔙 Umatras sa Antas",
+        showcase_engage_btn: "SIMULAN ANG LABAN",
+        showcase_bad_label: "❌ MALI NA KODIGO (BUG)",
+        showcase_good_label: "✅ TAMANG AYOS (SOLUSYON)",
 
         // Battle Screen & HUD
         battle_back_btn: "Bumalik",
@@ -282,7 +306,9 @@ const BUGHUNT_TRANSLATIONS = {
         hud_enemy_points: "Buhay (HP): {points}",
         hud_answer_tag: "IYONG TAMANG KODIGO // WORKSPACE",
         hud_answer_placeholder: "Isulat dito ang tamang Python code...",
-        hud_submit_button: "IPASA",
+        hud_submit_button: "⩒ PATAKBUHIN AT ISUBMIT",
+        puzzle_goal_label: "LAYUNIN NG FUNCTION",
+        puzzle_output_label: "INAASAHANG OUTPUT",
         hud_hint_cost_free: "Libreng Hint!",
         hud_hint_cost_pay: "Bawas: 1 Hit Point",
         hud_hint_cost_prefix: "Halaga ng Hint:\n",
@@ -301,6 +327,7 @@ const BUGHUNT_TRANSLATIONS = {
         defeat_title: "TALO...",
         defeat_message: "Naubusan ka ng puso. Babalik sa pagpili ng hirap.",
         defeat_btn: "Bumalik sa Pagpili",
+        defeat_retry_btn: "🔄 Ulitin ang Sektor (Halimaw #1)",
 
         // Shop Screen
         shop_title: "Tindahan ng Upgrade",
@@ -374,8 +401,25 @@ const BUGHUNT_TRANSLATIONS = {
         showcase_tip_title: "GABAY AT PAYO NI FRAU",
         showcase_retreat_btn: "🔙 Bumalik sa mga Yugto",
         showcase_engage_btn: "SIMULAN ANG LABAN",
-        showcase_resume_btn: "ITULOY ANG LABAN",
-        showcase_return_btn: "✕ Bumalik sa Laban"
+        showcase_return_btn: "✕ Bumalik sa Laban",
+
+        // Python Codex & Memory Match Game
+        codex_memory_title: "Memory Match Game",
+        codex_memory_sub: "Ipares ang concepts at subukin ang memorya",
+        codex_memory_badge: "LARUIN",
+        codex_topic_hint: "Pumili ng paksa",
+        codex_back_btn: "Bumalik sa Menu",
+        codex_title: "PYTHON CODEX",
+        codex_subtitle: "Kumpletong Gabay sa Python at Archive ng Bug (Easy hanggang Hell)",
+        codex_search_ph: "Maghanap ng concept o bug sa Python...",
+        codex_tab_easy: "EASY",
+        codex_tab_easy_sub: "Mga Batayan",
+        codex_tab_normal: "NORMAL",
+        codex_tab_normal_sub: "Data at OOP",
+        codex_tab_hard: "HARD",
+        codex_tab_hard_sub: "Advanced OOP",
+        codex_tab_hell: "HELL",
+        codex_tab_hell_sub: "Mastery at Async"
     }
 };
 

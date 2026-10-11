@@ -102,15 +102,27 @@ function applyLoggedInUser(user, serverProgress) {
         updatePoints();
     }
 
-    if (user.role === "teacher") {
+    const isTeacherOrAdmin = (
+        user.role === "teacher" || 
+        user.role === "admin" || 
+        (user.username && (user.username.toLowerCase() === "admin" || user.username.toLowerCase() === "teacher"))
+    );
+
+    if (isTeacherOrAdmin) {
         const welcomeEl = document.getElementById("admin-welcome");
         if (welcomeEl) {
             welcomeEl.textContent = user.full_name || user.username;
         }
-        if (typeof fillEnemySelect === "function") fillEnemySelect();
-        if (typeof showScreen === "function") showScreen(document.getElementById("admin-screen"));
-        if (typeof loadStudentProgressTable === "function") loadStudentProgressTable();
-        if (typeof loadQuestionPoolList === "function") loadQuestionPoolList();
+
+        // 1. Immediately switch to the Teacher / Admin Screen
+        if (typeof showScreen === "function") {
+            showScreen(document.getElementById("admin-screen"));
+        }
+
+        // 2. Safely populate workspace widgets without blocking UI transition
+        try { if (typeof fillEnemySelect === "function") fillEnemySelect(); } catch (err) { console.warn("fillEnemySelect error:", err); }
+        try { if (typeof loadStudentProgressTable === "function") loadStudentProgressTable(); } catch (err) { console.warn("loadStudentProgressTable error:", err); }
+        try { if (typeof loadQuestionPoolList === "function") loadQuestionPoolList(); } catch (err) { console.warn("loadQuestionPoolList error:", err); }
         return;
     }
 
@@ -208,22 +220,99 @@ function recordFailedLogin() {
     }
 }
 
-async function handleLoginSubmit() {
-    if (checkLockoutStatus()) return;
+function switchLoginRole(role) {
+    const studentTab = document.getElementById("role-tab-student");
+    const teacherTab = document.getElementById("role-tab-teacher");
+    const studentPanel = document.getElementById("student-login-panel");
+    const teacherPanel = document.getElementById("teacher-login-panel");
+    const loginMsg = document.getElementById("login-message");
 
+    if (loginMsg) loginMsg.textContent = "";
+
+    if (role === "teacher") {
+        if (studentTab) studentTab.classList.remove("active");
+        if (teacherTab) teacherTab.classList.add("active");
+        if (studentPanel) studentPanel.style.display = "none";
+        if (teacherPanel) teacherPanel.style.display = "block";
+        const teacherUser = document.getElementById("teacher-username");
+        if (teacherUser) teacherUser.focus();
+    } else {
+        if (teacherTab) teacherTab.classList.remove("active");
+        if (studentTab) studentTab.classList.add("active");
+        if (teacherPanel) teacherPanel.style.display = "none";
+        if (studentPanel) studentPanel.style.display = "block";
+        const studentUser = document.getElementById("username");
+        if (studentUser) studentUser.focus();
+    }
+}
+window.switchLoginRole = switchLoginRole;
+
+async function handleTeacherLoginSubmit() {
+    const teacherUserInp = document.getElementById("teacher-username");
+    const teacherPassInp = document.getElementById("teacher-password");
+    const loginMsg = document.getElementById("login-message");
+    const teacherBtn = document.getElementById("teacher-login-button");
+
+    const inputUsername = teacherUserInp ? teacherUserInp.value.trim() : "";
+    const inputPassword = teacherPassInp ? teacherPassInp.value : "";
+
+    if (!inputUsername || !inputPassword) {
+        if (loginMsg) loginMsg.innerHTML = '<span style="color: #f87171;">⚠️ Please enter both Teacher username and password.</span>';
+        return;
+    }
+
+    if (loginMsg) loginMsg.innerHTML = '<span style="color: #c4b5fd;">Verifying teacher credentials...</span>';
+    if (teacherBtn) teacherBtn.disabled = true;
+
+    try {
+        const data = await api("auth.php", "POST", {
+            action: "login",
+            username: inputUsername,
+            password: inputPassword
+        });
+
+        const user = data.user;
+        const isTeacherOrAdmin = (
+            user.role === "teacher" || 
+            user.role === "admin" || 
+            (user.username && (user.username.toLowerCase() === "admin" || user.username.toLowerCase() === "teacher"))
+        );
+
+        if (!isTeacherOrAdmin) {
+            throw new Error("This account does not have teacher/admin privileges. Please use the Student Portal.");
+        }
+
+        clearFailedLogins();
+        if (loginMsg) loginMsg.innerHTML = '<span style="color: #4ade80;">✅ Teacher Login Successful! Opening console...</span>';
+        applyLoggedInUser(user, data.progress);
+    } catch (e) {
+        if (loginMsg) loginMsg.innerHTML = '<span style="color: #f87171;">❌ ' + (e.message || "Invalid teacher username or password.") + '</span>';
+    } finally {
+        if (teacherBtn) teacherBtn.disabled = false;
+    }
+}
+
+async function handleLoginSubmit() {
     const usernameInp = document.getElementById("username") || document.getElementById("username-input");
     const passwordInp = document.getElementById("password") || document.getElementById("password-input");
     const loginMsg = document.getElementById("login-message");
+    const loginBtn = document.getElementById("login-button");
 
     const inputUsername = usernameInp ? usernameInp.value.trim() : "";
     const inputPassword = passwordInp ? passwordInp.value : "";
 
-    if (!inputUsername || !inputPassword) {
-        if (loginMsg) loginMsg.textContent = "Please enter your username and password.";
+    if (checkLockoutStatus()) {
         return;
     }
 
-    if (loginMsg) loginMsg.textContent = "Logging in...";
+    if (!inputUsername || !inputPassword) {
+        if (loginMsg) loginMsg.innerHTML = '<span style="color: #f87171;">⚠️ Please enter your student username and password.</span>';
+        return;
+    }
+
+    if (loginMsg) loginMsg.innerHTML = '<span style="color: #c4b5fd;">Logging in...</span>';
+    if (loginBtn) loginBtn.disabled = true;
+
     try {
         const data = await api("auth.php", "POST", {
             action: "login",
@@ -231,15 +320,17 @@ async function handleLoginSubmit() {
             password: inputPassword
         });
         clearFailedLogins();
-        if (loginMsg) loginMsg.textContent = "Login Successful!";
+        if (loginMsg) loginMsg.innerHTML = '<span style="color: #4ade80;">✅ Login Successful!</span>';
         applyLoggedInUser(data.user, data.progress);
     } catch (e) {
         recordFailedLogin();
         if (!checkLockoutStatus()) {
             const attemptsLeft = failedLoginAttempts < 3 ? (3 - failedLoginAttempts) : 0;
             const attemptWarning = attemptsLeft > 0 ? " (" + attemptsLeft + " attempts left before timed out)" : "";
-            if (loginMsg) loginMsg.textContent = (e.message || "Invalid credentials.") + attemptWarning;
+            if (loginMsg) loginMsg.innerHTML = '<span style="color: #f87171;">❌ ' + (e.message || "Invalid credentials.") + attemptWarning + '</span>';
         }
+    } finally {
+        if (loginBtn && !checkLockoutStatus()) loginBtn.disabled = false;
     }
 }
 
@@ -336,18 +427,33 @@ function initAuth() {
     // Back to Login Screen
     if (backToLoginBtn) {
         backToLoginBtn.addEventListener("click", function () {
+            switchLoginRole("student");
             if (typeof showScreen === "function") {
                 showScreen(document.getElementById("login-screen"));
             }
         });
     }
 
-    // Login Submission
+    // Role Selection Tabs (Student vs Teacher)
+    const roleTabStudent = document.getElementById("role-tab-student");
+    const roleTabTeacher = document.getElementById("role-tab-teacher");
+    if (roleTabStudent) {
+        roleTabStudent.addEventListener("click", function () {
+            switchLoginRole("student");
+        });
+    }
+    if (roleTabTeacher) {
+        roleTabTeacher.addEventListener("click", function () {
+            switchLoginRole("teacher");
+        });
+    }
+
+    // Student Login Submission
     if (loginBtn) {
         loginBtn.addEventListener("click", handleLoginSubmit);
     }
 
-    // Enter key submission on Login fields
+    // Enter key submission on Student Login fields
     if (usernameInp) {
         usernameInp.addEventListener("keydown", function (e) {
             if (e.key === "Enter") handleLoginSubmit();
@@ -356,6 +462,24 @@ function initAuth() {
     if (passwordInp) {
         passwordInp.addEventListener("keydown", function (e) {
             if (e.key === "Enter") handleLoginSubmit();
+        });
+    }
+
+    // Teacher Login Submission
+    const teacherLoginBtn = document.getElementById("teacher-login-button");
+    const teacherUserInp = document.getElementById("teacher-username");
+    const teacherPassInp = document.getElementById("teacher-password");
+    if (teacherLoginBtn) {
+        teacherLoginBtn.addEventListener("click", handleTeacherLoginSubmit);
+    }
+    if (teacherUserInp) {
+        teacherUserInp.addEventListener("keydown", function (e) {
+            if (e.key === "Enter") handleTeacherLoginSubmit();
+        });
+    }
+    if (teacherPassInp) {
+        teacherPassInp.addEventListener("keydown", function (e) {
+            if (e.key === "Enter") handleTeacherLoginSubmit();
         });
     }
 

@@ -1,516 +1,2418 @@
+// =========================================================
+// BUGHUNT: HELL DIFFICULTY ENEMY QUESTION POOL (data/hell.js)
+// Curated 72 questions (6 Parsons + 6 Quiz per enemy)
+// Bilingual: English (default) & Everyday Conversational Filipino
+// =========================================================
+
 const memoryDemon = {
-    id: "memory_demon",
-    name: "Memory Demon",
-    topic: "Names, None & Copies",
-    sprite: "memoryDemon.png",
-    hearts: 10,
-    trophy: "Memory Fragment",
-    intro: "I am Memory Demon. I delete what you still need.\nNone has no attributes. Do not shadow list.\nCreate first. Copy lists with a slice.",
-    bugs: [
+    "id": "memory_demon",
+    "name": "Memory Demon",
+    "topic": "Memory & Mutability",
+    "sprite": "memoryDemon.png",
+    "hearts": 5,
+    "trophy": "Demon Mutability Horn",
+    "intro": "You think you copied that list? Hahaha! You merely copied the reference!\nMutate one, mutate all! Welcome to Hell!",
+    "bugs": [
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Shared Mutable Default Argument Trap",
-            "code": "def add_item(item, lst=[]):\n    lst.append(item)\n    return lst",
-            "answer": "def add_item(item, lst=None):\n    if lst is None:\n        lst = []\n    lst.append(item)\n    return lst",
-            "hint": "Never use mutable default arguments like lst=[]. Use lst=None."
+            "id": 193,
+            "enemy_id": "memory_demon",
+            "difficulty": "hell",
+            "category": "Python Internals & Memory",
+            "error_type": "Logical Error: Mutable default list shared across calls",
+            "title": "Memory Demon #1: Mutable Default Argument Trap",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Avoid the shared mutable list default trap using None and conditional initialization.",
+            "expected_output": "Bag 1: ['potion'], Bag 2: ['elixir']",
+            "lines": [
+                "def add_item(item, bag=None):",
+                "    if bag is None: bag = []",
+                "    bag.append(item)",
+                "    return bag",
+                "b1 = add_item(\"potion\")",
+                "b2 = add_item(\"elixir\")",
+                "print(f\"Bag 1: {b1}, Bag 2: {b2}\")"
+            ],
+            "distractors": [
+                "def add_item(item, bag=[]):"
+            ],
+            "hint": "Default argument expressions are evaluated once at function definition time, sharing the same list across calls.",
+            "code": "def add_item(item, bag=[]):",
+            "answer": "def add_item(item, bag=None):\n    if bag is None: bag = []\n    bag.append(item)\n    return bag\nb1 = add_item(\"potion\")\nb2 = add_item(\"elixir\")\nprint(f\"Bag 1: {b1}, Bag 2: {b2}\")",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Avoid the shared mutable list default trap using None and conditional initialization.",
+            "goal_fil": "Lutasin ang program: Avoid the shared mutable list default trap using None and conditional initialization.",
+            "hint_en": "Default argument expressions are evaluated once at function definition time, sharing the same list across calls.",
+            "hint_fil": "Tandaan: Default argument expressions are evaluated once at function definition time, sharing the same list across calls."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Shallow Copy vs Deep Copy Mutation",
-            "code": "import copy\noriginal = [[1, 2], [3, 4]]\nshallow = original.copy()\nshallow[0][0] = 99\nprint(original[0][0])",
-            "answer": "import copy\noriginal = [[1, 2], [3, 4]]\ndeep = copy.deepcopy(original)\ndeep[0][0] = 99\nprint(original[0][0])",
-            "hint": "Shallow copy shares nested lists. Use copy.deepcopy() for nested objects."
+            "id": 194,
+            "enemy_id": "memory_demon",
+            "difficulty": "hell",
+            "category": "Python Internals & Memory",
+            "error_type": "Logical Error: Shallow copy shares nested list references",
+            "title": "Memory Demon #2: Shallow vs Deep Copy on Nested Lists",
+            "question": "Arrange the code blocks to process the list correctly. Exclude the distractor.",
+            "goal": "Safely clone a nested matrix using copy.deepcopy() so nested modifications do not affect original.",
+            "expected_output": "Original: [1, 2], Clone: [1, 99]",
+            "lines": [
+                "import copy",
+                "orig = [[1, 2]]",
+                "clone = copy.deepcopy(orig)",
+                "clone[0][1] = 99",
+                "print(f\"Original: {orig[0]}, Clone: {clone[0]}\")"
+            ],
+            "distractors": [
+                "clone = orig[:]"
+            ],
+            "hint": "Review your Python syntax, variable names, and line sequence.",
+            "code": "clone = orig[:]",
+            "answer": "import copy\norig = [[1, 2]]\nclone = copy.deepcopy(orig)\nclone[0][1] = 99\nprint(f\"Original: {orig[0]}, Clone: {clone[0]}\")",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to process the list correctly. Exclude the distractor.",
+            "question_fil": "I-drag at i-ayos ang mga block para maayos na maproseso ang list. Alisin ang distractor.",
+            "goal_en": "Safely clone a nested matrix using copy.deepcopy() so nested modifications do not affect original.",
+            "goal_fil": "Lutasin ang program: Safely clone a nested matrix using copy.deepcopy() so nested modifications do not affect original.",
+            "hint_en": "Review your Python syntax, variable names, and line sequence.",
+            "hint_fil": "Slicing orig[:] only performs a shallow copy; the inner list [1, 2] is still shared by reference."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Unintended Object Reference Mutation",
-            "code": "list = [1, 2, 3]\nnums = list(\"456\")",
-            "answer": "items = [1, 2, 3]\nnums = list(\"456\")",
-            "hint": "Do not shadow the built-in list type by using it as a variable name."
+            "id": 195,
+            "enemy_id": "memory_demon",
+            "difficulty": "hell",
+            "category": "Python Internals & Memory",
+            "error_type": "Logical Error: Confusing value equality with memory identity",
+            "title": "Memory Demon #3: Identity (is) vs Equality (==)",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Distinguish between object identity (same memory address) and value equality.",
+            "expected_output": "Equal: True, Identical: False",
+            "lines": [
+                "a = [1, 2, 3]",
+                "b = [1, 2, 3]",
+                "are_equal = (a == b)",
+                "are_identical = (a is b)",
+                "print(f\"Equal: {are_equal}, Identical: {are_identical}\")"
+            ],
+            "distractors": [
+                "are_identical = (a == b)"
+            ],
+            "hint": "Use double equals == for comparison checks, not single equals =.",
+            "code": "are_identical = (a == b)",
+            "answer": "a = [1, 2, 3]\nb = [1, 2, 3]\nare_equal = (a == b)\nare_identical = (a is b)\nprint(f\"Equal: {are_equal}, Identical: {are_identical}\")",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Distinguish between object identity (same memory address) and value equality.",
+            "goal_fil": "Lutasin ang program: Distinguish between object identity (same memory address) and value equality.",
+            "hint_en": "Use double equals == for comparison checks, not single equals =.",
+            "hint_fil": "'==' checks whether values match; 'is' checks whether both variables point to the exact same memory address."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Unintended Object Reference Mutation",
-            "code": "data = None\nprint(data.lower())",
-            "answer": "data = \"BugHunt\"\nprint(data.lower())",
-            "hint": "AttributeError: NoneType has no attribute lower. Verify data is not None."
+            "id": 196,
+            "enemy_id": "memory_demon",
+            "difficulty": "hell",
+            "category": "Python Internals & Memory",
+            "error_type": "Logical Error: Re-assignment allocates new memory object",
+            "title": "Memory Demon #4: Memory Address Inspection with id()",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Verify that mutating a list in-place preserves its original memory ID address.",
+            "expected_output": "Same Address: True",
+            "lines": [
+                "nums = [10, 20]",
+                "addr_before = id(nums)",
+                "nums.append(30)",
+                "addr_after = id(nums)",
+                "print(\"Same Address:\", addr_before == addr_after)"
+            ],
+            "distractors": [
+                "nums = nums + [30]"
+            ],
+            "hint": "Use the .append() method to add an item to the end of a list.",
+            "code": "nums = nums + [30]",
+            "answer": "nums = [10, 20]\naddr_before = id(nums)\nnums.append(30)\naddr_after = id(nums)\nprint(\"Same Address:\", addr_before == addr_after)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Verify that mutating a list in-place preserves its original memory ID address.",
+            "goal_fil": "Lutasin ang program: Verify that mutating a list in-place preserves its original memory ID address.",
+            "hint_en": "Use the .append() method to add an item to the end of a list.",
+            "hint_fil": "nums = nums + [30] creates a brand new list with a different ID; in-place .append() preserves the address."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Shallow Copy vs Deep Copy Mutation",
-            "code": "a = [1, 2]\nb = a\nb.append(3)\nprint(len(a))",
-            "answer": "a = [1, 2]\nb = a.copy()\nb.append(3)\nprint(len(a))",
-            "hint": "b = a creates an alias to the same list. Use a.copy() to create a new list."
+            "id": 197,
+            "enemy_id": "memory_demon",
+            "difficulty": "hell",
+            "category": "Python Internals & Memory",
+            "error_type": "Logical Error: Mutating list during direct iteration skips elements",
+            "title": "Memory Demon #5: Safe Slicing while Iterating",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Iterate over a copy slice of a list when removing elements to prevent skipping items.",
+            "expected_output": "Clean: [2, 4]",
+            "lines": [
+                "items = [1, 2, 3, 4]",
+                "for x in items[:]:",
+                "    if x % 2 != 0:",
+                "        items.remove(x)",
+                "print(\"Clean:\", items)"
+            ],
+            "distractors": [
+                "for x in items:\n    if x % 2 != 0: items.remove(x)"
+            ],
+            "hint": "Modifying a list while iterating over it shifts index pointers, causing the loop to skip adjacent elements.",
+            "code": "for x in items:\n    if x % 2 != 0: items.remove(x)",
+            "answer": "items = [1, 2, 3, 4]\nfor x in items[:]:\n    if x % 2 != 0:\n        items.remove(x)\nprint(\"Clean:\", items)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Iterate over a copy slice of a list when removing elements to prevent skipping items.",
+            "goal_fil": "Lutasin ang program: Iterate over a copy slice of a list when removing elements to prevent skipping items.",
+            "hint_en": "Modifying a list while iterating over it shifts index pointers, causing the loop to skip adjacent elements.",
+            "hint_fil": "Tandaan: Modifying a list while iterating over it shifts index pointers, causing the loop to skip adjacent elements."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Unintended Object Reference Mutation",
-            "code": "val = undefined",
-            "answer": "val = None",
-            "hint": "Python has no undefined keyword. Use None for empty / unassigned states."
+            "id": 198,
+            "enemy_id": "memory_demon",
+            "difficulty": "hell",
+            "category": "Python Internals & Memory",
+            "error_type": "TypeError: 'tuple' object does not support item assignment",
+            "title": "Memory Demon #6: Mutating a List Inside a Tuple",
+            "question": "Arrange the code blocks to process the list correctly. Exclude the distractor.",
+            "goal": "Mutating a List Inside a Tuple.",
+            "expected_output": "Tuple contents: ([1, 2, 3],)",
+            "lines": [
+                "inner = [1, 2]",
+                "box = (inner,)",
+                "box[0].append(3)",
+                "print(\"Tuple contents:\", box)"
+            ],
+            "distractors": [
+                "box[0] = [1, 2, 3]"
+            ],
+            "hint": "Tuples cannot be reassigned (box[0] = ... throws TypeError), but mutable inner lists can still be modified.",
+            "code": "box[0] = [1, 2, 3]",
+            "answer": "inner = [1, 2]\nbox = (inner,)\nbox[0].append(3)\nprint(\"Tuple contents:\", box)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to process the list correctly. Exclude the distractor.",
+            "question_fil": "I-drag at i-ayos ang mga block para maayos na maproseso ang list. Alisin ang distractor.",
+            "goal_en": "Mutating a List Inside a Tuple.",
+            "goal_fil": "Demonstrate that an immutable tuple can hold mutable objects whose contents can change.",
+            "hint_en": "Tuples cannot be reassigned (box[0] = ... throws TypeError), but mutable inner lists can still be modified.",
+            "hint_fil": "Tandaan: Tuples cannot be reassigned (box[0] = ... throws TypeError), but mutable inner lists can still be modified."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Unintended Object Reference Mutation",
-            "code": "id = 123\nprint(id(id))",
-            "answer": "user_id = 123\nprint(id(user_id))",
-            "hint": "Avoid shadowing the built-in function id(). Use a descriptive name like user_id."
+            "id": 199,
+            "enemy_id": "memory_demon",
+            "difficulty": "hell",
+            "category": "Python Internals & Memory",
+            "error_type": "Logical Error: list.sort() returns None",
+            "title": "Memory Demon #7: In-Place Sort vs Sorted Copy",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Use .sort() for in-place memory mutation and sorted() when a new sorted copy is needed.",
+            "expected_output": "In-place: [1, 2, 3]",
+            "lines": [
+                "scores = [3, 1, 2]",
+                "scores.sort()",
+                "print(\"In-place:\", scores)"
+            ],
+            "distractors": [
+                "scores = scores.sort()"
+            ],
+            "hint": ".sort() modifies the list in place and returns None. Assigning its result sets scores to None!",
+            "code": "scores = scores.sort()",
+            "answer": "scores = [3, 1, 2]\nscores.sort()\nprint(\"In-place:\", scores)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Use .sort() for in-place memory mutation and sorted() when a new sorted copy is needed.",
+            "goal_fil": "Lutasin ang program: Use .sort() for in-place memory mutation and sorted() when a new sorted copy is needed.",
+            "hint_en": ".sort() modifies the list in place and returns None. Assigning its result sets scores to None!",
+            "hint_fil": "Tandaan: .sort() modifies the list in place and returns None. Assigning its result sets scores to None!"
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Unintended Object Reference Mutation",
-            "code": "x = (1, 2, [3, 4])\nx[2] = [5, 6]",
-            "answer": "x = (1, 2, [3, 4])\nx[2].append(5)",
-            "hint": "Tuples are immutable; you cannot reassign an index, though nested lists can be modified."
+            "id": 200,
+            "enemy_id": "memory_demon",
+            "difficulty": "hell",
+            "category": "Python Internals & Memory",
+            "error_type": "Logical Error: Aliased list mutated inadvertently",
+            "title": "Memory Demon #8: Preventing Accidental List Aliasing",
+            "question": "Arrange the code blocks to process the list correctly. Exclude the distractor.",
+            "goal": "Create an independent list copy using list() constructor to prevent unintended alias mutation.",
+            "expected_output": "Master: [10], Player: [10, 20]",
+            "lines": [
+                "master = [10]",
+                "player = list(master)",
+                "player.append(20)",
+                "print(f\"Master: {master}, Player: {player}\")"
+            ],
+            "distractors": [
+                "player = master"
+            ],
+            "hint": "Writing 'player = master' creates a second pointer to the same list in memory (aliasing).",
+            "code": "player = master",
+            "answer": "master = [10]\nplayer = list(master)\nplayer.append(20)\nprint(f\"Master: {master}, Player: {player}\")",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to process the list correctly. Exclude the distractor.",
+            "question_fil": "I-drag at i-ayos ang mga block para maayos na maproseso ang list. Alisin ang distractor.",
+            "goal_en": "Create an independent list copy using list() constructor to prevent unintended alias mutation.",
+            "goal_fil": "Lutasin ang program: Create an independent list copy using list() constructor to prevent unintended alias mutation.",
+            "hint_en": "Writing 'player = master' creates a second pointer to the same list in memory (aliasing).",
+            "hint_fil": "Tandaan: Writing 'player = master' creates a second pointer to the same list in memory (aliasing)."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Unintended Object Reference Mutation",
-            "code": "def clear_data(d):\n    d = {}\ndata = {\"a\": 1}\nclear_data(data)",
-            "answer": "def clear_data(d):\n    d.clear()\ndata = {\"a\": 1}\nclear_data(data)",
-            "hint": "Reassigning parameter d = {} only affects local scope. Call d.clear() to modify the original dict."
+            "id": 201,
+            "enemy_id": "memory_demon",
+            "difficulty": "hell",
+            "category": "Python Internals & Memory",
+            "error_type": "Logical Error: Clear leaves name bound in locals",
+            "title": "Memory Demon #9: Garbage Collection and Object Deletion",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Delete an object reference using 'del' and observe clean unbinding.",
+            "expected_output": "Freed: True",
+            "lines": [
+                "cache = {\"data\": 999}",
+                "del cache",
+                "is_freed = \"cache\" not in locals()",
+                "print(\"Freed:\", is_freed)"
+            ],
+            "distractors": [
+                "cache.clear()"
+            ],
+            "hint": "del removes the variable name from the namespace scope entirely.",
+            "code": "cache.clear()",
+            "answer": "cache = {\"data\": 999}\ndel cache\nis_freed = \"cache\" not in locals()\nprint(\"Freed:\", is_freed)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Delete an object reference using 'del' and observe clean unbinding.",
+            "goal_fil": "Lutasin ang program: Delete an object reference using 'del' and observe clean unbinding.",
+            "hint_en": "del removes the variable name from the namespace scope entirely.",
+            "hint_fil": "Tandaan: del removes the variable name from the namespace scope entirely."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Unintended Object Reference Mutation",
-            "code": "sum = 10\nprint(sum([1, 2, 3]))",
-            "answer": "total = 10\nprint(sum([1, 2, 3]))",
-            "hint": "Do not shadow the built-in sum() function. Use total instead."
+            "id": 202,
+            "enemy_id": "memory_demon",
+            "difficulty": "hell",
+            "category": "Python Internals & Memory",
+            "error_type": "Logical Error: Shared mutable dictionary across calls",
+            "title": "Memory Demon #10: Mutable Dictionary Default Argument Trap",
+            "question": "Arrange the code blocks to store and retrieve dictionary values. Exclude the distractor.",
+            "goal": "Mutable Dictionary Default Argument Trap.",
+            "expected_output": "Config: {'mode': 'fast'}",
+            "lines": [
+                "def init_game(cfg=None):",
+                "    if cfg is None: cfg = {}",
+                "    cfg.setdefault(\"mode\", \"fast\")",
+                "    return cfg",
+                "res = init_game()",
+                "print(\"Config:\", res)"
+            ],
+            "distractors": [
+                "def init_game(cfg={}):"
+            ],
+            "hint": "Default argument cfg={} is created once in memory and shared across all invocations.",
+            "code": "def init_game(cfg={}):",
+            "answer": "def init_game(cfg=None):\n    if cfg is None: cfg = {}\n    cfg.setdefault(\"mode\", \"fast\")\n    return cfg\nres = init_game()\nprint(\"Config:\", res)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to store and retrieve dictionary values. Exclude the distractor.",
+            "question_fil": "I-drag at i-ayos ang mga block para ma-store at makuha ang values sa dictionary. Alisin ang distractor.",
+            "goal_en": "Mutable Dictionary Default Argument Trap.",
+            "goal_fil": "Safely handle optional dictionary parameters without shared mutable dictionary state.",
+            "hint_en": "Default argument cfg={} is created once in memory and shared across all invocations.",
+            "hint_fil": "Tandaan: Default argument cfg={} is created once in memory and shared across all invocations."
+        },
+        {
+            "id": 203,
+            "enemy_id": "memory_demon",
+            "difficulty": "hell",
+            "category": "Python Internals & Memory",
+            "error_type": "Logical Error: Inverted comparison condition",
+            "title": "Memory Demon #11: String Interning and Is Check",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Demonstrate string identity behavior with identical string literals.",
+            "expected_output": "Same String Ref: True",
+            "lines": [
+                "s1 = \"bug_hunter\"",
+                "s2 = \"bug_hunter\"",
+                "is_interned = (s1 is s2)",
+                "print(\"Same String Ref:\", is_interned)"
+            ],
+            "distractors": [
+                "is_interned = (s1 is not s2)"
+            ],
+            "hint": "Python automatically interns short constant string literals, mapping them to the same memory address.",
+            "code": "is_interned = (s1 is not s2)",
+            "answer": "s1 = \"bug_hunter\"\ns2 = \"bug_hunter\"\nis_interned = (s1 is s2)\nprint(\"Same String Ref:\", is_interned)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Demonstrate string identity behavior with identical string literals.",
+            "goal_fil": "Lutasin ang program: Demonstrate string identity behavior with identical string literals.",
+            "hint_en": "Python automatically interns short constant string literals, mapping them to the same memory address.",
+            "hint_fil": "Tandaan: Python automatically interns short constant string literals, mapping them to the same memory address."
+        },
+        {
+            "id": 204,
+            "enemy_id": "memory_demon",
+            "difficulty": "hell",
+            "category": "Python Internals & Memory",
+            "error_type": "Logical Error: Multiplied list contains duplicate row references",
+            "title": "Memory Demon #12: List Multiplication Reference Trap",
+            "question": "Arrange the code blocks to process the list correctly. Exclude the distractor.",
+            "goal": "Avoid the outer multiplication trap [[0]] * 3 which creates 3 references to the same row.",
+            "expected_output": "Independent Matrix: [[1, 0], [0, 0]]",
+            "lines": [
+                "matrix = [[0, 0] for _ in range(2)]",
+                "matrix[0][0] = 1",
+                "print(\"Independent Matrix:\", matrix)"
+            ],
+            "distractors": [
+                "matrix = [[0, 0]] * 2"
+            ],
+            "hint": "Review your Python syntax, variable names, and line sequence.",
+            "code": "matrix = [[0, 0]] * 2",
+            "answer": "matrix = [[0, 0] for _ in range(2)]\nmatrix[0][0] = 1\nprint(\"Independent Matrix:\", matrix)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to process the list correctly. Exclude the distractor.",
+            "question_fil": "I-drag at i-ayos ang mga block para maayos na maproseso ang list. Alisin ang distractor.",
+            "goal_en": "Avoid the outer multiplication trap [[0]] * 3 which creates 3 references to the same row.",
+            "goal_fil": "Lutasin ang program: Avoid the outer multiplication trap [[0]] * 3 which creates 3 references to the same row.",
+            "hint_en": "Review your Python syntax, variable names, and line sequence.",
+            "hint_fil": "[[0, 0]] * 2 duplicates the reference to the inner list; modifying matrix[0] changes all rows!"
         }
     ]
 };
 
 const algorithmWraith = {
-    id: "algorithm_wraith",
-    name: "Algorithm Wraith",
-    topic: "Depth-First Search (DFS)",
-    sprite: "algorithmWraith.png",
-    hearts: 10,
-    trophy: "Algorithm Core",
-    intro: "I am Algorithm Wraith — phantom of the call stack.\nI corrupt Depth-First Search with Syntax, Logical, and Runtime errors.\nIdentify the error category, repair the traversal, and break my recursion!",
-    bugs: [
+    "id": "algorithm_wraith",
+    "name": "Algorithm Wraith",
+    "topic": "Algorithms & Search",
+    "sprite": "algorithmWraith.png",
+    "hearts": 5,
+    "trophy": "Wraith Big-O Cloak",
+    "intro": "O(n^2)? Too slow! Your soul times out in the infinite search space!\nOptimize or be consumed by complexity!",
+    "bugs": [
         {
-            "category": "Syntax Error",
-            "error_type": "SyntaxError: expected ':'",
-            "code": "def dfs(graph, node, visited)\n    visited.add(node)",
-            "answer": "def dfs(graph, node, visited):\n    visited.add(node)",
-            "hint": "Syntax Error: Function headers must end with a colon (:). Add ':' after visited)."
-        },
-        {
-            "category": "Syntax Error",
-            "error_type": "SyntaxError: closing bracket ']' missing",
-            "code": "stack = [start_node\nvisited = set()",
-            "answer": "stack = [start_node]\nvisited = set()",
-            "hint": "Syntax Error: The stack list was opened with '[' but never closed with ']'."
-        },
-        {
-            "category": "Syntax Error",
-            "error_type": "SyntaxError: expected ':'",
-            "code": "for neighbor in graph.get(node, [])\n    if neighbor not in visited:\n        dfs(graph, neighbor, visited)",
-            "answer": "for neighbor in graph.get(node, []):\n    if neighbor not in visited:\n        dfs(graph, neighbor, visited)",
-            "hint": "Syntax Error: For-loop headers iterating over neighbors must end with a colon (:)."
-        },
-        {
-            "category": "Syntax Error",
-            "error_type": "SyntaxError: invalid syntax",
-            "code": "if neighbor not visited:\n    visited.add(neighbor)",
-            "answer": "if neighbor not in visited:\n    visited.add(neighbor)",
-            "hint": "Syntax Error: In Python, membership checks use 'not in': if neighbor not in visited:."
-        },
-        {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Infinite Cycle / Unmarked Visited",
-            "code": "def dfs(graph, node, visited):\n    for neighbor in graph.get(node, []):\n        if neighbor not in visited:\n            dfs(graph, neighbor, visited)",
-            "answer": "def dfs(graph, node, visited):\n    visited.add(node)\n    for neighbor in graph.get(node, []):\n        if neighbor not in visited:\n            dfs(graph, neighbor, visited)",
-            "hint": "Logical Error: 'node' is never marked as visited (visited.add(node)), causing cyclic graphs to loop forever."
-        },
-        {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Inverted Traversal Condition",
-            "code": "for neighbor in graph[node]:\n    if neighbor in visited:\n        dfs(graph, neighbor, visited)",
-            "answer": "for neighbor in graph[node]:\n    if neighbor not in visited:\n        dfs(graph, neighbor, visited)",
-            "hint": "Logical Error: DFS must only traverse unvisited nodes. Change 'in visited' to 'not in visited'."
-        },
-        {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Wrong Traversal Argument",
-            "code": "for neighbor in graph.get(node, []):\n    if neighbor not in visited:\n        dfs(graph, node, visited)",
-            "answer": "for neighbor in graph.get(node, []):\n    if neighbor not in visited:\n        dfs(graph, neighbor, visited)",
-            "hint": "Logical Error: The recursive call passes 'node' instead of 'neighbor', endlessly re-exploring the same node."
-        },
-        {
-            "category": "Logical Error",
-            "error_type": "Logical Error: FIFO Queue instead of LIFO Stack",
-            "code": "stack = [start]\nwhile stack:\n    curr = stack.pop(0)",
-            "answer": "stack = [start]\nwhile stack:\n    curr = stack.pop()",
-            "hint": "Logical Error: pop(0) behaves like a FIFO queue (BFS). Iterative Depth-First Search requires LIFO stack.pop()."
-        },
-        {
-            "category": "Runtime Error",
-            "error_type": "KeyError: missing graph adjacency key",
-            "code": "for neighbor in graph[node]:\n    dfs(graph, neighbor, visited)",
-            "answer": "for neighbor in graph.get(node, []):\n    dfs(graph, neighbor, visited)",
-            "hint": "Runtime Error (KeyError): If 'node' has no outgoing edges, graph[node] crashes. Use graph.get(node, [])."
-        },
-        {
-            "category": "Runtime Error",
-            "error_type": "AttributeError: 'set' object has no attribute 'append'",
-            "code": "visited = set()\nvisited.append(node)",
-            "answer": "visited = set()\nvisited.add(node)",
-            "hint": "Runtime Error (AttributeError): Python sets do not have an .append() method. Use visited.add(node)."
-        },
-        {
-            "category": "Runtime Error",
+            "id": 205,
+            "enemy_id": "algorithm_wraith",
+            "difficulty": "hell",
+            "category": "Advanced Algorithms",
             "error_type": "RecursionError: maximum recursion depth exceeded",
-            "code": "def dfs(root):\n    return 1 + max(dfs(root.left), dfs(root.right))",
-            "answer": "def dfs(root):\n    if root is None:\n        return 0\n    return 1 + max(dfs(root.left), dfs(root.right))",
-            "hint": "Runtime Error (RecursionError): Tree DFS is missing a base case ('if root is None: return 0'), causing stack overflow."
+            "title": "Algorithm Wraith #1: Depth-First Search with Visited Set",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Traverse a graph using DFS and maintain a visited set to avoid infinite cyclic loops.",
+            "expected_output": "Visited: {'A', 'B', 'C'}",
+            "lines": [
+                "graph = {'A': ['B'], 'B': ['C', 'A'], 'C': []}",
+                "def dfs(node, visited=None):",
+                "    if visited is None: visited = set()",
+                "    visited.add(node)",
+                "    for nxt in graph[node]:",
+                "        if nxt not in visited: dfs(nxt, visited)",
+                "    return visited",
+                "print(\"Visited:\", dfs('A'))"
+            ],
+            "distractors": [
+                "    for nxt in graph[node]:\n        dfs(nxt, visited)"
+            ],
+            "hint": "Without checking if nxt is already in visited, cyclic graphs cause infinite recursive calls.",
+            "code": "    for nxt in graph[node]:\n        dfs(nxt, visited)",
+            "answer": "graph = {'A': ['B'], 'B': ['C', 'A'], 'C': []}\ndef dfs(node, visited=None):\n    if visited is None: visited = set()\n    visited.add(node)\n    for nxt in graph[node]:\n        if nxt not in visited: dfs(nxt, visited)\n    return visited\nprint(\"Visited:\", dfs('A'))",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Traverse a graph using DFS and maintain a visited set to avoid infinite cyclic loops.",
+            "goal_fil": "Lutasin ang program: Traverse a graph using DFS and maintain a visited set to avoid infinite cyclic loops.",
+            "hint_en": "Without checking if nxt is already in visited, cyclic graphs cause infinite recursive calls.",
+            "hint_fil": "Tandaan: Without checking if nxt is already in visited, cyclic graphs cause infinite recursive calls."
         },
         {
-            "category": "Runtime Error",
-            "error_type": "NameError: name 'visited' is not defined",
-            "code": "graph = {\"A\": [\"B\"]}\nfor node in graph:\n    visited.add(node)",
-            "answer": "graph = {\"A\": [\"B\"]}\nvisited = set()\nfor node in graph:\n    visited.add(node)",
-            "hint": "Runtime Error (NameError): 'visited' must be initialized as a set (visited = set()) before adding nodes."
+            "id": 206,
+            "enemy_id": "algorithm_wraith",
+            "difficulty": "hell",
+            "category": "Advanced Algorithms",
+            "error_type": "Logical Error: LIFO behavior instead of FIFO queue",
+            "title": "Algorithm Wraith #2: Breadth-First Search (BFS) Traversal",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Implement BFS using a deque to traverse graph nodes level by level.",
+            "expected_output": "BFS Order: ['A', 'B', 'C']",
+            "lines": [
+                "from collections import deque",
+                "graph = {'A': ['B', 'C'], 'B': [], 'C': []}",
+                "queue, order = deque(['A']), []",
+                "while queue:",
+                "    node = queue.popleft()",
+                "    order.append(node)",
+                "    queue.extend(graph[node])",
+                "print(\"BFS Order:\", order)"
+            ],
+            "distractors": [
+                "    node = queue.pop()"
+            ],
+            "hint": "queue.pop() removes from the right (acting like a stack/DFS). Use queue.popleft() for BFS FIFO.",
+            "code": "    node = queue.pop()",
+            "answer": "from collections import deque\ngraph = {'A': ['B', 'C'], 'B': [], 'C': []}\nqueue, order = deque(['A']), []\nwhile queue:\n    node = queue.popleft()\n    order.append(node)\n    queue.extend(graph[node])\nprint(\"BFS Order:\", order)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Implement BFS using a deque to traverse graph nodes level by level.",
+            "goal_fil": "Lutasin ang program: Implement BFS using a deque to traverse graph nodes level by level.",
+            "hint_en": "queue.pop() removes from the right (acting like a stack/DFS). Use queue.popleft() for BFS FIFO.",
+            "hint_fil": "Tandaan: queue.pop() removes from the right (acting like a stack/DFS). Use queue.popleft() for BFS FIFO."
+        },
+        {
+            "id": 207,
+            "enemy_id": "algorithm_wraith",
+            "difficulty": "hell",
+            "category": "Advanced Algorithms",
+            "error_type": "Logical Error: Search interval inverted",
+            "title": "Algorithm Wraith #3: Binary Search on Sorted Array",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Implement iterative binary search to locate target value in O(log n) time.",
+            "expected_output": "Found at index: 2",
+            "lines": [
+                "nums = [10, 20, 30, 40, 50]",
+                "low, high, target = 0, len(nums) - 1, 30",
+                "idx = -1",
+                "while low <= high:",
+                "    mid = (low + high) // 2",
+                "    if nums[mid] == target: idx = mid; break",
+                "    elif nums[mid] < target: low = mid + 1",
+                "    else: high = mid - 1",
+                "print(\"Found at index:\", idx)"
+            ],
+            "distractors": [
+                "    elif nums[mid] < target: high = mid - 1"
+            ],
+            "hint": "When nums[mid] is smaller than target, the target is in the upper half: low = mid + 1.",
+            "code": "    elif nums[mid] < target: high = mid - 1",
+            "answer": "nums = [10, 20, 30, 40, 50]\nlow, high, target = 0, len(nums) - 1, 30\nidx = -1\nwhile low <= high:\n    mid = (low + high) // 2\n    if nums[mid] == target: idx = mid; break\n    elif nums[mid] < target: low = mid + 1\n    else: high = mid - 1\nprint(\"Found at index:\", idx)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Implement iterative binary search to locate target value in O(log n) time.",
+            "goal_fil": "Lutasin ang program: Implement iterative binary search to locate target value in O(log n) time.",
+            "hint_en": "When nums[mid] is smaller than target, the target is in the upper half: low = mid + 1.",
+            "hint_fil": "Tandaan: When nums[mid] is smaller than target, the target is in the upper half: low = mid + 1."
+        },
+        {
+            "id": 208,
+            "enemy_id": "algorithm_wraith",
+            "difficulty": "hell",
+            "category": "Advanced Algorithms",
+            "error_type": "Logical Error: False positive cycle detection",
+            "title": "Algorithm Wraith #4: Graph Cycle Detection",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Detect cycles in a directed graph using visiting and visited state sets.",
+            "expected_output": "Has Cycle: True",
+            "lines": [
+                "graph = {'A': ['B'], 'B': ['A']}",
+                "visited, rec_stack = set(), set()",
+                "def has_cycle(u):",
+                "    visited.add(u); rec_stack.add(u)",
+                "    for v in graph.get(u, []):",
+                "        if v not in visited and has_cycle(v): return True",
+                "        elif v in rec_stack: return True",
+                "    rec_stack.remove(u); return False",
+                "print(\"Has Cycle:\", has_cycle('A'))"
+            ],
+            "distractors": [
+                "        elif v in visited: return True"
+            ],
+            "hint": "A cycle occurs when an ancestor in the current recursion stack (rec_stack) is visited again.",
+            "code": "        elif v in visited: return True",
+            "answer": "graph = {'A': ['B'], 'B': ['A']}\nvisited, rec_stack = set(), set()\ndef has_cycle(u):\n    visited.add(u); rec_stack.add(u)\n    for v in graph.get(u, []):\n        if v not in visited and has_cycle(v): return True\n        elif v in rec_stack: return True\n    rec_stack.remove(u); return False\nprint(\"Has Cycle:\", has_cycle('A'))",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Detect cycles in a directed graph using visiting and visited state sets.",
+            "goal_fil": "Lutasin ang program: Detect cycles in a directed graph using visiting and visited state sets.",
+            "hint_en": "A cycle occurs when an ancestor in the current recursion stack (rec_stack) is visited again.",
+            "hint_fil": "Tandaan: A cycle occurs when an ancestor in the current recursion stack (rec_stack) is visited again."
+        },
+        {
+            "id": 209,
+            "enemy_id": "algorithm_wraith",
+            "difficulty": "hell",
+            "category": "Advanced Algorithms",
+            "error_type": "Logical Error: Pointer advancement inverted",
+            "title": "Algorithm Wraith #5: Two-Pointer Target Sum",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Find two numbers in a sorted array that sum to target in O(n) time.",
+            "expected_output": "Pair: (2, 8)",
+            "lines": [
+                "arr = [1, 2, 4, 8, 11]",
+                "left, right, target = 0, len(arr) - 1, 10",
+                "pair = None",
+                "while left < right:",
+                "    s = arr[left] + arr[right]",
+                "    if s == target: pair = (arr[left], arr[right]); break",
+                "    elif s < target: left += 1",
+                "    else: right -= 1",
+                "print(\"Pair:\", pair)"
+            ],
+            "distractors": [
+                "    elif s < target: right -= 1"
+            ],
+            "hint": "If sum is too small, increase the sum by incrementing the left pointer: left += 1.",
+            "code": "    elif s < target: right -= 1",
+            "answer": "arr = [1, 2, 4, 8, 11]\nleft, right, target = 0, len(arr) - 1, 10\npair = None\nwhile left < right:\n    s = arr[left] + arr[right]\n    if s == target: pair = (arr[left], arr[right]); break\n    elif s < target: left += 1\n    else: right -= 1\nprint(\"Pair:\", pair)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Find two numbers in a sorted array that sum to target in O(n) time.",
+            "goal_fil": "Lutasin ang program: Find two numbers in a sorted array that sum to target in O(n) time.",
+            "hint_en": "If sum is too small, increase the sum by incrementing the left pointer: left += 1.",
+            "hint_fil": "Tandaan: If sum is too small, increase the sum by incrementing the left pointer: left += 1."
+        },
+        {
+            "id": 210,
+            "enemy_id": "algorithm_wraith",
+            "difficulty": "hell",
+            "category": "Advanced Algorithms",
+            "error_type": "Logical Error: Sequential update clobbers previous state",
+            "title": "Algorithm Wraith #6: Dynamic Programming Fibonacci Array",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Compute the n-th Fibonacci number in O(n) time and O(1) space with DP state variables.",
+            "expected_output": "DP Fib(7): 13",
+            "lines": [
+                "n = 7",
+                "a, b = 0, 1",
+                "for _ in range(n):",
+                "    a, b = b, a + b",
+                "print(\"DP Fib(7):\", a)"
+            ],
+            "distractors": [
+                "    a = b\n    b = a + b"
+            ],
+            "hint": "Review your Python syntax, variable names, and line sequence.",
+            "code": "    a = b\n    b = a + b",
+            "answer": "n = 7\na, b = 0, 1\nfor _ in range(n):\n    a, b = b, a + b\nprint(\"DP Fib(7):\", a)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Compute the n-th Fibonacci number in O(n) time and O(1) space with DP state variables.",
+            "goal_fil": "Lutasin ang program: Compute the n-th Fibonacci number in O(n) time and O(1) space with DP state variables.",
+            "hint_en": "Review your Python syntax, variable names, and line sequence.",
+            "hint_fil": "Writing 'a = b' updates a before 'b = a + b' can use its old value; use simultaneous unpacking a, b = b, a + b."
+        },
+        {
+            "id": 211,
+            "enemy_id": "algorithm_wraith",
+            "difficulty": "hell",
+            "category": "Advanced Algorithms",
+            "error_type": "Logical Error: Equality condition inverted",
+            "title": "Algorithm Wraith #7: Valid Parentheses via Stack",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Validate matching brackets using a list as a LIFO stack.",
+            "expected_output": "Balanced: True",
+            "lines": [
+                "s = \"{[()]}\"",
+                "stack, pairs = [], {')': '(', ']': '[', '}': '{'}",
+                "valid = True",
+                "for ch in s:",
+                "    if ch in pairs.values(): stack.append(ch)",
+                "    elif not stack or stack.pop() != pairs[ch]: valid = False; break",
+                "print(\"Balanced:\", valid and len(stack) == 0)"
+            ],
+            "distractors": [
+                "    elif stack.pop() == pairs[ch]: valid = False; break"
+            ],
+            "hint": "When popped element DOES NOT match the closing bracket pairs[ch], the string is invalid.",
+            "code": "    elif stack.pop() == pairs[ch]: valid = False; break",
+            "answer": "s = \"{[()]}\"\nstack, pairs = [], {')': '(', ']': '[', '}': '{'}\nvalid = True\nfor ch in s:\n    if ch in pairs.values(): stack.append(ch)\n    elif not stack or stack.pop() != pairs[ch]: valid = False; break\nprint(\"Balanced:\", valid and len(stack) == 0)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Validate matching brackets using a list as a LIFO stack.",
+            "goal_fil": "Lutasin ang program: Validate matching brackets using a list as a LIFO stack.",
+            "hint_en": "When popped element DOES NOT match the closing bracket pairs[ch], the string is invalid.",
+            "hint_fil": "Tandaan: When popped element DOES NOT match the closing bracket pairs[ch], the string is invalid."
+        },
+        {
+            "id": 212,
+            "enemy_id": "algorithm_wraith",
+            "difficulty": "hell",
+            "category": "Advanced Algorithms",
+            "error_type": "Logical Error: Distance not incremented",
+            "title": "Algorithm Wraith #8: Shortest Path Length in Unweighted Graph",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Find shortest distance from start to target node using level-order BFS.",
+            "expected_output": "Distance A to C: 2",
+            "lines": [
+                "from collections import deque",
+                "graph = {'A': ['B'], 'B': ['C'], 'C': []}",
+                "q = deque([('A', 0)])",
+                "dist = -1",
+                "while q:",
+                "    node, d = q.popleft()",
+                "    if node == 'C': dist = d; break",
+                "    for nxt in graph[node]: q.append((nxt, d + 1))",
+                "print(\"Distance A to C:\", dist)"
+            ],
+            "distractors": [
+                "    for nxt in graph[node]: q.append((nxt, d))"
+            ],
+            "hint": "Each step taken from node to neighbor increments distance: d + 1.",
+            "code": "    for nxt in graph[node]: q.append((nxt, d))",
+            "answer": "from collections import deque\ngraph = {'A': ['B'], 'B': ['C'], 'C': []}\nq = deque([('A', 0)])\ndist = -1\nwhile q:\n    node, d = q.popleft()\n    if node == 'C': dist = d; break\n    for nxt in graph[node]: q.append((nxt, d + 1))\nprint(\"Distance A to C:\", dist)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Find shortest distance from start to target node using level-order BFS.",
+            "goal_fil": "Lutasin ang program: Find shortest distance from start to target node using level-order BFS.",
+            "hint_en": "Each step taken from node to neighbor increments distance: d + 1.",
+            "hint_fil": "Tandaan: Each step taken from node to neighbor increments distance: d + 1."
+        },
+        {
+            "id": 213,
+            "enemy_id": "algorithm_wraith",
+            "difficulty": "hell",
+            "category": "Advanced Algorithms",
+            "error_type": "Logical Error: Sub-optimal sort bypasses two-pointer merge",
+            "title": "Algorithm Wraith #9: Merge Two Sorted Lists in O(n)",
+            "question": "Arrange the code blocks to process the list correctly. Exclude the distractor.",
+            "goal": "Merge two pre-sorted lists into a single sorted list using two pointer indices.",
+            "expected_output": "Merged: [1, 2, 3, 4]",
+            "lines": [
+                "l1, l2 = [1, 3], [2, 4]",
+                "i, j, out = 0, 0, []",
+                "while i < len(l1) and j < len(l2):",
+                "    if l1[i] <= l2[j]: out.append(l1[i]); i += 1",
+                "    else: out.append(l2[j]); j += 1",
+                "out.extend(l1[i:]); out.extend(l2[j:])",
+                "print(\"Merged:\", out)"
+            ],
+            "distractors": [
+                "out = sorted(l1 + l2)\nwhile False: pass"
+            ],
+            "hint": "Implement true linear merge by comparing l1[i] and l2[j] and appending remaining elements with out.extend().",
+            "code": "out = sorted(l1 + l2)\nwhile False: pass",
+            "answer": "l1, l2 = [1, 3], [2, 4]\ni, j, out = 0, 0, []\nwhile i < len(l1) and j < len(l2):\n    if l1[i] <= l2[j]: out.append(l1[i]); i += 1\n    else: out.append(l2[j]); j += 1\nout.extend(l1[i:]); out.extend(l2[j:])\nprint(\"Merged:\", out)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to process the list correctly. Exclude the distractor.",
+            "question_fil": "I-drag at i-ayos ang mga block para maayos na maproseso ang list. Alisin ang distractor.",
+            "goal_en": "Merge two pre-sorted lists into a single sorted list using two pointer indices.",
+            "goal_fil": "Lutasin ang program: Merge two pre-sorted lists into a single sorted list using two pointer indices.",
+            "hint_en": "Implement true linear merge by comparing l1[i] and l2[j] and appending remaining elements with out.extend().",
+            "hint_fil": "Tandaan: Implement true linear merge by comparing l1[i] and l2[j] and appending remaining elements with out.extend()."
+        },
+        {
+            "id": 214,
+            "enemy_id": "algorithm_wraith",
+            "difficulty": "hell",
+            "category": "Advanced Algorithms",
+            "error_type": "Logical Error: Edge count substituted for cluster count",
+            "title": "Algorithm Wraith #10: Connected Components Count",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Count the number of disconnected subgraphs in an undirected network.",
+            "expected_output": "Components: 2",
+            "lines": [
+                "graph = {'A': ['B'], 'B': ['A'], 'C': []}",
+                "visited, count = set(), 0",
+                "for node in graph:",
+                "    if node not in visited:",
+                "        count += 1",
+                "        stack = [node]",
+                "        while stack:",
+                "            cur = stack.pop()",
+                "            if cur not in visited:",
+                "                visited.add(cur)",
+                "                stack.extend(graph[cur])",
+                "print(\"Components:\", count)"
+            ],
+            "distractors": [
+                "        count += len(graph[node])"
+            ],
+            "hint": "Increment component count once per unvisited cluster start, not per edge count.",
+            "code": "        count += len(graph[node])",
+            "answer": "graph = {'A': ['B'], 'B': ['A'], 'C': []}\nvisited, count = set(), 0\nfor node in graph:\n    if node not in visited:\n        count += 1\n        stack = [node]\n        while stack:\n            cur = stack.pop()\n            if cur not in visited:\n                visited.add(cur)\n                stack.extend(graph[cur])\nprint(\"Components:\", count)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Count the number of disconnected subgraphs in an undirected network.",
+            "goal_fil": "Lutasin ang program: Count the number of disconnected subgraphs in an undirected network.",
+            "hint_en": "Increment component count once per unvisited cluster start, not per edge count.",
+            "hint_fil": "Tandaan: Increment component count once per unvisited cluster start, not per edge count."
+        },
+        {
+            "id": 215,
+            "enemy_id": "algorithm_wraith",
+            "difficulty": "hell",
+            "category": "Advanced Algorithms",
+            "error_type": "Logical Error: Base case returns 0 subsets",
+            "title": "Algorithm Wraith #11: Recursive Backtracking Subset Generator",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Generate all possible subset combinations of a list using recursive backtracking.",
+            "expected_output": "Total Subsets: 4",
+            "lines": [
+                "def subsets(nums):",
+                "    if not nums: return [[]]",
+                "    rest = subsets(nums[1:])",
+                "    return rest + [[nums[0]] + s for s in rest]",
+                "print(\"Total Subsets:\", len(subsets([1, 2])))"
+            ],
+            "distractors": [
+                "    if not nums: return []"
+            ],
+            "hint": "Base case for empty list is [[]] (a list containing the empty set), which has length 1.",
+            "code": "    if not nums: return []",
+            "answer": "def subsets(nums):\n    if not nums: return [[]]\n    rest = subsets(nums[1:])\n    return rest + [[nums[0]] + s for s in rest]\nprint(\"Total Subsets:\", len(subsets([1, 2])))",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Generate all possible subset combinations of a list using recursive backtracking.",
+            "goal_fil": "Lutasin ang program: Generate all possible subset combinations of a list using recursive backtracking.",
+            "hint_en": "Base case for empty list is [[]] (a list containing the empty set), which has length 1.",
+            "hint_fil": "Tandaan: Base case for empty list is [[]] (a list containing the empty set), which has length 1."
+        },
+        {
+            "id": 216,
+            "enemy_id": "algorithm_wraith",
+            "difficulty": "hell",
+            "category": "Advanced Algorithms",
+            "error_type": "Logical Error: Blocked tasks scheduled before prerequisites",
+            "title": "Algorithm Wraith #12: Topological Sort Dependency Resolution",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Order task dependencies sequentially using Kahn's algorithm in-degree queue.",
+            "expected_output": "Task Order: ['build', 'test']",
+            "lines": [
+                "deps = {'build': [], 'test': ['build']}",
+                "order = []",
+                "ready = [k for k, v in deps.items() if not v]",
+                "order.extend(ready)",
+                "for k, v in deps.items():",
+                "    if v and all(dep in order for dep in v): order.append(k)",
+                "print(\"Task Order:\", order)"
+            ],
+            "distractors": [
+                "ready = [k for k, v in deps.items() if v]"
+            ],
+            "hint": "Initial ready tasks are those with 0 dependencies (not v).",
+            "code": "ready = [k for k, v in deps.items() if v]",
+            "answer": "deps = {'build': [], 'test': ['build']}\norder = []\nready = [k for k, v in deps.items() if not v]\norder.extend(ready)\nfor k, v in deps.items():\n    if v and all(dep in order for dep in v): order.append(k)\nprint(\"Task Order:\", order)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Order task dependencies sequentially using Kahn's algorithm in-degree queue.",
+            "goal_fil": "Lutasin ang program: Order task dependencies sequentially using Kahn's algorithm in-degree queue.",
+            "hint_en": "Initial ready tasks are those with 0 dependencies (not v).",
+            "hint_fil": "Tandaan: Initial ready tasks are those with 0 dependencies (not v)."
         }
     ]
 };
 
 const concurrencyBeast = {
-    id: "concurrency_beast",
-    name: "Concurrency Beast",
-    topic: "Threads & async",
-    sprite: "concurrencyBeast.png",
-    hearts: 10,
-    trophy: "Thread Core",
-    intro: "I am Concurrency Beast. I race your code.\nCreate Thread before start(). Call join().\nasync def, then await — never the other way.",
-    bugs: [
+    "id": "concurrency_beast",
+    "name": "Concurrency Beast",
+    "topic": "Threads & Async",
+    "sprite": "concurrencyBeast.png",
+    "hearts": 5,
+    "trophy": "Beast Mutex Collar",
+    "intro": "Race conditions! Deadlocks! Two threads enter, neither leaves!\nSynchronize your state or crash into chaos!",
+    "bugs": [
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Immediate Execution in Thread Target",
-            "code": "import threading\nt = threading.Thread(target=print(\"Running\"))\nt.start()",
-            "answer": "import threading\nt = threading.Thread(target=print, args=(\"Running\",))\nt.start()\nt.join()",
-            "hint": "Pass the function reference target=print and args as a tuple, do not execute it immediately."
+            "id": 217,
+            "enemy_id": "concurrency_beast",
+            "difficulty": "hell",
+            "category": "Concurrency & Streams",
+            "error_type": "Logical Error: Return terminates function on first iteration",
+            "title": "Concurrency Beast #1: Basic Generator Function with Yield",
+            "question": "Arrange the code blocks to define the function and call it. Exclude the distractor.",
+            "goal": "Define a generator function that yields sequence values on demand without creating a list.",
+            "expected_output": "Generated: [1, 2, 3]",
+            "lines": [
+                "def count_to_3():",
+                "    yield 1",
+                "    yield 2",
+                "    yield 3",
+                "gen = count_to_3()",
+                "print(\"Generated:\", list(gen))"
+            ],
+            "distractors": [
+                "def count_to_3():\n    return 1\n    return 2"
+            ],
+            "hint": "Generators pause and yield execution state with the 'yield' keyword instead of returning.",
+            "code": "def count_to_3():\n    return 1\n    return 2",
+            "answer": "def count_to_3():\n    yield 1\n    yield 2\n    yield 3\ngen = count_to_3()\nprint(\"Generated:\", list(gen))",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to define the function and call it. Exclude the distractor.",
+            "question_fil": "I-drag at i-ayos ang mga block para magawa ang function at matawag ito. Alisin ang distractor.",
+            "goal_en": "Define a generator function that yields sequence values on demand without creating a list.",
+            "goal_fil": "Lutasin ang program: Define a generator function that yields sequence values on demand without creating a list.",
+            "hint_en": "Generators pause and yield execution state with the 'yield' keyword instead of returning.",
+            "hint_fil": "Tandaan: Generators pause and yield execution state with the 'yield' keyword instead of returning."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Unsynchronized Async Coroutine / Thread",
-            "code": "async function fetch_data():\n    return 42",
-            "answer": "async def fetch_data():\n    return 42",
-            "hint": "Python defines coroutines with async def, not async function."
+            "id": 218,
+            "enemy_id": "concurrency_beast",
+            "difficulty": "hell",
+            "category": "Concurrency & Streams",
+            "error_type": "AttributeError: 'generator' object has no attribute 'next'",
+            "title": "Concurrency Beast #2: Consuming Generator with Next()",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Step through generator states manually using the built-in next() function.",
+            "expected_output": "First: 10, Second: 20",
+            "lines": [
+                "def pair():",
+                "    yield 10",
+                "    yield 20",
+                "g = pair()",
+                "v1 = next(g)",
+                "v2 = next(g)",
+                "print(f\"First: {v1}, Second: {v2}\")"
+            ],
+            "distractors": [
+                "v1 = g.next()"
+            ],
+            "hint": "Python 3 uses the built-in next(g) function, not the legacy Python 2 g.next() method.",
+            "code": "v1 = g.next()",
+            "answer": "def pair():\n    yield 10\n    yield 20\ng = pair()\nv1 = next(g)\nv2 = next(g)\nprint(f\"First: {v1}, Second: {v2}\")",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Step through generator states manually using the built-in next() function.",
+            "goal_fil": "Lutasin ang program: Step through generator states manually using the built-in next() function.",
+            "hint_en": "Python 3 uses the built-in next(g) function, not the legacy Python 2 g.next() method.",
+            "hint_fil": "Tandaan: Python 3 uses the built-in next(g) function, not the legacy Python 2 g.next() method."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Unsynchronized Async Coroutine / Thread",
-            "code": "import asyncio\nasync def main():\n    return 1\nmain()",
-            "answer": "import asyncio\nasync def main():\n    return 1\nasyncio.run(main())",
-            "hint": "Calling a coroutine returns a coroutine object. Execute it with asyncio.run(main())."
+            "id": 219,
+            "enemy_id": "concurrency_beast",
+            "difficulty": "hell",
+            "category": "Concurrency & Streams",
+            "error_type": "StopIteration",
+            "title": "Concurrency Beast #3: Generator StopIteration Handling",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Catch StopIteration cleanly when an exhausted generator has no remaining values.",
+            "expected_output": "Exhausted: True",
+            "lines": [
+                "def one_val(): yield 99",
+                "g = one_val()",
+                "next(g)",
+                "exhausted = False",
+                "try: next(g)",
+                "except StopIteration: exhausted = True",
+                "print(\"Exhausted:\", exhausted)"
+            ],
+            "distractors": [
+                "except IndexError:\n    exhausted = True"
+            ],
+            "hint": "An exhausted generator raises StopIteration when next() is called past its end.",
+            "code": "except IndexError:\n    exhausted = True",
+            "answer": "def one_val(): yield 99\ng = one_val()\nnext(g)\nexhausted = False\ntry: next(g)\nexcept StopIteration: exhausted = True\nprint(\"Exhausted:\", exhausted)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Catch StopIteration cleanly when an exhausted generator has no remaining values.",
+            "goal_fil": "Lutasin ang program: Catch StopIteration cleanly when an exhausted generator has no remaining values.",
+            "hint_en": "An exhausted generator raises StopIteration when next() is called past its end.",
+            "hint_fil": "Tandaan: An exhausted generator raises StopIteration when next() is called past its end."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Unsynchronized Async Coroutine / Thread",
-            "code": "import asyncio\ndef fetch():\n    await asyncio.sleep(1)",
-            "answer": "import asyncio\nasync def fetch():\n    await asyncio.sleep(1)",
-            "hint": "await can only be used inside async def functions."
+            "id": 220,
+            "enemy_id": "concurrency_beast",
+            "difficulty": "hell",
+            "category": "Concurrency & Streams",
+            "error_type": "Memory Allocation Inefficiency",
+            "title": "Concurrency Beast #4: Memory-Efficient Generator Expression",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Compute sum of large squares with an O(1) memory generator expression using parentheses ().",
+            "expected_output": "Sum of Squares: 14",
+            "lines": [
+                "gen_exp = (x**2 for x in [1, 2, 3])",
+                "total = sum(gen_exp)",
+                "print(\"Sum of Squares:\", total)"
+            ],
+            "distractors": [
+                "gen_exp = [x**2 for x in [1, 2, 3]]\n# Uses list memory allocation"
+            ],
+            "hint": "Generator expressions use parentheses (x for x in ...), yielding values on-the-fly without allocating memory.",
+            "code": "gen_exp = [x**2 for x in [1, 2, 3]]\n# Uses list memory allocation",
+            "answer": "gen_exp = (x**2 for x in [1, 2, 3])\ntotal = sum(gen_exp)\nprint(\"Sum of Squares:\", total)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Compute sum of large squares with an O(1) memory generator expression using parentheses ().",
+            "goal_fil": "Lutasin ang program: Compute sum of large squares with an O(1) memory generator expression using parentheses ().",
+            "hint_en": "Generator expressions use parentheses (x for x in ...), yielding values on-the-fly without allocating memory.",
+            "hint_fil": "Tandaan: Generator expressions use parentheses (x for x in ...), yielding values on-the-fly without allocating memory."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Unsynchronized Async Coroutine / Thread",
-            "code": "import threading\nlock = threading.Lock()\nlock.acquire()\nprint(\"Critical section\")",
-            "answer": "import threading\nlock = threading.Lock()\nwith lock:\n    print(\"Critical section\")",
-            "hint": "Use with lock: context manager so the lock is automatically released."
+            "id": 221,
+            "enemy_id": "concurrency_beast",
+            "difficulty": "hell",
+            "category": "Concurrency & Streams",
+            "error_type": "Logical Error: Eager list construction breaks stream pipeline",
+            "title": "Concurrency Beast #5: Generator Pipeline Transformation",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Chain two generator functions together into an on-demand data processing pipeline.",
+            "expected_output": "Doubled Odds: [2, 6]",
+            "lines": [
+                "def get_odds(nums):",
+                "    for n in nums: if n % 2 != 0: yield n",
+                "def double_it(gen):",
+                "    for v in gen: yield v * 2",
+                "pipeline = double_it(get_odds([1, 2, 3, 4]))",
+                "print(\"Doubled Odds:\", list(pipeline))"
+            ],
+            "distractors": [
+                "def get_odds(nums):\n    return [n for n in nums if n % 2 != 0]"
+            ],
+            "hint": "Pipelines preserve lazy memory evaluation by using 'yield' at every transformation stage.",
+            "code": "def get_odds(nums):\n    return [n for n in nums if n % 2 != 0]",
+            "answer": "def get_odds(nums):\n    for n in nums: if n % 2 != 0: yield n\ndef double_it(gen):\n    for v in gen: yield v * 2\npipeline = double_it(get_odds([1, 2, 3, 4]))\nprint(\"Doubled Odds:\", list(pipeline))",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Chain two generator functions together into an on-demand data processing pipeline.",
+            "goal_fil": "Lutasin ang program: Chain two generator functions together into an on-demand data processing pipeline.",
+            "hint_en": "Pipelines preserve lazy memory evaluation by using 'yield' at every transformation stage.",
+            "hint_fil": "Tandaan: Pipelines preserve lazy memory evaluation by using 'yield' at every transformation stage."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Unsynchronized Async Coroutine / Thread",
-            "code": "import threading\nt = threading.Thread(target=lambda: None)\nt.join()",
-            "answer": "import threading\nt = threading.Thread(target=lambda: None)\nt.start()\nt.join()",
-            "hint": "A thread must be started with t.start() before it can be joined."
+            "id": 222,
+            "enemy_id": "concurrency_beast",
+            "difficulty": "hell",
+            "category": "Concurrency & Streams",
+            "error_type": "Logical Error: Nested generator object yielded instead of values",
+            "title": "Concurrency Beast #6: Delegating with Yield From",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Delegate generator iteration to a sub-generator using the 'yield from' syntax.",
+            "expected_output": "Combined: ['a', 'b', 1, 2]",
+            "lines": [
+                "def sub_letters(): yield from [\"a\", \"b\"]",
+                "def sub_numbers(): yield from [1, 2]",
+                "def master():",
+                "    yield from sub_letters()",
+                "    yield from sub_numbers()",
+                "print(\"Combined:\", list(master()))"
+            ],
+            "distractors": [
+                "    yield sub_letters()"
+            ],
+            "hint": "Always include 'self' as the first parameter of an instance method.",
+            "code": "    yield sub_letters()",
+            "answer": "def sub_letters(): yield from [\"a\", \"b\"]\ndef sub_numbers(): yield from [1, 2]\ndef master():\n    yield from sub_letters()\n    yield from sub_numbers()\nprint(\"Combined:\", list(master()))",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Delegate generator iteration to a sub-generator using the 'yield from' syntax.",
+            "goal_fil": "Lutasin ang program: Delegate generator iteration to a sub-generator using the 'yield from' syntax.",
+            "hint_en": "Always include 'self' as the first parameter of an instance method.",
+            "hint_fil": "'yield sub_letters()' yields the generator object itself; 'yield from' unpacks its values."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Unsynchronized Async Coroutine / Thread",
-            "code": "import asyncio\nasync def work():\n    time.sleep(1)",
-            "answer": "import asyncio\nasync def work():\n    await asyncio.sleep(1)",
-            "hint": "In async coroutines, use await asyncio.sleep(1) to avoid blocking the event loop."
+            "id": 223,
+            "enemy_id": "concurrency_beast",
+            "difficulty": "hell",
+            "category": "Concurrency & Streams",
+            "error_type": "TypeError: iter() returned non-iterator of type 'int'",
+            "title": "Concurrency Beast #7: Custom Iterable Protocol (__iter__)",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Build a custom class implementing __iter__ that returns a generator object.",
+            "expected_output": "Countdown: [3, 2, 1]",
+            "lines": [
+                "class Countdown:",
+                "    def __init__(self, start): self.start = start",
+                "    def __iter__(self):",
+                "        cur = self.start",
+                "        while cur > 0:",
+                "            yield cur; cur -= 1",
+                "cd = Countdown(3)",
+                "print(\"Countdown:\", list(cd))"
+            ],
+            "distractors": [
+                "    def __iter__(self):\n        return self.start"
+            ],
+            "hint": "__iter__ must return an iterator or generator object, not an integer.",
+            "code": "    def __iter__(self):\n        return self.start",
+            "answer": "class Countdown:\n    def __init__(self, start): self.start = start\n    def __iter__(self):\n        cur = self.start\n        while cur > 0:\n            yield cur; cur -= 1\ncd = Countdown(3)\nprint(\"Countdown:\", list(cd))",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Build a custom class implementing __iter__ that returns a generator object.",
+            "goal_fil": "Lutasin ang program: Build a custom class implementing __iter__ that returns a generator object.",
+            "hint_en": "__iter__ must return an iterator or generator object, not an integer.",
+            "hint_fil": "Tandaan: __iter__ must return an iterator or generator object, not an integer."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Unsynchronized Async Coroutine / Thread",
-            "code": "from concurrent.futures import ThreadPoolExecutor\nwith ThreadPoolExecutor() as ex:\n    res = ex.map(int, [\"1\", \"2\"])\n    print(res[0])",
-            "answer": "from concurrent.futures import ThreadPoolExecutor\nwith ThreadPoolExecutor() as ex:\n    res = list(ex.map(int, [\"1\", \"2\"]))\n    print(res[0])",
-            "hint": "executor.map returns an iterator. Convert it with list() to index elements."
+            "id": 224,
+            "enemy_id": "concurrency_beast",
+            "difficulty": "hell",
+            "category": "Concurrency & Streams",
+            "error_type": "TypeError: can't send non-None value to a just-started generator",
+            "title": "Concurrency Beast #8: Sending Values into Generator (send)",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Receive external inputs into a running generator using the gen.send() protocol.",
+            "expected_output": "Received: 50",
+            "lines": [
+                "def receiver():",
+                "    val = yield",
+                "    yield f\"Received: {val}\"",
+                "g = receiver()",
+                "next(g)",
+                "res = g.send(50)",
+                "print(res)"
+            ],
+            "distractors": [
+                "res = g.send(50)\n# Called before priming with next(g)"
+            ],
+            "hint": "A generator must be primed with next(g) to advance execution to the first yield before send() can be called.",
+            "code": "res = g.send(50)\n# Called before priming with next(g)",
+            "answer": "def receiver():\n    val = yield\n    yield f\"Received: {val}\"\ng = receiver()\nnext(g)\nres = g.send(50)\nprint(res)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Receive external inputs into a running generator using the gen.send() protocol.",
+            "goal_fil": "Lutasin ang program: Receive external inputs into a running generator using the gen.send() protocol.",
+            "hint_en": "A generator must be primed with next(g) to advance execution to the first yield before send() can be called.",
+            "hint_fil": "Tandaan: A generator must be primed with next(g) to advance execution to the first yield before send() can be called."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Unsynchronized Async Coroutine / Thread",
-            "code": "import queue\nq = queue.Queue()\nq.put(1)\nprint(q.pop())",
-            "answer": "import queue\nq = queue.Queue()\nq.put(1)\nprint(q.get())",
-            "hint": "queue.Queue uses .get() to retrieve items, not .pop()."
+            "id": 225,
+            "enemy_id": "concurrency_beast",
+            "difficulty": "hell",
+            "category": "Concurrency & Streams",
+            "error_type": "MemoryError: Infinite list consumption",
+            "title": "Concurrency Beast #9: Infinite Stream Generator with Take Helper",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Generate an infinite sequence of multiples and take only the first 3 values safely.",
+            "expected_output": "First 3 Multiples: [5, 10, 15]",
+            "lines": [
+                "def multiples(k):",
+                "    cur = k",
+                "    while True:",
+                "        yield cur; cur += k",
+                "gen = multiples(5)",
+                "first_3 = [next(gen) for _ in range(3)]",
+                "print(\"First 3 Multiples:\", first_3)"
+            ],
+            "distractors": [
+                "first_3 = list(multiples(5))"
+            ],
+            "hint": "Calling list() on an infinite generator creates an infinite loop and crashes with Out Of Memory.",
+            "code": "first_3 = list(multiples(5))",
+            "answer": "def multiples(k):\n    cur = k\n    while True:\n        yield cur; cur += k\ngen = multiples(5)\nfirst_3 = [next(gen) for _ in range(3)]\nprint(\"First 3 Multiples:\", first_3)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Generate an infinite sequence of multiples and take only the first 3 values safely.",
+            "goal_fil": "Lutasin ang program: Generate an infinite sequence of multiples and take only the first 3 values safely.",
+            "hint_en": "Calling list() on an infinite generator creates an infinite loop and crashes with Out Of Memory.",
+            "hint_fil": "Tandaan: Calling list() on an infinite generator creates an infinite loop and crashes with Out Of Memory."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Unsynchronized Async Coroutine / Thread",
-            "code": "import asyncio\nasync def main():\n    tasks = [asyncio.sleep(1), asyncio.sleep(2)]\n    await tasks",
-            "answer": "import asyncio\nasync def main():\n    await asyncio.gather(asyncio.sleep(1), asyncio.sleep(2))",
-            "hint": "Use await asyncio.gather(*tasks) to run concurrent awaitables."
+            "id": 226,
+            "enemy_id": "concurrency_beast",
+            "difficulty": "hell",
+            "category": "Concurrency & Streams",
+            "error_type": "Logical Error: Synchronous function is not a coroutine",
+            "title": "Concurrency Beast #10: Asynchronous Coroutine Definition",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Define an asynchronous coroutine using async def and inspect its coroutine object.",
+            "expected_output": "Is Coroutine: True",
+            "lines": [
+                "import inspect",
+                "async def async_fetch():",
+                "    return \"Data\"",
+                "coro = async_fetch()",
+                "print(\"Is Coroutine:\", inspect.iscoroutine(coro))",
+                "coro.close()"
+            ],
+            "distractors": [
+                "def async_fetch():\n    return \"Data\""
+            ],
+            "hint": "Asynchronous functions are declared with 'async def' which returns a coroutine object upon invocation.",
+            "code": "def async_fetch():\n    return \"Data\"",
+            "answer": "import inspect\nasync def async_fetch():\n    return \"Data\"\ncoro = async_fetch()\nprint(\"Is Coroutine:\", inspect.iscoroutine(coro))\ncoro.close()",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Define an asynchronous coroutine using async def and inspect its coroutine object.",
+            "goal_fil": "Lutasin ang program: Define an asynchronous coroutine using async def and inspect its coroutine object.",
+            "hint_en": "Asynchronous functions are declared with 'async def' which returns a coroutine object upon invocation.",
+            "hint_fil": "Tandaan: Asynchronous functions are declared with 'async def' which returns a coroutine object upon invocation."
+        },
+        {
+            "id": 227,
+            "enemy_id": "concurrency_beast",
+            "difficulty": "hell",
+            "category": "Concurrency & Streams",
+            "error_type": "Logical Error: GeneratorExit suppressed incorrectly",
+            "title": "Concurrency Beast #11: Generator State Clean Close with finally",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Trigger guaranteed resource cleanup when a generator is closed via gen.close().",
+            "expected_output": "Generator Cleaned: True",
+            "lines": [
+                "closed_flag = False",
+                "def managed():",
+                "    global closed_flag",
+                "    try: yield 1",
+                "    finally: closed_flag = True",
+                "g = managed()",
+                "next(g)",
+                "g.close()",
+                "print(\"Generator Cleaned:\", closed_flag)"
+            ],
+            "distractors": [
+                "    except GeneratorExit:\n        pass"
+            ],
+            "hint": "Finally block executes automatically when generator is closed by gen.close().",
+            "code": "    except GeneratorExit:\n        pass",
+            "answer": "closed_flag = False\ndef managed():\n    global closed_flag\n    try: yield 1\n    finally: closed_flag = True\ng = managed()\nnext(g)\ng.close()\nprint(\"Generator Cleaned:\", closed_flag)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Trigger guaranteed resource cleanup when a generator is closed via gen.close().",
+            "goal_fil": "Lutasin ang program: Trigger guaranteed resource cleanup when a generator is closed via gen.close().",
+            "hint_en": "Finally block executes automatically when generator is closed by gen.close().",
+            "hint_fil": "Tandaan: Finally block executes automatically when generator is closed by gen.close()."
+        },
+        {
+            "id": 228,
+            "enemy_id": "concurrency_beast",
+            "difficulty": "hell",
+            "category": "Concurrency & Streams",
+            "error_type": "Logical Error: Sequential batch execution instead of interleaved concurrency",
+            "title": "Concurrency Beast #12: Round-Robin Task Coroutine Runner",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Interleave execution of two generator tasks using round-robin cooperative scheduling.",
+            "expected_output": "Executed Steps: ['A1', 'B1', 'A2', 'B2']",
+            "lines": [
+                "def task(name):",
+                "    yield f\"{name}1\"",
+                "    yield f\"{name}2\"",
+                "t1, t2 = task(\"A\"), task(\"B\")",
+                "steps = [next(t1), next(t2), next(t1), next(t2)]",
+                "print(\"Executed Steps:\", steps)"
+            ],
+            "distractors": [
+                "steps = list(t1) + list(t2)"
+            ],
+            "hint": "Review your Python syntax, variable names, and line sequence.",
+            "code": "steps = list(t1) + list(t2)",
+            "answer": "def task(name):\n    yield f\"{name}1\"\n    yield f\"{name}2\"\nt1, t2 = task(\"A\"), task(\"B\")\nsteps = [next(t1), next(t2), next(t1), next(t2)]\nprint(\"Executed Steps:\", steps)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Interleave execution of two generator tasks using round-robin cooperative scheduling.",
+            "goal_fil": "Lutasin ang program: Interleave execution of two generator tasks using round-robin cooperative scheduling.",
+            "hint_en": "Review your Python syntax, variable names, and line sequence.",
+            "hint_fil": "list(t1) + list(t2) runs t1 to completion before starting t2; alternating next() interleaves tasks concurrently."
         }
     ]
 };
 
 const securityHydra = {
-    id: "security_hydra",
-    name: "Security Hydra",
-    topic: "Safe Python Habits",
-    sprite: "securityHydra.png",
-    hearts: 10,
-    trophy: "Security Fang",
-    intro: "I am Security Hydra. One head is a bad habit.\nNo eval on user input. No secrets in source.\nDo not overwrite input(). Do not paste SQL.",
-    bugs: [
+    "id": "security_hydra",
+    "name": "Security Hydra",
+    "topic": "Input Sanitation & Security",
+    "sprite": "securityHydra.png",
+    "hearts": 5,
+    "trophy": "Hydra Hash Fang",
+    "intro": "Cut off one injection flaw, two more take its place!\nSanitize your inputs, hash your tokens, and guard against exploits!",
+    "bugs": [
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Insecure Dynamic Code Execution via eval()",
-            "code": "user_input = \"1 + 1\"\nresult = eval(user_input)",
-            "answer": "import ast\nuser_input = \"1 + 1\"\nresult = ast.literal_eval(\"2\")",
-            "hint": "Never use eval() on untrusted user input. Use ast.literal_eval or safe parsers."
+            "id": 229,
+            "enemy_id": "security_hydra",
+            "difficulty": "hell",
+            "category": "Metaprogramming & Security",
+            "error_type": "TypeError: 'str' object is not callable",
+            "title": "Security Hydra #1: Function Decorator Pattern",
+            "question": "Arrange the code blocks to define the function and call it. Exclude the distractor.",
+            "goal": "Wrap a target function using a decorator that prefixes output with security tag.",
+            "expected_output": "[SECURE] Login granted",
+            "lines": [
+                "def secure(func):",
+                "    def wrapper():",
+                "        return f\"[SECURE] {func()}\"",
+                "    return wrapper",
+                "@secure",
+                "def login(): return \"Login granted\"",
+                "print(login())"
+            ],
+            "distractors": [
+                "    return wrapper()"
+            ],
+            "hint": "The decorator must return the wrapper function reference, not invoke it immediately with ().",
+            "code": "    return wrapper()",
+            "answer": "def secure(func):\n    def wrapper():\n        return f\"[SECURE] {func()}\"\n    return wrapper\n@secure\ndef login(): return \"Login granted\"\nprint(login())",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to define the function and call it. Exclude the distractor.",
+            "question_fil": "I-drag at i-ayos ang mga block para magawa ang function at matawag ito. Alisin ang distractor.",
+            "goal_en": "Wrap a target function using a decorator that prefixes output with security tag.",
+            "goal_fil": "Lutasin ang program: Wrap a target function using a decorator that prefixes output with security tag.",
+            "hint_en": "The decorator must return the wrapper function reference, not invoke it immediately with ().",
+            "hint_fil": "Tandaan: The decorator must return the wrapper function reference, not invoke it immediately with ()."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Input Sanitization Failure",
-            "code": "query = \"SELECT * FROM users WHERE id = \" + user_id",
-            "answer": "query = \"SELECT * FROM users WHERE id = %s\"\ncursor.execute(query, (user_id,))",
-            "hint": "Prevent SQL injection by using parameterized queries (%s) instead of string concatenation."
+            "id": 230,
+            "enemy_id": "security_hydra",
+            "difficulty": "hell",
+            "category": "Metaprogramming & Security",
+            "error_type": "TypeError: wrapper() takes 0 positional arguments but 2 were given",
+            "title": "Security Hydra #2: Decorator Forwarding with *args & **kwargs",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Forward all positional and keyword arguments transparently through decorator wrapper.",
+            "expected_output": "Result: 70",
+            "lines": [
+                "def log_call(func):",
+                "    def wrapper(*args, **kwargs):",
+                "        return func(*args, **kwargs)",
+                "    return wrapper",
+                "@log_call",
+                "def add(a, b): return a + b",
+                "print(\"Result:\", add(30, 40))"
+            ],
+            "distractors": [
+                "    def wrapper():\n        return func()"
+            ],
+            "hint": "Wrapper functions must accept (*args, **kwargs) and pass them to func(*args, **kwargs).",
+            "code": "    def wrapper():\n        return func()",
+            "answer": "def log_call(func):\n    def wrapper(*args, **kwargs):\n        return func(*args, **kwargs)\n    return wrapper\n@log_call\ndef add(a, b): return a + b\nprint(\"Result:\", add(30, 40))",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Forward all positional and keyword arguments transparently through decorator wrapper.",
+            "goal_fil": "Lutasin ang program: Forward all positional and keyword arguments transparently through decorator wrapper.",
+            "hint_en": "Wrapper functions must accept (*args, **kwargs) and pass them to func(*args, **kwargs).",
+            "hint_fil": "Tandaan: Wrapper functions must accept (*args, **kwargs) and pass them to func(*args, **kwargs)."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Input Sanitization Failure",
-            "code": "API_SECRET = \"sk_live_9384729183\"",
-            "answer": "import os\nAPI_SECRET = os.environ.get(\"API_SECRET\", \"\")",
-            "hint": "Do not hardcode secrets or API keys in source code. Load from environment variables."
+            "id": 231,
+            "enemy_id": "security_hydra",
+            "difficulty": "hell",
+            "category": "Metaprogramming & Security",
+            "error_type": "TypeError: wraps() missing 1 required positional argument: 'wrapped'",
+            "title": "Security Hydra #3: Preserving Metadata with functools.wraps",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Preserve the original function's __name__ and docstring using @functools.wraps(func).",
+            "expected_output": "Function Name: pay_bill",
+            "lines": [
+                "import functools",
+                "def audit(func):",
+                "    @functools.wraps(func)",
+                "    def wrapper(*args): return func(*args)",
+                "    return wrapper",
+                "@audit",
+                "def pay_bill(): pass",
+                "print(\"Function Name:\", pay_bill.__name__)"
+            ],
+            "distractors": [
+                "    @functools.wraps\n    def wrapper(*args): return func(*args)"
+            ],
+            "hint": "Review your Python syntax, variable names, and line sequence.",
+            "code": "    @functools.wraps\n    def wrapper(*args): return func(*args)",
+            "answer": "import functools\ndef audit(func):\n    @functools.wraps(func)\n    def wrapper(*args): return func(*args)\n    return wrapper\n@audit\ndef pay_bill(): pass\nprint(\"Function Name:\", pay_bill.__name__)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Preserve the original function's __name__ and docstring using @functools.wraps(func).",
+            "goal_fil": "Preserve the original function's __name__ and docstring using @functools.wraps(func).",
+            "hint_en": "Review your Python syntax, variable names, and line sequence.",
+            "hint_fil": "functools.wraps takes the decorated function as an argument: @functools.wraps(func)."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Input Sanitization Failure",
-            "code": "filename = \"../../etc/passwd\"\nwith open(filename) as f:\n    pass",
-            "answer": "from pathlib import Path\nfilename = Path(\"user_notes.txt\").name\nwith open(filename) as f:\n    pass",
-            "hint": "Prevent directory traversal by sanitizing file paths with Path(filename).name."
+            "id": 232,
+            "enemy_id": "security_hydra",
+            "difficulty": "hell",
+            "category": "Metaprogramming & Security",
+            "error_type": "NameError: name 'count' is not defined",
+            "title": "Security Hydra #4: Lexical Closure State Persistence",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Encapsulate private state inside a closure function across multiple invocations.",
+            "expected_output": "Call 1: 1, Call 2: 2",
+            "lines": [
+                "def make_counter():",
+                "    count = 0",
+                "    def counter():",
+                "        nonlocal count",
+                "        count += 1",
+                "        return count",
+                "    return counter",
+                "c = make_counter()",
+                "print(f\"Call 1: {c()}, Call 2: {c()}\")"
+            ],
+            "distractors": [
+                "        global count"
+            ],
+            "hint": "Use 'nonlocal count' to rebind variables in the outer enclosing function scope, not 'global'.",
+            "code": "        global count",
+            "answer": "def make_counter():\n    count = 0\n    def counter():\n        nonlocal count\n        count += 1\n        return count\n    return counter\nc = make_counter()\nprint(f\"Call 1: {c()}, Call 2: {c()}\")",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Encapsulate private state inside a closure function across multiple invocations.",
+            "goal_fil": "Lutasin ang program: Encapsulate private state inside a closure function across multiple invocations.",
+            "hint_en": "Use 'nonlocal count' to rebind variables in the outer enclosing function scope, not 'global'.",
+            "hint_fil": "Tandaan: Use 'nonlocal count' to rebind variables in the outer enclosing function scope, not 'global'."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Input Sanitization Failure",
-            "code": "import pickle\ndata = pickle.loads(user_bytes)",
-            "answer": "import json\ndata = json.loads(user_str)",
-            "hint": "pickle is insecure for untrusted data. Use JSON or safe serialization formats."
+            "id": 233,
+            "enemy_id": "security_hydra",
+            "difficulty": "hell",
+            "category": "Metaprogramming & Security",
+            "error_type": "TypeError: repeat() missing 1 required positional argument: 'n'",
+            "title": "Security Hydra #5: Decorator with Configuration Parameters",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Decorator with Configuration Parameters.",
+            "expected_output": "Triple Echo: echo echo echo",
+            "lines": [
+                "def repeat(n):",
+                "    def decorator(func):",
+                "        def wrapper(*args):",
+                "            return \" \".join([func(*args)] * n)",
+                "        return wrapper",
+                "    return decorator",
+                "@repeat(3)",
+                "def shout(): return \"echo\"",
+                "print(\"Triple Echo:\", shout())"
+            ],
+            "distractors": [
+                "def repeat(func, n):"
+            ],
+            "hint": "Review your Python syntax, variable names, and line sequence.",
+            "code": "def repeat(func, n):",
+            "answer": "def repeat(n):\n    def decorator(func):\n        def wrapper(*args):\n            return \" \".join([func(*args)] * n)\n        return wrapper\n    return decorator\n@repeat(3)\ndef shout(): return \"echo\"\nprint(\"Triple Echo:\", shout())",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Decorator with Configuration Parameters.",
+            "goal_fil": "Create a 3-layer decorator factory that takes configuration parameters.",
+            "hint_en": "Review your Python syntax, variable names, and line sequence.",
+            "hint_fil": "Decorators with arguments require a 3-tier factory structure: outer factory -> decorator -> wrapper."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Input Sanitization Failure",
-            "code": "import subprocess\nsubprocess.run(\"ls \" + folder, shell=True)",
-            "answer": "import subprocess\nsubprocess.run([\"ls\", folder], shell=False)",
-            "hint": "Avoid shell=True with user inputs to prevent command injection."
+            "id": 234,
+            "enemy_id": "security_hydra",
+            "difficulty": "hell",
+            "category": "Metaprogramming & Security",
+            "error_type": "Logical Error: any() allows partial invalid argument lists",
+            "title": "Security Hydra #6: Type Validation Decorator",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Verify that all function arguments are integers before executing the target function.",
+            "expected_output": "Type validation rejected string input",
+            "lines": [
+                "def enforce_ints(func):",
+                "    def wrapper(*args):",
+                "        if not all(isinstance(x, int) for x in args):",
+                "            raise TypeError(\"All args must be int\")",
+                "        return func(*args)",
+                "    return wrapper",
+                "@enforce_ints",
+                "def calc(a, b): return a + b",
+                "try: calc(10, \"bad\")",
+                "except TypeError: print(\"Type validation rejected string input\")"
+            ],
+            "distractors": [
+                "        if not any(isinstance(x, int) for x in args):"
+            ],
+            "hint": "Use all() to require every argument to be an integer. any() would accept mixed invalid types.",
+            "code": "        if not any(isinstance(x, int) for x in args):",
+            "answer": "def enforce_ints(func):\n    def wrapper(*args):\n        if not all(isinstance(x, int) for x in args):\n            raise TypeError(\"All args must be int\")\n        return func(*args)\n    return wrapper\n@enforce_ints\ndef calc(a, b): return a + b\ntry: calc(10, \"bad\")\nexcept TypeError: print(\"Type validation rejected string input\")",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Verify that all function arguments are integers before executing the target function.",
+            "goal_fil": "Lutasin ang program: Verify that all function arguments are integers before executing the target function.",
+            "hint_en": "Use all() to require every argument to be an integer. any() would accept mixed invalid types.",
+            "hint_fil": "Tandaan: Use all() to require every argument to be an integer. any() would accept mixed invalid types."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Input Sanitization Failure",
-            "code": "import hashlib\nhashed = hashlib.md5(b\"password\").hexdigest()",
-            "answer": "import hashlib\nhashed = hashlib.sha256(b\"password\").hexdigest()",
-            "hint": "MD5 is cryptographically broken. Use SHA-256 or bcrypt."
+            "id": 235,
+            "enemy_id": "security_hydra",
+            "difficulty": "hell",
+            "category": "Metaprogramming & Security",
+            "error_type": "KeyError: 5",
+            "title": "Security Hydra #7: Memoization / Cache Decorator",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Implement a caching decorator storing computed results in a local dictionary.",
+            "expected_output": "Square of 5: 25",
+            "lines": [
+                "def memoize(func):",
+                "    cache = {}",
+                "    def wrapper(n):",
+                "        if n not in cache: cache[n] = func(n)",
+                "        return cache[n]",
+                "    return wrapper",
+                "@memoize",
+                "def sq(n): return n * n",
+                "print(\"Square of 5:\", sq(5))"
+            ],
+            "distractors": [
+                "    cache = {}\n    def wrapper(n):\n        return cache[n]"
+            ],
+            "hint": "Looking up cache[n] before computing it throws KeyError. Calculate and store if not in cache.",
+            "code": "    cache = {}\n    def wrapper(n):\n        return cache[n]",
+            "answer": "def memoize(func):\n    cache = {}\n    def wrapper(n):\n        if n not in cache: cache[n] = func(n)\n        return cache[n]\n    return wrapper\n@memoize\ndef sq(n): return n * n\nprint(\"Square of 5:\", sq(5))",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Implement a caching decorator storing computed results in a local dictionary.",
+            "goal_fil": "Lutasin ang program: Implement a caching decorator storing computed results in a local dictionary.",
+            "hint_en": "Looking up cache[n] before computing it throws KeyError. Calculate and store if not in cache.",
+            "hint_fil": "Tandaan: Looking up cache[n] before computing it throws KeyError. Calculate and store if not in cache."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Input Sanitization Failure",
-            "code": "user_role = input(\"Enter role: \")\nif user_role == \"admin\": is_admin = True",
-            "answer": "user_role = \"student\"\nis_admin = False",
-            "hint": "Do not trust user client input to assign privileged administrative roles."
+            "id": 236,
+            "enemy_id": "security_hydra",
+            "difficulty": "hell",
+            "category": "Metaprogramming & Security",
+            "error_type": "Logical Error: Post-call timer unreachable",
+            "title": "Security Hydra #8: Execution Timing Decorator",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Measure function execution time using time.perf_counter() in a decorator.",
+            "expected_output": "Executed safely with timer",
+            "lines": [
+                "import time",
+                "def timed(func):",
+                "    def wrapper(*args):",
+                "        t0 = time.perf_counter()",
+                "        res = func(*args)",
+                "        t1 = time.perf_counter()",
+                "        return res",
+                "    return wrapper",
+                "@timed",
+                "def heavy(): return \"Executed safely with timer\"",
+                "print(heavy())"
+            ],
+            "distractors": [
+                "        return func(*args)\n        t1 = time.perf_counter()"
+            ],
+            "hint": "Code placed after 'return func(*args)' is unreachable and will never execute.",
+            "code": "        return func(*args)\n        t1 = time.perf_counter()",
+            "answer": "import time\ndef timed(func):\n    def wrapper(*args):\n        t0 = time.perf_counter()\n        res = func(*args)\n        t1 = time.perf_counter()\n        return res\n    return wrapper\n@timed\ndef heavy(): return \"Executed safely with timer\"\nprint(heavy())",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Measure function execution time using time.perf_counter() in a decorator.",
+            "goal_fil": "Lutasin ang program: Measure function execution time using time.perf_counter() in a decorator.",
+            "hint_en": "Code placed after 'return func(*args)' is unreachable and will never execute.",
+            "hint_fil": "Tandaan: Code placed after 'return func(*args)' is unreachable and will never execute."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Input Sanitization Failure",
-            "code": "import yaml\ndata = yaml.load(content)",
-            "answer": "import yaml\ndata = yaml.safe_load(content)",
-            "hint": "Use yaml.safe_load() to prevent arbitrary code execution during parsing."
+            "id": 237,
+            "enemy_id": "security_hydra",
+            "difficulty": "hell",
+            "category": "Metaprogramming & Security",
+            "error_type": "UnboundLocalError: local variable 'calls' referenced before assignment",
+            "title": "Security Hydra #9: Rate Limiter Execution Cap",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Cap maximum function executions to 2 calls using closure state tracking.",
+            "expected_output": "Call 1: OK, Call 2: OK, Call 3: BLOCKED",
+            "lines": [
+                "def rate_limit(func):",
+                "    calls = 0",
+                "    def wrapper():",
+                "        nonlocal calls",
+                "        calls += 1",
+                "        if calls > 2: return \"BLOCKED\"",
+                "        return func()",
+                "    return wrapper",
+                "@rate_limit",
+                "def ping(): return \"OK\"",
+                "print(f\"Call 1: {ping()}, Call 2: {ping()}, Call 3: {ping()}\")"
+            ],
+            "distractors": [
+                "        calls += 1\n        if calls > 2: return \"BLOCKED\""
+            ],
+            "hint": "Updating 'calls += 1' without declaring 'nonlocal calls' causes UnboundLocalError.",
+            "code": "        calls += 1\n        if calls > 2: return \"BLOCKED\"",
+            "answer": "def rate_limit(func):\n    calls = 0\n    def wrapper():\n        nonlocal calls\n        calls += 1\n        if calls > 2: return \"BLOCKED\"\n        return func()\n    return wrapper\n@rate_limit\ndef ping(): return \"OK\"\nprint(f\"Call 1: {ping()}, Call 2: {ping()}, Call 3: {ping()}\")",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Cap maximum function executions to 2 calls using closure state tracking.",
+            "goal_fil": "Lutasin ang program: Cap maximum function executions to 2 calls using closure state tracking.",
+            "hint_en": "Updating 'calls += 1' without declaring 'nonlocal calls' causes UnboundLocalError.",
+            "hint_fil": "Tandaan: Updating 'calls += 1' without declaring 'nonlocal calls' causes UnboundLocalError."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Input Sanitization Failure",
-            "code": "print(\"User password:\", password)",
-            "answer": "print(\"User authenticated successfully\")",
-            "hint": "Never log or print plain text passwords or sensitive tokens."
+            "id": 238,
+            "enemy_id": "security_hydra",
+            "difficulty": "hell",
+            "category": "Metaprogramming & Security",
+            "error_type": "NameError: name 'user' is not defined",
+            "title": "Security Hydra #10: Role-Based Authorization Decorator",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Verify user role permissions before granting access to sensitive operation.",
+            "expected_output": "Access Granted: Admin Dashboard",
+            "lines": [
+                "def require_admin(func):",
+                "    def wrapper(user, *args):",
+                "        if user.get(\"role\") != \"admin\": raise PermissionError(\"Denied\")",
+                "        return func(user, *args)",
+                "    return wrapper",
+                "@require_admin",
+                "def dashboard(user): return \"Admin Dashboard\"",
+                "res = dashboard({\"role\": \"admin\"})",
+                "print(\"Access Granted:\", res)"
+            ],
+            "distractors": [
+                "    def wrapper(*args):\n        if user.get(\"role\") != \"admin\": pass"
+            ],
+            "hint": "The wrapper must receive the user dictionary argument to inspect user.get('role').",
+            "code": "    def wrapper(*args):\n        if user.get(\"role\") != \"admin\": pass",
+            "answer": "def require_admin(func):\n    def wrapper(user, *args):\n        if user.get(\"role\") != \"admin\": raise PermissionError(\"Denied\")\n        return func(user, *args)\n    return wrapper\n@require_admin\ndef dashboard(user): return \"Admin Dashboard\"\nres = dashboard({\"role\": \"admin\"})\nprint(\"Access Granted:\", res)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Verify user role permissions before granting access to sensitive operation.",
+            "goal_fil": "Lutasin ang program: Verify user role permissions before granting access to sensitive operation.",
+            "hint_en": "The wrapper must receive the user dictionary argument to inspect user.get('role').",
+            "hint_fil": "Tandaan: The wrapper must receive the user dictionary argument to inspect user.get('role')."
+        },
+        {
+            "id": 239,
+            "enemy_id": "security_hydra",
+            "difficulty": "hell",
+            "category": "Metaprogramming & Security",
+            "error_type": "TypeError: 'Vault' object is not callable",
+            "title": "Security Hydra #11: Class Decorator Transformation",
+            "question": "Arrange the code blocks to define the class and instantiate the object. Exclude the distractor.",
+            "goal": "Decorate a class directly to inject an extra security validation method.",
+            "expected_output": "Security Stamp: CERTIFIED",
+            "lines": [
+                "def add_security_stamp(cls):",
+                "    cls.security_stamp = \"CERTIFIED\"",
+                "    return cls",
+                "@add_security_stamp",
+                "def Vault(): pass",
+                "class Vault: pass",
+                "print(\"Security Stamp:\", Vault.security_stamp)"
+            ],
+            "distractors": [
+                "def add_security_stamp(cls):\n    return cls()"
+            ],
+            "hint": "Class decorators must return the modified class object itself, not an instantiated instance.",
+            "code": "def add_security_stamp(cls):\n    return cls()",
+            "answer": "def add_security_stamp(cls):\n    cls.security_stamp = \"CERTIFIED\"\n    return cls\n@add_security_stamp\ndef Vault(): pass\nclass Vault: pass\nprint(\"Security Stamp:\", Vault.security_stamp)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to define the class and instantiate the object. Exclude the distractor.",
+            "question_fil": "I-drag at i-ayos ang mga block para magawa ang class at object. Alisin ang distractor.",
+            "goal_en": "Decorate a class directly to inject an extra security validation method.",
+            "goal_fil": "Lutasin ang program: Decorate a class directly to inject an extra security validation method.",
+            "hint_en": "Class decorators must return the modified class object itself, not an instantiated instance.",
+            "hint_fil": "Tandaan: Class decorators must return the modified class object itself, not an instantiated instance."
+        },
+        {
+            "id": 240,
+            "enemy_id": "security_hydra",
+            "difficulty": "hell",
+            "category": "Metaprogramming & Security",
+            "error_type": "TypeError: italic() missing 1 required positional argument: 'func'",
+            "title": "Security Hydra #12: Chaining Multiple Decorators",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Apply two decorators sequentially and understand bottom-up execution order.",
+            "expected_output": "Decorated: <B><I>Hydra</I></B>",
+            "lines": [
+                "def bold(func):",
+                "    def w(): return f\"<B>{func()}</B>\"",
+                "    return w",
+                "def italic(func):",
+                "    def w(): return f\"<I>{func()}</I>\"",
+                "    return w",
+                "@bold",
+                "@italic",
+                "def text(): return \"Hydra\"",
+                "print(\"Decorated:\", text())"
+            ],
+            "distractors": [
+                "@bold\n@italic()\ndef text(): return \"Hydra\""
+            ],
+            "hint": "Ensure all opening parentheses have a matching closing parenthesis ().",
+            "code": "@bold\n@italic()\ndef text(): return \"Hydra\"",
+            "answer": "def bold(func):\n    def w(): return f\"<B>{func()}</B>\"\n    return w\ndef italic(func):\n    def w(): return f\"<I>{func()}</I>\"\n    return w\n@bold\n@italic\ndef text(): return \"Hydra\"\nprint(\"Decorated:\", text())",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Apply two decorators sequentially and understand bottom-up execution order.",
+            "goal_fil": "Lutasin ang program: Apply two decorators sequentially and understand bottom-up execution order.",
+            "hint_en": "Ensure all opening parentheses have a matching closing parenthesis ().",
+            "hint_fil": "When decorators take no arguments, apply them as @italic without trailing parentheses ()."
         }
     ]
 };
 
 const aiOverlord = {
-    id: "ai_overlord",
-    name: "AI Overlord",
-    topic: "Objects & Models",
-    sprite: "aiOverlord.png",
-    hearts: 10,
-    trophy: "Artificial Mind",
-    intro: "I am AI Overlord. Models are just objects here.\npredict and fit need an instance and data.\nNone has no shape. undefined is not Python.",
-    bugs: [
+    "id": "ai_overlord",
+    "name": "AI Overlord",
+    "topic": "Machine Learning Logic",
+    "sprite": "aiOverlord.png",
+    "hearts": 5,
+    "trophy": "Overlord Neural Core",
+    "intro": "Matrices, weights, threshold functions! Your code is just training data to me!\nCalculate the forward pass accurately or be obsolete!",
+    "bugs": [
         {
-            "category": "Runtime Error",
-            "error_type": "TypeError: Class Reference Used Instead of Instance",
-            "code": "class Model:\n    def predict(self, x): return [0]\nm = Model\nres = m.predict([1, 2])",
-            "answer": "class Model:\n    def predict(self, x): return [0]\nm = Model()\nres = m.predict([1, 2])",
-            "hint": "Model is a class; create an instance with Model() before calling predict()."
+            "id": 241,
+            "enemy_id": "ai_overlord",
+            "difficulty": "hell",
+            "category": "Functional Programming",
+            "error_type": "SyntaxError: invalid syntax",
+            "title": "AI Overlord #1: Map with Anonymous Lambda Function",
+            "question": "Arrange the code blocks to define the function and call it. Exclude the distractor.",
+            "goal": "Transform numbers list by tripling values using map() and a lambda function.",
+            "expected_output": "Tripled: [3, 6, 9]",
+            "lines": [
+                "nums = [1, 2, 3]",
+                "tripled = list(map(lambda x: x * 3, nums))",
+                "print(\"Tripled:\", tripled)"
+            ],
+            "distractors": [
+                "tripled = list(map(def(x): return x * 3, nums))"
+            ],
+            "hint": "Anonymous inline functions in Python use the lambda keyword: lambda x: x * 3.",
+            "code": "tripled = list(map(def(x): return x * 3, nums))",
+            "answer": "nums = [1, 2, 3]\ntripled = list(map(lambda x: x * 3, nums))\nprint(\"Tripled:\", tripled)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to define the function and call it. Exclude the distractor.",
+            "question_fil": "I-drag at i-ayos ang mga block para magawa ang function at matawag ito. Alisin ang distractor.",
+            "goal_en": "Transform numbers list by tripling values using map() and a lambda function.",
+            "goal_fil": "Lutasin ang program: Transform numbers list by tripling values using map() and a lambda function.",
+            "hint_en": "Anonymous inline functions in Python use the lambda keyword: lambda x: x * 3.",
+            "hint_fil": "Tandaan: Anonymous inline functions in Python use the lambda keyword: lambda x: x * 3."
         },
         {
-            "category": "Runtime Error",
-            "error_type": "Runtime Error: Tensor / Shape Mismatch Exception",
-            "code": "data = None\nprint(data.shape)",
-            "answer": "data = [1, 2, 3]\nprint(len(data))",
-            "hint": "NoneType has no shape attribute. Initialize data with a valid structure."
+            "id": 242,
+            "enemy_id": "ai_overlord",
+            "difficulty": "hell",
+            "category": "Functional Programming",
+            "error_type": "TypeError: 'list' object is not callable",
+            "title": "AI Overlord #2: Filter with Predicate Lambda",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Filter a list to retain only numbers strictly greater than 10 using filter().",
+            "expected_output": "Filtered: [15, 20]",
+            "lines": [
+                "data = [5, 15, 8, 20]",
+                "filtered = list(filter(lambda x: x > 10, data))",
+                "print(\"Filtered:\", filtered)"
+            ],
+            "distractors": [
+                "filtered = list(filter(data, lambda x: x > 10))"
+            ],
+            "hint": "filter takes arguments in order: filter(function_predicate, iterable).",
+            "code": "filtered = list(filter(data, lambda x: x > 10))",
+            "answer": "data = [5, 15, 8, 20]\nfiltered = list(filter(lambda x: x > 10, data))\nprint(\"Filtered:\", filtered)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Filter a list to retain only numbers strictly greater than 10 using filter().",
+            "goal_fil": "Lutasin ang program: Filter a list to retain only numbers strictly greater than 10 using filter().",
+            "hint_en": "filter takes arguments in order: filter(function_predicate, iterable).",
+            "hint_fil": "Tandaan: filter takes arguments in order: filter(function_predicate, iterable)."
         },
         {
-            "category": "Runtime Error",
-            "error_type": "Runtime Error: Tensor / Shape Mismatch Exception",
-            "code": "weights = [0.1, 0.5]\ninputs = [1, 2, 3]\ndot = sum(w * x for w, x in zip(weights, inputs))",
-            "answer": "weights = [0.1, 0.5, 0.2]\ninputs = [1, 2, 3]\ndot = sum(w * x for w, x in zip(weights, inputs))",
-            "hint": "Weights and inputs must have matching dimensions for dot product calculations."
+            "id": 243,
+            "enemy_id": "ai_overlord",
+            "difficulty": "hell",
+            "category": "Functional Programming",
+            "error_type": "NameError: name 'reduce' is not defined",
+            "title": "AI Overlord #3: Reduce Cumulative Aggregation",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Multiply all numbers together into a single product using functools.reduce().",
+            "expected_output": "Product: 24",
+            "lines": [
+                "import functools",
+                "nums = [1, 2, 3, 4]",
+                "product = functools.reduce(lambda acc, x: acc * x, nums)",
+                "print(\"Product:\", product)"
+            ],
+            "distractors": [
+                "product = reduce(lambda acc, x: acc * x, nums)"
+            ],
+            "hint": "Review your Python syntax, variable names, and line sequence.",
+            "code": "product = reduce(lambda acc, x: acc * x, nums)",
+            "answer": "import functools\nnums = [1, 2, 3, 4]\nproduct = functools.reduce(lambda acc, x: acc * x, nums)\nprint(\"Product:\", product)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Multiply all numbers together into a single product using functools.reduce().",
+            "goal_fil": "Lutasin ang program: Multiply all numbers together into a single product using functools.reduce().",
+            "hint_en": "Review your Python syntax, variable names, and line sequence.",
+            "hint_fil": "reduce was moved to the 'functools' module in Python 3; call functools.reduce()."
         },
         {
-            "category": "Runtime Error",
-            "error_type": "Runtime Error: Tensor / Shape Mismatch Exception",
-            "code": "loss = [0.5, 0.4, 0.2]\nloss.backward()",
-            "answer": "class Loss:\n    def backward(self): pass\nloss = Loss()\nloss.backward()",
-            "hint": "Python lists do not have a backward() method. Use an autograd/tensor object."
+            "id": 244,
+            "enemy_id": "ai_overlord",
+            "difficulty": "hell",
+            "category": "Functional Programming",
+            "error_type": "Logical Error: Logical 'and' evaluates to single boolean/value",
+            "title": "AI Overlord #4: Multi-Key Lambda Sorting",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Sort complex records primary by priority (descending) and secondary by name (ascending).",
+            "expected_output": "Top Task: deploy",
+            "lines": [
+                "tasks = [{'p': 1, 'n': 'test'}, {'p': 2, 'n': 'deploy'}]",
+                "sorted_tasks = sorted(tasks, key=lambda t: (-t['p'], t['n']))",
+                "print(\"Top Task:\", sorted_tasks[0]['n'])"
+            ],
+            "distractors": [
+                "sorted_tasks = sorted(tasks, key=lambda t: -t['p'] and t['n'])"
+            ],
+            "hint": "Multiple sort keys are passed as a tuple: (-t['p'], t['n']).",
+            "code": "sorted_tasks = sorted(tasks, key=lambda t: -t['p'] and t['n'])",
+            "answer": "tasks = [{'p': 1, 'n': 'test'}, {'p': 2, 'n': 'deploy'}]\nsorted_tasks = sorted(tasks, key=lambda t: (-t['p'], t['n']))\nprint(\"Top Task:\", sorted_tasks[0]['n'])",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Sort complex records primary by priority (descending) and secondary by name (ascending).",
+            "goal_fil": "Lutasin ang program: Sort complex records primary by priority (descending) and secondary by name (ascending).",
+            "hint_en": "Multiple sort keys are passed as a tuple: (-t['p'], t['n']).",
+            "hint_fil": "Tandaan: Multiple sort keys are passed as a tuple: (-t['p'], t['n'])."
         },
         {
-            "category": "Runtime Error",
-            "error_type": "Runtime Error: Tensor / Shape Mismatch Exception",
-            "code": "dataset = [1, 2, 3]\nfor batch in dataset.batch(2):\n    pass",
-            "answer": "dataset = [1, 2, 3, 4]\nbatches = [dataset[i:i+2] for i in range(0, len(dataset), 2)]",
-            "hint": "Standard Python lists do not have a .batch() method. Slice or chunk the list."
+            "id": 245,
+            "enemy_id": "ai_overlord",
+            "difficulty": "hell",
+            "category": "Functional Programming",
+            "error_type": "Logical Error: Multiplies parallel evaluations instead of composing",
+            "title": "AI Overlord #5: Pipeline Composition of Functions",
+            "question": "Arrange the code blocks to define the function and call it. Exclude the distractor.",
+            "goal": "Compose two unary functions f(g(x)) to form a continuous transformation pipeline.",
+            "expected_output": "Composed Result: 22",
+            "lines": [
+                "add_one = lambda x: x + 1",
+                "double = lambda x: x * 2",
+                "compose = lambda f, g: lambda x: f(g(x))",
+                "pipeline = compose(double, add_one)",
+                "print(\"Composed Result:\", pipeline(10))"
+            ],
+            "distractors": [
+                "compose = lambda f, g: lambda x: f(x) * g(x)"
+            ],
+            "hint": "Function composition executes inner g(x) and passes its output to outer f.",
+            "code": "compose = lambda f, g: lambda x: f(x) * g(x)",
+            "answer": "add_one = lambda x: x + 1\ndouble = lambda x: x * 2\ncompose = lambda f, g: lambda x: f(g(x))\npipeline = compose(double, add_one)\nprint(\"Composed Result:\", pipeline(10))",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to define the function and call it. Exclude the distractor.",
+            "question_fil": "I-drag at i-ayos ang mga block para magawa ang function at matawag ito. Alisin ang distractor.",
+            "goal_en": "Compose two unary functions f(g(x)) to form a continuous transformation pipeline.",
+            "goal_fil": "Lutasin ang program: Compose two unary functions f(g(x)) to form a continuous transformation pipeline.",
+            "hint_en": "Function composition executes inner g(x) and passes its output to outer f.",
+            "hint_fil": "Tandaan: Function composition executes inner g(x) and passes its output to outer f."
         },
         {
-            "category": "Runtime Error",
-            "error_type": "Runtime Error: Tensor / Shape Mismatch Exception",
-            "code": "logits = [2.0, 1.0, 0.1]\nprobs = softmax(logits)",
-            "answer": "import math\nlogits = [2.0, 1.0, 0.1]\nexps = [math.exp(x) for x in logits]\nprobs = [x / sum(exps) for x in exps]",
-            "hint": "Define or compute softmax using math.exp(x) / sum_exps."
+            "id": 246,
+            "enemy_id": "ai_overlord",
+            "difficulty": "hell",
+            "category": "Functional Programming",
+            "error_type": "TypeError: power() missing 1 required positional argument: 'base'",
+            "title": "AI Overlord #6: Partial Function Application",
+            "question": "Arrange the code blocks to define the function and call it. Exclude the distractor.",
+            "goal": "Pre-fill the base exponent argument using functools.partial to create a square helper.",
+            "expected_output": "5 Squared: 25",
+            "lines": [
+                "from functools import partial",
+                "def power(base, exp): return base ** exp",
+                "square = partial(power, exp=2)",
+                "print(\"5 Squared:\", square(5))"
+            ],
+            "distractors": [
+                "square = partial(power(exp=2))"
+            ],
+            "hint": "partial takes the function as its first argument: partial(func, **kwargs).",
+            "code": "square = partial(power(exp=2))",
+            "answer": "from functools import partial\ndef power(base, exp): return base ** exp\nsquare = partial(power, exp=2)\nprint(\"5 Squared:\", square(5))",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to define the function and call it. Exclude the distractor.",
+            "question_fil": "I-drag at i-ayos ang mga block para magawa ang function at matawag ito. Alisin ang distractor.",
+            "goal_en": "Pre-fill the base exponent argument using functools.partial to create a square helper.",
+            "goal_fil": "Lutasin ang program: Pre-fill the base exponent argument using functools.partial to create a square helper.",
+            "hint_en": "partial takes the function as its first argument: partial(func, **kwargs).",
+            "hint_fil": "Tandaan: partial takes the function as its first argument: partial(func, **kwargs)."
         },
         {
-            "category": "Runtime Error",
-            "error_type": "Runtime Error: Tensor / Shape Mismatch Exception",
-            "code": "model.eval\nwith torch.no_grad():\n    pass",
-            "answer": "model.eval()\nwith torch.no_grad():\n    pass",
-            "hint": "eval() is a method on neural network models; call it with parentheses."
+            "id": 247,
+            "enemy_id": "ai_overlord",
+            "difficulty": "hell",
+            "category": "Functional Programming",
+            "error_type": "NameError: name 'b' is not defined",
+            "title": "AI Overlord #7: Currying Multi-Parameter Function",
+            "question": "Arrange the code blocks to define the function and call it. Exclude the distractor.",
+            "goal": "Transform a function taking two arguments into a curried chain of unary functions.",
+            "expected_output": "Curried Sum: 15",
+            "lines": [
+                "def curry_add(a):",
+                "    return lambda b: a + b",
+                "add_five = curry_add(5)",
+                "result = add_five(10)",
+                "print(\"Curried Sum:\", result)"
+            ],
+            "distractors": [
+                "def curry_add(a):\n    return a + b"
+            ],
+            "hint": "The inner function must be a lambda or def taking b: lambda b: a + b.",
+            "code": "def curry_add(a):\n    return a + b",
+            "answer": "def curry_add(a):\n    return lambda b: a + b\nadd_five = curry_add(5)\nresult = add_five(10)\nprint(\"Curried Sum:\", result)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to define the function and call it. Exclude the distractor.",
+            "question_fil": "I-drag at i-ayos ang mga block para magawa ang function at matawag ito. Alisin ang distractor.",
+            "goal_en": "Transform a function taking two arguments into a curried chain of unary functions.",
+            "goal_fil": "Lutasin ang program: Transform a function taking two arguments into a curried chain of unary functions.",
+            "hint_en": "The inner function must be a lambda or def taking b: lambda b: a + b.",
+            "hint_fil": "Tandaan: The inner function must be a lambda or def taking b: lambda b: a + b."
         },
         {
-            "category": "Runtime Error",
-            "error_type": "Runtime Error: Tensor / Shape Mismatch Exception",
-            "code": "labels = [0, 1, 2]\npred = 3\nacc = (pred in labels) / len(labels)",
-            "answer": "labels = [0, 1, 2]\npreds = [0, 1, 2]\nacc = sum(p == l for p, l in zip(preds, labels)) / len(labels)",
-            "hint": "Accuracy requires comparing prediction lists with ground truth labels."
+            "id": 248,
+            "enemy_id": "ai_overlord",
+            "difficulty": "hell",
+            "category": "Functional Programming",
+            "error_type": "Logical Error: Inefficient doubling before filtering",
+            "title": "AI Overlord #8: Combined Filter & Map Stream",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Double only the positive numbers using a chained map(..., filter(...)) expression.",
+            "expected_output": "Doubled Positives: [4, 8]",
+            "lines": [
+                "nums = [-5, 2, -1, 4]",
+                "pipeline = map(lambda x: x * 2, filter(lambda x: x > 0, nums))",
+                "print(\"Doubled Positives:\", list(pipeline))"
+            ],
+            "distractors": [
+                "pipeline = filter(lambda x: x > 0, map(lambda x: x * 2, nums))"
+            ],
+            "hint": "Filter the positive numbers first, then apply map to double the filtered results.",
+            "code": "pipeline = filter(lambda x: x > 0, map(lambda x: x * 2, nums))",
+            "answer": "nums = [-5, 2, -1, 4]\npipeline = map(lambda x: x * 2, filter(lambda x: x > 0, nums))\nprint(\"Doubled Positives:\", list(pipeline))",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Double only the positive numbers using a chained map(..., filter(...)) expression.",
+            "goal_fil": "Lutasin ang program: Double only the positive numbers using a chained map(..., filter(...)) expression.",
+            "hint_en": "Filter the positive numbers first, then apply map to double the filtered results.",
+            "hint_fil": "Tandaan: Filter the positive numbers first, then apply map to double the filtered results."
         },
         {
-            "category": "Runtime Error",
-            "error_type": "Runtime Error: Tensor / Shape Mismatch Exception",
-            "code": "lr = \"0.001\"\nstep = 10 * lr",
-            "answer": "lr = 0.001\nstep = 10 * lr",
-            "hint": "Learning rate must be a float (0.001), not a string (\"0.001\")."
+            "id": 249,
+            "enemy_id": "ai_overlord",
+            "difficulty": "hell",
+            "category": "Functional Programming",
+            "error_type": "TypeError: '>' not supported between instances of 'dict' and 'dict'",
+            "title": "AI Overlord #9: Finding Max Record with Key Lambda",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Find the player dictionary with highest score using max() and key lambda.",
+            "expected_output": "Best: Frau with 99 pts",
+            "lines": [
+                "players = [{'name': 'Bob', 'score': 70}, {'name': 'Frau', 'score': 99}]",
+                "best = max(players, key=lambda p: p['score'])",
+                "print(f\"Best: {best['name']} with {best['score']} pts\")"
+            ],
+            "distractors": [
+                "best = max(players)"
+            ],
+            "hint": "Review your Python syntax, variable names, and line sequence.",
+            "code": "best = max(players)",
+            "answer": "players = [{'name': 'Bob', 'score': 70}, {'name': 'Frau', 'score': 99}]\nbest = max(players, key=lambda p: p['score'])\nprint(f\"Best: {best['name']} with {best['score']} pts\")",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Find the player dictionary with highest score using max() and key lambda.",
+            "goal_fil": "Lutasin ang program: Find the player dictionary with highest score using max() and key lambda.",
+            "hint_en": "Review your Python syntax, variable names, and line sequence.",
+            "hint_fil": "Dictionaries cannot be compared directly (<); specify key=lambda p: p['score']."
         },
         {
-            "category": "Runtime Error",
-            "error_type": "Runtime Error: Tensor / Shape Mismatch Exception",
-            "code": "def forward(x):\n    return x\noutput = forward()",
-            "answer": "def forward(x):\n    return x\noutput = forward(1.0)",
-            "hint": "forward() requires an input argument x. Pass input tensor or value."
+            "id": 250,
+            "enemy_id": "ai_overlord",
+            "difficulty": "hell",
+            "category": "Functional Programming",
+            "error_type": "TypeError: <lambda>() missing 1 required positional argument: 'a'",
+            "title": "AI Overlord #10: Zipping and Transforming Parallel Sequences",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Pair up questions and answers using zip() and format them with a lambda map.",
+            "expected_output": "Q&A: ['Q1: A1', 'Q2: A2']",
+            "lines": [
+                "qs = ['Q1', 'Q2']",
+                "ans = ['A1', 'A2']",
+                "formatted = list(map(lambda pair: f\"{pair[0]}: {pair[1]}\", zip(qs, ans)))",
+                "print(\"Q&A:\", formatted)"
+            ],
+            "distractors": [
+                "formatted = list(map(lambda q, a: f\"{q}: {a}\", zip(qs, ans)))"
+            ],
+            "hint": "Review your Python syntax, variable names, and line sequence.",
+            "code": "formatted = list(map(lambda q, a: f\"{q}: {a}\", zip(qs, ans)))",
+            "answer": "qs = ['Q1', 'Q2']\nans = ['A1', 'A2']\nformatted = list(map(lambda pair: f\"{pair[0]}: {pair[1]}\", zip(qs, ans)))\nprint(\"Q&A:\", formatted)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Pair up questions and answers using zip() and format them with a lambda map.",
+            "goal_fil": "Lutasin ang program: Pair up questions and answers using zip() and format them with a lambda map.",
+            "hint_en": "Review your Python syntax, variable names, and line sequence.",
+            "hint_fil": "map over zip yields single 2-tuples; the lambda takes one tuple parameter 'pair'."
+        },
+        {
+            "id": 251,
+            "enemy_id": "ai_overlord",
+            "difficulty": "hell",
+            "category": "Functional Programming",
+            "error_type": "Logical Error: Contradictory predicate logic",
+            "title": "AI Overlord #11: Point-Free Any/All Predicates",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Verify that all items in an authorization checklist are truthy using built-in all().",
+            "expected_output": "System Cleared: True",
+            "lines": [
+                "checks = [True, True, True]",
+                "is_cleared = all(checks)",
+                "print(\"System Cleared:\", is_cleared)"
+            ],
+            "distractors": [
+                "is_cleared = any(checks) and not all(checks)"
+            ],
+            "hint": "all(iterable) returns True if all elements evaluate to True.",
+            "code": "is_cleared = any(checks) and not all(checks)",
+            "answer": "checks = [True, True, True]\nis_cleared = all(checks)\nprint(\"System Cleared:\", is_cleared)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Verify that all items in an authorization checklist are truthy using built-in all().",
+            "goal_fil": "Lutasin ang program: Verify that all items in an authorization checklist are truthy using built-in all().",
+            "hint_en": "all(iterable) returns True if all elements evaluate to True.",
+            "hint_fil": "Tandaan: all(iterable) returns True if all elements evaluate to True."
+        },
+        {
+            "id": 252,
+            "enemy_id": "ai_overlord",
+            "difficulty": "hell",
+            "category": "Functional Programming",
+            "error_type": "TypeError: unhashable type: 'map'",
+            "title": "AI Overlord #12: Generating Dictionaries from Mapped Tuples",
+            "question": "Arrange the code blocks to store and retrieve dictionary values. Exclude the distractor.",
+            "goal": "Construct a dictionary from key-value pairs generated via functional map transformation.",
+            "expected_output": "Lookup: {'a': 1, 'b': 2}",
+            "lines": [
+                "tokens = [('a', '1'), ('b', '2')]",
+                "lookup = dict(map(lambda pair: (pair[0], int(pair[1])), tokens))",
+                "print(\"Lookup:\", lookup)"
+            ],
+            "distractors": [
+                "lookup = {map(lambda pair: (pair[0], int(pair[1])), tokens)}"
+            ],
+            "hint": "Review your Python syntax, variable names, and line sequence.",
+            "code": "lookup = {map(lambda pair: (pair[0], int(pair[1])), tokens)}",
+            "answer": "tokens = [('a', '1'), ('b', '2')]\nlookup = dict(map(lambda pair: (pair[0], int(pair[1])), tokens))\nprint(\"Lookup:\", lookup)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to store and retrieve dictionary values. Exclude the distractor.",
+            "question_fil": "I-drag at i-ayos ang mga block para ma-store at makuha ang values sa dictionary. Alisin ang distractor.",
+            "goal_en": "Construct a dictionary from key-value pairs generated via functional map transformation.",
+            "goal_fil": "Lutasin ang program: Construct a dictionary from key-value pairs generated via functional map transformation.",
+            "hint_en": "Review your Python syntax, variable names, and line sequence.",
+            "hint_fil": "Wrapping in {} creates a set of map objects; pass the map iterator to dict()."
         }
     ]
 };
 
 const finalCompiler = {
-    id: "final_compiler",
-    name: "The Final Compiler",
-    topic: "Everything",
-    sprite: "hellBoss.png",
-    hearts: 15,
-    trophy: "Hell Champion Trophy",
-    intro: "I am The Final Compiler. I reject almost everything.\nThis is the last hunt: syntax, objects, safety, recursion.\nType the complete fix. I do not accept almost.",
-    bugs: [
+    "id": "final_compiler",
+    "name": "Final Compiler",
+    "topic": "Ultimate Compiler Boss",
+    "sprite": "finalCompiler.png",
+    "hearts": 6,
+    "trophy": "Ultimate Crown of BugHunt",
+    "intro": "I am the Final Compiler! The apex arbiter of execution!\nEvery bug you have faced is distilled here. Parse, optimize, and assemble your final victory!",
+    "bugs": [
         {
-            "category": "Runtime Error",
-            "error_type": "TypeError: 'generator' object is not subscriptable",
-            "code": "def generator():\n    yield 1\n    yield 2\nprint(generator()[0])",
-            "answer": "def generator():\n    yield 1\n    yield 2\nprint(list(generator())[0])",
-            "hint": "Generators cannot be indexed directly. Convert to list() or use next()."
+            "id": 253,
+            "enemy_id": "final_compiler",
+            "difficulty": "hell",
+            "category": "Metaprogramming & Compilers",
+            "error_type": "AttributeError: __exit__",
+            "title": "Final Compiler #1: Custom Context Manager Protocol",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Implement a context manager class with __enter__ and __exit__ methods.",
+            "expected_output": "Entered -> In Context -> Exited",
+            "lines": [
+                "class CompilerSession:",
+                "    def __enter__(self):",
+                "        return \"In Context\"",
+                "    def __exit__(self, exc_type, exc_val, exc_tb):",
+                "        print(\"Exited\")",
+                "print(\"Entered ->\", end=\" \")",
+                "with CompilerSession() as ctx:",
+                "    print(ctx, \"->\", end=\" \")"
+            ],
+            "distractors": [
+                "    def __close__(self): pass"
+            ],
+            "hint": "Context managers in Python implement __enter__ and __exit__, not __close__.",
+            "code": "    def __close__(self): pass",
+            "answer": "class CompilerSession:\n    def __enter__(self):\n        return \"In Context\"\n    def __exit__(self, exc_type, exc_val, exc_tb):\n        print(\"Exited\")\nprint(\"Entered ->\", end=\" \")\nwith CompilerSession() as ctx:\n    print(ctx, \"->\", end=\" \")",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Implement a context manager class with __enter__ and __exit__ methods.",
+            "goal_fil": "Lutasin ang program: Implement a context manager class with __enter__ and __exit__ methods.",
+            "hint_en": "Context managers in Python implement __enter__ and __exit__, not __close__.",
+            "hint_fil": "Tandaan: Context managers in Python implement __enter__ and __exit__, not __close__."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Generator Exhaustion / Stream State",
-            "code": "def decorator(func):\n    def wrapper():\n        return func\n    return wrapper",
-            "answer": "def decorator(func):\n    def wrapper(*args, **kwargs):\n        return func(*args, **kwargs)\n    return wrapper",
-            "hint": "Decorators must call and forward parameters to func(*args, **kwargs)."
+            "id": 254,
+            "enemy_id": "final_compiler",
+            "difficulty": "hell",
+            "category": "Metaprogramming & Compilers",
+            "error_type": "ZeroDivisionError: division by zero",
+            "title": "Final Compiler #2: Context Manager Exception Suppression",
+            "question": "Arrange the code blocks into a valid try-except block to handle errors. Exclude the distractor.",
+            "goal": "Suppress an internal exception cleanly by returning True from __exit__.",
+            "expected_output": "Suppressed: True",
+            "lines": [
+                "class SuppressZeroDiv:",
+                "    def __enter__(self): return self",
+                "    def __exit__(self, exc_type, exc_val, exc_tb):",
+                "        return exc_type is ZeroDivisionError",
+                "suppressed = False",
+                "with SuppressZeroDiv():",
+                "    bad = 10 / 0",
+                "suppressed = True",
+                "print(\"Suppressed:\", suppressed)"
+            ],
+            "distractors": [
+                "    def __exit__(self, exc_type, exc_val, exc_tb):\n        return False"
+            ],
+            "hint": "Returning True from __exit__ tells Python that the raised exception has been handled and suppressed.",
+            "code": "    def __exit__(self, exc_type, exc_val, exc_tb):\n        return False",
+            "answer": "class SuppressZeroDiv:\n    def __enter__(self): return self\n    def __exit__(self, exc_type, exc_val, exc_tb):\n        return exc_type is ZeroDivisionError\nsuppressed = False\nwith SuppressZeroDiv():\n    bad = 10 / 0\nsuppressed = True\nprint(\"Suppressed:\", suppressed)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks into a valid try-except block to handle errors. Exclude the distractor.",
+            "question_fil": "I-drag at i-ayos ang mga block sa tamang try-except structure para masalo ang error. Alisin ang distractor.",
+            "goal_en": "Suppress an internal exception cleanly by returning True from __exit__.",
+            "goal_fil": "Lutasin ang program: Suppress an internal exception cleanly by returning True from __exit__.",
+            "hint_en": "Returning True from __exit__ tells Python that the raised exception has been handled and suppressed.",
+            "hint_fil": "Tandaan: Returning True from __exit__ tells Python that the raised exception has been handled and suppressed."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Generator Exhaustion / Stream State",
-            "code": "class Singleton:\n    _inst = None\n    def __new__(cls):\n        if not cls._inst:\n            cls._inst = super().__new__()\n        return cls._inst",
-            "answer": "class Singleton:\n    _inst = None\n    def __new__(cls):\n        if not cls._inst:\n            cls._inst = super().__new__(cls)\n        return cls._inst",
-            "hint": "__new__ requires passing the class (cls) to super().__new__(cls)."
+            "id": 255,
+            "enemy_id": "final_compiler",
+            "difficulty": "hell",
+            "category": "Metaprogramming & Compilers",
+            "error_type": "TypeError: __repr__ returned non-string (type NoneType)",
+            "title": "Final Compiler #3: String Representation Protocol (__repr__)",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Implement __repr__ on AST token node to provide unambiguous debugging strings.",
+            "expected_output": "Token(VAR, x)",
+            "lines": [
+                "class Token:",
+                "    def __init__(self, kind, val):",
+                "        self.kind = kind",
+                "        self.val = val",
+                "    def __repr__(self):",
+                "        return f\"Token({self.kind}, {self.val})\"",
+                "t = Token(\"VAR\", \"x\")",
+                "print(repr(t))"
+            ],
+            "distractors": [
+                "    def __repr__(self):\n        print(f\"Token({self.kind}, {self.val})\")"
+            ],
+            "hint": "__repr__ must return a string, not print to stdout.",
+            "code": "    def __repr__(self):\n        print(f\"Token({self.kind}, {self.val})\")",
+            "answer": "class Token:\n    def __init__(self, kind, val):\n        self.kind = kind\n        self.val = val\n    def __repr__(self):\n        return f\"Token({self.kind}, {self.val})\"\nt = Token(\"VAR\", \"x\")\nprint(repr(t))",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Implement __repr__ on AST token node to provide unambiguous debugging strings.",
+            "goal_fil": "Lutasin ang program: Implement __repr__ on AST token node to provide unambiguous debugging strings.",
+            "hint_en": "__repr__ must return a string, not print to stdout.",
+            "hint_fil": "Tandaan: __repr__ must return a string, not print to stdout."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Generator Exhaustion / Stream State",
-            "code": "try:\n    pass\nexcept BaseException:\n    pass",
-            "answer": "try:\n    pass\nexcept Exception:\n    pass",
-            "hint": "Do not catch BaseException directly; it catches KeyboardInterrupt and SystemExit. Catch Exception."
+            "id": 256,
+            "enemy_id": "final_compiler",
+            "difficulty": "hell",
+            "category": "Metaprogramming & Compilers",
+            "error_type": "TypeError: 'ASTNode' object is not subscriptable",
+            "title": "Final Compiler #4: Sequence Indexing Protocol (__getitem__)",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Implement __getitem__ and __len__ to allow square bracket indexing on custom AST node.",
+            "expected_output": "First child: Node(A), Total: 2",
+            "lines": [
+                "class ASTNode:",
+                "    def __init__(self, children): self.children = children",
+                "    def __len__(self): return len(self.children)",
+                "    def __getitem__(self, idx): return self.children[idx]",
+                "node = ASTNode([\"Node(A)\", \"Node(B)\"])",
+                "print(f\"First child: {node[0]}, Total: {len(node)}\")"
+            ],
+            "distractors": [
+                "    def __get__(self, idx): return self.children[idx]"
+            ],
+            "hint": "Square bracket indexing [idx] invokes __getitem__, while __get__ is for descriptors.",
+            "code": "    def __get__(self, idx): return self.children[idx]",
+            "answer": "class ASTNode:\n    def __init__(self, children): self.children = children\n    def __len__(self): return len(self.children)\n    def __getitem__(self, idx): return self.children[idx]\nnode = ASTNode([\"Node(A)\", \"Node(B)\"])\nprint(f\"First child: {node[0]}, Total: {len(node)}\")",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Implement __getitem__ and __len__ to allow square bracket indexing on custom AST node.",
+            "goal_fil": "Lutasin ang program: Implement __getitem__ and __len__ to allow square bracket indexing on custom AST node.",
+            "hint_en": "Square bracket indexing [idx] invokes __getitem__, while __get__ is for descriptors.",
+            "hint_fil": "Tandaan: Square bracket indexing [idx] invokes __getitem__, while __get__ is for descriptors."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Generator Exhaustion / Stream State",
-            "code": "items = [x for x in range(3)]\nprint(items[3])",
-            "answer": "items = [x for x in range(3)]\nprint(items[2])",
-            "hint": "IndexError: 0-indexed range(3) contains elements at index 0, 1, and 2."
+            "id": 257,
+            "enemy_id": "final_compiler",
+            "difficulty": "hell",
+            "category": "Metaprogramming & Compilers",
+            "error_type": "TypeError: unsupported operand type(s) for +: 'BytecodeBuffer' and 'BytecodeBuffer'",
+            "title": "Final Compiler #5: Operator Overloading (__add__)",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Overload the plus (+) operator on BytecodeBuffer using the __add__ dunder method.",
+            "expected_output": "Combined Instructions: [1, 2, 3]",
+            "lines": [
+                "class BytecodeBuffer:",
+                "    def __init__(self, ops): self.ops = ops",
+                "    def __add__(self, other):",
+                "        return BytecodeBuffer(self.ops + other.ops)",
+                "b1 = BytecodeBuffer([1, 2])",
+                "b2 = BytecodeBuffer([3])",
+                "b3 = b1 + b2",
+                "print(\"Combined Instructions:\", b3.ops)"
+            ],
+            "distractors": [
+                "    def __plus__(self, other):"
+            ],
+            "hint": "The operator + corresponds to the __add__ dunder method in Python.",
+            "code": "    def __plus__(self, other):",
+            "answer": "class BytecodeBuffer:\n    def __init__(self, ops): self.ops = ops\n    def __add__(self, other):\n        return BytecodeBuffer(self.ops + other.ops)\nb1 = BytecodeBuffer([1, 2])\nb2 = BytecodeBuffer([3])\nb3 = b1 + b2\nprint(\"Combined Instructions:\", b3.ops)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Overload the plus (+) operator on BytecodeBuffer using the __add__ dunder method.",
+            "goal_fil": "Lutasin ang program: Overload the plus (+) operator on BytecodeBuffer using the __add__ dunder method.",
+            "hint_en": "The operator + corresponds to the __add__ dunder method in Python.",
+            "hint_fil": "Tandaan: The operator + corresponds to the __add__ dunder method in Python."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Generator Exhaustion / Stream State",
-            "code": "class Meta(type):\n    def __init__(cls, name, bases, dct):\n        super().__init__(name, bases, dct)",
-            "answer": "class Meta(type):\n    def __init__(cls, name, bases, dct):\n        super().__init__(name, bases, dct)",
-            "hint": "Metaclass declaration with proper arguments."
+            "id": 258,
+            "enemy_id": "final_compiler",
+            "difficulty": "hell",
+            "category": "Metaprogramming & Compilers",
+            "error_type": "TypeError: 'Compiler' object is not callable",
+            "title": "Final Compiler #6: Callable Instances (__call__)",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Make a class instance callable like a standard function using the __call__ method.",
+            "expected_output": "Compiled Result: 42",
+            "lines": [
+                "class Compiler:",
+                "    def __init__(self, offset): self.offset = offset",
+                "    def __call__(self, val):",
+                "        return val + self.offset",
+                "compile_fn = Compiler(2)",
+                "print(\"Compiled Result:\", compile_fn(40))"
+            ],
+            "distractors": [
+                "    def __invoke__(self, val): return val + self.offset"
+            ],
+            "hint": "Enabling function invocation obj(arg) requires the __call__ dunder method.",
+            "code": "    def __invoke__(self, val): return val + self.offset",
+            "answer": "class Compiler:\n    def __init__(self, offset): self.offset = offset\n    def __call__(self, val):\n        return val + self.offset\ncompile_fn = Compiler(2)\nprint(\"Compiled Result:\", compile_fn(40))",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Make a class instance callable like a standard function using the __call__ method.",
+            "goal_fil": "Lutasin ang program: Make a class instance callable like a standard function using the __call__ method.",
+            "hint_en": "Enabling function invocation obj(arg) requires the __call__ dunder method.",
+            "hint_fil": "Tandaan: Enabling function invocation obj(arg) requires the __call__ dunder method."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Generator Exhaustion / Stream State",
-            "code": "with open(\"log.txt\") as f\n    data = f.read()",
-            "answer": "with open(\"log.txt\") as f:\n    data = f.read()",
-            "hint": "With statement requires a colon (:)."
+            "id": 259,
+            "enemy_id": "final_compiler",
+            "difficulty": "hell",
+            "category": "Metaprogramming & Compilers",
+            "error_type": "RuntimeError: generator didn't yield",
+            "title": "Final Compiler #7: Generator-based Context Manager (@contextmanager)",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Construct a concise context manager with contextlib.@contextmanager and yield.",
+            "expected_output": "Start -> Compiled -> Finish",
+            "lines": [
+                "from contextlib import contextmanager",
+                "@contextmanager",
+                "def compile_scope():",
+                "    print(\"Start ->\", end=\" \")",
+                "    yield \"Compiled\"",
+                "    print(\"-> Finish\")",
+                "with compile_scope() as stage:",
+                "    print(stage, end=\" \")"
+            ],
+            "distractors": [
+                "    return \"Compiled\""
+            ],
+            "hint": "Review your Python syntax, variable names, and line sequence.",
+            "code": "    return \"Compiled\"",
+            "answer": "from contextlib import contextmanager\n@contextmanager\ndef compile_scope():\n    print(\"Start ->\", end=\" \")\n    yield \"Compiled\"\n    print(\"-> Finish\")\nwith compile_scope() as stage:\n    print(stage, end=\" \")",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Construct a concise context manager with contextlib.@contextmanager and yield.",
+            "goal_fil": "Construct a concise context manager with contextlib.@contextmanager and yield.",
+            "hint_en": "Review your Python syntax, variable names, and line sequence.",
+            "hint_fil": "Functions decorated with @contextmanager must yield exactly one value, separating enter and exit phases."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Generator Exhaustion / Stream State",
-            "code": "class Game:\n    @property\n    def score(self):\n        return self._s\ng = Game()\ng.score = 100",
-            "answer": "class Game:\n    def __init__(self):\n        self._s = 0\n    @property\n    def score(self):\n        return self._s\n    @score.setter\n    def score(self, val):\n        self._s = val\ng = Game()\ng.score = 100",
-            "hint": "Cannot set a property without defining a @score.setter method."
+            "id": 260,
+            "enemy_id": "final_compiler",
+            "difficulty": "hell",
+            "category": "Metaprogramming & Compilers",
+            "error_type": "RecursionError: maximum recursion depth exceeded",
+            "title": "Final Compiler #8: Dynamic Attribute Access (__getattr__)",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Fallback gracefully on missing attribute access with the __getattr__ dunder method.",
+            "expected_output": "Dynamic Reg: R_0",
+            "lines": [
+                "class RegisterBank:",
+                "    def __getattr__(self, name):",
+                "        return f\"R_{name.split('_')[-1]}\"",
+                "bank = RegisterBank()",
+                "print(\"Dynamic Reg:\", bank.reg_0)"
+            ],
+            "distractors": [
+                "    def __getattribute__(self, name):\n        return f\"R_{name.split('_')[-1]}\""
+            ],
+            "hint": "Review your Python syntax, variable names, and line sequence.",
+            "code": "    def __getattribute__(self, name):\n        return f\"R_{name.split('_')[-1]}\"",
+            "answer": "class RegisterBank:\n    def __getattr__(self, name):\n        return f\"R_{name.split('_')[-1]}\"\nbank = RegisterBank()\nprint(\"Dynamic Reg:\", bank.reg_0)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Fallback gracefully on missing attribute access with the __getattr__ dunder method.",
+            "goal_fil": "Lutasin ang program: Fallback gracefully on missing attribute access with the __getattr__ dunder method.",
+            "hint_en": "Review your Python syntax, variable names, and line sequence.",
+            "hint_fil": "Overriding __getattribute__ intercepts ALL attributes and easily causes infinite recursion; use __getattr__ for fallbacks."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Generator Exhaustion / Stream State",
-            "code": "def execute():\n    global count\n    count += 1",
-            "answer": "count = 0\ndef execute():\n    global count\n    count += 1\nexecute()",
-            "hint": "Define global count in module scope before incrementing it."
+            "id": 261,
+            "enemy_id": "final_compiler",
+            "difficulty": "hell",
+            "category": "Metaprogramming & Compilers",
+            "error_type": "Logical Error: Falls back to memory identity comparison",
+            "title": "Final Compiler #9: Custom Equality Protocol (__eq__)",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Implement custom value equality for Token instances using __eq__.",
+            "expected_output": "Tokens Equal: True",
+            "lines": [
+                "class Token:",
+                "    def __init__(self, val): self.val = val",
+                "    def __eq__(self, other):",
+                "        if not isinstance(other, Token): return False",
+                "        return self.val == other.val",
+                "t1, t2 = Token(\"EOF\"), Token(\"EOF\")",
+                "print(\"Tokens Equal:\", t1 == t2)"
+            ],
+            "distractors": [
+                "    def __equals__(self, other):"
+            ],
+            "hint": "Python equality operator == invokes __eq__, not __equals__.",
+            "code": "    def __equals__(self, other):",
+            "answer": "class Token:\n    def __init__(self, val): self.val = val\n    def __eq__(self, other):\n        if not isinstance(other, Token): return False\n        return self.val == other.val\nt1, t2 = Token(\"EOF\"), Token(\"EOF\")\nprint(\"Tokens Equal:\", t1 == t2)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Implement custom value equality for Token instances using __eq__.",
+            "goal_fil": "Lutasin ang program: Implement custom value equality for Token instances using __eq__.",
+            "hint_en": "Python equality operator == invokes __eq__, not __equals__.",
+            "hint_fil": "Tandaan: Python equality operator == invokes __eq__, not __equals__."
         },
         {
-            "category": "Logical Error",
-            "error_type": "Logical Error: Generator Exhaustion / Stream State",
-            "code": "class BugHunt:\n    @staticmethod\n    def victory():\n        return \"Master Debugger Achieved!\"\nprint(BugHunt.victory)",
-            "answer": "class BugHunt:\n    @staticmethod\n    def victory():\n        return \"Master Debugger Achieved!\"\nprint(BugHunt.victory())",
-            "hint": "Call the victory() static method with parentheses to claim ultimate mastery."
+            "id": 262,
+            "enemy_id": "final_compiler",
+            "difficulty": "hell",
+            "category": "Metaprogramming & Compilers",
+            "error_type": "Logical Error: Flawed token classification predicate",
+            "title": "Final Compiler #10: Compiler Lexer Token Dispatcher",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Dispatch token regex match strings into structured token instances.",
+            "expected_output": "Parsed: [('NUM', '10'), ('OP', '+')]",
+            "lines": [
+                "raw_stream = [\"10\", \"+\"]",
+                "tokens = []",
+                "for tok in raw_stream:",
+                "    kind = \"NUM\" if tok.isdigit() else \"OP\"",
+                "    tokens.append((kind, tok))",
+                "print(\"Parsed:\", tokens)"
+            ],
+            "distractors": [
+                "    kind = \"NUM\" if tok.isnumeric() and not tok else \"OP\""
+            ],
+            "hint": "tok.isdigit() checks whether string consists only of digits.",
+            "code": "    kind = \"NUM\" if tok.isnumeric() and not tok else \"OP\"",
+            "answer": "raw_stream = [\"10\", \"+\"]\ntokens = []\nfor tok in raw_stream:\n    kind = \"NUM\" if tok.isdigit() else \"OP\"\n    tokens.append((kind, tok))\nprint(\"Parsed:\", tokens)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Dispatch token regex match strings into structured token instances.",
+            "goal_fil": "Lutasin ang program: Dispatch token regex match strings into structured token instances.",
+            "hint_en": "tok.isdigit() checks whether string consists only of digits.",
+            "hint_fil": "Tandaan: tok.isdigit() checks whether string consists only of digits."
+        },
+        {
+            "id": 263,
+            "enemy_id": "final_compiler",
+            "difficulty": "hell",
+            "category": "Metaprogramming & Compilers",
+            "error_type": "Logical Error: Fails on nested recursive sub-trees",
+            "title": "Final Compiler #11: AST Node Evaluation Visitor Pattern",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Evaluate binary AST node recursively based on its operator symbol.",
+            "expected_output": "Evaluated: 15",
+            "lines": [
+                "ast = {'op': '+', 'left': 10, 'right': 5}",
+                "def eval_node(node):",
+                "    if isinstance(node, int): return node",
+                "    if node['op'] == '+':",
+                "        return eval_node(node['left']) + eval_node(node['right'])",
+                "print(\"Evaluated:\", eval_node(ast))"
+            ],
+            "distractors": [
+                "    if node['op'] == '+':\n        return node['left'] + node['right']"
+            ],
+            "hint": "Review your Python syntax, variable names, and line sequence.",
+            "code": "    if node['op'] == '+':\n        return node['left'] + node['right']",
+            "answer": "ast = {'op': '+', 'left': 10, 'right': 5}\ndef eval_node(node):\n    if isinstance(node, int): return node\n    if node['op'] == '+':\n        return eval_node(node['left']) + eval_node(node['right'])\nprint(\"Evaluated:\", eval_node(ast))",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Evaluate binary AST node recursively based on its operator symbol.",
+            "goal_fil": "Lutasin ang program: Evaluate binary AST node recursively based on its operator symbol.",
+            "hint_en": "Review your Python syntax, variable names, and line sequence.",
+            "hint_fil": "Sub-nodes can be nested AST trees; recursively call eval_node(node['left'])."
+        },
+        {
+            "id": 264,
+            "enemy_id": "final_compiler",
+            "difficulty": "hell",
+            "category": "Metaprogramming & Compilers",
+            "error_type": "Logical Error: Top-of-stack operands not consumed",
+            "title": "Final Compiler #12: Bytecode Virtual Machine Execution",
+            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "goal": "Execute a linear stack-based bytecode instruction sequence into final output.",
+            "expected_output": "VM Output: 100",
+            "lines": [
+                "bytecode = [('PUSH', 40), ('PUSH', 60), ('ADD', None)]",
+                "stack = []",
+                "for op, arg in bytecode:",
+                "    if op == 'PUSH': stack.append(arg)",
+                "    elif op == 'ADD':",
+                "        stack.append(stack.pop() + stack.pop())",
+                "print(\"VM Output:\", stack[0])"
+            ],
+            "distractors": [
+                "    elif op == 'ADD':\n        stack.append(stack[0] + stack[1])"
+            ],
+            "hint": "In a stack VM, pop the top two values with stack.pop() and push the sum back onto the stack.",
+            "code": "    elif op == 'ADD':\n        stack.append(stack[0] + stack[1])",
+            "answer": "bytecode = [('PUSH', 40), ('PUSH', 60), ('ADD', None)]\nstack = []\nfor op, arg in bytecode:\n    if op == 'PUSH': stack.append(arg)\n    elif op == 'ADD':\n        stack.append(stack.pop() + stack.pop())\nprint(\"VM Output:\", stack[0])",
+            "type": "parson",
+            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
+            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
+            "goal_en": "Execute a linear stack-based bytecode instruction sequence into final output.",
+            "goal_fil": "Lutasin ang program: Execute a linear stack-based bytecode instruction sequence into final output.",
+            "hint_en": "In a stack VM, pop the top two values with stack.pop() and push the sum back onto the stack.",
+            "hint_fil": "Tandaan: In a stack VM, pop the top two values with stack.pop() and push the sum back onto the stack."
         }
     ]
 };
 
-const hellBoss = finalCompiler;
-
 const hellEnemies = [
-    memoryDemon,
-    algorithmWraith,
-    concurrencyBeast,
-    securityHydra,
-    aiOverlord,
-    finalCompiler
+    memoryDemon, algorithmWraith, concurrencyBeast, securityHydra, aiOverlord, finalCompiler
 ];
+
+if (typeof window !== "undefined") window.hellEnemies = hellEnemies;
+if (typeof module !== "undefined") module.exports = hellEnemies;

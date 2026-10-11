@@ -26,7 +26,7 @@ const ENEMY_GUIDE_DATA = {
         "errorType": "SyntaxError",
         "tip": {
             "en": "Inspect quote pairs and verify that all print() parentheses are properly closed.",
-            "fil": "Suriin ang mga pares ng panipi at tiyaking sarado ang panaklong ng print()."
+            "fil": "Suriin ang mga pares ng quotes at tiyaking sarado ang panaklong () ng print()."
         }
     },
     "variable_goblin": {
@@ -151,7 +151,7 @@ const ENEMY_GUIDE_DATA = {
         "errorType": "SyntaxError / Full Review",
         "tip": {
             "en": "Check each line from top to bottom: colons, matching quotes, and correct indentation.",
-            "fil": "Suriin ang bawat linya mula itaas pababa: tutuldok (:), panipi, at indentation."
+            "fil": "Suriin ang bawat linya mula itaas pababa: colon (:), quotes, at indentation."
         }
     },
     "list_ogre": {

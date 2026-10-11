@@ -4,15 +4,11 @@
 
 #main-menu {
     display: none;
-
     position: relative;
-
-    width: 1920px;
-    height: 1080px;
-
-    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    padding: 60px 20px 40px 20px;
     box-sizing: border-box;
-
     background-image:
         linear-gradient(
             90deg,
@@ -21,14 +17,21 @@
             rgba(0, 0, 0, 0.20) 100%
         ),
         url("bgassets/mainmenu.png");
-
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-
-    overflow: hidden;
-
+    overflow-y: auto;
+    overflow-x: hidden;
     text-align: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#main-menu:not([style*="display: none"]),
+#main-menu[style*="display: block"],
+#main-menu[style*="display: flex"] {
+    display: flex !important;
 }
 
 
@@ -89,36 +92,24 @@
 ========================== */
 
 #main-menu h1 {
-    position: absolute;
-
-    top: 105px;
-    left: 50%;
-
-    transform: translateX(-50%);
-
-    width: 600px;
-
-    margin: 0;
-
+    position: static;
+    transform: none;
+    width: auto;
+    max-width: 90%;
+    margin: 0 auto 10px auto;
     font-family:
         'Press Start 2P',
         'Courier New',
         monospace;
-
-    font-size: 58px;
-
-    letter-spacing: 6px;
-
+    font-size: clamp(24px, 4.2vmin + 10px, 52px);
+    letter-spacing: clamp(2px, 0.4vmin, 4px);
     color: #f0c8ff;
-
     text-align: center;
-
     text-shadow:
         4px 4px 0 #31004c,
         8px 8px 0 #180028,
         0 0 10px #b800ff,
         0 0 25px rgba(212, 0, 255, 0.8);
-
     z-index: 5;
 }
 
@@ -130,11 +121,11 @@
 #main-menu h1::after {
     content: "✦ PYTHON BUG HUNTING ARENA ✦";
     display: block;
-    margin-top: 16px;
+    margin-top: clamp(8px, 1.2vmin, 14px);
     font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
+    font-size: clamp(11px, 1.4vmin, 15px);
     font-weight: 700;
-    letter-spacing: 5px;
+    letter-spacing: clamp(2px, 0.4vmin, 4px);
     color: #c4b5fd;
     text-shadow: 0 0 12px rgba(168, 85, 247, 0.8);
 }
@@ -145,22 +136,20 @@
 ========================== */
 
 #welcome-message {
-    position: absolute;
-    top: 292px;
-    left: 50%;
-    transform: translateX(-50%);
+    position: static;
+    transform: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin: 0;
-    padding: 9px 28px;
+    margin: 0 auto 24px auto;
+    padding: 10px 28px;
     box-sizing: border-box;
     background: rgba(22, 12, 42, 0.85);
     border: 1px solid rgba(168, 85, 247, 0.5);
     border-radius: 20px;
     color: #f3e8ff;
     font-family: 'Inter', sans-serif;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 600;
     letter-spacing: 0.5px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6), 0 0 15px rgba(168, 85, 247, 0.25);
@@ -175,19 +164,17 @@
 ========================== */
 
 #true-points-menu {
-    position: absolute;
-    top: 350px;
-    left: 50%;
-    transform: translateX(-50%);
+    position: static;
+    transform: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin: 0;
-    padding: 6px 18px;
+    margin: 0 auto 20px auto;
+    padding: 8px 22px;
     box-sizing: border-box;
     color: #facc15;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     letter-spacing: 1px;
     text-shadow: 0 0 12px rgba(250, 204, 21, 0.45);
@@ -200,32 +187,32 @@
 ========================================================= */
 
 .menu-buttons-deck {
-    position: absolute;
-    top: 360px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 420px;
+    position: static;
+    transform: none;
+    width: min(90%, clamp(280px, 32vw, 420px));
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: clamp(8px, 1.2vmin, 14px);
     align-items: stretch;
     z-index: 10;
+    margin: 0 auto;
 }
 
 .menu-btn {
     width: 100%;
-    height: 52px;
+    min-height: clamp(42px, 5.2vmin, 54px);
     box-sizing: border-box;
-    border-radius: 10px;
+    border-radius: 12px;
     font-family: 'Inter', sans-serif;
-    font-size: 15px;
+    font-size: clamp(13.5px, 1.5vmin, 16px);
     font-weight: 700;
     letter-spacing: 0.5px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 10px;
+    padding: clamp(8px, 1.2vmin, 12px) clamp(16px, 2vmin, 24px);
     transition: all 0.2s ease;
     background: linear-gradient(135deg, rgba(32, 20, 52, 0.95), rgba(16, 10, 30, 0.98));
     border: 1px solid #5a388a;
@@ -386,12 +373,11 @@
 
 #shop-screen {
     display: none;
-    position: absolute;
-    inset: 0;
-    width: 1920px;
-    height: 1080px;
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
     box-sizing: border-box;
-    padding: 35px 80px 35px 80px;
+    padding: 40px clamp(20px, 4vw, 60px);
     background:
         linear-gradient(180deg, rgba(8, 2, 16, 0.9), rgba(4, 1, 9, 0.96)),
         url("bgassets/mainmenu.png") center/cover no-repeat;
@@ -498,9 +484,9 @@
 /* Shop Cards Grid */
 .shop-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 36px;
-    max-width: 1550px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 28px;
+    max-width: 1400px;
     width: 100%;
     margin: 0 auto;
     align-items: stretch;
@@ -1004,10 +990,10 @@
 #about-screen {
     display: none;
     position: relative;
-    width: 1920px;
-    height: 1080px;
+    width: 100%;
+    min-height: 100vh;
     box-sizing: border-box;
-    padding: 0;
+    padding: 90px 24px 50px 24px;
     background-image:
         linear-gradient(
             90deg,
@@ -1019,7 +1005,8 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     z-index: 100;
 }
 
@@ -1068,8 +1055,8 @@
 /* Back Nav Button */
 #about-screen .about-back-nav-btn {
     position: absolute;
-    top: 40px;
-    left: 40px;
+    top: 30px;
+    left: 30px;
     width: 190px;
     height: 50px;
     z-index: 20;
@@ -1080,8 +1067,9 @@
 .about-card-container {
     position: relative;
     z-index: 10;
-    width: 1080px;
-    max-width: 90%;
+    width: 100%;
+    max-width: 980px;
+    margin: 0 auto;
     background: rgba(22, 12, 42, 0.92);
     border: 1.5px solid rgba(168, 85, 247, 0.55);
     border-radius: 16px;
@@ -1172,7 +1160,7 @@
 /* 3 Pillars Grid */
 .about-pillars-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 16px;
 }
 
@@ -2032,12 +2020,11 @@
 
 #collection-screen,
 .steam-collection-screen {
-    position: absolute !important;
-    inset: 0 !important;
-    width: 1920px !important;
-    height: 1080px !important;
+    position: relative !important;
+    width: 100% !important;
+    min-height: 100vh !important;
     box-sizing: border-box;
-    padding: 24px 50px 40px 50px;
+    padding: 30px clamp(20px, 4vw, 60px) 50px clamp(20px, 4vw, 60px);
     background: radial-gradient(circle at 50% 10%, rgba(35, 15, 60, 0.75) 0%, rgba(10, 6, 20, 0.97) 60%, #06030c 100%),
                 url("bgassets/mainmenu.png") center/cover no-repeat;
     overflow-y: auto !important;
@@ -2339,11 +2326,11 @@
     white-space: nowrap;
 }
 
-/* Steam Achievements Grid (3 columns) */
+/* Steam Achievements Grid (Responsive auto-fit) */
 .steam-achievements-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 12px;
 }
 
 .steam-achieve-card {

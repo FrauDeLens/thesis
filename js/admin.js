@@ -99,15 +99,26 @@ function escapeHtml(str) {
 
 function getEnemiesForTier(tier) {
     const t = (tier || "").toLowerCase();
-    if (t === "easy" && typeof easyEnemies !== "undefined") return easyEnemies;
-    if (t === "normal" && typeof normalEnemies !== "undefined") return normalEnemies;
-    if (t === "hard" && typeof hardEnemies !== "undefined") return hardEnemies;
-    if (t === "hell" && typeof hellEnemies !== "undefined") return hellEnemies;
-    if (typeof enemiesByDifficulty === "function") {
-        return enemiesByDifficulty(t) || [];
+    let list = [];
+    if (t === "easy") {
+        list = (typeof easyEnemies !== "undefined" ? easyEnemies : (typeof window !== "undefined" ? window.easyEnemies : null)) || [];
+    } else if (t === "normal") {
+        list = (typeof normalEnemies !== "undefined" ? normalEnemies : (typeof window !== "undefined" ? window.normalEnemies : null)) || [];
+    } else if (t === "hard") {
+        list = (typeof hardEnemies !== "undefined" ? hardEnemies : (typeof window !== "undefined" ? window.hardEnemies : null)) || [];
+    } else if (t === "hell") {
+        list = (typeof hellEnemies !== "undefined" ? hellEnemies : (typeof window !== "undefined" ? window.hellEnemies : null)) || [];
+    } else if (typeof enemiesByDifficulty === "function") {
+        list = enemiesByDifficulty(t) || [];
+    } else {
+        const match = (typeof allEnemyCatalog !== "undefined" && Array.isArray(allEnemyCatalog))
+            ? allEnemyCatalog.find(function (g) { return g.difficulty === t; })
+            : null;
+        list = match ? match.list : [];
     }
-    const match = allEnemyCatalog.find(function (g) { return g.difficulty === t; });
-    return match ? match.list : [];
+    return (Array.isArray(list) ? list : []).filter(function (enemy) {
+        return Boolean(enemy && enemy.id);
+    });
 }
 
 function getAllEnemyGroups() {
@@ -123,7 +134,9 @@ function getEnemyFriendlyName(enemyId) {
     if (!enemyId) return "Unknown Enemy";
     const groups = getAllEnemyGroups();
     for (const group of groups) {
+        if (!group || !Array.isArray(group.list)) continue;
         for (const enemy of group.list) {
+            if (!enemy || !enemy.id) continue;
             if (enemy.id === enemyId) {
                 return enemy.name + (enemy.topic ? " (" + enemy.topic + ")" : "");
             }
@@ -143,6 +156,7 @@ function updateQuestionFormEnemies(diffTier) {
     const icon = getTierThemeIcon(tier);
     const list = getEnemiesForTier(tier);
     list.forEach(function (enemy) {
+        if (!enemy || !enemy.id) return;
         const opt = document.createElement("option");
         opt.value = enemy.id;
         opt.textContent = icon + " " + enemy.name + (enemy.topic ? " — " + enemy.topic : "");
@@ -167,10 +181,13 @@ function updateBankEnemyFilter(selectedTier) {
 
         const groups = getAllEnemyGroups();
         groups.forEach(function (group) {
+            if (!group || !Array.isArray(group.list)) return;
+            const validEnemies = group.list.filter(function (e) { return Boolean(e && e.id); });
+            if (validEnemies.length === 0) return;
             const icon = getTierThemeIcon(group.difficulty);
             const optgroup = document.createElement("optgroup");
             optgroup.label = "── " + icon + " " + group.name.toUpperCase() + " TIER MONSTERS ──";
-            group.list.forEach(function (enemy) {
+            validEnemies.forEach(function (enemy) {
                 const opt = document.createElement("option");
                 opt.value = enemy.id;
                 opt.textContent = icon + " " + enemy.name + (enemy.topic ? " — " + enemy.topic : "");
@@ -189,6 +206,7 @@ function updateBankEnemyFilter(selectedTier) {
         bankFilter.appendChild(allInTierOpt);
 
         list.forEach(function (enemy) {
+            if (!enemy || !enemy.id) return;
             const opt = document.createElement("option");
             opt.value = enemy.id;
             opt.textContent = icon + " " + enemy.name + (enemy.topic ? " — " + enemy.topic : "");
@@ -291,13 +309,29 @@ function renderStudentTable() {
     }
 
     if (clearanceFilter === "cleared-normal") {
-        list = list.filter(function (s) { return s.unlocks && s.unlocks.normal; });
+        list = list.filter(function (s) {
+            const u = s.unlocks || {};
+            const tr = s.trophies || {};
+            return u.normal || u.hard || u.hell || (tr.normal && tr.normal.length > 0) || (tr.hard && tr.hard.length > 0) || (tr.hell && tr.hell.length > 0);
+        });
     } else if (clearanceFilter === "cleared-hard") {
-        list = list.filter(function (s) { return s.unlocks && s.unlocks.hard; });
+        list = list.filter(function (s) {
+            const u = s.unlocks || {};
+            const tr = s.trophies || {};
+            return u.hard || u.hell || (tr.hard && tr.hard.length > 0) || (tr.hell && tr.hell.length > 0);
+        });
     } else if (clearanceFilter === "cleared-hell") {
-        list = list.filter(function (s) { return s.unlocks && s.unlocks.hell; });
+        list = list.filter(function (s) {
+            const u = s.unlocks || {};
+            const tr = s.trophies || {};
+            return u.hell || (tr.hell && tr.hell.length > 0);
+        });
     } else if (clearanceFilter === "easy-only") {
-        list = list.filter(function (s) { return !(s.unlocks && s.unlocks.normal); });
+        list = list.filter(function (s) {
+            const u = s.unlocks || {};
+            const tr = s.trophies || {};
+            return !u.normal && !u.hard && !u.hell && (!tr.normal || tr.normal.length === 0);
+        });
     }
 
     list.sort(function (a, b) {
@@ -353,9 +387,9 @@ function renderStudentTable() {
 
         const unlocks = s.unlocks || {};
         const isEasy = unlocks.easy !== false;
-        const isNormal = !!unlocks.normal;
-        const isHard = !!unlocks.hard;
-        const isHell = !!unlocks.hell;
+        const isNormal = !!unlocks.normal || (trophies.normal && trophies.normal.length > 0) || !!unlocks.hard || !!unlocks.hell;
+        const isHard = !!unlocks.hard || (trophies.hard && trophies.hard.length > 0) || !!unlocks.hell;
+        const isHell = !!unlocks.hell || (trophies.hell && trophies.hell.length > 0);
 
         const trophies = s.trophies || {};
         const eTrophies = (trophies.easy || []).length;
@@ -432,6 +466,104 @@ async function loadQuestionPoolList() {
     }
 }
 
+// ==========================
+// CHALLENGE TYPE FORM HELPERS
+// ==========================
+
+function addAdminMemoryPairRow(containerId, initialA, initialB) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const row = document.createElement("div");
+    row.className = "admin-pair-row";
+    row.innerHTML = `
+        <input type="text" class="pair-input pair-a" placeholder="Card A (e.g. print())" value="${escapeHtml(initialA || '')}">
+        <span class="pair-arrow">↔</span>
+        <input type="text" class="pair-input pair-b" placeholder="Card B (e.g. Displays output)" value="${escapeHtml(initialB || '')}">
+        <button type="button" class="pair-remove-btn" title="Remove Pair">❌</button>
+    `;
+    const removeBtn = row.querySelector(".pair-remove-btn");
+    if (removeBtn) {
+        removeBtn.addEventListener("click", function () {
+            row.remove();
+        });
+    }
+    container.appendChild(row);
+}
+
+function getAdminMemoryPairs(containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return [];
+    const rows = container.querySelectorAll(".admin-pair-row");
+    const pairs = [];
+    rows.forEach(function (row) {
+        const a = row.querySelector(".pair-a") ? row.querySelector(".pair-a").value.trim() : "";
+        const b = row.querySelector(".pair-b") ? row.querySelector(".pair-b").value.trim() : "";
+        if (a && b) {
+            pairs.push({ a: a, b: b });
+        }
+    });
+    return pairs;
+}
+
+function updateSpotBugLineOptions(codeTextareaId, selectId, selectedVal) {
+    const textarea = document.getElementById(codeTextareaId);
+    const select = document.getElementById(selectId);
+    if (!textarea || !select) return;
+    const lines = textarea.value.split("\n");
+    select.innerHTML = "";
+    lines.forEach(function (line, idx) {
+        const opt = document.createElement("option");
+        opt.value = idx;
+        const preview = line.trim() ? (" - " + line.trim().slice(0, 30)) : " - (blank)";
+        opt.textContent = "Line " + (idx + 1) + preview;
+        select.appendChild(opt);
+    });
+    if (typeof selectedVal !== "undefined" && selectedVal !== null && select.querySelector(`option[value="${selectedVal}"]`)) {
+        select.value = selectedVal;
+    }
+}
+
+function switchAdminAddModalType(type) {
+    const parsonSec = document.getElementById("add-type-parson-section");
+    const memSec = document.getElementById("add-type-memory-section");
+    const spotSec = document.getElementById("add-type-spotbug-section");
+    const help = document.getElementById("question-type-help");
+
+    if (parsonSec) parsonSec.style.display = (type === "parson") ? "block" : "none";
+    if (memSec) memSec.style.display = (type === "memory") ? "block" : "none";
+    if (spotSec) spotSec.style.display = (type === "spotBug") ? "block" : "none";
+
+    if (help) {
+        if (type === "parson") help.textContent = "🧩 Parson Puzzle: Students rearrange scrambled Python code blocks in proper sequential order.";
+        else if (type === "memory") help.textContent = "🃏 Memory Match: Students uncover face-down cards to pair Python terms, keywords, and definitions.";
+        else if (type === "spotBug") help.textContent = "🐞 Spot the Bug: Students inspect a Python snippet and click the specific line with the error.";
+    }
+
+    if (type === "memory") {
+        const list = document.getElementById("add-memory-pairs-list");
+        if (list && list.children.length === 0) {
+            addAdminMemoryPairRow("add-memory-pairs-list", "print()", "Outputs text to terminal");
+            addAdminMemoryPairRow("add-memory-pairs-list", "input()", "Reads user keyboard input");
+        }
+    } else if (type === "spotBug") {
+        updateSpotBugLineOptions("question-spotbug-code", "question-spotbug-line");
+    }
+}
+
+function switchAdminEditModalType(type) {
+    const parsonSec = document.getElementById("edit-type-parson-section");
+    const memSec = document.getElementById("edit-type-memory-section");
+    const spotSec = document.getElementById("edit-type-spotbug-section");
+
+    if (parsonSec) parsonSec.style.display = (type === "parson") ? "block" : "none";
+    if (memSec) memSec.style.display = (type === "memory") ? "block" : "none";
+    if (spotSec) spotSec.style.display = (type === "spotBug") ? "block" : "none";
+
+    if (type === "spotBug") {
+        updateSpotBugLineOptions("edit-question-spotbug-code", "edit-question-spotbug-line");
+    }
+}
+
 function renderQuestionBank() {
     const container = document.getElementById("question-pool-list");
     const countBadge = document.getElementById("question-bank-count");
@@ -440,8 +572,16 @@ function renderQuestionBank() {
     const keyword = (document.getElementById("question-search-input") ? document.getElementById("question-search-input").value : "").trim().toLowerCase();
     const enemyFilter = document.getElementById("question-bank-enemy-filter") ? document.getElementById("question-bank-enemy-filter").value : "all";
     const categoryFilter = document.getElementById("question-bank-category-filter") ? document.getElementById("question-bank-category-filter").value : "all";
+    const typeFilter = document.getElementById("question-bank-type-filter") ? document.getElementById("question-bank-type-filter").value : "all";
 
     let list = cachedAdminQuestions.slice();
+
+    if (typeFilter !== "all") {
+        list = list.filter(function (q) {
+            const t = q.type || "parson";
+            return t === typeFilter;
+        });
+    }
 
     if (categoryFilter !== "all") {
         list = list.filter(function (q) {
@@ -464,11 +604,12 @@ function renderQuestionBank() {
 
     if (keyword) {
         list = list.filter(function (q) {
-            const code = (q.code || "").toLowerCase();
-            const ans = (q.answer || "").toLowerCase();
+            const code = (typeof q.code === "string" ? q.code : JSON.stringify(q.code || "")).toLowerCase();
+            const ans = (typeof q.answer === "string" ? q.answer : JSON.stringify(q.answer || "")).toLowerCase();
             const hint = (q.hint || "").toLowerCase();
             const enemy = (q.enemy_id || "").toLowerCase();
-            return code.includes(keyword) || ans.includes(keyword) || hint.includes(keyword) || enemy.includes(keyword);
+            const title = (q.title || "").toLowerCase();
+            return code.includes(keyword) || ans.includes(keyword) || hint.includes(keyword) || enemy.includes(keyword) || title.includes(keyword);
         });
     }
 
@@ -499,6 +640,7 @@ function renderQuestionBank() {
     list.forEach(function (q) {
         const diffLower = (q.difficulty || "easy").toLowerCase();
         const friendlyEnemy = getEnemyFriendlyName(q.enemy_id);
+        const qType = q.type || "parson";
 
         const cat = q.category || "Syntax Error";
         const catLower = cat.toLowerCase();
@@ -507,38 +649,108 @@ function renderQuestionBank() {
         const icon = catLower.includes("syntax") ? "⚡ " :
                      catLower.includes("log") ? "🧠 " : "💥 ";
 
+        const typeBadge = qType === "memory"
+            ? '<span class="qcard-type-badge type-memory">🃏 MEMORY</span>'
+            : qType === "spotBug"
+            ? '<span class="qcard-type-badge type-spotBug">🐞 SPOT BUG</span>'
+            : '<span class="qcard-type-badge type-parson">🧩 PARSON</span>';
+
         html += "<div class='admin-qcard'>";
         html += "<div class='qcard-header'>";
         html += "<span class='qcard-tier-badge tier-" + diffLower + "-badge'>" + diffLower.toUpperCase() + "</span>";
+        html += typeBadge;
         html += "<span class='qcard-category-badge " + catClass + "'>" + icon + escapeHtml(cat) + "</span>";
         if (q.error_type) {
             html += "<span class='qcard-error-type-tag'>🏷️ " + escapeHtml(q.error_type) + "</span>";
         }
         html += "<span class='qcard-enemy-name'>" + escapeHtml(friendlyEnemy) + "</span>";
-        html += "<span class='qcard-id-tag'>ID #" + q.id + "</span>";
+        const safeId = escapeHtml(String(q.id != null ? q.id : ""));
+        html += "<span class='qcard-id-tag'>ID #" + safeId + "</span>";
         html += "<div class='qcard-actions-group'>";
-        html += "<button class='qcard-edit-btn' onclick='adminOpenEditModal(" + q.id + ")' type='button' title='Edit challenge'>";
+        html += "<button class='qcard-edit-btn' onclick='adminOpenEditModal(\"" + safeId + "\")' type='button' title='Edit challenge'>";
         html += "<span>✏️</span><span>Edit</span>";
         html += "</button>";
-        html += "<button class='qcard-delete-btn' onclick='adminDeleteQuestion(" + q.id + ")' type='button' title='Delete challenge'>";
+        html += "<button class='qcard-delete-btn' onclick='adminDeleteQuestion(\"" + safeId + "\")' type='button' title='Delete challenge'>";
         html += "<span>🗑️</span><span>Delete</span>";
         html += "</button>";
         html += "</div>";
         html += "</div>";
 
         html += "<div class='qcard-body'>";
-        html += "<div class='qcard-code-block buggy'>";
-        html += "<div class='code-block-header'>🐞 BUGGY PYTHON CODE (STUDENT CHALLENGE)</div>";
-        html += "<pre class='qcard-code-snippet'>" + escapeHtml(q.code) + "</pre>";
-        html += "</div>";
 
-        html += "<div class='qcard-code-block solution'>";
-        html += "<div class='code-block-header'>✅ EXPECTED PYTHON SOLUTION</div>";
-        html += "<pre class='qcard-code-snippet'>" + escapeHtml(q.answer) + "</pre>";
-        html += "</div>";
+        if (q.title) {
+            html += "<div style='font-weight:700;color:#ffffff;font-size:14px;margin-bottom:6px;'>";
+            html += escapeHtml(q.title);
+            html += "</div>";
+        }
+
+        if (q.goal) {
+            html += "<div class='qcard-hint-box' style='background:rgba(124,58,237,0.15);border-color:rgba(124,58,237,0.4);margin-bottom:8px;'>";
+            html += "<span class='qcard-hint-icon'>🎯</span>";
+            html += "<span><strong>Objective:</strong> " + escapeHtml(q.goal) + "</span>";
+            html += "</div>";
+        }
+
+        // Challenge-Specific Content Rendering
+        if (qType === "memory") {
+            const pairs = q.pairs || (q.question_data && q.question_data.pairs) || [];
+            html += "<div class='qcard-code-block solution'>";
+            html += "<div class='code-block-header'>🃏 MEMORY MATCH PAIRS (" + pairs.length + ")</div>";
+            if (pairs.length > 0) {
+                pairs.forEach(function (p) {
+                    html += "<div style='font-family:monospace;font-size:12.5px;padding:3px 0;color:#bae6fd;'>• <code style='color:#38bdf8;background:rgba(0,0,0,0.4);padding:2px 4px;border-radius:3px;'>" + escapeHtml(p.a) + "</code> ↔ <span style='color:#f3e8ff;'>" + escapeHtml(p.b) + "</span></div>";
+                });
+            } else {
+                html += "<div style='color:#a78bfa;font-size:12px;'>No pairs configured.</div>";
+            }
+            html += "</div>";
+        } else if (qType === "spotBug") {
+            const lines = Array.isArray(q.code) ? q.code : (typeof q.code === "string" ? q.code.split('\n') : []);
+            const bugIdx = typeof q.answer === "number" ? q.answer : parseInt(q.answer, 10);
+            html += "<div class='qcard-code-block buggy'>";
+            html += "<div class='code-block-header'>🐞 PYTHON CODE SNIPPET (CORRECT BUGGY LINE: #" + (isNaN(bugIdx) ? "?" : (bugIdx + 1)) + ")</div>";
+            lines.forEach(function (l, idx) {
+                const isBug = (idx === bugIdx || (isNaN(bugIdx) && l.trim() === String(q.answer).trim()));
+                html += "<div style='font-family:monospace;font-size:12px;padding:3px 6px;margin:1px 0;border-radius:3px;" + (isBug ? "color:#fecdd3;font-weight:bold;background:rgba(244,63,94,0.3);border-left:3px solid #f43f5e;" : "color:#f3e8ff;") + "'>";
+                html += "<span style='color:#a78bfa;min-width:20px;display:inline-block;'>" + (idx + 1) + ".</span> " + escapeHtml(l) + (isBug ? " ⚠️ [BUGGY LINE]" : "");
+                html += "</div>";
+            });
+            html += "</div>";
+            if (q.explanation) {
+                html += "<div class='qcard-hint-box' style='background:rgba(244,63,94,0.12);border-color:rgba(244,63,94,0.35);margin-top:6px;'>";
+                html += "<span class='qcard-hint-icon'>🔍</span>";
+                html += "<span><strong>Bug Diagnosis:</strong> " + escapeHtml(q.explanation) + "</span>";
+                html += "</div>";
+            }
+        } else {
+            // Default: Parson Puzzle
+            if (q.expected_output) {
+                html += "<div class='qcard-hint-box' style='background:rgba(16,185,129,0.15);border-color:rgba(16,185,129,0.4);margin-bottom:8px;'>";
+                html += "<span class='qcard-hint-icon'>🖥️</span>";
+                html += "<span><strong>Expected Output:</strong> <code style='color:#50fa7b;background:rgba(0,0,0,0.5);padding:2px 6px;border-radius:4px;'>" + escapeHtml(q.expected_output) + "</code></span>";
+                html += "</div>";
+            }
+
+            html += "<div class='qcard-code-block solution'>";
+            html += "<div class='code-block-header'>🧩 PARSONS SOLUTION CODE BLOCKS</div>";
+            html += "<pre class='qcard-code-snippet'>" + escapeHtml(q.answer) + "</pre>";
+            html += "</div>";
+
+            if (q.distractors && Array.isArray(q.distractors) && q.distractors.length > 0) {
+                html += "<div class='qcard-code-block buggy' style='margin-top:8px;'>";
+                html += "<div class='code-block-header'>🚫 BUGGY DISTRACTOR LINES (MUST BE EXCLUDED)</div>";
+                html += "<pre class='qcard-code-snippet' style='color:#fca5a5;'>" + escapeHtml(q.distractors.join('\n')) + "</pre>";
+                html += "</div>";
+            } else if (q.code && q.code !== q.answer) {
+                html += "<div class='qcard-code-block buggy' style='margin-top:8px;'>";
+                html += "<div class='code-block-header'>🚫 BUGGY DISTRACTOR CODE</div>";
+                html += "<pre class='qcard-code-snippet' style='color:#fca5a5;'>" + escapeHtml(q.code) + "</pre>";
+                html += "</div>";
+            }
+        }
 
         if (q.hint && q.hint.trim() !== "") {
-            html += "<div class='qcard-hint-box'>";
+            html += "<div class='qcard-hint-box' style='margin-top:8px;'>";
             html += "<span class='qcard-hint-icon'>💡</span>";
             html += "<span><strong>Teacher Hint:</strong> " + escapeHtml(q.hint) + "</span>";
             html += "</div>";
@@ -566,7 +778,7 @@ function renderQuestionBank() {
 async function adminDeleteQuestion(id) {
     if (!confirm("Are you sure you want to permanently delete Question #" + id + " from the database?")) return;
     try {
-        await api("questions.php?id=" + id, "DELETE");
+        await api("questions.php?id=" + encodeURIComponent(id), "DELETE");
         loadQuestionPoolList();
     } catch (e) {
         alert("Failed to delete question: " + e.message);
@@ -583,7 +795,8 @@ function fillEditEnemySelect(tier) {
     select.innerHTML = "";
     const t = (tier || "easy").toLowerCase();
     const icon = getTierThemeIcon(t);
-    const list = typeof enemiesByDifficulty === "function" ? enemiesByDifficulty(t) : getEnemiesForTier(t);
+    const rawList = getEnemiesForTier(t);
+    const list = (Array.isArray(rawList) ? rawList : []).filter(function (e) { return Boolean(e && e.id); });
     list.forEach(function (enemy) {
         const opt = document.createElement("option");
         opt.value = enemy.id;
@@ -592,8 +805,31 @@ function fillEditEnemySelect(tier) {
     });
 }
 
+function adminOpenAddModal() {
+    const modal = document.getElementById("admin-add-modal");
+    if (!modal) return;
+    const diff = document.getElementById("question-difficulty") ? document.getElementById("question-difficulty").value : "easy";
+    updateQuestionFormEnemies(diff);
+    const msg = document.getElementById("question-form-message");
+    if (msg) {
+        msg.style.display = "none";
+        msg.className = "admin-form-message";
+        msg.textContent = "";
+    }
+    const typeSelect = document.getElementById("question-type");
+    if (typeSelect) {
+        switchAdminAddModalType(typeSelect.value);
+    }
+    modal.style.display = "flex";
+}
+
+function adminCloseAddModal() {
+    const modal = document.getElementById("admin-add-modal");
+    if (modal) modal.style.display = "none";
+}
+
 function adminOpenEditModal(id) {
-    const q = cachedAdminQuestions.find(function (item) { return Number(item.id) === Number(id); });
+    const q = cachedAdminQuestions.find(function (item) { return String(item.id) === String(id) || Number(item.id) === Number(id); });
     if (!q) {
         alert("Challenge #" + id + " not found.");
         return;
@@ -607,9 +843,52 @@ function adminOpenEditModal(id) {
 
     fillEditEnemySelect(diff);
     document.getElementById("edit-question-enemy").value = q.enemy_id;
-    document.getElementById("edit-question-code").value = q.code || "";
-    document.getElementById("edit-question-answer").value = q.answer || "";
-    document.getElementById("edit-question-hint").value = q.hint || "";
+    const titleInput = document.getElementById("edit-question-title");
+    if (titleInput) titleInput.value = q.title || q.question || "";
+    const hintInput = document.getElementById("edit-question-hint");
+    if (hintInput) hintInput.value = q.hint || "";
+
+    // Set Challenge Type
+    const qType = q.type || "parson";
+    const typeSelect = document.getElementById("edit-question-type");
+    if (typeSelect) {
+        typeSelect.value = qType;
+        switchAdminEditModalType(qType);
+    }
+
+    // Populate type-specific data
+    if (qType === "memory") {
+        const pairsList = document.getElementById("edit-memory-pairs-list");
+        if (pairsList) {
+            pairsList.innerHTML = "";
+            const pairs = q.pairs || (q.question_data && q.question_data.pairs) || [];
+            pairs.forEach(function (p) {
+                addAdminMemoryPairRow("edit-memory-pairs-list", p.a, p.b);
+            });
+            if (pairs.length === 0) {
+                addAdminMemoryPairRow("edit-memory-pairs-list", "", "");
+            }
+        }
+    } else if (qType === "spotBug") {
+        const lines = Array.isArray(q.code) ? q.code.join("\n") : (typeof q.code === "string" ? q.code : "");
+        const spotCodeInput = document.getElementById("edit-question-spotbug-code");
+        if (spotCodeInput) spotCodeInput.value = lines;
+        const spotExpInput = document.getElementById("edit-question-spotbug-explanation");
+        if (spotExpInput) spotExpInput.value = q.explanation || "";
+
+        const bugIdx = typeof q.answer === "number" ? q.answer : parseInt(q.answer, 10);
+        updateSpotBugLineOptions("edit-question-spotbug-code", "edit-question-spotbug-line", isNaN(bugIdx) ? 0 : bugIdx);
+    } else {
+        // Parson
+        const goalInput = document.getElementById("edit-question-goal");
+        if (goalInput) goalInput.value = q.goal || "";
+        const outInput = document.getElementById("edit-question-expected-output");
+        if (outInput) outInput.value = q.expected_output || "";
+
+        const distLines = Array.isArray(q.distractors) ? q.distractors.join("\n") : (q.code !== q.answer && typeof q.code === "string" ? q.code : "");
+        document.getElementById("edit-question-code").value = distLines || "";
+        document.getElementById("edit-question-answer").value = q.answer || "";
+    }
 
     const msg = document.getElementById("edit-question-message");
     if (msg) {
@@ -637,7 +916,7 @@ function adminOpenEditModal(id) {
 
     const titleEl = document.getElementById("admin-edit-modal-title");
     if (titleEl) {
-        titleEl.textContent = "EDIT CHALLENGE #" + q.id;
+        titleEl.textContent = "EDIT CHALLENGE #" + q.id + " (" + qType.toUpperCase() + ")";
     }
 
     modal.style.display = "flex";
@@ -656,20 +935,92 @@ async function adminSaveEditedQuestion() {
     const errTypeEl = document.getElementById("edit-question-error-type");
     const category = catEl ? catEl.value : "Syntax Error";
     const error_type = errTypeEl ? errTypeEl.value : category;
-    const code = document.getElementById("edit-question-code").value.trim();
-    const answer = document.getElementById("edit-question-answer").value.trim();
+    const title = document.getElementById("edit-question-title") ? document.getElementById("edit-question-title").value.trim() : "";
     const hint = document.getElementById("edit-question-hint").value.trim();
+    const type = document.getElementById("edit-question-type") ? document.getElementById("edit-question-type").value : "parson";
 
     const msg = document.getElementById("edit-question-message");
     const saveBtn = document.getElementById("save-edit-question-btn");
 
-    if (!code || !answer) {
-        if (msg) {
-            msg.className = "admin-form-message error";
-            msg.style.display = "block";
-            msg.textContent = "⚠️ Please provide both the Buggy Code and Correct Answer.";
+    let payload = {
+        id: id,
+        type: type,
+        difficulty: difficulty,
+        enemy_id: enemy_id,
+        title: title,
+        question: title,
+        category: category,
+        error_type: error_type,
+        hint: hint
+    };
+
+    if (type === "memory") {
+        const pairs = getAdminMemoryPairs("edit-memory-pairs-list");
+        if (pairs.length === 0) {
+            if (msg) {
+                msg.className = "admin-form-message error";
+                msg.style.display = "block";
+                msg.textContent = "⚠️ Please add at least one valid concept pair (Card A and Card B).";
+            }
+            return;
         }
-        return;
+        payload.pairs = pairs;
+        payload.answer = JSON.stringify(pairs);
+        payload.code = "";
+        payload.question_data = { pairs: pairs };
+    } else if (type === "spotBug") {
+        const codeText = document.getElementById("edit-question-spotbug-code") ? document.getElementById("edit-question-spotbug-code").value.trim() : "";
+        const codeLines = codeText.split("\n");
+        const lineSelect = document.getElementById("edit-question-spotbug-line");
+        const selectedLine = lineSelect ? parseInt(lineSelect.value, 10) : 0;
+        const explanation = document.getElementById("edit-question-spotbug-explanation") ? document.getElementById("edit-question-spotbug-explanation").value.trim() : "";
+
+        if (!codeText || codeLines.length === 0) {
+            if (msg) {
+                msg.className = "admin-form-message error";
+                msg.style.display = "block";
+                msg.textContent = "⚠️ Please provide the Python code snippet.";
+            }
+            return;
+        }
+        if (isNaN(selectedLine) || selectedLine < 0 || selectedLine >= codeLines.length) {
+            if (msg) {
+                msg.className = "admin-form-message error";
+                msg.style.display = "block";
+                msg.textContent = "⚠️ Please select a valid line number for the bug.";
+            }
+            return;
+        }
+        payload.code = codeLines;
+        payload.answer = selectedLine;
+        payload.explanation = explanation;
+        payload.question_data = {
+            code: codeLines,
+            answer: selectedLine,
+            explanation: explanation
+        };
+    } else {
+        // Parson
+        const goal = document.getElementById("edit-question-goal") ? document.getElementById("edit-question-goal").value.trim() : "";
+        const expected_output = document.getElementById("edit-question-expected-output") ? document.getElementById("edit-question-expected-output").value.trim() : "";
+        const code = document.getElementById("edit-question-code").value.trim();
+        const answer = document.getElementById("edit-question-answer").value.trim();
+
+        if (!answer) {
+            if (msg) {
+                msg.className = "admin-form-message error";
+                msg.style.display = "block";
+                msg.textContent = "⚠️ Please provide the Correct Solution code lines.";
+            }
+            return;
+        }
+
+        const distractorsArray = code ? code.split("\n").map(function (l) { return l.trim(); }).filter(Boolean) : [];
+        payload.goal = goal;
+        payload.expected_output = expected_output;
+        payload.code = code;
+        payload.answer = answer;
+        payload.distractors = distractorsArray;
     }
 
     try {
@@ -680,26 +1031,11 @@ async function adminSaveEditedQuestion() {
             msg.textContent = "Saving changes to database...";
         }
 
-        await api("questions.php", "PUT", {
-            id: id,
-            difficulty: difficulty,
-            enemy_id: enemy_id,
-            category: category,
-            error_type: error_type,
-            code: code,
-            answer: answer,
-            hint: hint
-        });
+        await api("questions.php", "PUT", payload);
 
-        const item = cachedAdminQuestions.find(function (q) { return Number(q.id) === id; });
+        const item = cachedAdminQuestions.find(function (q) { return String(q.id) === String(id) || Number(q.id) === Number(id); });
         if (item) {
-            item.difficulty = difficulty;
-            item.enemy_id = enemy_id;
-            item.category = category;
-            item.error_type = error_type;
-            item.code = code;
-            item.answer = answer;
-            item.hint = hint;
+            Object.assign(item, payload);
         }
 
         if (msg) {
@@ -756,9 +1092,58 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const questionBankEnemyFilter = document.getElementById("question-bank-enemy-filter");
     if (questionBankEnemyFilter) questionBankEnemyFilter.addEventListener("change", renderQuestionBank);
-    // questionBankCatFilterListener
+
     const questionBankCatFilter = document.getElementById("question-bank-category-filter");
     if (questionBankCatFilter) questionBankCatFilter.addEventListener("change", renderQuestionBank);
+
+    const questionBankTypeFilter = document.getElementById("question-bank-type-filter");
+    if (questionBankTypeFilter) questionBankTypeFilter.addEventListener("change", renderQuestionBank);
+
+    // Dynamic type switching for Add Modal
+    const questionTypeSelect = document.getElementById("question-type");
+    if (questionTypeSelect) {
+        questionTypeSelect.addEventListener("change", function () {
+            switchAdminAddModalType(this.value);
+        });
+    }
+
+    // Dynamic type switching for Edit Modal
+    const editQuestionTypeSelect = document.getElementById("edit-question-type");
+    if (editQuestionTypeSelect) {
+        editQuestionTypeSelect.addEventListener("change", function () {
+            switchAdminEditModalType(this.value);
+        });
+    }
+
+    // Memory match pair buttons
+    const addMemoryPairBtn = document.getElementById("add-memory-pair-btn");
+    if (addMemoryPairBtn) {
+        addMemoryPairBtn.addEventListener("click", function () {
+            addAdminMemoryPairRow("add-memory-pairs-list");
+        });
+    }
+
+    const editMemoryPairBtn = document.getElementById("edit-memory-pair-btn");
+    if (editMemoryPairBtn) {
+        editMemoryPairBtn.addEventListener("click", function () {
+            addAdminMemoryPairRow("edit-memory-pairs-list");
+        });
+    }
+
+    // Spot the Bug live line indexing
+    const spotbugCodeInput = document.getElementById("question-spotbug-code");
+    if (spotbugCodeInput) {
+        spotbugCodeInput.addEventListener("input", function () {
+            updateSpotBugLineOptions("question-spotbug-code", "question-spotbug-answer");
+        });
+    }
+
+    const editSpotbugCodeInput = document.getElementById("edit-question-spotbug-code");
+    if (editSpotbugCodeInput) {
+        editSpotbugCodeInput.addEventListener("input", function () {
+            updateSpotBugLineOptions("edit-question-spotbug-code", "edit-question-spotbug-answer");
+        });
+    }
 
     const tierButtons = document.querySelectorAll(".tier-tab-btn");
     tierButtons.forEach(function (btn) {
@@ -766,6 +1151,8 @@ document.addEventListener("DOMContentLoaded", function () {
             tierButtons.forEach(function (b) { b.classList.remove("active"); });
             this.classList.add("active");
             currentQuestionFilterTier = this.getAttribute("data-tier") || "all";
+            const bankFilter = document.getElementById("question-bank-enemy-filter");
+            if (bankFilter) bankFilter.value = "all";
             updateBankEnemyFilter(currentQuestionFilterTier);
             renderQuestionBank();
         });
@@ -800,23 +1187,23 @@ document.addEventListener("DOMContentLoaded", function () {
             if (adminViewSubtitle) adminViewSubtitle.textContent = "Manage Python bug challenges, answers, and hints for all difficulty levels.";
             fillEnemySelect();
 
-    // Sync Error Category & Specific Error Type selects in Add Form
-    const qCatSelect = document.getElementById("question-category");
-    const qErrorTypeSelect = document.getElementById("question-error-type");
-    if (qCatSelect && qErrorTypeSelect) {
-        qErrorTypeSelect.addEventListener("change", function () {
-            qCatSelect.value = this.value;
-        });
-    }
+            // Sync Error Category & Specific Error Type selects in Add Form
+            const qCatSelect = document.getElementById("question-category");
+            const qErrorTypeSelect = document.getElementById("question-error-type");
+            if (qCatSelect && qErrorTypeSelect) {
+                qErrorTypeSelect.addEventListener("change", function () {
+                    qCatSelect.value = this.value;
+                });
+            }
 
-    // Sync in Edit Modal
-    const editCatSelect = document.getElementById("edit-question-category");
-    const editErrorTypeSelect = document.getElementById("edit-question-error-type");
-    if (editCatSelect && editErrorTypeSelect) {
-        editErrorTypeSelect.addEventListener("change", function () {
-            editCatSelect.value = this.value;
-        });
-    }
+            // Sync in Edit Modal
+            const editCatSelect = document.getElementById("edit-question-category");
+            const editErrorTypeSelect = document.getElementById("edit-question-error-type");
+            if (editCatSelect && editErrorTypeSelect) {
+                editErrorTypeSelect.addEventListener("change", function () {
+                    editCatSelect.value = this.value;
+                });
+            }
 
             loadQuestionPoolList();
         });
@@ -841,82 +1228,129 @@ document.addEventListener("DOMContentLoaded", function () {
     const saveEditBtn = document.getElementById("save-edit-question-btn");
     if (saveEditBtn) saveEditBtn.addEventListener("click", adminSaveEditedQuestion);
 
-    const testEditBtn = document.getElementById("test-edit-question-btn");
-    if (testEditBtn) {
-        testEditBtn.addEventListener("click", function () {
-            const code = document.getElementById("edit-question-code").value;
-            const answer = document.getElementById("edit-question-answer").value;
-            const msg = document.getElementById("edit-question-message");
-            const res = testQuestionDiffAndSyntax(code, answer);
-            if (msg) {
-                msg.style.display = "block";
-                msg.className = "admin-form-message " + (res.valid ? "success" : "error");
-                msg.textContent = res.message;
-            }
-        });
-    }
+    // Modal listeners for Add Question
+    const openAddBtn = document.getElementById("open-add-question-modal-btn");
+    if (openAddBtn) openAddBtn.addEventListener("click", adminOpenAddModal);
+
+    const closeAddBtn = document.getElementById("close-add-modal-btn");
+    if (closeAddBtn) closeAddBtn.addEventListener("click", adminCloseAddModal);
+
+    const cancelAddBtn = document.getElementById("cancel-add-modal-btn");
+    if (cancelAddBtn) cancelAddBtn.addEventListener("click", adminCloseAddModal);
+
+    const addBackdrop = document.getElementById("admin-add-modal-backdrop");
+    if (addBackdrop) addBackdrop.addEventListener("click", adminCloseAddModal);
 
     const addQuestionBtn = document.getElementById("add-question-button");
     if (addQuestionBtn) {
         addQuestionBtn.addEventListener("click", async function () {
             const diff = document.getElementById("question-difficulty").value;
             const enemy = document.getElementById("question-enemy").value;
+            const type = "parson";
             const catEl = document.getElementById("question-category");
             const errTypeEl = document.getElementById("question-error-type");
             const category = catEl ? catEl.value : "Syntax Error";
             const error_type = errTypeEl ? errTypeEl.value : category;
-            const codeInput = document.getElementById("question-code");
-            const answerInput = document.getElementById("question-answer");
+
+            const titleInput = document.getElementById("question-title");
             const hintInput = document.getElementById("question-hint");
             const msg = document.getElementById("question-form-message");
 
-            const code = codeInput ? codeInput.value.trim() : "";
-            const answer = answerInput ? answerInput.value.trim() : "";
+            const title = titleInput ? titleInput.value.trim() : "";
             const hint = hintInput ? hintInput.value.trim() : "";
 
-            if (!code || !answer) {
+            if (!title) {
                 if (msg) {
                     msg.className = "admin-form-message error";
-                    msg.textContent = "⚠️ Please provide both the Buggy Code and Correct Answer.";
+                    msg.style.display = "block";
+                    msg.textContent = "⚠️ Please provide a Challenge Mission Title.";
                 }
                 return;
             }
+
+            const goalInput = document.getElementById("question-goal");
+            const outInput = document.getElementById("question-expected-output");
+            const codeInput = document.getElementById("question-code");
+            const answerInput = document.getElementById("question-answer");
+
+            const goal = goalInput ? goalInput.value.trim() : "";
+            const expected_output = outInput ? outInput.value.trim() : "";
+            const code = codeInput ? codeInput.value.trim() : "";
+            const answer = answerInput ? answerInput.value.trim() : "";
+
+            if (!answer) {
+                if (msg) {
+                    msg.className = "admin-form-message error";
+                    msg.style.display = "block";
+                    msg.textContent = "⚠️ Please provide the Correct Python Solution code lines (one per block).";
+                }
+                return;
+            }
+
+            const solutionLines = answer.split("\n").map(function (l) { return l.trim(); }).filter(Boolean);
+            const distractorsArray = code ? code.split("\n").map(function (l) { return l.trim(); }).filter(Boolean) : [];
+
+            let payload = {
+                difficulty: diff,
+                enemy_id: enemy,
+                type: "parson",
+                title: title,
+                question: title,
+                category: category,
+                error_type: error_type,
+                hint: hint,
+                goal: goal,
+                expected_output: expected_output,
+                code: code,
+                answer: answer,
+                lines: solutionLines,
+                distractors: distractorsArray,
+                question_data: {
+                    goal: goal,
+                    expected_output: expected_output,
+                    solution_lines: solutionLines,
+                    distractor_lines: distractorsArray
+                }
+            };
 
             try {
                 if (msg) {
                     msg.className = "admin-form-message";
                     msg.style.display = "block";
-                    msg.textContent = "Submitting challenge...";
+                    msg.textContent = "Submitting challenge to database...";
                 }
-                await api("questions.php", "POST", {
-                    difficulty: diff,
-                    enemy_id: enemy,
-                    category: category,
-                    error_type: error_type,
-                    code: code,
-                    answer: answer,
-                    hint: hint
-                });
+                await api("questions.php", "POST", payload);
 
                 if (msg) {
                     msg.className = "admin-form-message success";
                     msg.textContent = "✅ Challenge added successfully to the " + diff.toUpperCase() + " pool!";
                 }
 
+                if (titleInput) titleInput.value = "";
+                const goalInput = document.getElementById("question-goal");
+                if (goalInput) goalInput.value = "";
+                const outInput = document.getElementById("question-expected-output");
+                if (outInput) outInput.value = "";
+                const codeInput = document.getElementById("question-code");
                 if (codeInput) codeInput.value = "";
+                const answerInput = document.getElementById("question-answer");
                 if (answerInput) answerInput.value = "";
                 if (hintInput) hintInput.value = "";
+                const sbCode = document.getElementById("question-spotbug-code");
+                if (sbCode) sbCode.value = "";
+                const sbExp = document.getElementById("question-spotbug-explanation");
+                if (sbExp) sbExp.value = "";
 
                 loadQuestionPoolList();
 
                 setTimeout(function () {
-                    if (msg && msg.classList.contains("success")) {
-                        msg.style.display = "none";
-                    }
-                }, 4000);
+                    adminCloseAddModal();
+                    if (msg) msg.style.display = "none";
+                }, 800);
             } catch (e) {
                 if (msg) {
                     msg.className = "admin-form-message error";
+                    msg.style.display = "block";
                     msg.textContent = "❌ Error adding question: " + e.message;
                 }
             }
@@ -928,6 +1362,17 @@ document.addEventListener("DOMContentLoaded", function () {
         adminLogoutBtn.addEventListener("click", async function () {
             try { await api("auth.php", "POST", { action: "logout" }); } catch (e) { }
             currentUser = null;
+            const teacherUser = document.getElementById("teacher-username");
+            const teacherPass = document.getElementById("teacher-password");
+            const userInp = document.getElementById("username");
+            const passInp = document.getElementById("password");
+            const logMsg = document.getElementById("login-message");
+            if (teacherUser) teacherUser.value = "";
+            if (teacherPass) teacherPass.value = "";
+            if (userInp) userInp.value = "";
+            if (passInp) passInp.value = "";
+            if (logMsg) logMsg.textContent = "";
+            if (typeof switchLoginRole === "function") switchLoginRole("student");
             showScreen(document.getElementById("login-screen"));
         });
     }
@@ -947,3 +1392,4 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+

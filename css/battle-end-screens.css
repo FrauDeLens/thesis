@@ -8,13 +8,13 @@
 --------------------------------------------------------- */
 #victory-screen {
     display: none;
-    position: absolute;
-    inset: 0;
-    width: 1920px;
-    height: 1080px;
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
     z-index: 250;
     box-sizing: border-box;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     background-image:
         radial-gradient(circle at 75% 35%, rgba(250, 204, 21, 0.15) 0%, transparent 45%),
         radial-gradient(circle at 25% 65%, rgba(124, 58, 237, 0.25) 0%, transparent 50%),
@@ -84,9 +84,9 @@
 /* Floating Frau Character on the Left Stage */
 #victory-frau {
     position: absolute;
-    left: 120px;
-    bottom: 90px;
-    max-height: 720px;
+    left: clamp(20px, 6vw, 100px);
+    bottom: clamp(20px, 8vh, 90px);
+    max-height: clamp(260px, 60vh, 680px);
     width: auto;
     object-fit: contain;
     z-index: 10;
@@ -107,10 +107,10 @@
 /* Glowing Character Aura Platform */
 .end-screen-vignette {
     position: absolute;
-    left: 80px;
-    bottom: 40px;
-    width: 600px;
-    height: 120px;
+    left: clamp(10px, 4vw, 80px);
+    bottom: clamp(10px, 4vh, 40px);
+    width: clamp(220px, 32vw, 550px);
+    height: clamp(40px, 10vh, 110px);
     background: radial-gradient(ellipse at center, rgba(250, 204, 21, 0.45) 0%, rgba(124, 58, 237, 0.25) 45%, transparent 75%);
     border-radius: 50%;
     filter: blur(8px);
@@ -118,15 +118,13 @@
     pointer-events: none;
 }
 
-/* Victory Right Content Card */
+/* Victory Center Content Card */
 .victory-panel {
-    position: absolute;
-    right: 140px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 680px;
-    max-width: 45%;
-    z-index: 20;
+    position: relative;
+    margin: auto;
+    width: min(600px, 92vw);
+    max-width: 92vw;
+    z-index: 25;
     background: rgba(22, 12, 42, 0.94);
     border: 1.5px solid rgba(250, 204, 21, 0.55);
     border-radius: 20px;
@@ -135,23 +133,23 @@
         0 15px 50px rgba(0, 0, 0, 0.85),
         0 0 40px rgba(250, 204, 21, 0.25),
         inset 0 0 25px rgba(250, 204, 21, 0.08);
-    padding: 44px 50px;
+    padding: clamp(20px, 3.5vmin, 40px);
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 18px;
     text-align: center;
-    animation: victoryCardEntry 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: victoryCardEntry 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes victoryCardEntry {
     from {
         opacity: 0;
-        transform: translateY(-45%) scale(0.95);
+        transform: translateY(16px) scale(0.96);
     }
     to {
         opacity: 1;
-        transform: translateY(-50%) scale(1);
+        transform: translateY(0) scale(1);
     }
 }
 
@@ -281,13 +279,13 @@
 --------------------------------------------------------- */
 #defeat-screen {
     display: none;
-    position: absolute;
-    inset: 0;
-    width: 1920px;
-    height: 1080px;
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
     z-index: 250;
     box-sizing: border-box;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     background-image:
         radial-gradient(circle at 75% 35%, rgba(239, 68, 68, 0.2) 0%, transparent 45%),
         radial-gradient(circle at 25% 65%, rgba(150, 10, 30, 0.3) 0%, transparent 50%),
@@ -356,9 +354,9 @@
 /* Floating Frau Character (Defeated Pose) */
 #defeat-frau {
     position: absolute;
-    left: 120px;
-    bottom: 90px;
-    max-height: 700px;
+    left: clamp(20px, 6vw, 100px);
+    bottom: clamp(20px, 8vh, 90px);
+    max-height: clamp(260px, 60vh, 660px);
     width: auto;
     object-fit: contain;
     z-index: 10;
@@ -378,10 +376,10 @@
 
 .defeat-vignette {
     position: absolute;
-    left: 80px;
-    bottom: 40px;
-    width: 600px;
-    height: 120px;
+    left: clamp(10px, 4vw, 80px);
+    bottom: clamp(10px, 4vh, 40px);
+    width: clamp(220px, 32vw, 550px);
+    height: clamp(40px, 10vh, 110px);
     background: radial-gradient(ellipse at center, rgba(239, 68, 68, 0.45) 0%, rgba(100, 10, 20, 0.25) 45%, transparent 75%);
     border-radius: 50%;
     filter: blur(8px);
@@ -389,15 +387,13 @@
     pointer-events: none;
 }
 
-/* Defeat Right Content Card */
+/* Defeat Center Content Card */
 .defeat-panel {
-    position: absolute;
-    right: 140px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 680px;
-    max-width: 45%;
-    z-index: 20;
+    position: relative;
+    margin: auto;
+    width: min(600px, 92vw);
+    max-width: 92vw;
+    z-index: 25;
     background: rgba(26, 8, 16, 0.95);
     border: 1.5px solid rgba(239, 68, 68, 0.55);
     border-radius: 20px;
@@ -406,23 +402,23 @@
         0 15px 50px rgba(0, 0, 0, 0.9),
         0 0 40px rgba(239, 68, 68, 0.25),
         inset 0 0 25px rgba(239, 68, 68, 0.08);
-    padding: 44px 50px;
+    padding: clamp(20px, 3.5vmin, 40px);
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 18px;
     text-align: center;
-    animation: defeatCardEntry 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: defeatCardEntry 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes defeatCardEntry {
     from {
         opacity: 0;
-        transform: translateY(-45%) scale(0.95);
+        transform: translateY(16px) scale(0.96);
     }
     to {
         opacity: 1;
-        transform: translateY(-50%) scale(1);
+        transform: translateY(0) scale(1);
     }
 }
 
@@ -473,17 +469,52 @@
     margin: 0;
 }
 
+/* Defeat Action Buttons Row */
+.defeat-actions-row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    margin-top: 6px;
+}
+
+.defeat-retry-btn {
+    width: 100%;
+    height: 52px;
+    background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+    border: 1.5px solid #fde68a !important;
+    border-radius: 12px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.5px !important;
+    color: #ffffff !important;
+    box-shadow: 0 8px 24px rgba(245, 158, 11, 0.45) !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+}
+
+.defeat-retry-btn:hover {
+    background: linear-gradient(135deg, #fbbf24, #b45309) !important;
+    box-shadow: 0 12px 32px rgba(245, 158, 11, 0.7) !important;
+    transform: translateY(-2px) scale(1.01) !important;
+}
+
 /* Return to Difficulty Button */
 .defeat-btn {
     width: 100%;
-    height: 56px;
+    height: 52px;
     background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
     border: 1.5px solid #fca5a5 !important;
     border-radius: 12px !important;
     font-family: 'Inter', sans-serif !important;
-    font-size: 17px !important;
+    font-size: 16px !important;
     font-weight: 800 !important;
-    letter-spacing: 1px !important;
+    letter-spacing: 0.5px !important;
     color: #ffffff !important;
     box-shadow: 0 8px 30px rgba(239, 68, 68, 0.5) !important;
     cursor: pointer !important;
@@ -492,7 +523,6 @@
     align-items: center !important;
     justify-content: center !important;
     gap: 10px !important;
-    margin-top: 6px !important;
 }
 
 .defeat-btn:hover {
@@ -525,3 +555,18 @@
         opacity: 0;
     }
 }
+
+/* Responsive Handling for Centered Victory and Defeat Panels */
+@media (max-width: 1024px) {
+    #victory-frau,
+    #defeat-frau {
+        opacity: 0.18 !important;
+        left: 10px !important;
+        max-height: 40vh !important;
+        filter: blur(1px) drop-shadow(0 10px 20px rgba(0, 0, 0, 0.8)) !important;
+    }
+    .end-screen-vignette {
+        opacity: 0.25 !important;
+    }
+}
+

@@ -4,10 +4,28 @@
 // =========================================================
 
 function enemiesByDifficulty(name) {
-    if (name === "easy") return easyEnemies;
-    if (name === "normal") return normalEnemies;
-    if (name === "hard") return hardEnemies;
-    return hellEnemies;
+    const n = (name || "").toLowerCase();
+    if (n === "easy") {
+        if (typeof easyEnemies !== "undefined") return easyEnemies;
+        if (typeof window !== "undefined" && window.easyEnemies) return window.easyEnemies;
+        return [];
+    }
+    if (n === "normal") {
+        if (typeof normalEnemies !== "undefined") return normalEnemies;
+        if (typeof window !== "undefined" && window.normalEnemies) return window.normalEnemies;
+        return [];
+    }
+    if (n === "hard") {
+        if (typeof hardEnemies !== "undefined") return hardEnemies;
+        if (typeof window !== "undefined" && window.hardEnemies) return window.hardEnemies;
+        return [];
+    }
+    if (n === "hell") {
+        if (typeof hellEnemies !== "undefined") return hellEnemies;
+        if (typeof window !== "undefined" && window.hellEnemies) return window.hellEnemies;
+        return [];
+    }
+    return [];
 }
 
 function getGameProgress() {

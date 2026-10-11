@@ -58,7 +58,7 @@ function showScreen(screen) {
     if (adminScreen) adminScreen.style.display = "none";
     if (codexScreen) codexScreen.style.display = "none";
 
-    if (screen === codexScreen) {
+    if (screen === codexScreen || screen === loginScreen || screen === registerScreen || screen === titleScreen) {
         screen.style.display = "flex";
     } else {
         screen.style.display = "block";
@@ -81,16 +81,13 @@ function showScreen(screen) {
     }
 }
 
-// Aspect Ratio Responsive Scaler (1920 x 1080)
+// Responsive Layout Handler
 function resizeGame() {
     const game = document.getElementById("game-container");
     if (!game) return;
-
-    const scaleX = window.innerWidth / 1920;
-    const scaleY = window.innerHeight / 1080;
-    const scale = Math.min(scaleX, scaleY);
-
-    game.style.transform = `translate(-50%, -50%) scale(${scale})`;
+    game.style.transform = "none";
+    game.style.left = "0";
+    game.style.top = "0";
 }
 
 window.addEventListener("resize", resizeGame);
@@ -207,14 +204,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const userInp = document.getElementById("username") || document.getElementById("username-input");
             const passInp = document.getElementById("password") || document.getElementById("password-input");
+            const teacherUser = document.getElementById("teacher-username");
+            const teacherPass = document.getElementById("teacher-password");
             const logMsg = document.getElementById("login-message");
             const welMsg = document.getElementById("welcome-message");
             const profName = document.getElementById("global-profile-name");
             if (userInp) userInp.value = "";
             if (passInp) passInp.value = "";
+            if (teacherUser) teacherUser.value = "";
+            if (teacherPass) teacherPass.value = "";
             if (logMsg) logMsg.textContent = "";
             if (welMsg) welMsg.textContent = "Welcome!";
             if (profName) profName.textContent = "Profile";
+            if (typeof switchLoginRole === "function") switchLoginRole("student");
         });
     }
 

@@ -53,6 +53,7 @@ function updatePoints() {
     if (enemyPointsDisplay) enemyPointsDisplay.textContent = "HIT " + enemyPointValue;
 
     updateHintCostDisplay();
+    if (typeof updatePowerupButtons === "function") updatePowerupButtons();
 }
 
 function updateHearts() {
@@ -125,7 +126,11 @@ function showHint() {
     const lang = (typeof getLanguage === "function") ? getLanguage() : "en";
     const isFil = lang === "fil";
 
-    if (!currentBugData.hint) {
+    const hintText = isFil 
+        ? (currentBugData.hint_fil || currentBugData.hint) 
+        : (currentBugData.hint_en || currentBugData.hint);
+
+    if (!hintText) {
         if (dialogueText) dialogueText.textContent = isFil ? "Walang hint para sa bug na ito." : "No hint available for this bug.";
         return;
     }
@@ -136,7 +141,7 @@ function showHint() {
     // Easy and Normal modes: Hints are 100% FREE (No TP used or deducted)
     if (isEasyOrNormal) {
         if (playerSprite) playerSprite.src = "css/Sprites/user/talking.png";
-        if (dialogueText) dialogueText.textContent = (isFil ? "💡 LIBRENG HINT: " : "💡 FREE HINT: ") + currentBugData.hint;
+        if (dialogueText) dialogueText.textContent = (isFil ? "💡 LIBRENG HINT: " : "💡 FREE HINT: ") + hintText;
         if (hintButton) hintButton.disabled = true;
         return;
     }
@@ -145,7 +150,7 @@ function showHint() {
     if (freeHintsRemaining > 0) {
         freeHintsRemaining--;
         if (playerSprite) playerSprite.src = "css/Sprites/user/talking.png";
-        if (dialogueText) dialogueText.textContent = (isFil ? "LIBRENG HINT: " : "FREE HINT: ") + currentBugData.hint;
+        if (dialogueText) dialogueText.textContent = (isFil ? "LIBRENG HINT: " : "FREE HINT: ") + hintText;
         if (hintButton) hintButton.disabled = true;
         updateHintCostDisplay();
         return;
@@ -168,7 +173,7 @@ function showHint() {
 
     if (playerSprite) playerSprite.src = "css/Sprites/user/talking.png";
     const prefix = isFil ? "HINT (" + hintCost + " TP): " : "HINT (" + hintCost + " TP): ";
-    if (dialogueText) dialogueText.textContent = prefix + currentBugData.hint;
+    if (dialogueText) dialogueText.textContent = prefix + hintText;
     updatePoints();
     if (hintButton) hintButton.disabled = true;
 }

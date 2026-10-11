@@ -1,14 +1,24 @@
 // =========================================================
 // BUGHUNT: PYTHON CODEX & STUDY ACADEMY CONTROLLER (js/study.js)
-// Focused, User-Friendly Python Learning Terminal
+// Ultra-clean, focused Python concept guide and interactive memory match game
 // =========================================================
 
 (function () {
     let currentDifficulty = "easy";
     let selectedTopicId = null;
     let searchQuery = "";
-    let currentCategoryFilter = "all";
-    let currentLessonTab = "concept"; // "concept" | "bugfix" | "quiz" | "all"
+    let isMemoryGameActive = false;
+
+    // Memory Game State
+    let memoryGameState = {
+        cards: [],
+        flippedCards: [],
+        matchedCount: 0,
+        moves: 0,
+        timerSeconds: 0,
+        timerInterval: null,
+        isLocked: false
+    };
 
     // DOM Elements Cache
     let codexScreen = null;
@@ -17,6 +27,7 @@
     let codexTopicCount = null;
     let codexSearchInput = null;
     let codexSearchClear = null;
+    let codexMemoryToggleBtn = null;
     let codexTabs = [];
 
     // Helper: Localize topic based on active language (en or fil)
@@ -25,44 +36,25 @@
         const lang = (typeof getLanguage === "function") ? getLanguage() : "en";
         const loc = topic[lang] || topic["en"] || {};
         return Object.assign({}, topic, loc, {
-            bugCategory: loc.bugCategory || topic.bugCategory || "Syntax Error"
+            category: loc.category || topic.category || "Fundamentals"
         });
     }
 
     // Helper: Simple Markdown to HTML Formatter
     function formatMarkdown(text) {
         if (!text) return "";
-
-        // If the text contains markdown tables, format table portions cleanly
-        if (text.includes("|") && text.includes("---")) {
-            const parts = text.split("\n\n");
-            return parts.map(part => {
-                if (part.includes("|") && part.includes("---")) {
-                    return formatMarkdownTable(part);
-                }
-                return formatMarkdown(part);
-            }).join("");
-        }
-
         let html = text
-            // Escape HTML tags to prevent XSS
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;")
-            // Headers
             .replace(/^### (.*$)/gim, "<h3>$1</h3>")
             .replace(/^## (.*$)/gim, "<h2>$1</h2>")
-            // Bold
             .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-            // Inline code
             .replace(/`([^`]+)`/g, "<code>$1</code>")
-            // Bullet points
             .replace(/^\s*-\s+(.*$)/gim, "<li>$1</li>")
             .replace(/^\s*\d+\.\s+(.*$)/gim, "<li>$1</li>")
-            // Paragraph breaks
             .replace(/\n\n+/g, "</p><p>");
 
-        // Wrap li in ul
         if (html.includes("<li>")) {
             html = html.replace(/(<li>[\s\S]*?<\/li>)/g, "<ul>$1</ul>");
         }
@@ -79,38 +71,15 @@
         return html;
     }
 
-    // Helper: Parse Markdown Table for Cheat Sheet
-    function formatMarkdownTable(markdownText) {
-        const lines = markdownText.trim().split("\n");
-        if (lines.length < 2) return formatMarkdown(markdownText);
-
-        const headerLine = lines[0];
-        const dataLines = lines.slice(2); // skip separator row
-
-        const parseRow = (line) => line.split("|").slice(1, -1).map(c => c.trim());
-
-        const headers = parseRow(headerLine);
-        let tableHtml = `<div class="cheatsheet-table-wrap"><table class="cheatsheet-table"><thead><tr>`;
-        headers.forEach(h => {
-            tableHtml += `<th>${h.replace(/\*\*(.*?)\*\*/g, "$1")}</th>`;
-        });
-        tableHtml += `</tr></thead><tbody>`;
-
-        dataLines.forEach(line => {
-            if (!line.includes("|")) return;
-            const cells = parseRow(line);
-            tableHtml += `<tr>`;
-            cells.forEach(c => {
-                let cellFormatted = c
-                    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-                    .replace(/`([^`]+)`/g, "<code>$1</code>");
-                tableHtml += `<td>${cellFormatted}</td>`;
-            });
-            tableHtml += `</tr>`;
-        });
-
-        tableHtml += `</tbody></table></div>`;
-        return tableHtml;
+    // Helper: Escape HTML
+    function escapeHtml(str) {
+        if (!str) return "";
+        return String(str)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
     }
 
     // Initialize Codex
@@ -121,6 +90,7 @@
         codexTopicCount = document.getElementById("codex-topic-count");
         codexSearchInput = document.getElementById("codex-search-input");
         codexSearchClear = document.getElementById("codex-search-clear");
+        codexMemoryToggleBtn = document.getElementById("codex-memory-toggle-btn");
         codexTabs = Array.from(document.querySelectorAll(".codex-tab"));
 
         if (!codexScreen) return;
@@ -140,6 +110,7 @@
                 if (codexSearchClear) {
                     codexSearchClear.style.display = searchQuery ? "inline-flex" : "none";
                 }
+                isMemoryGameActive = false;
                 renderTopicList();
             });
         }
@@ -147,34 +118,32 @@
         // Search Clear Button
         if (codexSearchClear) {
             codexSearchClear.addEventListener("click", () => {
-                if (codexSearchInput) {
-                    codexSearchInput.value = "";
-                }
+                if (codexSearchInput) codexSearchInput.value = "";
                 searchQuery = "";
                 codexSearchClear.style.display = "none";
+                isMemoryGameActive = false;
                 renderTopicList();
-                if (codexSearchInput) {
-                    codexSearchInput.focus();
-                }
+                if (codexSearchInput) codexSearchInput.focus();
             });
         }
 
-        // Category Filter Selection Buttons (All, Syntax, Logic, Runtime)
-        const catButtons = Array.from(document.querySelectorAll(".codex-cat-filter-btn"));
-        catButtons.forEach(btn => {
-            btn.addEventListener("click", () => {
-                catButtons.forEach(b => b.classList.remove("active"));
-                btn.classList.add("active");
-                currentCategoryFilter = btn.getAttribute("data-cat") || "all";
-                renderTopicList();
+        // Memory Match Toggle Button in Sidebar
+        if (codexMemoryToggleBtn) {
+            codexMemoryToggleBtn.addEventListener("click", () => {
+                startMemoryGame();
             });
-        });
+        }
     }
 
     // Switch Difficulty Tab
     function setDifficulty(diff) {
+        if (!["easy", "normal", "hard", "hell"].includes(diff)) {
+            diff = "easy";
+        }
         currentDifficulty = diff;
-        currentLessonTab = "concept";
+        isMemoryGameActive = false;
+        selectedTopicId = null;
+
         codexTabs.forEach(t => {
             if (t.getAttribute("data-diff") === diff) {
                 t.classList.add("active");
@@ -183,7 +152,13 @@
             }
         });
 
-        selectedTopicId = null;
+        if (codexMemoryToggleBtn) {
+            codexMemoryToggleBtn.classList.remove("active");
+        }
+        if (codexScreen) {
+            codexScreen.classList.remove("memory-game-mode");
+        }
+
         renderTopicList();
     }
 
@@ -193,48 +168,34 @@
         codexTopicList.innerHTML = "";
 
         const rawTopics = (typeof PYTHON_CODEX_DATA !== "undefined" && PYTHON_CODEX_DATA[currentDifficulty]) || [];
-        const allTopics = rawTopics.map(t => (typeof getLocalizedTopic === "function" ? getLocalizedTopic(t) : t));
+        const allTopics = rawTopics.map(t => getLocalizedTopic(t));
 
-        // Apply Search Filtering (across title, enemy, summary, category, errorType)
+        // Filter by Search Query
         let filtered = allTopics.filter(t => {
             if (!searchQuery) return true;
             const inTitle = (t.title || "").toLowerCase().includes(searchQuery);
-            const inEnemy = (t.enemyName || "").toLowerCase().includes(searchQuery);
             const inSummary = (t.summary || "").toLowerCase().includes(searchQuery);
-            const inCat = (t.bugCategory || t.category || "").toLowerCase().includes(searchQuery);
-            const inErr = (t.bugExample && t.bugExample.errorType ? t.bugExample.errorType.toLowerCase() : "").includes(searchQuery);
-            return inTitle || inEnemy || inSummary || inCat || inErr;
+            const inEnemy = (t.enemyName || "").toLowerCase().includes(searchQuery);
+            return inTitle || inSummary || inEnemy;
         });
 
-        if (currentCategoryFilter !== "all") {
-            filtered = filtered.filter(t => {
-                const cat = (t.bugCategory || t.category || "").toLowerCase();
-                return cat.includes(currentCategoryFilter.toLowerCase());
-            });
-        }
-
-        const lang = typeof getLanguage === "function" ? getLanguage() : "en";
+        const lang = (typeof getLanguage === "function") ? getLanguage() : "en";
 
         if (codexTopicCount) {
-            const countSuffix = lang === "fil" 
+            const countSuffix = lang === "fil"
                 ? (filtered.length === 1 ? "Paksa" : "mga Paksa")
                 : (filtered.length === 1 ? "Topic" : "Topics");
             codexTopicCount.textContent = `${filtered.length} ${countSuffix}`;
         }
 
         if (filtered.length === 0) {
-            const noResultsMsg = typeof t === "function" 
-                ? t("codex_no_search_results", { query: searchQuery })
-                : `No topics found for "${searchQuery}".<br>Try searching for another keyword!`;
-            const noTopicTitle = lang === "fil" ? "Walang Nahanap na Paksa" : "No Topics Found";
-            const clearSearchLabel = lang === "fil" ? "I-clear ang Search" : "Clear Search";
-
             codexTopicList.innerHTML = `
                 <div class="codex-no-results-box">
                     <span class="no-results-icon">🔍</span>
-                    <p>${noResultsMsg}</p>
-                    <button id="codex-clear-filter-btn" class="codex-clear-filter-btn" type="button">${clearSearchLabel}</button>
-                    ${currentCategoryFilter !== "all" ? `<button id="codex-reset-cat-btn" class="codex-clear-filter-btn" style="margin-top:6px" type="button">Reset Category to All</button>` : ""}
+                    <p>${lang === "fil" ? `Walang nahanap na paksa para sa "${escapeHtml(searchQuery)}".` : `No topics found for "${escapeHtml(searchQuery)}".`}</p>
+                    <button id="codex-clear-filter-btn" class="codex-clear-filter-btn" type="button">
+                        ${lang === "fil" ? "I-clear ang Search" : "Clear Search"}
+                    </button>
                 </div>
             `;
             const clearBtn = codexTopicList.querySelector("#codex-clear-filter-btn");
@@ -250,31 +211,30 @@
                 codexContentArea.innerHTML = `
                     <div class="codex-empty-placeholder">
                         <span class="placeholder-icon">📂</span>
-                        <h2 class="placeholder-title">${noTopicTitle}</h2>
-                        <p class="placeholder-desc">${lang === "fil" ? "Baguhin ang filter o i-clear ang search sa itaas." : "Adjust your search filter or clear the search box above to browse lessons."}</p>
+                        <h2 class="placeholder-title">${lang === "fil" ? "Walang Nahanap na Paksa" : "No Topics Found"}</h2>
+                        <p class="placeholder-desc">${lang === "fil" ? "Subukang maghanap ng ibang salita sa search box sa itaas." : "Try searching for a different keyword or clear your search query above."}</p>
                     </div>
                 `;
             }
             return;
         }
 
-        // Auto-select first if none or current selected is not in filtered
-        if (!selectedTopicId || !filtered.some(t => t.id === selectedTopicId)) {
-            selectedTopicId = filtered[0].id;
+        // If not in memory game mode, ensure a topic is selected
+        if (!isMemoryGameActive) {
+            if (!selectedTopicId || !filtered.some(t => t.id === selectedTopicId)) {
+                selectedTopicId = filtered[0].id;
+            }
         }
 
         filtered.forEach((topic, index) => {
             const card = document.createElement("div");
-            const isActive = topic.id === selectedTopicId;
+            const isActive = !isMemoryGameActive && topic.id === selectedTopicId;
             card.className = `codex-topic-card ${isActive ? "active" : ""}`;
 
-            // Sprite or default icon
             const spriteHtml = topic.sprite
-                ? `<img class="topic-sprite-thumb" src="${topic.sprite}" alt="${topic.enemyName || 'Topic'}" onerror="this.onerror=null; this.src='css/Sprites/Easy/beginnerDragon.png';">`
-                : `<div class="topic-sprite-thumb fallback-icon">&#9733;</div>`;
+                ? `<img class="topic-sprite-thumb" src="${topic.sprite}" alt="${escapeHtml(topic.enemyName || 'Topic')}" onerror="this.onerror=null; this.src='css/Sprites/Easy/beginnerDragon.png';">`
+                : `<div class="topic-sprite-thumb fallback-icon">★</div>`;
 
-            const enemyLabel = topic.enemyName ? `👾 ${topic.enemyName}` : "";
-            const errorTypeLabel = topic.bugExample?.errorType ? `⚡ ${topic.bugExample.errorType}` : "";
             const stepNum = String(index + 1).padStart(2, '0');
 
             card.innerHTML = `
@@ -282,23 +242,18 @@
                 ${spriteHtml}
                 <div class="topic-info-wrap">
                     <div class="topic-card-category-row">
-                        <span class="topic-card-category ${
-    (topic.bugCategory || topic.category || "").toLowerCase().includes("syntax") ? "cat-syntax" :
-    (topic.bugCategory || topic.category || "").toLowerCase().includes("log") ? "cat-logical" : "cat-runtime"
-}">${
-    (topic.bugCategory || topic.category || "").toLowerCase().includes("syntax") ? "⚡ " :
-    (topic.bugCategory || topic.category || "").toLowerCase().includes("log") ? "🧠 " : "💥 "
-}${topic.bugCategory || topic.category || currentDifficulty.toUpperCase()}</span>
-                        ${errorTypeLabel ? `<span class="topic-card-error-pill">${errorTypeLabel}</span>` : ""}
+                        <span class="topic-card-category">${escapeHtml(topic.category || currentDifficulty.toUpperCase())}</span>
                     </div>
-                    <div class="topic-card-title">${topic.title}</div>
-                    ${enemyLabel ? `<div class="topic-card-enemy">${enemyLabel}</div>` : ""}
+                    <div class="topic-card-title">${escapeHtml(topic.title)}</div>
+                    ${topic.enemyName ? `<div class="topic-card-enemy">👾 ${escapeHtml(topic.enemyName)}</div>` : ""}
                 </div>
                 <div class="topic-active-indicator">▶</div>
             `;
 
             card.addEventListener("click", () => {
+                isMemoryGameActive = false;
                 selectedTopicId = topic.id;
+                if (codexMemoryToggleBtn) codexMemoryToggleBtn.classList.remove("active");
                 renderTopicList();
                 renderLessonDetail(topic);
             });
@@ -306,19 +261,14 @@
             codexTopicList.appendChild(card);
         });
 
-        // Render Active Topic
-        const activeTopic = filtered.find(t => t.id === selectedTopicId) || filtered[0];
-        if (activeTopic) {
-            renderLessonDetail(activeTopic);
-        }
-    }
-
-    // Scroll to section helper inside codexContentArea
-    function scrollToCodexSection(sectionId) {
-        if (!codexContentArea) return;
-        const target = codexContentArea.querySelector(`#${sectionId}`);
-        if (target) {
-            target.scrollIntoView({ behavior: "smooth", block: "start" });
+        // If memory game is active, show memory game; else show active topic
+        if (isMemoryGameActive) {
+            renderMemoryGameView();
+        } else {
+            const activeTopic = filtered.find(t => t.id === selectedTopicId) || filtered[0];
+            if (activeTopic) {
+                renderLessonDetail(activeTopic);
+            }
         }
     }
 
@@ -327,471 +277,474 @@
         if (!codexContentArea || !rawTopic) return;
         codexContentArea.scrollTop = 0;
 
-        const topic = typeof getLocalizedTopic === "function" ? getLocalizedTopic(rawTopic) : rawTopic;
-        const lang = typeof getLanguage === "function" ? getLanguage() : "en";
+        const topic = getLocalizedTopic(rawTopic);
+        const lang = (typeof getLanguage === "function") ? getLanguage() : "en";
 
-        // Check if Cheat Sheet format
-        if (currentDifficulty === "cheatsheet") {
-            renderCheatSheetView(topic);
-            return;
+        const conceptTitle = lang === "fil" ? "PANGUNAHING KONSEPTO" : "CONCEPT OVERVIEW";
+        const blueprintTitle = lang === "fil" ? "TEMPLATE NG SYNTAX" : "PYTHON SYNTAX BLUEPRINT";
+        const codeExampleTitle = lang === "fil" ? "HALIMBAWANG CODE AT PAGGAMIT" : "WORKING CODE DEMONSTRATION";
+        const takeawaysTitle = lang === "fil" ? "MGA DAPAT TANDAAN" : "KEY TAKEAWAYS";
+        const playMatchLabel = lang === "fil" ? "Laruin ang Memory Match Game sa Antas na Ito" : "Play Memory Match Game for this Difficulty";
+
+        // Build Key Takeaways HTML
+        let takeawaysHtml = "";
+        if (Array.isArray(topic.takeaways) && topic.takeaways.length > 0) {
+            takeawaysHtml = `
+                <div class="lesson-section-header mt-4">
+                    <span class="lesson-section-badge">[04]</span>
+                    <h3 class="lesson-section-title">${takeawaysTitle}</h3>
+                </div>
+                <div class="lesson-takeaways-card">
+                    <ul class="lesson-takeaways-list">
+                        ${topic.takeaways.map(t => `<li><span class="takeaway-bullet">✦</span> ${escapeHtml(t)}</li>`).join("")}
+                    </ul>
+                </div>
+            `;
         }
 
-        let diffBadgeClass = `badge-${currentDifficulty}`;
+        // Build Code Example HTML
+        let codeExampleHtml = "";
+        if (topic.codeExample) {
+            codeExampleHtml = `
+                <div class="lesson-section-header mt-4">
+                    <span class="lesson-section-badge">[03]</span>
+                    <h3 class="lesson-section-title">${codeExampleTitle}</h3>
+                </div>
+                <div class="lesson-code-block-wrap">
+                    <div class="code-block-header">
+                        <span class="code-lang-tag">python • runnable example</span>
+                        <button class="codex-copy-code-btn" type="button" data-copy="${escapeHtml(topic.codeExample)}">
+                            📋 Copy Code
+                        </button>
+                    </div>
+                    <pre class="lesson-code-pre"><code>${escapeHtml(topic.codeExample)}</code></pre>
+                </div>
+            `;
+        }
 
-        // Section 1: Concept Overview HTML
-        const conceptTitle = typeof t === "function" ? t("codex_sec_concept") : "CONCEPT OVERVIEW";
-        const blueprintTitle = typeof t === "function" ? t("codex_sec_blueprint") : "SYNTAX BLUEPRINT";
-        const templateLabel = lang === "fil" ? "TEMPLATE NG ISTRUKTURA" : "PYTHON SYNTAX BLUEPRINT";
-        const copyBlueprintText = typeof t === "function" ? t("codex_copy_btn") : "📋 Copy";
+        // Build Syntax Blueprint HTML
+        let blueprintHtml = "";
+        if (topic.syntaxBlueprint) {
+            blueprintHtml = `
+                <div class="lesson-section-header mt-4">
+                    <span class="lesson-section-badge">[02]</span>
+                    <h3 class="lesson-section-title">${blueprintTitle}</h3>
+                </div>
+                <div class="lesson-code-block-wrap blueprint-wrap">
+                    <div class="code-block-header">
+                        <span class="code-lang-tag">python syntax template</span>
+                        <button class="codex-copy-code-btn" type="button" data-copy="${escapeHtml(topic.syntaxBlueprint)}">
+                            📋 Copy Template
+                        </button>
+                    </div>
+                    <pre class="lesson-code-pre blueprint-pre"><code>${escapeHtml(topic.syntaxBlueprint)}</code></pre>
+                </div>
+            `;
+        }
 
-        const conceptSectionHtml = `
-            <div id="codex-sec-concept" class="lesson-section-header">
+        codexContentArea.innerHTML = `
+            <!-- Hero Banner -->
+            <div class="lesson-hero-banner">
+                <div class="hero-sprite-frame">
+                    ${topic.sprite ? `<img src="${topic.sprite}" alt="${escapeHtml(topic.enemyName || 'Enemy')}" onerror="this.onerror=null; this.src='css/Sprites/Easy/beginnerDragon.png';">` : '👾'}
+                </div>
+                <div class="lesson-hero-details">
+                    <div class="lesson-hero-tags">
+                        <span class="lesson-badge badge-${currentDifficulty}">${currentDifficulty.toUpperCase()}</span>
+                        <span class="lesson-badge badge-category">${escapeHtml(topic.category)}</span>
+                        ${topic.enemyName ? `<span class="lesson-badge badge-enemy">👾 ${escapeHtml(topic.enemyName)}</span>` : ""}
+                    </div>
+                    <h2 class="lesson-hero-title">${escapeHtml(topic.title)}</h2>
+                    <p class="lesson-hero-summary">${escapeHtml(topic.summary || "")}</p>
+                </div>
+            </div>
+
+            <!-- Interactive Jump Banner to Memory Game -->
+            <div class="codex-memory-launch-banner">
+                <div class="mem-launch-text">
+                    <span class="mem-launch-icon">🃏</span>
+                    <div>
+                        <div class="mem-launch-title">${lang === "fil" ? "Interactive Practice" : "Interactive Practice Available"}</div>
+                        <div class="mem-launch-sub">${lang === "fil" ? "Ipares ang syntax at konsepto sa interactive memory card game!" : "Test your memory and match Python concepts in this difficulty's card pairing challenge!"}</div>
+                    </div>
+                </div>
+                <button id="codex-btn-launch-game" class="codex-launch-game-btn" type="button">
+                    <span>${playMatchLabel}</span> &rarr;
+                </button>
+            </div>
+
+            <!-- Section 1: Concept Overview -->
+            <div class="lesson-section-header">
                 <span class="lesson-section-badge">[01]</span>
                 <h3 class="lesson-section-title">${conceptTitle}</h3>
             </div>
             <div class="lesson-prose">
                 ${formatMarkdown(topic.explanation)}
             </div>
+
+            <!-- Section 2: Syntax Blueprint -->
+            ${blueprintHtml}
+
+            <!-- Section 3: Working Code Demonstration -->
+            ${codeExampleHtml}
+
+            <!-- Section 4: Key Takeaways -->
+            ${takeawaysHtml}
         `;
 
-        // Section 2: Syntax Blueprint HTML
-        let blueprintSectionHtml = "";
-        if (topic.syntaxBlueprint) {
-            blueprintSectionHtml = `
-                <div id="codex-sec-blueprint" class="lesson-section-header">
-                    <span class="lesson-section-badge">[02]</span>
-                    <h3 class="lesson-section-title">${blueprintTitle}</h3>
-                </div>
-                <div class="syntax-blueprint-card">
-                    <div class="blueprint-terminal-bar">
-                        <div class="terminal-dots">
-                            <span class="term-dot dot-red"></span>
-                            <span class="term-dot dot-yellow"></span>
-                            <span class="term-dot dot-green"></span>
-                        </div>
-                        <span class="blueprint-label">${templateLabel}</span>
-                        <button class="copy-code-btn copy-blueprint-btn" data-code="${encodeURIComponent(topic.syntaxBlueprint)}">${copyBlueprintText}</button>
-                    </div>
-                    <pre class="codex-code-block blueprint-code"><code>${escapeHtml(topic.syntaxBlueprint)}</code></pre>
-                </div>
-            `;
-        }
-
-        // Section 3: Bug Hunt Comparison HTML
-        let bugComparisonHtml = "";
-        if (topic.bugExample) {
-            const bug = topic.bugExample;
-            const compTitle = typeof t === "function" ? t("codex_sec_comparison") : "BUG HUNT COMPARISON (MISTAKE VS SOLUTION)";
-            const bugLabel = lang === "fil" ? "ANG BUG (Maling Pattern)" : "THE BUG (Why It Breaks)";
-            const bugBadge = lang === "fil" ? "MAY ERROR" : "BUGGY CODE";
-            const fixLabel = lang === "fil" ? "ANG AYOS (Tamang Solusyon)" : "THE FIX (Purified Solution)";
-            const copyBtnText = typeof t === "function" ? t("codex_copy_btn") : "📋 Copy Fix";
-            const whyWorksText = typeof t === "function" ? t("codex_why_works") : "✔ Why this fix works:";
-
-            bugComparisonHtml = `
-                <div id="codex-sec-comparison" class="lesson-section-header">
-                    <span class="lesson-section-badge">[03]</span>
-                    <h3 class="lesson-section-title">${compTitle}</h3>
-                </div>
-                <div class="bug-comparison-grid">
-                    <!-- Bad Code -->
-                    <div class="comparison-box bad">
-                        <div class="comparison-header">
-                            <div class="terminal-indicator">
-                                <span class="term-dot dot-red"></span>
-                                <span class="term-label">${bugLabel}</span>
-                            </div>
-                            <span class="status-badge bad-badge">${bugBadge}</span>
-                        </div>
-                        <div class="comparison-code-wrap">
-                            <pre class="codex-code-block bad-code"><code>${escapeHtml(bug.badCode)}</code></pre>
-                        </div>
-                        <div class="comparison-footer">
-                            <div class="error-badge">⚠️ ${escapeHtml(bug.errorType || "Error")}</div>
-                            <div class="explanation-text">${escapeHtml(bug.explanation)}</div>
-                        </div>
-                    </div>
-
-                    <!-- Good Code -->
-                    <div class="comparison-box good">
-                        <div class="comparison-header">
-                            <div class="terminal-indicator">
-                                <span class="term-dot dot-green"></span>
-                                <span class="term-label">${fixLabel}</span>
-                            </div>
-                            <button class="copy-code-btn" data-code="${encodeURIComponent(bug.goodCode)}">${copyBtnText}</button>
-                        </div>
-                        <div class="comparison-code-wrap">
-                            <pre class="codex-code-block good-code"><code>${escapeHtml(bug.goodCode)}</code></pre>
-                        </div>
-                        <div class="comparison-footer">
-                            <div class="fix-label">${whyWorksText}</div>
-                            <div class="explanation-text">${escapeHtml(bug.fixExplanation)}</div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Bug Diagnostics Card HTML
-        const diagnosticsHtml = (() => {
-            const cat = (topic.bugCategory || topic.category || "Syntax Error").toLowerCase();
-            const isSyntax = cat.includes("syntax");
-            const isLogical = cat.includes("log");
-            const borderClass = isSyntax ? "syntax-border" : isLogical ? "logical-border" : "runtime-border";
-            const badgeClass = isSyntax ? "syntax" : isLogical ? "logical" : "runtime";
-            const catLabel = isSyntax ? "⚡ SYNTAX ERROR" : isLogical ? "🧠 LOGICAL ERROR" : "💥 RUNTIME ERROR";
-
-            const phaseEn = isSyntax ? "Parsing / Compile Phase" : isLogical ? "Post-Run Execution Logic" : "Mid-Execution Phase";
-            const phaseFil = isSyntax ? "Yugto ng Parsing (Bago Patakbuhin)" : isLogical ? "Yugto ng Lohika (Walang Crash pero Mali)" : "Yugto ng Pagpapatakbo (Unhandled Exception)";
-
-            const causeEn = isSyntax 
-                ? "Violates Python formal grammar rules (missing colons, unclosed quotes, parentheses mismatch, or invalid indentation)."
-                : isLogical
-                ? "Valid syntax and completes without crashing, but outputs wrong answers, loops endlessly, or mishandles algorithm state."
-                : "Valid syntax that crashes mid-execution when illegal operations occur (e.g., dividing by zero, missing dictionary key, or list index out of range).";
-
-            const causeFil = isSyntax
-                ? "Lumalabag sa baririla ng Python (kulang na colon, bukas na quote o parenthesis, o maling indentation)."
-                : isLogical
-                ? "Wastong syntax at hindi nag-crash, ngunit mali ang kinalabasan, walang katapusang loop, o maling DFS traversal."
-                : "Wastong syntax ngunit biglang nag-crash sa gitna dahil sa bawal na operasyon (hal. divide by zero, KeyError, o IndexError).";
-
-            const reactionEn = isSyntax
-                ? "Python stops parsing immediately and halts before executing line 1."
-                : isLogical
-                ? "Python runs silently to the end; programmer must trace variable state or use debugger to locate the flaw."
-                : "Python halts immediately and prints an explicit Traceback with line numbers and exception name.";
-
-            const reactionFil = isSyntax
-                ? "Agad na humihinto ang Python at hindi man lang magsisimula ang execution."
-                : isLogical
-                ? "Tahimik na tatakbo ang Python hanggang dulo; kailangang i-trace ng programmer ang variable state."
-                : "Biglang hihinto ang Python at maglalabas ng Traceback na may numero ng linya at pangalan ng Exception.";
-
-            const fixEn = isSyntax
-                ? "Match all opening/closing pairs, add colons to control statements, and maintain consistent 4-space indentation."
-                : isLogical
-                ? "Audit loop boundaries, verify algorithm preconditions, track visited sets in graph DFS, and test edge cases."
-                : "Validate inputs before use, use safe accessors like dict.get(), and wrap risky operations in try-except blocks.";
-
-            const fixFil = isSyntax
-                ? "Ipares ang lahat ng panaklong at quotes, maglagay ng colon sa header, at panatilihin ang 4-space indentation."
-                : isLogical
-                ? "Suriin ang loop conditions, tiyakin ang visited set sa graph DFS, at mag-test gamit ang boundary values."
-                : "Suriin muna ang input, gamitin ang dict.get(), o kaya ay saluhin gamit ang try-except block.";
-
-            return `
-                <div class="lesson-bug-classification-card ${borderClass}">
-                    <div class="classification-header">
-                        <div class="classification-badges-left">
-                            <span class="classification-badge ${badgeClass}">${catLabel}</span>
-                            <span class="classification-phase">${lang === 'fil' ? phaseFil : phaseEn}</span>
-                        </div>
-                        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#d9c0e5">
-                            <strong>TARGET ERROR:</strong> ${escapeHtml(topic.bugExample?.errorType || 'Python Bug')}
-                        </span>
-                    </div>
-                    <div class="classification-grid">
-                        <div class="classification-col">
-                            <span class="classification-col-title">⚠️ ${lang === 'fil' ? 'Ano ang Sanhi?' : 'Root Cause'}</span>
-                            <p class="classification-col-desc">${lang === 'fil' ? causeFil : causeEn}</p>
-                        </div>
-                        <div class="classification-col">
-                            <span class="classification-col-title">⚙️ ${lang === 'fil' ? 'Reaksyon ng Python' : 'Interpreter Reaction'}</span>
-                            <p class="classification-col-desc">${lang === 'fil' ? reactionFil : reactionEn}</p>
-                        </div>
-                        <div class="classification-col">
-                            <span class="classification-col-title">🛡️ ${lang === 'fil' ? 'Paraan ng Pag-ayos' : 'Resolution Defense'}</span>
-                            <p class="classification-col-desc">${lang === 'fil' ? fixFil : fixEn}</p>
-                        </div>
-                    </div>
-                </div>
-            `;
-        })();
-
-        // Section 4: Golden Rules / Battle Checklist HTML
-        let goldenRulesHtml = "";
-        if (Array.isArray(topic.goldenRules) && topic.goldenRules.length > 0) {
-            const rulesTitle = typeof t === "function" ? t("codex_sec_rules") : "BATTLE CHECKLIST (KEY RULES)";
-            goldenRulesHtml = `
-                <div id="codex-sec-rules" class="lesson-section-header">
-                    <span class="lesson-section-badge">[04]</span>
-                    <h3 class="lesson-section-title">${rulesTitle}</h3>
-                </div>
-                <div class="golden-rules-list">
-                    ${topic.goldenRules.map(rule => `
-                        <div class="golden-rule-item">
-                            <span class="rule-check-icon">✅</span>
-                            <div class="rule-text">${escapeHtml(rule)}</div>
-                        </div>
-                    `).join("")}
-                </div>
-            `;
-        }
-
-        // Section 5: Interactive Quiz HTML
-        let quizHtml = "";
-        if (topic.quiz) {
-            const q = topic.quiz;
-            const quizTitle = typeof t === "function" ? t("codex_sec_quiz") : "SPOT THE BUG // KNOWLEDGE CHECK";
-            const optionsHtml = q.options.map((opt, idx) => `
-                <button class="quiz-option-btn" data-idx="${idx}">
-                    <span class="quiz-option-badge">[${String.fromCharCode(65 + idx)}]</span>
-                    <span class="quiz-option-label">${escapeHtml(opt)}</span>
-                </button>
-            `).join("");
-
-            quizHtml = `
-                <div id="codex-sec-quiz" class="codex-quiz-card">
-                    <div class="codex-quiz-header">
-                        <span class="quiz-star">⭐</span>
-                        <span class="quiz-header-title">${quizTitle}</span>
-                    </div>
-                    <div class="codex-quiz-question">${escapeHtml(q.question)}</div>
-                    ${q.code ? `<div class="codex-quiz-code"><pre><code>${escapeHtml(q.code)}</code></pre></div>` : ""}
-                    <div class="codex-quiz-options" id="quiz-options-container">
-                        ${optionsHtml}
-                    </div>
-                    <div class="quiz-feedback-box" id="quiz-feedback-box"></div>
-                </div>
-            `;
-        }
-
-        // View Mode Tabs Data
-        const viewTabs = [
-            { id: "concept", icon: "💡", label: lang === "fil" ? "Konsepto & Syntax" : "Concept & Syntax" },
-            { id: "bugfix", icon: "⚔️", label: lang === "fil" ? "Mali vs Tama" : "Bug vs Fix" },
-            { id: "quiz", icon: "🎯", label: lang === "fil" ? "Pagsusulit & Rules" : "Quiz & Rules" },
-            { id: "all", icon: "📜", label: lang === "fil" ? "Lahat" : "View All" }
-        ];
-
-        // Hero Banner HTML (Clean, single container)
-        const heroBannerHtml = `
-            <div class="lesson-hero-banner">
-                <div class="hero-sprite-frame">
-                    <img class="lesson-hero-sprite" src="${topic.sprite || 'css/Sprites/Easy/beginnerDragon.png'}" alt="${topic.enemyName || 'Enemy'}" onerror="this.onerror=null; this.src='css/Sprites/Easy/beginnerDragon.png';">
-                </div>
-                <div class="lesson-hero-details">
-                    <div class="lesson-hero-tags">
-                        <span class="lesson-badge ${diffBadgeClass}">${currentDifficulty.toUpperCase()}</span>
-                        ${topic.enemyName ? `<span class="lesson-badge badge-enemy">👾 ${topic.enemyName}</span>` : ""}
-                        ${topic.bugExample?.errorType ? `<span class="lesson-badge badge-error">⚡ ${escapeHtml(topic.bugExample.errorType)}</span>` : ""}
-                        <span class="lesson-badge badge-category">${topic.bugCategory || topic.category || "Basics"}</span>
-                    </div>
-                    <h2 class="lesson-hero-title">${escapeHtml(topic.title)}</h2>
-                    <p class="lesson-hero-summary">${escapeHtml(topic.summary)}</p>
-                </div>
-            </div>
-        `;
-
-        // Segmented View Switcher Tabs HTML
-        const viewTabsHtml = `
-            <div class="codex-view-tabs" role="tablist">
-                ${viewTabs.map(vt => `
-                    <button class="codex-view-tab ${currentLessonTab === vt.id ? 'active' : ''}" data-view="${vt.id}" type="button">
-                        <span class="view-tab-icon">${vt.icon}</span>
-                        <span class="view-tab-label">${vt.label}</span>
-                    </button>
-                `).join("")}
-            </div>
-        `;
-
-        // Compose Body based on active sub-tab
-        let activeBodyHtml = "";
-        if (currentLessonTab === "concept") {
-            activeBodyHtml = `
-                ${conceptSectionHtml}
-                ${blueprintSectionHtml}
-                <div class="codex-view-footer">
-                    <button class="codex-next-step-btn" data-next="bugfix" type="button">
-                        <span>⚔️ ${lang === 'fil' ? 'Susunod: Tingnan ang Bug & Ayos' : 'Next: Bug vs Fix Comparison'} ➔</span>
-                    </button>
-                </div>
-            `;
-        } else if (currentLessonTab === "bugfix") {
-            activeBodyHtml = `
-                ${bugComparisonHtml}
-                <div class="lesson-section-header">
-                    <span class="lesson-section-badge">[DIAG]</span>
-                    <h3 class="lesson-section-title">${lang === 'fil' ? 'DIAGNOSTIC ARCHITECTURE' : 'DIAGNOSTIC ARCHITECTURE'}</h3>
-                </div>
-                ${diagnosticsHtml}
-                <div class="codex-view-footer">
-                    <button class="codex-next-step-btn" data-next="quiz" type="button">
-                        <span>🎯 ${lang === 'fil' ? 'Susunod: Pagsusulit & Rules' : 'Next: Test Knowledge & Rules'} ➔</span>
-                    </button>
-                </div>
-            `;
-        } else if (currentLessonTab === "quiz") {
-            activeBodyHtml = `
-                ${goldenRulesHtml}
-                ${quizHtml}
-            `;
-        } else {
-            // "all" mode
-            activeBodyHtml = `
-                ${conceptSectionHtml}
-                ${blueprintSectionHtml}
-                ${bugComparisonHtml}
-                <div class="lesson-section-header">
-                    <span class="lesson-section-badge">[DIAG]</span>
-                    <h3 class="lesson-section-title">${lang === 'fil' ? 'DIAGNOSTIC ARCHITECTURE' : 'DIAGNOSTIC ARCHITECTURE'}</h3>
-                </div>
-                ${diagnosticsHtml}
-                ${goldenRulesHtml}
-                ${quizHtml}
-            `;
-        }
-
-        // Render to DOM
-        codexContentArea.innerHTML = `
-            ${heroBannerHtml}
-            ${viewTabsHtml}
-            <div class="codex-active-panel">
-                ${activeBodyHtml}
-            </div>
-        `;
-
-        // Attach View Mode Switcher Listeners
-        codexContentArea.querySelectorAll(".codex-view-tab").forEach(tabBtn => {
-            tabBtn.addEventListener("click", () => {
-                currentLessonTab = tabBtn.getAttribute("data-view");
-                renderLessonDetail(topic);
-            });
-        });
-
-        // Attach Next Step Button Listeners
-        codexContentArea.querySelectorAll(".codex-next-step-btn").forEach(nextBtn => {
-            nextBtn.addEventListener("click", () => {
-                currentLessonTab = nextBtn.getAttribute("data-next");
-                renderLessonDetail(topic);
-            });
-        });
-
-        // Attach Copy Button Listeners
-        codexContentArea.querySelectorAll(".copy-code-btn").forEach(btn => {
+        // Attach Copy Code Listeners
+        const copyBtns = codexContentArea.querySelectorAll(".codex-copy-code-btn");
+        copyBtns.forEach(btn => {
             btn.addEventListener("click", () => {
-                const code = decodeURIComponent(btn.getAttribute("data-code"));
-                navigator.clipboard.writeText(code).then(() => {
-                    const originalText = btn.innerHTML;
-                    const copiedText = typeof t === "function" ? t("codex_copied_btn") : "✔ Copied!";
-                    btn.innerHTML = copiedText;
+                const text = btn.getAttribute("data-copy") || "";
+                navigator.clipboard.writeText(text).then(() => {
+                    const original = btn.textContent;
+                    btn.textContent = "✓ Copied!";
                     btn.classList.add("copied");
                     setTimeout(() => {
-                        btn.innerHTML = originalText;
+                        btn.textContent = original;
                         btn.classList.remove("copied");
-                    }, 2000);
+                    }, 1800);
                 });
             });
         });
 
-        // Attach Quiz Option Listeners
-        if (topic.quiz && (currentLessonTab === "quiz" || currentLessonTab === "all")) {
-            setupQuizInteractions(topic.quiz, lang);
+        // Launch Game Button Click
+        const launchBtn = codexContentArea.querySelector("#codex-btn-launch-game");
+        if (launchBtn) {
+            launchBtn.addEventListener("click", () => {
+                startMemoryGame();
+            });
         }
     }
 
-    // Interactive Quiz Setup with Retry Functionality
-    function setupQuizInteractions(quizData, lang) {
-        const quizContainer = codexContentArea.querySelector("#quiz-options-container");
-        const feedbackBox = codexContentArea.querySelector("#quiz-feedback-box");
-        if (!quizContainer || !feedbackBox) return;
+    // =========================================================
+    // MEMORY CARD GAME ENGINE
+    // =========================================================
 
-        const optionBtns = quizContainer.querySelectorAll(".quiz-option-btn");
+    function startMemoryGame() {
+        isMemoryGameActive = true;
+        if (codexMemoryToggleBtn) codexMemoryToggleBtn.classList.add("active");
+        if (codexScreen) codexScreen.classList.add("memory-game-mode");
 
-        function resetQuiz() {
-            optionBtns.forEach(btn => {
-                btn.disabled = false;
-                btn.classList.remove("selected-correct", "selected-wrong");
-            });
-            feedbackBox.className = "quiz-feedback-box";
-            feedbackBox.innerHTML = "";
+        // Deselect topic cards visually in sidebar
+        const topicCards = document.querySelectorAll(".codex-topic-card");
+        topicCards.forEach(c => c.classList.remove("active"));
+
+        initMemoryDeck();
+        renderMemoryGameView();
+    }
+
+    function exitMemoryGame() {
+        isMemoryGameActive = false;
+        if (memoryGameState.timerInterval) {
+            clearInterval(memoryGameState.timerInterval);
+            memoryGameState.timerInterval = null;
+        }
+        if (codexMemoryToggleBtn) codexMemoryToggleBtn.classList.remove("active");
+        if (codexScreen) codexScreen.classList.remove("memory-game-mode");
+        renderTopicList();
+    }
+
+    function initMemoryDeck() {
+        if (memoryGameState.timerInterval) {
+            clearInterval(memoryGameState.timerInterval);
+            memoryGameState.timerInterval = null;
         }
 
-        optionBtns.forEach(btn => {
-            btn.addEventListener("click", () => {
-                const chosenIdx = parseInt(btn.getAttribute("data-idx"), 10);
-                const isCorrect = chosenIdx === quizData.correctIndex;
+        memoryGameState.moves = 0;
+        memoryGameState.matchedCount = 0;
+        memoryGameState.timerSeconds = 0;
+        memoryGameState.flippedCards = [];
+        memoryGameState.isLocked = false;
 
-                optionBtns.forEach((b, idx) => {
-                    b.disabled = true;
-                    if (idx === quizData.correctIndex) {
-                        b.classList.add("selected-correct");
-                    } else if (idx === chosenIdx) {
-                        b.classList.add("selected-wrong");
-                    }
-                });
+        const lang = (typeof getLanguage === "function") ? getLanguage() : "en";
+        const rawDeck = (PYTHON_CODEX_DATA.memoryCards && PYTHON_CODEX_DATA.memoryCards[currentDifficulty]) || [];
 
-                const correctMsg = typeof t === "function" ? t("codex_quiz_correct_msg") : "✔ CORRECT ANSWER!";
-                const wrongMsg = typeof t === "function" ? t("codex_quiz_wrong_msg") : "✖ NOT QUITE RIGHT. HERE IS WHY:";
-                const retryBtnText = isCorrect
-                    ? (typeof t === "function" ? t("codex_quiz_practice_again") : "🔄 Practice Again")
-                    : (typeof t === "function" ? t("codex_quiz_retry_btn") : "🔄 Try Again");
+        // Build pairs: for each item, generate Card A (Concept) and Card B (Definition)
+        const cards = [];
+        rawDeck.forEach(item => {
+            const defText = item[lang] || item["en"] || item.concept;
 
-                feedbackBox.className = `quiz-feedback-box show ${isCorrect ? "correct" : "wrong"}`;
-                feedbackBox.innerHTML = `
-                    <div class="feedback-status-title">
-                        ${isCorrect ? correctMsg : wrongMsg}
-                    </div>
-                    <div class="feedback-solution-text">${escapeHtml(quizData.solution)}</div>
-                    <button id="quiz-reset-btn" class="quiz-reset-btn" type="button">${retryBtnText}</button>
-                `;
+            // Card A: Concept
+            cards.push({
+                uid: item.id + "_concept",
+                pairId: item.id,
+                type: "concept",
+                icon: item.icon || "⚡",
+                content: item.concept,
+                isFlipped: false,
+                isMatched: false
+            });
 
-                const resetBtn = feedbackBox.querySelector("#quiz-reset-btn");
-                if (resetBtn) {
-                    resetBtn.addEventListener("click", resetQuiz);
-                }
+            // Card B: Definition
+            cards.push({
+                uid: item.id + "_def",
+                pairId: item.id,
+                type: "definition",
+                icon: "📖",
+                content: defText,
+                isFlipped: false,
+                isMatched: false
             });
         });
+
+        // Fisher-Yates Shuffle
+        for (let i = cards.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [cards[i], cards[j]] = [cards[j], cards[i]];
+        }
+
+        memoryGameState.cards = cards;
+
+        // Start Timer
+        memoryGameState.timerInterval = setInterval(() => {
+            memoryGameState.timerSeconds++;
+            const timerEl = document.getElementById("codex-mem-timer");
+            if (timerEl) {
+                const mins = String(Math.floor(memoryGameState.timerSeconds / 60)).padStart(2, '0');
+                const secs = String(memoryGameState.timerSeconds % 60).padStart(2, '0');
+                timerEl.textContent = `${mins}:${secs}`;
+            }
+        }, 1000);
     }
 
-    // Render Cheat Sheet View
-    function renderCheatSheetView(rawSheet) {
-        const sheet = typeof getLocalizedTopic === "function" ? getLocalizedTopic(rawSheet) : rawSheet;
-        const lang = typeof getLanguage === "function" ? getLanguage() : "en";
-        const refTitle = lang === "fil" ? "MABILISANG SANGGUNIAN" : "QUICK REFERENCE ARCHIVE";
+    function renderMemoryGameView() {
+        if (!codexContentArea) return;
+        codexContentArea.scrollTop = 0;
 
-        let contentHtml = "";
-        if (sheet.content.includes("|")) {
-            contentHtml = formatMarkdownTable(sheet.content);
-        } else {
-            contentHtml = `<div class="lesson-prose">${formatMarkdown(sheet.content)}</div>`;
-        }
+        const lang = (typeof getLanguage === "function") ? getLanguage() : "en";
+        const totalPairs = (PYTHON_CODEX_DATA.memoryCards && PYTHON_CODEX_DATA.memoryCards[currentDifficulty]) ? PYTHON_CODEX_DATA.memoryCards[currentDifficulty].length : 8;
+
+        const mins = String(Math.floor(memoryGameState.timerSeconds / 60)).padStart(2, '0');
+        const secs = String(memoryGameState.timerSeconds % 60).padStart(2, '0');
+
+        const titleText = lang === "fil" 
+            ? `${currentDifficulty.toUpperCase()} MEMORY CARD GAME`
+            : `${currentDifficulty.toUpperCase()} CONCEPT MEMORY MATCH`;
+        const subText = lang === "fil"
+            ? "Ipares ang bawat Python concept sa tamang kahulugan nito!"
+            : "Match each Python concept with its correct definition!";
+
+        const instructionText = lang === "fil"
+            ? "I-click ang 2 baraha para ipares ang <strong>CONCEPT</strong> sa tamang <strong>DEFINITION</strong>!"
+            : "Flip 2 cards to match each <strong>CONCEPT</strong> with its corresponding <strong>DEFINITION</strong>!";
 
         codexContentArea.innerHTML = `
-            <div class="lesson-hero-banner">
-                <div class="hero-sprite-frame fallback-sheet-icon">
-                    <span style="font-size: 38px; color: #ffd700;">★</span>
-                </div>
-                <div class="lesson-hero-details">
-                    <div class="lesson-hero-tags">
-                        <span class="lesson-badge badge-cheatsheet">CHEAT SHEET</span>
-                        <span class="lesson-badge" style="background:rgba(255,215,0,0.15); border:1px solid #ffd700; color:#ffd700;">${sheet.category || 'Reference'}</span>
+            <div class="codex-mem-game-wrap">
+                <!-- Top Header & Controls -->
+                <div class="codex-mem-topbar">
+                    <div class="codex-mem-topbar-left">
+                        <button id="codex-mem-exit-btn" class="codex-mem-back-btn" type="button" title="Back to Codex Lessons">
+                            ◀ ${lang === "fil" ? "Bumalik sa Aralin" : "Back to Lessons"}
+                        </button>
+                        <span class="codex-mem-diff-pill badge-${currentDifficulty}">${currentDifficulty.toUpperCase()} DECK</span>
+                        <span class="codex-mem-heading">${titleText}</span>
                     </div>
-                    <h2 class="lesson-hero-title">${escapeHtml(sheet.title)}</h2>
-                    <p class="lesson-hero-summary">${escapeHtml(sheet.summary)}</p>
+
+                    <div class="codex-mem-stats-group">
+                        <div class="codex-mem-stat-chip">
+                            <span class="chip-lbl">${lang === "fil" ? "PARES" : "PAIRS"}</span>
+                            <span class="chip-val" id="codex-mem-pairs">${memoryGameState.matchedCount} / ${totalPairs}</span>
+                        </div>
+                        <div class="codex-mem-stat-chip">
+                            <span class="chip-lbl">${lang === "fil" ? "TIRA" : "MOVES"}</span>
+                            <span class="chip-val" id="codex-mem-moves">${memoryGameState.moves}</span>
+                        </div>
+                        <div class="codex-mem-stat-chip">
+                            <span class="chip-lbl">${lang === "fil" ? "ORAS" : "TIME"}</span>
+                            <span class="chip-val" id="codex-mem-timer">${mins}:${secs}</span>
+                        </div>
+                        <button id="codex-mem-reset-btn" class="codex-mem-reset-btn" type="button" title="Shuffle & Restart">
+                            🔄 ${lang === "fil" ? "Ulitin" : "Reset"}
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Helpful Instructions Banner -->
+                <div class="codex-mem-tip-banner">
+                    <span class="tip-icon">💡</span>
+                    <span class="tip-text">${instructionText}</span>
+                </div>
+
+                <!-- Cards Grid: 4 columns x 4 rows fitting 100% of remaining area -->
+                <div class="codex-mem-grid" id="codex-memory-grid">
+                    ${renderCardElementsHtml()}
                 </div>
             </div>
-
-            <div class="lesson-section-header">
-                <span class="lesson-section-badge">[REF]</span>
-                <h3 class="lesson-section-title">${refTitle}</h3>
-            </div>
-
-            ${contentHtml}
         `;
+
+        // Attach Card Clicks
+        attachMemoryCardEvents();
+
+        // Attach Reset & Exit
+        const resetBtn = document.getElementById("codex-mem-reset-btn");
+        if (resetBtn) {
+            resetBtn.addEventListener("click", () => {
+                initMemoryDeck();
+                renderMemoryGameView();
+            });
+        }
+
+        const exitBtn = document.getElementById("codex-mem-exit-btn");
+        if (exitBtn) {
+            exitBtn.addEventListener("click", () => {
+                exitMemoryGame();
+            });
+        }
     }
 
-    // Helper: Escape HTML
-    function escapeHtml(str) {
-        if (!str) return "";
-        return String(str)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
+    function renderCardElementsHtml() {
+        return memoryGameState.cards.map((card, idx) => {
+            const isFlipped = card.isFlipped || card.isMatched;
+            const cardClasses = [
+                "codex-mem-card",
+                isFlipped ? "flipped" : "",
+                card.isMatched ? "matched" : "",
+                card.type === "concept" ? "card-concept" : "card-def"
+            ].filter(Boolean).join(" ");
+
+            const badgeLabel = card.isMatched
+                ? "MATCHED ✓"
+                : (card.type === "concept" ? "CONCEPT" : "DEFINITION");
+
+            return `
+                <div class="${cardClasses}" data-index="${idx}">
+                    <div class="codex-mem-card-inner">
+                        <!-- Back: Cyber rune cover (Face Down) -->
+                        <div class="codex-mem-card-back">
+                            <div class="codex-mem-rune">👾</div>
+                            <span class="codex-mem-brand">BUGHUNT</span>
+                        </div>
+                        <!-- Front: Content (Face Up) -->
+                        <div class="codex-mem-card-front">
+                            <div class="codex-mem-badge ${card.type}">${badgeLabel}</div>
+                            <div class="codex-mem-icon">${card.icon}</div>
+                            <div class="codex-mem-text">${escapeHtml(card.content)}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join("");
+    }
+
+    function attachMemoryCardEvents() {
+        const grid = document.getElementById("codex-memory-grid");
+        if (!grid) return;
+
+        const cardEls = grid.querySelectorAll(".codex-mem-card");
+        cardEls.forEach(cardEl => {
+            cardEl.addEventListener("click", () => {
+                const idx = parseInt(cardEl.getAttribute("data-index"), 10);
+                handleCardFlip(idx, cardEl);
+            });
+        });
+    }
+
+    function handleCardFlip(idx, cardEl) {
+        if (memoryGameState.isLocked) return;
+        const card = memoryGameState.cards[idx];
+        if (!card || card.isFlipped || card.isMatched) return;
+
+        // Flip card
+        card.isFlipped = true;
+        cardEl.classList.add("flipped");
+        memoryGameState.flippedCards.push({ idx, card, el: cardEl });
+
+        if (memoryGameState.flippedCards.length === 2) {
+            memoryGameState.moves++;
+            const movesEl = document.getElementById("codex-mem-moves");
+            if (movesEl) movesEl.textContent = memoryGameState.moves;
+
+            const [first, second] = memoryGameState.flippedCards;
+
+            if (first.card.pairId === second.card.pairId && first.card.type !== second.card.type) {
+                // Match Found!
+                memoryGameState.isLocked = true;
+                setTimeout(() => {
+                    first.card.isMatched = true;
+                    second.card.isMatched = true;
+                    first.el.classList.add("matched");
+                    second.el.classList.add("matched");
+
+                    memoryGameState.matchedCount++;
+                    const pairsEl = document.getElementById("codex-mem-pairs");
+                    const totalPairs = (PYTHON_CODEX_DATA.memoryCards && PYTHON_CODEX_DATA.memoryCards[currentDifficulty]) ? PYTHON_CODEX_DATA.memoryCards[currentDifficulty].length : 8;
+                    if (pairsEl) pairsEl.textContent = `${memoryGameState.matchedCount} / ${totalPairs}`;
+
+                    memoryGameState.flippedCards = [];
+                    memoryGameState.isLocked = false;
+
+                    // Check Victory
+                    if (memoryGameState.matchedCount === totalPairs) {
+                        handleMemoryGameVictory();
+                    }
+                }, 350);
+            } else {
+                // Mismatch
+                memoryGameState.isLocked = true;
+                first.el.classList.add("mismatch");
+                second.el.classList.add("mismatch");
+
+                setTimeout(() => {
+                    first.card.isFlipped = false;
+                    second.card.isFlipped = false;
+                    first.el.classList.remove("flipped", "mismatch");
+                    second.el.classList.remove("flipped", "mismatch");
+
+                    memoryGameState.flippedCards = [];
+                    memoryGameState.isLocked = false;
+                }, 900);
+            }
+        }
+    }
+
+    function handleMemoryGameVictory() {
+        if (memoryGameState.timerInterval) {
+            clearInterval(memoryGameState.timerInterval);
+            memoryGameState.timerInterval = null;
+        }
+
+        const lang = (typeof getLanguage === "function") ? getLanguage() : "en";
+        const mins = String(Math.floor(memoryGameState.timerSeconds / 60)).padStart(2, '0');
+        const secs = String(memoryGameState.timerSeconds % 60).padStart(2, '0');
+
+        const victoryTitle = lang === "fil" ? "🎉 TAGUMPAY! NALIGPIT ANG LAHAT NG CARDS!" : "🎉 VICTORY! ALL CONCEPTS MATCHED!";
+        const victorySub = lang === "fil"
+            ? `Nakamit mo ang tagumpay sa ${memoryGameState.moves} tira sa loob ng ${mins}:${secs}!`
+            : `Mastered the ${currentDifficulty.toUpperCase()} deck in ${memoryGameState.moves} moves and ${mins}:${secs}!`;
+
+        const overlay = document.createElement("div");
+        overlay.className = "memory-victory-modal-backdrop";
+        overlay.innerHTML = `
+            <div class="memory-victory-card">
+                <div class="victory-trophy-anim">🏆</div>
+                <h2 class="victory-title">${victoryTitle}</h2>
+                <p class="victory-sub">${victorySub}</p>
+                <div class="victory-stats-row">
+                    <div class="vic-stat"><span>Moves:</span> <strong>${memoryGameState.moves}</strong></div>
+                    <div class="vic-stat"><span>Time:</span> <strong>${mins}:${secs}</strong></div>
+                    <div class="vic-stat"><span>Difficulty:</span> <strong>${currentDifficulty.toUpperCase()}</strong></div>
+                </div>
+                <div class="victory-actions">
+                    <button id="vic-replay-btn" class="vic-btn vic-replay" type="button">🔄 ${lang === "fil" ? "Maglaro Muli" : "Play Again"}</button>
+                    <button id="vic-lessons-btn" class="vic-btn vic-lessons" type="button">📖 ${lang === "fil" ? "Bumalik sa mga Aralin" : "Review Lessons"}</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+        overlay.querySelector("#vic-replay-btn").addEventListener("click", () => {
+            overlay.remove();
+            initMemoryDeck();
+            renderMemoryGameView();
+        });
+
+        overlay.querySelector("#vic-lessons-btn").addEventListener("click", () => {
+            overlay.remove();
+            exitMemoryGame();
+        });
     }
 
     // Public API for Opening Codex
@@ -811,7 +764,11 @@
 
     // Public API for dynamic language change
     window.updateCodexLanguage = function () {
-        renderTopicList();
+        if (isMemoryGameActive) {
+            renderMemoryGameView();
+        } else {
+            renderTopicList();
+        }
     };
 
     // Auto-init on DOMContentLoaded

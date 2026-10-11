@@ -31,7 +31,7 @@ function getEnemyGuideInfo(enemy) {
             : "A rogue Python bug entity corrupting code related to " + (enemy.topic || "core Python") + ". It generates crashes and syntax rejections until properly fixed.",
         rules: isFil
             ? [
-                "Suriin ang bawat simbolo, panipi, at tutuldok (:) sa hamon.",
+                "Suriin ang bawat simbolo, quotes (' o \"), at colon (:) sa hamon.",
                 "Siguraduhing sumusunod sa Python rules ang mga variable, loop, at functions.",
                 "Ibigay ang buong tamang solusyon upang talunin ang bug na ito."
             ]
@@ -41,10 +41,10 @@ function getEnemyGuideInfo(enemy) {
                 "Provide the complete corrected solution to defeat this bug."
             ],
         tip: isFil
-            ? "I-type ang buong linya ng tamang code. Pindutin ang Hint kung kailangan ng gabay pagkatapos ng unang subok."
-            : "Type the complete corrected line into the input box. Use Hint after your first try if you need guidance.",
-        bad: '# Corrupted ' + (enemy.topic || "Python") + ' code',
-        good: '# Purified ' + (enemy.topic || "Python") + ' code'
+            ? "I-drag ang mga code block sa tamang ayos gamit ang drag handle. I-exclude ang sirang distractor block gamit ang ❌ bago patakbuhin."
+            : "Drag code blocks into proper sequence using the drag handle. Exclude buggy distractor lines with ❌ before executing.",
+        bad: '# Corrupted ' + (enemy.topic || "Python") + ' distractor block',
+        good: '# Purified ' + (enemy.topic || "Python") + ' solution blocks'
     };
 }
 
@@ -108,6 +108,10 @@ function showEnemyIntro(enemy, isReferenceMode) {
     const overlay = document.getElementById("enemy-intro-overlay");
     if (!overlay) return;
 
+    if (typeof stopQuestionTimer === "function") {
+        stopQuestionTimer();
+    }
+
     // Guarantee global access bar is hidden during enemy showcase
     const globalAccessBar = document.getElementById("global-access-bar");
     if (globalAccessBar) globalAccessBar.style.display = "none";
@@ -170,15 +174,15 @@ function showEnemyIntro(enemy, isReferenceMode) {
         }
     }
 
-    if (heartsEl) heartsEl.textContent = enemy.hearts + (isFil ? " Buhay (HP)" : " Hearts");
-    if (trophyEl) trophyEl.textContent = enemy.trophy || (isFil ? "Tropeo sa Tagumpay" : "Victory Trophy");
+    if (heartsEl) heartsEl.textContent = enemy.hearts + " HP";
+    if (trophyEl) trophyEl.textContent = enemy.trophy || (isFil ? "Tropeo" : "Trophy");
     const rewardPts = typeof getDifficultyPointValue === "function" ? getDifficultyPointValue() : 5;
-    if (ptsEl) ptsEl.textContent = "+" + rewardPts + (isFil ? " TP bawat tama" : " TP / Hit");
+    if (ptsEl) ptsEl.textContent = "+" + rewardPts + " TP";
     if (threatEl) {
         if (diffName === "easy") threatEl.textContent = isFil ? "Level 1: Simpleng Bug" : "Level 1: Minor Bug";
-        else if (diffName === "normal") threatEl.textContent = isFil ? "Level 2: Mutated Bug" : "Level 2: Mutated Bug";
-        else if (diffName === "hard") threatEl.textContent = isFil ? "Level 3: Apex Bug" : "Level 3: Apex Bug";
-        else threatEl.textContent = isFil ? "Level 4: Mapanganib (Catastrophic)" : "Level 4: Catastrophic";
+        else if (diffName === "normal") threatEl.textContent = isFil ? "Level 2: Karaniwang Bug" : "Level 2: Mutated Bug";
+        else if (diffName === "hard") threatEl.textContent = isFil ? "Level 3: Malakas na Bug" : "Level 3: Apex Bug";
+        else threatEl.textContent = isFil ? "Level 4: Boss Bug" : "Level 4: Catastrophic";
     }
 
     // Voice Line Quote in Left Column
@@ -223,8 +227,8 @@ function showEnemyIntro(enemy, isReferenceMode) {
     const tipEl = document.getElementById("showcase-enemy-tactical-tip");
     if (tipEl) {
         tipEl.textContent = guideData.tip || (isFil
-            ? "I-type ang buong linya ng tamang code. Pindutin ang Hint kung kailangan ng gabay pagkatapos ng unang subok."
-            : "Type the complete corrected line into the input box. Use Hint after your first try if you need guidance.");
+            ? "I-exclude ang sirang distractor gamit ang ❌, at i-drag ang blocks sa tamang pagkakasunod-sunod bago mag-Run & Execute."
+            : "Exclude buggy distractor lines with ❌, then drag blocks into proper logical sequence before clicking Run & Execute.");
     }
 
     // Side-by-side Bad vs Good Code
@@ -261,6 +265,9 @@ function hideEnemyIntro() {
     const answerInput = document.getElementById("answer-input");
     if (answerInput) {
         answerInput.focus();
+    }
+    if (typeof startQuestionTimer === "function") {
+        startQuestionTimer();
     }
 }
 

@@ -16,15 +16,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Press+Start+2P&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/base.css?v=73">
-    <link rel="stylesheet" href="css/auth.css?v=73">
-    <link rel="stylesheet" href="css/menu.css?v=73">
-    <link rel="stylesheet" href="css/difficulty.css?v=73">
-    <link rel="stylesheet" href="css/battle.css?v=73">
-    <link rel="stylesheet" href="css/battle-end-screens.css?v=73">
-    <link rel="stylesheet" href="css/enemy-showcase.css?v=73">
-    <link rel="stylesheet" href="css/study.css?v=73">
-    <link rel="stylesheet" href="css/admin.css?v=73">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/base.css?v=101">
+    <link rel="stylesheet" href="css/auth.css?v=101">
+    <link rel="stylesheet" href="css/menu.css?v=101">
+    <link rel="stylesheet" href="css/difficulty.css?v=101">
+    <link rel="stylesheet" href="css/battle.css?v=101">
+    <link rel="stylesheet" href="css/battle-end-screens.css?v=101">
+    <link rel="stylesheet" href="css/enemy-showcase.css?v=101">
+    <link rel="stylesheet" href="css/study.css?v=101">
+    <link rel="stylesheet" href="css/admin.css?v=101">
 
 </head>
 
@@ -82,37 +83,79 @@
          LOGIN SCREEN
     ========================== -->
 
-    <div id="login-screen">
+    <div id="login-screen" style="display: none;">
 
         <h1 data-i18n="login_title">Login</h1>
 
-        <input
-            id="username"
-            type="text"
-            placeholder="Username"
-            data-i18n-ph="login_username_ph"
-            autocomplete="username"
-        >
+        <!-- DUAL ROLE SELECTOR TABS -->
+        <div class="auth-role-tabs">
+            <button type="button" id="role-tab-student" class="auth-role-tab active">
+                <span class="role-text">Log in as Student</span>
+            </button>
+            <button type="button" id="role-tab-teacher" class="auth-role-tab">
+                <span class="role-text">Log in as Teacher</span>
+            </button>
+        </div>
 
-        <input
-            id="password"
-            type="password"
-            placeholder="Password"
-            data-i18n-ph="login_password_ph"
-            autocomplete="current-password"
-        >
+        <!-- ================= STUDENT LOGIN PANEL ================= -->
+        <div id="student-login-panel" class="auth-role-panel">
+            <div class="auth-role-badge">STUDENT PORTAL</div>
 
-        <button id="login-button" data-i18n="login_btn">
-            Login
-        </button>
+            <input
+                id="username"
+                type="text"
+                placeholder="Student Username"
+                data-i18n-ph="login_username_ph"
+                autocomplete="username"
+            >
 
-        <button id="register-button" data-i18n="register_btn">
-            Register
-        </button>
+            <input
+                id="password"
+                type="password"
+                placeholder="Student Password"
+                data-i18n-ph="login_password_ph"
+                autocomplete="current-password"
+            >
 
-        <p id="login-hint" data-i18n="login_hint">
-            Students register here. Teachers and admins may log in with their assigned accounts.
-        </p>
+            <button id="login-button" class="auth-main-btn" data-i18n="login_btn">
+                Log in as Student
+            </button>
+
+            <button id="register-button" class="auth-alt-btn" data-i18n="register_btn">
+                Register Student Account
+            </button>
+
+            <p id="student-login-hint" class="login-hint">
+                Students can log in to resume debugging or register a new student account.
+            </p>
+        </div>
+
+        <!-- ================= TEACHER LOGIN PANEL ================= -->
+        <div id="teacher-login-panel" class="auth-role-panel" style="display: none;">
+            <div class="auth-role-badge teacher-badge">TEACHER &amp; ADMIN PORTAL</div>
+
+            <input
+                id="teacher-username"
+                type="text"
+                placeholder="Teacher / Admin Username"
+                autocomplete="username"
+            >
+
+            <input
+                id="teacher-password"
+                type="password"
+                placeholder="Teacher / Admin Password"
+                autocomplete="current-password"
+            >
+
+            <button id="teacher-login-button" class="auth-main-btn teacher-login-btn" type="button">
+                Log in as Teacher
+            </button>
+
+            <p id="teacher-login-hint" class="login-hint">
+                Authorized academic access only. Enter your teacher/admin credentials.
+            </p>
+        </div>
 
         <p id="login-message"></p>
 
@@ -234,7 +277,10 @@
             <div id="card-easy" class="diff-stage-card card-easy">
                 <div class="card-badge-row">
                     <span class="card-star-badge">⭐ STAGE 1</span>
-                    <span class="card-powerup-badge">⚡ 3 Power-ups</span>
+                    <span class="card-powerup-badge">⚡ 3 Free Uses</span>
+                </div>
+                <div class="diff-card-preview">
+                    <img src="css/Sprites/Easy/beginnerDragon.png" alt="Beginner Dragon" class="diff-boss-preview-img">
                 </div>
                 <h3 class="card-title">EASY</h3>
                 <p class="card-domain">Python Syntax &amp; Fundamentals</p>
@@ -252,7 +298,10 @@
             <div id="card-normal" class="diff-stage-card card-normal">
                 <div class="card-badge-row">
                     <span class="card-star-badge">⭐⭐ STAGE 2</span>
-                    <span class="card-powerup-badge">⚡ 2 Power-ups</span>
+                    <span class="card-powerup-badge">⚡ 2 Free Uses</span>
+                </div>
+                <div class="diff-card-preview">
+                    <img src="css/Sprites/Normal/normalTitan.png" alt="Normal Titan" class="diff-boss-preview-img">
                 </div>
                 <h3 class="card-title">NORMAL</h3>
                 <p class="card-domain">Data Collections &amp; OOP Basics</p>
@@ -270,7 +319,10 @@
             <div id="card-hard" class="diff-stage-card card-hard">
                 <div class="card-badge-row">
                     <span class="card-star-badge">⭐⭐⭐ STAGE 3</span>
-                    <span class="card-powerup-badge hardcore">🚫 0 Power-ups</span>
+                    <span class="card-powerup-badge paid">💎 Paid (10 TP)</span>
+                </div>
+                <div class="diff-card-preview">
+                    <img src="css/Sprites/Hard/hardBoss.png" alt="Code Titan" class="diff-boss-preview-img">
                 </div>
                 <h3 class="card-title">HARD</h3>
                 <p class="card-domain">Deep OOP &amp; Error Handling</p>
@@ -288,7 +340,10 @@
             <div id="card-hell" class="diff-stage-card card-hell">
                 <div class="card-badge-row">
                     <span class="card-star-badge">💀 FINAL STAGE</span>
-                    <span class="card-powerup-badge hardcore">🚫 0 Power-ups</span>
+                    <span class="card-powerup-badge paid">💎 Paid (10 TP)</span>
+                </div>
+                <div class="diff-card-preview">
+                    <img src="css/Sprites/Hell/hellBoss.png" alt="The Final Compiler" class="diff-boss-preview-img">
                 </div>
                 <h3 class="card-title">HELL</h3>
                 <p class="card-domain">Concurrency, Async &amp; Mastery</p>
@@ -392,53 +447,43 @@
         style="display: none;"
     >
         <div class="codex-header">
-            <button id="codex-back-button" class="codex-back-btn">
+            <button id="codex-back-button" class="codex-back-btn" type="button">
                 <span>&larr;</span> <span data-i18n="codex_back_btn">Back to Menu</span>
             </button>
             <div class="codex-header-titles">
                 <h1 class="codex-title" data-i18n="codex_title">PYTHON CODEX</h1>
                 <p class="codex-subtitle" data-i18n="codex_subtitle">Comprehensive Python Guide &amp; Bug Archive (Easy to Hell)</p>
             </div>
-            <div class="codex-search-box">
-                <span class="codex-search-icon">&#128269;</span>
-                <input type="text" id="codex-search-input" placeholder="Search Python concept or bug..." data-i18n-ph="codex_search_ph">
-                <button id="codex-search-clear" class="codex-search-clear-btn" type="button" style="display: none;" title="Clear search">✕</button>
-            </div>
-            <div class="lang-switch-box">
-                <button type="button" class="lang-btn active" data-lang="en">EN</button>
-                <span class="lang-sep">|</span>
-                <button type="button" class="lang-btn" data-lang="fil">FIL</button>
+            <div class="codex-header-actions">
+                <div class="codex-search-box">
+                    <span class="codex-search-icon">&#128269;</span>
+                    <input type="text" id="codex-search-input" placeholder="Search Python concept or bug..." data-i18n-ph="codex_search_ph">
+                    <button id="codex-search-clear" class="codex-search-clear-btn" type="button" style="display: none;" title="Clear search">✕</button>
+                </div>
+                <div class="lang-switch-box">
+                    <button type="button" class="lang-btn active" data-lang="en">EN</button>
+                    <span class="lang-sep">|</span>
+                    <button type="button" class="lang-btn" data-lang="fil">FIL</button>
+                </div>
             </div>
         </div>
 
         <div class="codex-tabs-bar">
-            <button class="codex-tab" data-diff="bugtypes">
-                <span class="tab-indicator bug-indicator">🐛</span>
-                <span data-i18n="codex_tab_bugtypes">BUG ANATOMY</span> <span class="tab-sub" data-i18n="codex_tab_bugtypes_sub">Syntax • Logic • Runtime</span>
-            </button>
-            <button class="codex-tab" data-diff="roadmap">
-                <span class="tab-indicator map-indicator">🗺️</span>
-                <span data-i18n="codex_tab_roadmap">ROADMAP</span> <span class="tab-sub" data-i18n="codex_tab_roadmap_sub">Learning Path</span>
-            </button>
-            <button class="codex-tab active" data-diff="easy">
+            <button class="codex-tab active" data-diff="easy" type="button">
                 <span class="tab-indicator easy-indicator">&#9679;</span>
                 <span data-i18n="codex_tab_easy">EASY</span> <span class="tab-sub" data-i18n="codex_tab_easy_sub">Fundamentals</span>
             </button>
-            <button class="codex-tab" data-diff="normal">
+            <button class="codex-tab" data-diff="normal" type="button">
                 <span class="tab-indicator normal-indicator">&#9679;</span>
                 <span data-i18n="codex_tab_normal">NORMAL</span> <span class="tab-sub" data-i18n="codex_tab_normal_sub">Data &amp; OOP</span>
             </button>
-            <button class="codex-tab" data-diff="hard">
+            <button class="codex-tab" data-diff="hard" type="button">
                 <span class="tab-indicator hard-indicator">&#9679;</span>
                 <span data-i18n="codex_tab_hard">HARD</span> <span class="tab-sub" data-i18n="codex_tab_hard_sub">Advanced OOP</span>
             </button>
-            <button class="codex-tab" data-diff="hell">
+            <button class="codex-tab" data-diff="hell" type="button">
                 <span class="tab-indicator hell-indicator">&#9679;</span>
                 <span data-i18n="codex_tab_hell">HELL</span> <span class="tab-sub" data-i18n="codex_tab_hell_sub">Mastery &amp; Async</span>
-            </button>
-            <button class="codex-tab" data-diff="cheatsheet">
-                <span class="tab-indicator sheet-indicator">&#9733;</span>
-                <span data-i18n="codex_tab_cheat">CHEAT SHEET</span> <span class="tab-sub" data-i18n="codex_tab_cheat_sub">Quick Reference</span>
             </button>
         </div>
 
@@ -449,21 +494,51 @@
                     <span id="codex-topic-count">6 Topics</span>
                     <span class="codex-sidebar-hint" data-i18n="codex_topic_hint">Select a topic</span>
                 </div>
-                <!-- Category Filter Bar for Codex -->
-                <div class="codex-category-filter-bar" id="codex-cat-filters">
-                    <button class="codex-cat-filter-btn active" data-cat="all" type="button">All</button>
-                    <button class="codex-cat-filter-btn cat-syntax" data-cat="Syntax Error" type="button">⚡ Syntax</button>
-                    <button class="codex-cat-filter-btn cat-logical" data-cat="Logical Error" type="button">🧠 Logic</button>
-                    <button class="codex-cat-filter-btn cat-runtime" data-cat="Runtime Error" type="button">💥 Runtime</button>
-                </div>
+                
+                <!-- Interactive Memory Match Quick Action -->
+                <button id="codex-memory-toggle-btn" class="codex-memory-toggle-btn" type="button" title="Play Memory Card Game for current difficulty">
+                    <span class="mem-toggle-icon">🃏</span>
+                    <div class="mem-toggle-info">
+                        <span class="mem-toggle-title" data-i18n="codex_memory_title">Memory Match Game</span>
+                        <span class="mem-toggle-sub" data-i18n="codex_memory_sub">Pair concepts &amp; test memory</span>
+                    </div>
+                    <span class="mem-toggle-badge" data-i18n="codex_memory_badge">PLAY</span>
+                </button>
+
                 <div id="codex-topic-list" class="codex-topic-list">
                     <!-- Populated dynamically via js/study.js -->
                 </div>
             </div>
 
-            <!-- Right: Lesson / Detail Viewer -->
+            <!-- Right: Lesson / Detail Viewer or Interactive Memory Match Game -->
             <div class="codex-content-area" id="codex-content-area">
                 <!-- Populated dynamically via js/study.js -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================
+         CODEX INTERACTIVE BOOTSTRAP MODAL
+    ========================== -->
+    <div class="modal fade" id="codex-interactive-modal" tabindex="-1" aria-labelledby="codexModalLabel" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+            <div class="modal-content codex-modal-content">
+                <div class="modal-header codex-modal-header border-bottom border-secondary border-opacity-25">
+                    <div class="d-flex align-items-center gap-2">
+                        <span id="codex-modal-icon" class="fs-4">🎯</span>
+                        <div>
+                            <h5 class="modal-title m-0 fw-bold text-light" id="codexModalLabel">Codex Interactive Challenge</h5>
+                            <div class="d-flex gap-2 mt-1 flex-wrap" id="codex-modal-badges"></div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body codex-modal-body p-4" id="codex-modal-body">
+                    <!-- Populated dynamically via js/study.js -->
+                </div>
+                <div class="modal-footer codex-modal-footer border-top border-secondary border-opacity-25" id="codex-modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
@@ -850,22 +925,26 @@
         <div id="battle-top">
 
             <button id="battle-back-button" title="Back to Difficulty Selection">
-                <span>◀ </span><span data-i18n="battle_back_btn">Back</span>
+                <span class="back-arrow">◀</span>
+                <span data-i18n="battle_back_btn">BACK</span>
             </button>
 
-            <!-- Battle Stage & Encounter Banner -->
-            <div id="battle-stage-banner">
-                <span id="battle-difficulty-badge">EASY</span>
-                <span class="banner-sep">/</span>
-                <span id="battle-stage-counter">ENEMY 1 OF 6</span>
-                <span class="banner-sep">:</span>
-                <span id="battle-target-name">SYNTAX SLIME</span>
+            <!-- Centered Unified Battle Status Pill (Difficulty | Enemy # | Timer) -->
+            <div id="battle-top-center-cluster" class="battle-top-center-cluster">
+                <span id="battle-difficulty-badge" class="battle-diff-pill">EASY</span>
+                <span class="cluster-sep">|</span>
+                <span id="battle-stage-counter" class="battle-counter-text">ENEMY 1 OF 6</span>
+                <span class="cluster-sep">|</span>
+                <div id="battle-timer-pill" class="battle-timer-pill" title="Time remaining to solve challenge">
+                    <span class="timer-icon">🛡️</span>
+                    <span id="battle-timer-text">02:00</span>
+                </div>
             </div>
 
             <!-- In-battle Guide & Language Controls -->
             <div class="battle-top-right">
                 <button id="battle-guide-button" type="button" title="View enemy intel, topic guide and combat tutorial">
-                    <span>📖</span>
+                    <span class="guide-icon">📖</span>
                     <span data-i18n="battle_guide_btn">GUIDE</span>
                 </button>
                 <div class="lang-switch-box battle-lang-box">
@@ -874,6 +953,9 @@
                     <button type="button" class="lang-btn" data-lang="fil">FIL</button>
                 </div>
             </div>
+
+            <!-- Hidden target name for backwards compatibility -->
+            <span id="battle-target-name" style="display: none;"></span>
 
         </div>
 
@@ -892,10 +974,14 @@
                     <span class="alert-label-text">BUG ENCOUNTER DETECTED</span>
                 </div>
 
-                <div class="showcase-pills-wrap">
-                    <span id="showcase-difficulty-pill" class="showcase-pill tier-pill">EASY SECTOR</span>
-                    <span id="showcase-stage-counter" class="showcase-pill counter-pill">ENCOUNTER 1 / 6</span>
-                    <span id="enemy-intro-topic" class="showcase-pill topic-pill">PYTHON SYNTAX</span>
+                <div class="showcase-topbar-center">
+                    <div class="showcase-cluster-pill">
+                        <span id="showcase-difficulty-pill" class="showcase-pill-diff">EASY SECTOR</span>
+                        <span class="showcase-sep">|</span>
+                        <span id="showcase-stage-counter" class="showcase-pill-counter">ENCOUNTER 1 / 6</span>
+                        <span class="showcase-sep">|</span>
+                        <span id="enemy-intro-topic" class="showcase-pill-topic">PYTHON SYNTAX</span>
+                    </div>
                 </div>
 
                 <button id="showcase-close-btn" class="showcase-close-btn" type="button" style="display: none;" title="Resume Battle">
@@ -909,7 +995,6 @@
                 <!-- Left Column: Character Spotlight, Threat Vitals & Lore Transmission -->
                 <div class="showcase-left-pillar">
                     <div class="char-spotlight-frame">
-                        <div class="char-hologram-glow"></div>
                         <div class="char-sprite-stage">
                             <img id="showcase-enemy-sprite" src="" alt="Monster Sprite" class="showcase-sprite-floating">
                             <div class="char-pedestal-platform"></div>
@@ -920,47 +1005,26 @@
                             <div id="showcase-enemy-topic-sub" class="showcase-enemy-subtitle">Topic Domain: Python Syntax</div>
                         </div>
 
-                        <!-- Vitals Grid -->
-                        <div class="showcase-vitals-grid">
-                            <div class="vital-card">
+                        <!-- Streamlined Vitals Strip -->
+                        <div class="showcase-vitals-strip">
+                            <div class="vital-pill">
                                 <span class="vital-icon">❤️</span>
-                                <div class="vital-info">
-                                    <span class="vital-title">HP HEARTS</span>
-                                    <span id="showcase-enemy-hearts" class="vital-value">5 Hearts</span>
-                                </div>
+                                <span id="showcase-enemy-hearts" class="vital-val">5 Hearts</span>
                             </div>
-
-                            <div class="vital-card">
+                            <div class="vital-pill">
+                                <span class="vital-icon">⚡</span>
+                                <span id="showcase-enemy-pts" class="vital-val">+10 TP</span>
+                            </div>
+                            <div class="vital-pill">
                                 <span class="vital-icon">🏆</span>
-                                <div class="vital-info">
-                                    <span class="vital-title">REWARD TROPHY</span>
-                                    <span id="showcase-enemy-trophy" class="vital-value">Slime Core</span>
-                                </div>
+                                <span id="showcase-enemy-trophy" class="vital-val">Slime Core</span>
                             </div>
-
-                            <div class="vital-card">
-                                <span class="vital-icon">💎</span>
-                                <div class="vital-info">
-                                    <span class="vital-title">TRUE POINTS</span>
-                                    <span id="showcase-enemy-pts" class="vital-value">+10 TP / Hit</span>
-                                </div>
-                            </div>
-
-                            <div class="vital-card">
-                                <span class="vital-icon">⚠️</span>
-                                <div class="vital-info">
-                                    <span class="vital-title">THREAT CLASS</span>
-                                    <span id="showcase-enemy-threat" class="vital-value">Active Bug</span>
-                                </div>
-                            </div>
+                            <span id="showcase-enemy-threat" style="display: none;"></span>
                         </div>
 
-                        <!-- Decoded Enemy Voice Line Transmission -->
+                        <!-- Atmospheric Lore Transmission -->
                         <div class="transmission-box">
-                            <div class="transmission-header">
-                                <span class="transmission-dot"></span>
-                                <span class="transmission-title" data-i18n="showcase_voice_title">DECODED ENEMY LOG // VOICE TRANSMISSION</span>
-                            </div>
+                            <span class="transmission-icon">💬</span>
                             <p id="enemy-intro-text" class="transmission-quote"></p>
                         </div>
                     </div>
@@ -973,7 +1037,7 @@
                     <div class="showcase-tabs-nav">
                         <button id="showcase-tab-btn-intel" class="showcase-tab-btn active" type="button" data-tab="intel">
                             <span class="tab-emoji">🎯</span>
-                            <span class="tab-name" data-i18n="showcase_tab_intel">Combat Briefing &amp; Intel</span>
+                            <span class="tab-name" data-i18n="showcase_tab_intel">Bug Diagnosis &amp; Intel</span>
                         </button>
                         <button id="showcase-tab-btn-tutorial" class="showcase-tab-btn" type="button" data-tab="tutorial">
                             <span class="tab-emoji">🎮</span>
@@ -1020,22 +1084,18 @@
                             </div>
                         </div>
 
-                        <!-- Tactical Battle Checklist -->
+                        <!-- Tactical Battle Checklist & Field Tip -->
                         <div class="guide-rules-card">
                             <div class="guide-rules-header">
                                 <span class="guide-book-icon">🛡️</span>
                                 <h4 id="showcase-guide-title" class="guide-topic-heading" data-i18n="showcase_rules_title">TACTICAL BATTLE CHECKLIST</h4>
                             </div>
                             <div id="showcase-guide-rules" class="guide-rules-list"></div>
-                        </div>
-
-                        <!-- Frau's Tactical Field Tip -->
-                        <div class="showcase-tactical-tip-card">
-                            <div class="tactical-tip-header">
+                            <div class="tactical-tip-inline">
                                 <span class="tip-bulb-icon">💡</span>
-                                <span class="tactical-tip-title" data-i18n="showcase_tip_title">FRAU'S FIELD GUIDE TIP</span>
+                                <span class="tactical-tip-inline-label" data-i18n="showcase_tip_title">FIELD TIP:</span>
+                                <span id="showcase-enemy-tactical-tip" class="tactical-tip-text"></span>
                             </div>
-                            <p id="showcase-enemy-tactical-tip" class="tactical-tip-text"></p>
                         </div>
                     </div>
 
@@ -1044,39 +1104,39 @@
                         <div class="tutorial-card">
                             <div class="tutorial-header">
                                 <span class="tutorial-gamepad-icon">🎮</span>
-                                <h4>HOW TO BATTLE &amp; DEBUG (STUDENT TUTORIAL)</h4>
+                                <h4>HOW TO BATTLE &amp; DEBUG (PARSONS PUZZLE)</h4>
                             </div>
 
                             <div class="tutorial-steps-container">
                                 <div class="tut-step">
                                     <div class="tut-step-num">1</div>
                                     <div class="tut-step-body">
-                                        <h5>INSPECT THE CHALLENGE</h5>
-                                        <p>Read the broken Python snippet shown inside the central <strong>BUG DETECTED</strong> terminal.</p>
+                                        <h5>CHECK MISSION DIRECTIVE</h5>
+                                        <p>Review the expected output and challenge goal in the central directive box. Click <strong>SHOW DETAILS</strong> for the full mission briefing.</p>
                                     </div>
                                 </div>
 
                                 <div class="tut-step">
                                     <div class="tut-step-num">2</div>
                                     <div class="tut-step-body">
-                                        <h5>SPOT THE CORRUPTION</h5>
-                                        <p>Find the error: missing quotes, colons, typos, incorrect syntax, or loop bugs.</p>
+                                        <h5>EXCLUDE BUGGY DISTRACTORS</h5>
+                                        <p>Spot the corrupted or unneeded distractor line and click <strong style="color:#ef4444;">❌</strong> to exclude it from execution.</p>
                                     </div>
                                 </div>
 
                                 <div class="tut-step">
                                     <div class="tut-step-num">3</div>
                                     <div class="tut-step-body">
-                                        <h5>TYPE THE CORRECTED CODE</h5>
-                                        <p>Type the full valid Python line into the <strong>ENTER PYTHON FIX</strong> input box below.</p>
+                                        <h5>DRAG &amp; REORDER CODE BLOCKS</h5>
+                                        <p>Use the <strong>::</strong> drag handle to arrange blocks into the correct logical Python execution sequence.</p>
                                     </div>
                                 </div>
 
                                 <div class="tut-step">
                                     <div class="tut-step-num">4</div>
                                     <div class="tut-step-body">
-                                        <h5>SUBMIT &amp; DEAL DAMAGE</h5>
-                                        <p>Click <strong>Submit Fix</strong> or press <strong>Enter / Ctrl+Enter</strong>. Correct answers deal 1 Heart of damage!</p>
+                                        <h5>RUN &amp; EXECUTE PATCH</h5>
+                                        <p>Click <strong>⩒ RUN &amp; EXECUTE PATCH</strong>. When your solution matches the goal and expected output, Frau deals 1 DMG!</p>
                                     </div>
                                 </div>
                             </div>
@@ -1084,11 +1144,11 @@
                             <div class="tutorial-tips-row">
                                 <div class="tut-tip-card">
                                     <span class="tip-icon">💡</span>
-                                    <span><strong>Teacher Hint:</strong> After your first attempt, you can click <em>Hint</em> for a clue.</span>
+                                    <span><strong>Teacher Clues:</strong> Use the <em>Clue / Scan</em> power-ups at the bottom bar if you need tactical assistance.</span>
                                 </div>
                                 <div class="tut-tip-card warn">
                                     <span class="tip-icon">❤️</span>
-                                    <span><strong>Defend Frau:</strong> Wrong answers deplete Frau's hearts and reduce bonus points!</span>
+                                    <span><strong>Defend Frau:</strong> Incorrect solutions cost 1 Heart. Protect Frau and defeat the bug!</span>
                                 </div>
                             </div>
                         </div>
@@ -1103,10 +1163,6 @@
                 <button id="showcase-back-btn" class="showcase-btn retreat-btn" type="button">
                     <span data-i18n="showcase_retreat_btn">🔙 Retreat to Stages</span>
                 </button>
-
-                <div class="showcase-footer-hint">
-                    <span>💡 <em>Pro Tip:</em> Review the <strong>Purified Python Fix</strong> and <strong>Battle Checklist</strong> above before striking!</span>
-                </div>
 
                 <button id="enemy-intro-continue" class="showcase-btn engage-btn" type="button">
                     <span class="sword-icon">⚔️</span>
@@ -1151,20 +1207,72 @@
                 >
             </div>
 
-            <!-- 3. CENTRAL BUG CHALLENGE TERMINAL -->
-            <div id="challenge-box" class="pokemon-challenge-terminal">
-                <div class="terminal-hud-header">
-                    <div class="terminal-traffic-lights">
-                        <span class="t-dot red"></span>
-                        <span class="t-dot yellow"></span>
-                        <span class="t-dot green"></span>
+            <!-- 3. CENTRAL COLLAPSIBLE MISSION DIRECTIVE BOX -->
+            <div id="challenge-box" class="pokemon-challenge-terminal parsons-challenge-terminal rpg-mission-box minimal-mission-box">
+                <!-- Header Row -->
+                <div class="mission-directive-header">
+                    <div class="mission-header-left">
+                        <span id="mission-mode-badge" class="rpg-speaker-badge">🛡️ MISSION DIRECTIVE</span>
+                        <h3 id="puzzle-title" class="mission-challenge-title">Python Debugging Mission</h3>
                     </div>
-                    <span class="terminal-header-title">👾 PYTHON BUG DETECTED // SPOT &amp; FIX</span>
-                    <span id="bug-category-badge" class="terminal-category-badge" style="display: none;"></span>
-                    
+                    <div class="mission-header-right">
+                        <button id="mission-details-toggle-btn" class="mission-details-toggle-btn" type="button" aria-expanded="false" title="Toggle detailed instructions">
+                            <span class="toggle-icon">▼</span>
+                            <span class="toggle-text">SHOW DETAILS</span>
+                        </button>
+                    </div>
                 </div>
-                <div class="terminal-code-scroll">
-                    <pre id="bug-code" class="terminal-code-pre"></pre>
+
+                <!-- Prominent Question / Directive Card (Always Visible) -->
+                <div id="mission-question-card" class="mission-question-card">
+                    <div class="mission-question-row">
+                        <span class="mission-badge-pill" id="mission-type-pill">QUESTION</span>
+                        <p id="puzzle-question" class="mission-question-text">Reorder the Python code blocks to achieve the goal.</p>
+                    </div>
+                    <div class="mission-goal-output-row">
+                        <div class="mission-inline-goal">
+                            <span class="mission-inline-label">🎯 Goal:</span>
+                            <span id="puzzle-goal" class="mission-inline-value">I-print ang mensahe.</span>
+                        </div>
+                        <div class="mission-inline-output">
+                            <span class="mission-inline-label">📋 Expected Output:</span>
+                            <pre id="puzzle-expected-output" class="rpg-expected-output-pre minimal-output-pre">Target output</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Collapsible Drawer (Full Step-by-Step Instructions & Intel) -->
+                <div id="mission-details-drawer" class="mission-details-drawer">
+                    <div class="mission-drawer-inner">
+                        <div id="mission-step-boxes-container" class="rpg-directive-content">
+                            <div class="rpg-step-box step-exclude">
+                                <span class="step-num-pill">1</span>
+                                <div class="step-desc-wrap">
+                                    <strong class="step-title">Hanapin at I-exclude ang Maling Linya:</strong>
+                                    <span class="step-sub">Pindutin ang <code class="exclude-chip">❌</code> sa sirang distractor line para maalis ito bago mag-execute.</span>
+                                </div>
+                            </div>
+                            <div class="rpg-step-box step-reorder">
+                                <span class="step-num-pill">2</span>
+                                <div class="step-desc-wrap">
+                                    <strong class="step-title">I-rearrange ang Parsons Puzzle:</strong>
+                                    <span class="step-sub">Ayusin ang natitirang blocks gamit ang drag-and-drop para mabuo ang program!</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mission-extra-controls">
+                            <button id="rpg-intel-toggle-btn" type="button" class="rpg-intel-btn" title="Open Code Intel & Bug Diagnosis">
+                                <span>🔍 Code Intel</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hidden legacy compatibility hooks -->
+                <div style="display: none;">
+                    <span id="puzzle-header-title"></span>
+                    <span id="bug-category-badge"></span>
+                    <pre id="bug-code"></pre>
                 </div>
             </div>
 
@@ -1185,6 +1293,10 @@
                 <div class="pokemon-card-header">
                     <span class="pokemon-combatant-name">FRAU</span>
                     <div class="player-header-pills">
+                        <button id="combat-log-toggle-btn" class="combat-log-pill-btn" type="button" title="Toggle Combat Feedback & Execution Log">
+                            <span class="log-icon">📜</span>
+                            <span class="log-label">LOG</span>
+                        </button>
                         <span id="player-shield-indicator" class="pokemon-shield-pill" style="display: none;">🛡️ SHIELD ACTIVE</span>
                         <span id="true-points-display" class="pokemon-tp-pill">TP 0</span>
                     </div>
@@ -1202,32 +1314,115 @@
         </div>
 
         <!-- ==============================================
-             POKEMON BOTTOM BATTLE WINDOW (2-COLUMN SPLIT)
+             POKEMON BOTTOM BATTLE WINDOW (CLEAN COMMAND DECK)
         =============================================== -->
         <div id="pokemon-battle-window" class="pokemon-battle-window">
 
-            <!-- Left: Narration & Combat Dialogue Log -->
-            <div id="pokemon-dialogue-pane" class="pokemon-dialogue-pane">
-                <div class="dialogue-tag-strip">
-                    <span class="speaker-label">FRAU // TACTICAL LOG</span>
-                </div>
-                <p id="dialogue-text" class="pokemon-dialogue-text">A wild bug appeared! What will Frau do?</p>
-            </div>
+            <!-- Action & Command Deck (Full Width & Centered) -->
+            <div id="pokemon-command-pane" class="pokemon-command-pane parsons-command-pane">
+                <!-- 1. Parsons Puzzle Reorderable Workspace -->
+                <div id="parsons-workspace-container" class="parsons-workspace-container">
+                    <div class="parsons-workspace-header">
+                        <div class="parsons-workspace-title-row">
+                            <span class="parsons-deck-badge">⚙ CORE BLOCKS (DRAG TO REORDER)</span>
+                            <span class="parsons-deck-tip">Exclude buggy distractor lines with ❌</span>
+                        </div>
+                        <button id="parsons-reset-btn" class="parsons-reset-btn" type="button" title="Reset blocks to initial scrambled state">
+                            <span>🔄 Reset</span>
+                        </button>
+                    </div>
 
-            <!-- Right: Action & Command Deck -->
-            <div id="pokemon-command-pane" class="pokemon-command-pane">
-                <!-- Answer Fix Input Box -->
-                <div class="pokemon-input-deck">
-                    <textarea
-                        id="answer-input"
-                        rows="2"
-                        spellcheck="false"
-                        placeholder="Type the corrected Python code here... (Enter or Ctrl+Enter to submit)"
-                        data-i18n-ph="hud_answer_placeholder"
-                    ></textarea>
-                    <button id="submit-button" class="pokemon-submit-btn" type="button">
-                        <span data-i18n="hud_submit_button">⚔️ SUBMIT FIX</span>
+                    <div id="parsons-blocks-list" class="parsons-blocks-list" role="list">
+                        <!-- Populated dynamically via js/game.js -->
+                    </div>
+                </div>
+
+                <!-- 2. Memory Match Workspace -->
+                <div id="memory-workspace-container" class="memory-workspace-container" style="display: none;">
+                    <div class="memory-workspace-header">
+                        <div class="memory-title-row">
+                            <span class="memory-deck-badge">🃏 MEMORY MATCH</span>
+                            <span class="memory-deck-tip">Select 2 cards to reveal &amp; pair matching concepts</span>
+                        </div>
+                        <div class="memory-status-box">
+                            <span id="memory-pairs-progress" class="memory-progress-pill">PAIRS: 0 / 0</span>
+                            <button id="memory-reset-btn" class="parsons-reset-btn" type="button" title="Reshuffle cards">
+                                <span>🔄 Reshuffle</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="memory-cards-grid" class="memory-cards-grid">
+                        <!-- Populated dynamically via js/game.js -->
+                    </div>
+                </div>
+
+                <!-- 3. Spot the Bug Workspace -->
+                <div id="spotbug-workspace-container" class="spotbug-workspace-container" style="display: none;">
+                    <div class="spotbug-workspace-header">
+                        <div class="spotbug-title-row">
+                            <span class="spotbug-deck-badge">🐞 SPOT THE BUG</span>
+                            <span class="spotbug-deck-tip">Click the line containing the Python bug</span>
+                        </div>
+                        <div class="spotbug-target-badge-wrap">
+                            <span id="spotbug-selected-label" class="spotbug-target-pill">NO LINE SELECTED</span>
+                        </div>
+                    </div>
+
+                    <div id="spotbug-code-lines" class="spotbug-code-lines-list" role="list">
+                        <!-- Populated dynamically via js/game.js -->
+                    </div>
+                </div>
+
+                <!-- 4. Bug Hunt / Multiple-Choice Quiz Workspace -->
+                <div id="bughunt-quiz-workspace-container" class="bughunt-quiz-workspace-container" style="display: none;">
+                    <div class="quiz-workspace-header">
+                        <div class="quiz-title-row">
+                            <span class="quiz-deck-badge">🎯 BUG HUNT // MULTIPLE CHOICE</span>
+                            <span class="quiz-deck-tip">Inspect the broken snippet &amp; select the correct patch</span>
+                        </div>
+                        <div class="quiz-selected-indicator" id="quiz-selected-indicator">
+                            <span class="indicator-label">SELECTED:</span>
+                            <span class="indicator-badge none" id="quiz-selected-badge">NONE</span>
+                        </div>
+                    </div>
+
+                    <!-- Prominent Question Callout Banner right above the code! -->
+                    <div class="quiz-question-callout" id="quiz-question-callout">
+                        <div class="callout-icon">❓</div>
+                        <div class="callout-body">
+                            <span class="callout-label">QUESTION / TANONG:</span>
+                            <div id="quiz-callout-text" class="callout-text">Piliin ang tamang ayos para sa sirang linya ng print().</div>
+                        </div>
+                    </div>
+
+                    <!-- Broken Code Snippet View -->
+                    <div class="quiz-broken-code-box">
+                        <div class="quiz-code-bar">
+                            <div class="code-bar-left">
+                                <span class="code-dot dot-red"></span>
+                                <span class="code-dot dot-yellow"></span>
+                                <span class="code-dot dot-green"></span>
+                                <span class="code-filename">broken_code.py</span>
+                            </div>
+                            <span class="code-error-tag" id="quiz-error-tag">⚡ DETECTED BUG</span>
+                        </div>
+                        <pre id="quiz-broken-code-pre" class="quiz-code-pre"><code># Broken code snippet will load here</code></pre>
+                    </div>
+
+                    <!-- 4 Option Choices Grid -->
+                    <div id="quiz-options-grid" class="quiz-options-grid" role="radiogroup">
+                        <!-- Populated dynamically via js/game.js: Option A, B, C, D -->
+                    </div>
+                </div>
+
+                <!-- Run / Submit Action Row -->
+                <div class="parsons-submit-row">
+                    <button id="submit-button" class="pokemon-submit-btn parsons-submit-btn" type="button">
+                        <span id="submit-button-text" data-i18n="hud_submit_button">⩒ RUN &amp; EXECUTE PATCH</span>
                     </button>
+                    <!-- Legacy hidden textarea for backwards compatibility -->
+                    <textarea id="answer-input" style="display: none;"></textarea>
                 </div>
 
                 <!-- Tactical Power-ups and Hint Deck -->
@@ -1243,16 +1438,21 @@
                         <button id="powerup-hint-btn" class="powerup-action-btn" type="button" title="Tactical Clue: Free immediate insight">
                             <span>💡 Clue</span>
                         </button>
-                        <span id="powerup-count-badge" class="powerup-quota-pill">3 LEFT</span>
-                    </div>
-
-                    <div class="hint-action-wrap">
-                        <button id="hint-button" class="combat-hint-btn" type="button" data-i18n="hud_hint_btn">
-                            <span>💡 Hint</span>
-                        </button>
-                        <span id="hint-cost-display" class="combat-hint-cost">Hint locked</span>
+                        <span id="powerup-count-badge" class="powerup-quota-pill free-quota">3 FREE</span>
                     </div>
                 </div>
+            </div>
+
+            <!-- Side Combat Log Pane (Positioned beside the Core Block Deck) -->
+            <div id="pokemon-dialogue-pane" class="player-combat-log-popover arena-side-core-log" style="display: none;">
+                <div class="dialogue-tag-strip">
+                    <div class="log-strip-title">
+                        <span class="log-dot"></span>
+                        <span class="speaker-label">FRAU // COMBAT LOG</span>
+                    </div>
+                    <button id="close-dialogue-btn" class="dialogue-close-btn" type="button" title="Close Combat Log">✕</button>
+                </div>
+                <div id="dialogue-text" class="pokemon-dialogue-text">A wild bug appeared! What will Frau do?</div>
             </div>
 
         </div>
@@ -1263,6 +1463,35 @@
             <p id="enemy-points-display"></p>
         </div>
 
+    </div>
+
+    <!-- ==============================================
+         CODE INTEL & DIAGNOSIS MODAL (BOOTSTRAP 5)
+    =============================================== -->
+    <div class="modal fade" id="code-intel-modal" tabindex="-1" aria-labelledby="codeIntelModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+            <div class="modal-content intel-modal-shell">
+                <div class="modal-header intel-modal-hdr">
+                    <div class="intel-modal-title-wrap">
+                        <span class="intel-modal-hdr-icon">🔍</span>
+                        <div>
+                            <h4 class="modal-title intel-modal-title-text" id="codeIntelModalTitle">TACTICAL CODE INTEL &amp; DIAGNOSIS</h4>
+                            <span class="intel-modal-sub" id="intel-modal-enemy-topic">Python Bug Analysis</span>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body intel-modal-body" id="code-intel-modal-content">
+                    <!-- Populated dynamically via js/game.js openCodeIntelModal() -->
+                </div>
+                <div class="modal-footer intel-modal-ftr">
+                    <span class="intel-modal-tip">💡 Pro Tip: Exclude the defective line first, then sequence the remaining blocks!</span>
+                    <button type="button" class="btn btn-secondary intel-close-action-btn" data-bs-dismiss="modal">
+                        <span>⚔️ Return to Battle</span>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -1462,143 +1691,59 @@
 
                     </div>
 
-
                     <!-- ==============================================
                          PANEL 2: QUESTIONS & ANSWERS POOL
                     =============================================== -->
                     <div id="admin-questions-panel" class="admin-tab-panel" style="display: none;">
 
-                        <div class="questions-split-grid">
-
-                            <!-- Left Division: Create/Add Question Challenge Form -->
-                            <div class="question-form-panel">
-                                <div class="panel-header-box">
-                                    <div class="panel-header-title-row">
-                                        <span class="panel-header-icon">➕</span>
-                                        <h3 class="panel-header-title">ADD NEW CHALLENGE</h3>
-                                    </div>
-                                    <p class="panel-header-desc">Create a Python bug challenge for students to debug and solve.</p>
+                        <!-- Full Width Question & Answer Pool Bank -->
+                        <div class="question-bank-panel" style="width: 100%;">
+                            <div class="panel-header-box">
+                                <div class="panel-header-title-row">
+                                    <span class="panel-header-icon">📚</span>
+                                    <h3 class="panel-header-title">QUESTION & ANSWER BANK</h3>
+                                    <span id="question-bank-count" class="bank-count-pill">0 Questions</span>
                                 </div>
-
-                                <div id="question-form" class="question-form-body">
-
-                                    <!-- Row 1: Difficulty Tier & Error Category / Type -->
-                                    <div class="form-grid-2cols">
-                                        <div class="form-field-group">
-                                            <label for="question-difficulty">Difficulty Tier</label>
-                                            <select id="question-difficulty" class="admin-select">
-                                                <option value="easy">🟢 Easy Tier (Stage 1: Basics)</option>
-                                                <option value="normal">🔵 Normal Tier (Stage 2: Intermediate)</option>
-                                                <option value="hard">🟣 Hard Tier (Stage 3: Advanced)</option>
-                                                <option value="hell">🔴 Hell Tier (Stage 4: Expert)</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="form-field-group">
-                                            <div class="field-label-row">
-                                                <label for="question-error-type">Error Category / Type</label>
-                                                <span class="field-pill pill-category">BUG TYPE</span>
-                                            </div>
-                                            <select id="question-error-type" class="admin-select">
-                                                <option value="Syntax Error">⚡ Syntax Error</option>
-                                                <option value="Logical Error">🧠 Logical Error</option>
-                                                <option value="Runtime Error">💥 Runtime Error</option>
-                                            </select>
-                                            <input type="hidden" id="question-category" value="Syntax Error">
-                                        </div>
-                                    </div>
-
-                                    <!-- Row 2: Target Monster / Bug (Full Width, No Overextending) -->
-                                    <div class="form-field-group">
-                                        <div class="field-label-row">
-                                            <label for="question-enemy">Target Monster / Bug</label>
-                                            <span class="field-pill pill-challenge">TARGET ENEMY</span>
-                                        </div>
-                                        <select id="question-enemy" class="admin-select" style="width: 100%;"></select>
-                                        <span class="field-help">Select the monster or bug guarded by this challenge.</span>
-                                    </div>
-
-                                    <!-- Row 3: Buggy Python Code (Challenge) -->
-                                    <div class="form-field-group">
-                                        <div class="field-label-row">
-                                            <label for="question-code">Buggy Python Code (Challenge)</label>
-                                            <span class="field-pill pill-challenge">CHALLENGE CODE</span>
-                                        </div>
-                                        <textarea id="question-code" rows="5" spellcheck="false" placeholder="# Buggy Python snippet for student challenge&#10;def dfs(graph, node, visited)&#10;    visited.add(node)"></textarea>
-                                        <span class="field-help">This code will be presented to the student in the battle terminal.</span>
-                                    </div>
-
-                                    <!-- Row 4: Corrected Answer (Solution) -->
-                                    <div class="form-field-group">
-                                        <div class="field-label-row">
-                                            <label for="question-answer">Correct Python Answer (Solution)</label>
-                                            <span class="field-pill pill-solution">CORRECT SOLUTION</span>
-                                        </div>
-                                        <textarea id="question-answer" rows="5" spellcheck="false" placeholder="# Corrected Python solution required to pass&#10;def dfs(graph, node, visited):&#10;    visited.add(node)"></textarea>
-                                        <span class="field-help">Student input is validated against this answer using equivalence checks.</span>
-                                    </div>
-
-                                    <!-- Row 5: Hint -->
-                                    <div class="form-field-group">
-                                        <div class="field-label-row">
-                                            <label for="question-hint">Helpful Hint (Optional)</label>
-                                            <span class="field-pill pill-hint">STUDENT CLUE</span>
-                                        </div>
-                                        <input id="question-hint" type="text" placeholder="e.g., Function headers must end with a colon (:).">
-                                    </div>
-
-                                    <!-- Form Action & Live Validation Test -->
-                                    <div class="form-footer-area">
-                                        <button id="test-question-button" type="button" class="admin-secondary-action-btn" title="Validate answer equivalence">
-                                            <span>🧪 Test Fix &amp; Validate</span>
-                                        </button>
-                                        <button id="add-question-button" type="button" class="admin-primary-action-btn">
-                                            <span>✨ Add to Question Pool</span>
-                                        </button>
-                                        <div id="question-form-message" class="admin-form-message"></div>
-                                    </div>
-
-                                </div>
+                                <p class="panel-header-desc">Search, filter, inspect and manage Parsons puzzle challenges currently in the active game pool.</p>
                             </div>
 
-
-                            <!-- Right Division: Question & Answer Pool Bank -->
-                            <div class="question-bank-panel">
-                                <div class="panel-header-box">
-                                    <div class="panel-header-title-row">
-                                        <span class="panel-header-icon">📚</span>
-                                        <h3 class="panel-header-title">QUESTION & ANSWER BANK</h3>
-                                        <span id="question-bank-count" class="bank-count-pill">0 Questions</span>
-                                    </div>
-                                    <p class="panel-header-desc">Search, filter, inspect and manage questions currently in the game pool.</p>
+                            <!-- Filter toolbar -->
+                            <div class="bank-toolbar">
+                                <div class="bank-search-wrap">
+                                    <span class="search-icon-symbol">🔍</span>
+                                    <input id="question-search-input" type="text" placeholder="Search questions by code, answer, or hint...">
                                 </div>
 
-                                <!-- Filter toolbar -->
-                                <div class="bank-toolbar">
-                                    <div class="bank-search-wrap">
-                                        <span class="search-icon-symbol">🔍</span>
-                                        <input id="question-search-input" type="text" placeholder="Search questions by code, answer, or hint...">
-                                    </div>
-
-                                    <div class="bank-tier-tabs" id="question-tier-filters">
-                                        <button class="tier-tab-btn active" data-tier="all" type="button">All</button>
-                                        <button class="tier-tab-btn tier-easy" data-tier="easy" type="button">Easy</button>
-                                        <button class="tier-tab-btn tier-normal" data-tier="normal" type="button">Normal</button>
-                                        <button class="tier-tab-btn tier-hard" data-tier="hard" type="button">Hard</button>
-                                        <button class="tier-tab-btn tier-hell" data-tier="hell" type="button">Hell</button>
-                                    </div>
-
-                                    <div class="bank-enemy-select-wrap">
-                                        <select id="question-bank-enemy-filter" class="admin-select">
-                                            <option value="all">All Monsters</option>
-                                        </select>
-                                    </div>
+                                <div class="bank-tier-tabs" id="question-tier-filters">
+                                    <button class="tier-tab-btn active" data-tier="all" type="button">All</button>
+                                    <button class="tier-tab-btn tier-easy" data-tier="easy" type="button">Easy</button>
+                                    <button class="tier-tab-btn tier-normal" data-tier="normal" type="button">Normal</button>
+                                    <button class="tier-tab-btn tier-hard" data-tier="hard" type="button">Hard</button>
+                                    <button class="tier-tab-btn tier-hell" data-tier="hell" type="button">Hell</button>
                                 </div>
 
-                                <!-- Question List Scroll Container -->
-                                <div id="question-pool-list" class="question-cards-list-wrap"></div>
+                                <div class="bank-enemy-select-wrap">
+                                    <select id="question-bank-enemy-filter" class="admin-select">
+                                        <option value="all">All Monsters</option>
+                                    </select>
+                                </div>
+
+                                <div class="bank-enemy-select-wrap">
+                                    <select id="question-bank-type-filter" class="admin-select">
+                                        <option value="all">All Challenge Types</option>
+                                        <option value="parson">🧩 Parson Puzzle</option>
+                                        <option value="memory">🃏 Memory Match</option>
+                                        <option value="spotBug">🐞 Spot the Bug</option>
+                                    </select>
+                                </div>
+
+                                <button id="open-add-question-modal-btn" class="admin-primary-action-btn" type="button" style="white-space: nowrap; padding: 8px 20px;">
+                                    <span>➕ Add New Question</span>
+                                </button>
                             </div>
 
+                            <!-- Question List Scroll Container -->
+                            <div id="question-pool-list" class="question-cards-list-wrap"></div>
                         </div>
 
                     </div>
@@ -1610,7 +1755,144 @@
         </div>
 
         <!-- ==============================================
-             ADMIN EDIT QUESTION & ANSWER MODAL
+             ADMIN ADD NEW QUESTION MODAL (TYPE-BASED)
+        =============================================== -->
+        <div id="admin-add-modal" class="admin-modal-wrap" style="display: none;">
+            <div class="admin-modal-backdrop" id="admin-add-modal-backdrop"></div>
+            <div class="admin-modal-dialog">
+                <div class="admin-modal-header">
+                    <div class="modal-title-group">
+                        <span class="modal-title-icon">➕</span>
+                        <div>
+                            <h3 class="modal-title-text" id="admin-add-modal-title">ADD NEW BATTLE CHALLENGE</h3>
+                            <p class="modal-subtitle-text">Create a Parson Puzzle, Memory Match, or Spot the Bug question.</p>
+                        </div>
+                    </div>
+                    <button id="close-add-modal-btn" class="modal-close-btn" type="button" title="Close modal">✕</button>
+                </div>
+
+                <div class="admin-modal-body">
+                    <!-- Challenge Mechanic Indicator -->
+                    <div class="form-field-group">
+                        <div class="field-label-row">
+                            <label>Battle Challenge System</label>
+                            <span class="field-pill pill-solution">🧩 PARSONS PUZZLE MECHANIC</span>
+                        </div>
+                        <input type="hidden" id="question-type" value="parson">
+                        <span class="field-help">Students spot &amp; exclude buggy distractor lines, then rearrange remaining code blocks to match the expected output.</span>
+                    </div>
+
+                    <!-- Row 1: Difficulty Tier & Error Category -->
+                    <div class="form-grid-2cols">
+                        <div class="form-field-group">
+                            <label for="question-difficulty">Difficulty Tier</label>
+                            <select id="question-difficulty" class="admin-select">
+                                <option value="easy">🟢 Easy Tier (Stage 1: Basics - 2 min timer)</option>
+                                <option value="normal">🔵 Normal Tier (Stage 2: Intermediate - 1.5 min timer)</option>
+                                <option value="hard">🟣 Hard Tier (Stage 3: Advanced - 1 min timer)</option>
+                                <option value="hell">🔴 Hell Tier (Stage 4: Expert - 1 min timer)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-field-group">
+                            <div class="field-label-row">
+                                <label for="question-error-type">Category / Topic</label>
+                                <span class="field-pill pill-category">CATEGORY</span>
+                            </div>
+                            <select id="question-error-type" class="admin-select">
+                                <option value="Syntax Error">⚡ Syntax Error</option>
+                                <option value="Logical Error">🧠 Logical Error</option>
+                                <option value="Runtime Error">💥 Runtime Error</option>
+                            </select>
+                            <input type="hidden" id="question-category" value="Syntax Error">
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Target Monster -->
+                    <div class="form-field-group">
+                        <div class="field-label-row">
+                            <label for="question-enemy">Target Monster / Bug Boss</label>
+                            <span class="field-pill pill-challenge">TARGET ENEMY</span>
+                        </div>
+                        <select id="question-enemy" class="admin-select" style="width: 100%;"></select>
+                        <span class="field-help">Select the monster or bug guarded by this challenge.</span>
+                    </div>
+
+                    <!-- Row 3: Challenge Title / Prompt Question -->
+                    <div class="form-field-group">
+                        <div class="field-label-row">
+                            <label for="question-title">Challenge Mission Title</label>
+                            <span class="field-pill pill-challenge">MISSION TITLE</span>
+                        </div>
+                        <input id="question-title" type="text" placeholder="e.g., Variable Goblin's Counter Logic" value="">
+                    </div>
+
+                    <!-- PARSONS PUZZLE FIELDS -->
+                    <div id="add-type-parson-section">
+                        <!-- Function Goal & Expected Output -->
+                        <div class="form-grid-2cols">
+                            <div class="form-field-group">
+                                <div class="field-label-row">
+                                    <label for="question-goal">🎯 Function Goal</label>
+                                    <span class="field-pill pill-solution">OBJECTIVE</span>
+                                </div>
+                                <textarea id="question-goal" rows="3" placeholder="e.g., Define count_even(numbers) to iterate through numbers and return the total count of even integers."></textarea>
+                            </div>
+                            <div class="form-field-group">
+                                <div class="field-label-row">
+                                    <label for="question-expected-output">🖥️ Expected Terminal Output</label>
+                                    <span class="field-pill pill-hint">TERMINAL OUTPUT</span>
+                                </div>
+                                <textarea id="question-expected-output" rows="3" placeholder="e.g., Output: 3"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Correct Solution Code (One block per line) -->
+                        <div class="form-field-group">
+                            <div class="field-label-row">
+                                <label for="question-answer">Correct Python Solution Code (One block per line)</label>
+                                <span class="field-pill pill-solution">SOLUTION BLOCKS</span>
+                            </div>
+                            <textarea id="question-answer" rows="5" spellcheck="false" placeholder="# Correct Python code lines in proper sequential order&#10;total = 0&#10;for n in numbers:&#10;    if n % 2 == 0:&#10;        total += 1&#10;print(total)"></textarea>
+                            <span class="field-help">Each line becomes an interactive, reorderable block for the student.</span>
+                        </div>
+
+                        <!-- Buggy Distractor Lines (Optional) -->
+                        <div class="form-field-group">
+                            <div class="field-label-row">
+                                <label for="question-code">Buggy Distractor Lines (Optional)</label>
+                                <span class="field-pill pill-challenge">DISTRACTORS</span>
+                            </div>
+                            <textarea id="question-code" rows="3" spellcheck="false" placeholder="# 1-2 buggy alternative lines that student must mark with ❌ Exclude&#10;total = total + n&#10;    if n % 2 = 0:"></textarea>
+                            <span class="field-help">Buggy distractor lines that must be excluded before running the code.</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 7: Hint -->
+                    <div class="form-field-group">
+                        <div class="field-label-row">
+                            <label for="question-hint">Helpful Clue / Teacher Hint (Optional)</label>
+                            <span class="field-pill pill-hint">STUDENT CLUE</span>
+                        </div>
+                        <input id="question-hint" type="text" placeholder="e.g., Check the assignment vs comparison operator.">
+                    </div>
+
+                    <div id="question-form-message" class="admin-form-message" style="display: none;"></div>
+                </div>
+
+                <div class="admin-modal-footer">
+                    <button id="cancel-add-modal-btn" class="admin-action-btn" type="button">
+                        <span>Cancel</span>
+                    </button>
+                    <button id="add-question-button" class="admin-primary-action-btn" type="button">
+                        <span>✨ Add to Question Pool</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==============================================
+             ADMIN EDIT QUESTION & ANSWER MODAL (TYPE-BASED)
         =============================================== -->
         <div id="admin-edit-modal" class="admin-modal-wrap" style="display: none;">
             <div class="admin-modal-backdrop" id="admin-edit-modal-backdrop"></div>
@@ -1620,7 +1902,7 @@
                         <span class="modal-title-icon">✏️</span>
                         <div>
                             <h3 class="modal-title-text" id="admin-edit-modal-title">EDIT CHALLENGE QUESTION</h3>
-                            <p class="modal-subtitle-text">Update the buggy code, solution, target enemy, or hint in the question pool.</p>
+                            <p class="modal-subtitle-text">Update the challenge parameters, puzzle data, target enemy, or hint.</p>
                         </div>
                     </div>
                     <button id="close-edit-modal-btn" class="modal-close-btn" type="button" title="Close modal">✕</button>
@@ -1628,6 +1910,19 @@
 
                 <div class="admin-modal-body">
                     <input type="hidden" id="edit-question-id">
+
+                    <!-- Row 0: Challenge Gameplay Type -->
+                    <div class="form-field-group">
+                        <div class="field-label-row">
+                            <label for="edit-question-type">Challenge Gameplay Type</label>
+                            <span class="field-pill pill-challenge">MECHANIC</span>
+                        </div>
+                        <select id="edit-question-type" class="admin-select" style="width: 100%;">
+                            <option value="parson">🧩 Parson Puzzle (Order Scrambled Code Blocks)</option>
+                            <option value="memory">🃏 Memory Match (Pair Python Terms &amp; Definitions)</option>
+                            <option value="spotBug">🐞 Spot the Bug (Select Incorrect Code Line)</option>
+                        </select>
+                    </div>
 
                     <!-- Row 1: Tier and Error Category -->
                     <div class="form-grid-2cols">
@@ -1643,8 +1938,8 @@
 
                         <div class="form-field-group">
                             <div class="field-label-row">
-                                <label for="edit-question-error-type">Error Category / Type</label>
-                                <span class="field-pill pill-category">BUG TYPE</span>
+                                <label for="edit-question-error-type">Category / Topic</label>
+                                <span class="field-pill pill-category">CATEGORY</span>
                             </div>
                             <select id="edit-question-error-type" class="admin-select">
                                 <option value="Syntax Error">⚡ Syntax Error</option>
@@ -1664,30 +1959,109 @@
                         <select id="edit-question-enemy" class="admin-select" style="width: 100%;"></select>
                     </div>
 
-                    <!-- Row 3: Buggy Code -->
+                    <!-- Row 3: Challenge Title / Prompt Question -->
                     <div class="form-field-group">
                         <div class="field-label-row">
-                            <label for="edit-question-code">Buggy Python Code (Challenge)</label>
-                            <span class="field-pill pill-challenge">CHALLENGE CODE</span>
+                            <label for="edit-question-title">Challenge Title / Task Prompt</label>
+                            <span class="field-pill pill-challenge">TASK PROMPT</span>
                         </div>
-                        <textarea id="edit-question-code" rows="5" spellcheck="false" placeholder="# Buggy Python snippet for student challenge"></textarea>
-                        <span class="field-help">This code will be presented to the student in battle.</span>
+                        <input id="edit-question-title" type="text" placeholder="e.g., Variable Goblin's Counter Logic" value="">
                     </div>
 
-                    <!-- Row 4: Correct Solution -->
-                    <div class="form-field-group">
-                        <div class="field-label-row">
-                            <label for="edit-question-answer">Correct Python Answer (Solution)</label>
-                            <span class="field-pill pill-solution">CORRECT SOLUTION</span>
+                    <!-- EDIT TYPE-SPECIFIC SECTION: PARSON PUZZLE -->
+                    <div id="edit-type-parson-section">
+                        <!-- Function Goal & Expected Output -->
+                        <div class="form-grid-2cols">
+                            <div class="form-field-group">
+                                <div class="field-label-row">
+                                    <label for="edit-question-goal">🎯 Function Goal</label>
+                                    <span class="field-pill pill-solution">OBJECTIVE</span>
+                                </div>
+                                <textarea id="edit-question-goal" rows="3" placeholder="e.g., Define count_even(numbers)..."></textarea>
+                            </div>
+                            <div class="form-field-group">
+                                <div class="field-label-row">
+                                    <label for="edit-question-expected-output">🖥️ Expected Output</label>
+                                    <span class="field-pill pill-hint">TERMINAL OUTPUT</span>
+                                </div>
+                                <textarea id="edit-question-expected-output" rows="3" placeholder="e.g., Output: 3"></textarea>
+                            </div>
                         </div>
-                        <textarea id="edit-question-answer" rows="5" spellcheck="false" placeholder="# Corrected Python solution required to pass"></textarea>
-                        <span class="field-help">Student input is validated against this answer.</span>
+
+                        <!-- Correct Solution Code -->
+                        <div class="form-field-group">
+                            <div class="field-label-row">
+                                <label for="edit-question-answer">Correct Python Solution Code (One block per line)</label>
+                                <span class="field-pill pill-solution">CORRECT SOLUTION</span>
+                            </div>
+                            <textarea id="edit-question-answer" rows="5" spellcheck="false" placeholder="# Corrected Python solution required to pass"></textarea>
+                            <span class="field-help">Student input is validated against this answer.</span>
+                        </div>
+
+                        <!-- Buggy Distractor Lines -->
+                        <div class="form-field-group">
+                            <div class="field-label-row">
+                                <label for="edit-question-code">Buggy Distractor Lines (Optional)</label>
+                                <span class="field-pill pill-challenge">DISTRACTORS</span>
+                            </div>
+                            <textarea id="edit-question-code" rows="3" spellcheck="false" placeholder="# 1-2 buggy alternative lines that student must exclude"></textarea>
+                            <span class="field-help">Optional distractors scrambled alongside solution blocks.</span>
+                        </div>
                     </div>
 
-                    <!-- Row 5: Hint -->
+                    <!-- EDIT TYPE-SPECIFIC SECTION: MEMORY MATCH -->
+                    <div id="edit-type-memory-section" style="display: none;">
+                        <div class="form-field-group">
+                            <div class="field-label-row">
+                                <label>🃏 Memory Pairs (Card A ↔ Card B)</label>
+                                <span class="field-pill pill-solution">MATCHING PAIRS</span>
+                            </div>
+                            <span class="field-help" style="margin-bottom: 8px; display: block;">Pairs of concepts/code and meanings.</span>
+                            <div id="edit-memory-pairs-list" class="admin-pairs-list">
+                                <!-- Dynamic pair rows rendered via js/admin.js -->
+                            </div>
+                            <button id="edit-memory-pair-btn" type="button" class="admin-secondary-action-btn" style="margin-top: 8px; width: auto; align-self: flex-start;">
+                                <span>➕ Add Pair</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- EDIT TYPE-SPECIFIC SECTION: SPOT THE BUG -->
+                    <div id="edit-type-spotbug-section" style="display: none;">
+                        <div class="form-field-group">
+                            <div class="field-label-row">
+                                <label for="edit-question-spotbug-code">Python Code Snippet (Line by Line)</label>
+                                <span class="field-pill pill-challenge">CODE SNIPPET</span>
+                            </div>
+                            <textarea id="edit-question-spotbug-code" rows="6" spellcheck="false" placeholder="Enter Python snippet lines"></textarea>
+                            <span class="field-help">Students will see these numbered lines and select the bug.</span>
+                        </div>
+
+                        <div class="form-grid-2cols">
+                            <div class="form-field-group">
+                                <div class="field-label-row">
+                                    <label for="edit-question-spotbug-line">Buggy Line Selection</label>
+                                    <span class="field-pill pill-category">CORRECT BUGGY LINE</span>
+                                </div>
+                                <select id="edit-question-spotbug-line" class="admin-select">
+                                    <option value="1">Line 1</option>
+                                </select>
+                            </div>
+
+                            <div class="form-field-group">
+                                <div class="field-label-row">
+                                    <label for="edit-question-spotbug-explanation">Bug Explanation (Optional)</label>
+                                    <span class="field-pill pill-hint">EXPLANATION</span>
+                                </div>
+                                <input id="edit-question-spotbug-explanation" type="text" placeholder="e.g., Missing colon or invalid syntax">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 7: Hint -->
                     <div class="form-field-group">
                         <div class="field-label-row">
-                            <label for="edit-question-hint">Helpful Hint (Optional)</label>
+                            <label for="edit-question-hint">Helpful Clue / Teacher Hint (Optional)</label>
                             <span class="field-pill pill-hint">STUDENT CLUE</span>
                         </div>
                         <input id="edit-question-hint" type="text" placeholder="e.g., Don't forget to close the print parenthesis.">
@@ -1697,9 +2071,6 @@
                 </div>
 
                 <div class="admin-modal-footer">
-                    <button id="test-edit-question-btn" class="admin-secondary-action-btn" type="button" title="Test fix equivalence">
-                        <span>🧪 Test Fix</span>
-                    </button>
                     <button id="cancel-edit-modal-btn" class="admin-action-btn" type="button">
                         <span>Cancel</span>
                     </button>
@@ -1793,11 +2164,14 @@
             <p class="defeat-tip-text"><strong>TACTICAL RECOVERY INTEL:</strong> Study the bug patterns in the <strong>Python Codex</strong>, stock up on hints from the Shop, and review your code syntax before challenging this sector again!</p>
         </div>
 
-        <div class="end-panel-divider defeat-divider"></div>
-
-        <button id="defeat-button" class="end-screen-btn defeat-btn" data-i18n="defeat_btn">
-            ↩ Return to Difficulty
-        </button>
+        <div class="defeat-actions-row">
+            <button id="defeat-retry-button" class="end-screen-btn defeat-retry-btn" type="button" data-i18n="defeat_retry_btn">
+                🔄 Retry Sector (Monster #1)
+            </button>
+            <button id="defeat-button" class="end-screen-btn defeat-btn" data-i18n="defeat_btn">
+                ↩ Return to Difficulty
+            </button>
+        </div>
 
     </div>
 
@@ -1977,36 +2351,41 @@
 
 
 <!-- ==========================
+     FRONT-END FRAMEWORK (BOOTSTRAP 5)
+========================== -->
+<script src="js/bootstrap.bundle.min.js"></script>
+
+<!-- ==========================
      LOCALIZATION & I18N SYSTEM
 ========================== -->
-<script src="js/i18n.js?v=73"></script>
-<script src="data/easy.js?v=73"></script>
-<script src="data/normal.js?v=73"></script>
-<script src="data/hard.js?v=73"></script>
-<script src="data/hell.js?v=73"></script>
-<script src="data/enemyGuides.js?v=73"></script>
-<script src="data/pythonLessons.js?v=73"></script>
+<script src="js/i18n.js?v=101"></script>
+<script src="data/easy.js?v=101"></script>
+<script src="data/normal.js?v=101"></script>
+<script src="data/hard.js?v=101"></script>
+<script src="data/hell.js?v=101"></script>
+<script src="data/enemyGuides.js?v=101"></script>
+<script src="data/pythonLessons.js?v=101"></script>
 
 <!-- ==========================
      FIREBASE CLOUD DATABASE
-========================== -->
+========================= -->
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
-<script src="js/firebase-config.js?v=73"></script>
-<script src="js/firebase-db.js?v=73"></script>
+<script src="js/firebase-config.js?v=101"></script>
+<script src="js/firebase-db.js?v=101"></script>
 
 <!-- ==========================
      MODULAR JAVASCRIPT SYSTEM
-========================== -->
-<script src="js/auth.js?v=73"></script>
-<script src="js/save.js?v=73"></script>
-<script src="js/points.js?v=73"></script>
-<script src="js/difficulty.js?v=73"></script>
-<script src="js/enemyShowcase.js?v=73"></script>
-<script src="js/game.js?v=73"></script>
-<script src="js/study.js?v=73"></script>
-<script src="js/admin.js?v=73"></script>
-<script src="js/app.js?v=73"></script>
+========================= -->
+<script src="js/auth.js?v=101"></script>
+<script src="js/save.js?v=101"></script>
+<script src="js/points.js?v=101"></script>
+<script src="js/difficulty.js?v=101"></script>
+<script src="js/enemyShowcase.js?v=101"></script>
+<script src="js/game.js?v=101"></script>
+<script src="js/study.js?v=101"></script>
+<script src="js/admin.js?v=101"></script>
+<script src="js/app.js?v=101"></script>
 
 
 </body>

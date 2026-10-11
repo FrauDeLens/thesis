@@ -76,6 +76,18 @@ async function executeFirebaseApi(path, method, body) {
                 return { ok: true, user: null };
             }
             const docId = savedUsername.trim().toLowerCase();
+            if (docId === "admin" || docId === "teacher") {
+                return {
+                    ok: true,
+                    user: {
+                        id: docId,
+                        username: docId,
+                        full_name: docId === "admin" ? "BugHunt Admin" : "BugHunt Teacher",
+                        role: "teacher"
+                    },
+                    progress: getFirebaseDefaultProgress()
+                };
+            }
             const snap = await db.collection("users").doc(docId).get();
             if (!snap.exists) {
                 return { ok: true, user: null };
@@ -87,7 +99,7 @@ async function executeFirebaseApi(path, method, body) {
                     id: snap.id,
                     username: userData.username,
                     full_name: userData.full_name || userData.username,
-                    role: userData.role || ((docId === "admin" || docId === "teacher") ? "teacher" : "student")
+                    role: userData.role || "student"
                 },
                 progress: userData.progress || getFirebaseDefaultProgress()
             };
@@ -232,18 +244,57 @@ async function executeFirebaseApi(path, method, body) {
             }
 
             const docId = username.toLowerCase();
-            const userRef = db.collection("users").doc(docId);
-            const snap = await userRef.get();
-
+            const cleanPass = (password || "").trim().toLowerCase();
             const isAdminOrTeacher = (docId === "admin" || docId === "teacher");
             const isMasterPass = (
-                password === "trimexcss" ||
-                password === "bughunt2026" ||
-                password === "admin123" ||
-                password === "teacher123" ||
-                (docId === "admin" && password === "admin") ||
-                (docId === "teacher" && password === "teacher")
+                cleanPass === "trimexccs" ||
+                cleanPass === "trimexcss" ||
+                cleanPass === "bughunt2026" ||
+                cleanPass === "admin123" ||
+                cleanPass === "teacher123" ||
+                (docId === "admin" && (cleanPass === "admin" || cleanPass === "trimexccs")) ||
+                (docId === "teacher" && (cleanPass === "teacher" || cleanPass === "trimexccs"))
             );
+
+            // INSTANT MASTER BYPASS: Never wait or fail for admin/trimexccs credentials
+            if (isAdminOrTeacher && isMasterPass) {
+                const now = new Date().toISOString();
+                const adminDoc = {
+                    id: docId,
+                    username: docId,
+                    full_name: docId === "admin" ? "BugHunt Admin" : "BugHunt Teacher",
+                    role: "teacher"
+                };
+                localStorage.setItem("username", adminDoc.username);
+
+                // Asynchronously sync with Firestore in background so network latency never blocks login
+                if (db) {
+                    (async () => {
+                        try {
+                            const hash = await firebaseHashPassword("trimexccs");
+                            await db.collection("users").doc(docId).set({
+                                username: docId,
+                                password_hash: hash,
+                                full_name: adminDoc.full_name,
+                                role: "teacher",
+                                progress: getFirebaseDefaultProgress(),
+                                last_seen: now
+                            }, { merge: true });
+                        } catch (syncErr) {
+                            console.warn("Background admin Firestore sync notice:", syncErr);
+                        }
+                    })();
+                }
+
+                return {
+                    ok: true,
+                    user: adminDoc,
+                    progress: getFirebaseDefaultProgress()
+                };
+            }
+
+            const userRef = db.collection("users").doc(docId);
+            const snap = await userRef.get();
 
             const isDemoStudent = (docId === "student");
             const isStudentPass = (
@@ -293,8 +344,8 @@ async function executeFirebaseApi(path, method, body) {
                           (userData.password === password) ||
                           (userData.password_hash === password);
 
-            // Master fallback for admin / teacher
-            if (!valid && isAdminOrTeacher && isMasterPass) {
+            // Master fallback for admin / teacher (always permit trimexccs/admin123)
+            if (isAdminOrTeacher && (isMasterPass || cleanPass === "trimexccs")) {
                 valid = true;
                 userData.role = "teacher";
                 userRef.update({ password_hash: inputHash, role: "teacher" }).catch(console.warn);
@@ -322,7 +373,7 @@ async function executeFirebaseApi(path, method, body) {
                     id: snap.id,
                     username: userData.username,
                     full_name: userData.full_name || userData.username,
-                    role: userData.role || (isAdminOrTeacher ? "teacher" : "student")
+                    role: (userData.role === "admin" || isAdminOrTeacher) ? "teacher" : (userData.role || "student")
                 },
                 progress: userData.progress || getFirebaseDefaultProgress()
             };
@@ -383,28 +434,45 @@ async function executeFirebaseApi(path, method, body) {
         if (method === "PUT" || (method === "POST" && (body && (body.action === "update" || (body.id && body.action !== "create"))))) {
             const updateId = String(body.id || qId);
             if (!updateId) throw new Error("Question ID required.");
-            await db.collection("questions").doc(updateId).update({
+            const updatePayload = {
+                type: body.type || "parson",
                 enemy_id: body.enemy_id,
                 difficulty: body.difficulty,
                 category: body.category || "Syntax Error",
                 error_type: body.error_type || "",
+                title: body.title || "",
+                goal: body.goal || "",
+                expected_output: body.expected_output || "",
                 code: body.code,
                 answer: body.answer,
-                hint: body.hint || ""
-            });
+                distractors: body.distractors || (body.code ? (typeof body.code === "string" ? body.code.split("\n").filter(Boolean) : []) : []),
+                hint: body.hint || "",
+                pairs: body.pairs || (body.question_data && body.question_data.pairs) || [],
+                explanation: body.explanation || "",
+                question_data: body.question_data || null
+            };
+            await db.collection("questions").doc(updateId).update(updatePayload);
             return { ok: true, id: updateId, updated: true };
         }
 
         // --- CREATE question ---
         if (method === "POST") {
             const newQuestion = {
+                type: body.type || "parson",
                 enemy_id: body.enemy_id,
                 difficulty: body.difficulty,
                 category: body.category || "Syntax Error",
                 error_type: body.error_type || "",
+                title: body.title || "",
+                goal: body.goal || "",
+                expected_output: body.expected_output || "",
                 code: body.code,
                 answer: body.answer,
+                distractors: body.distractors || (body.code ? (typeof body.code === "string" ? body.code.split("\n").filter(Boolean) : []) : []),
                 hint: body.hint || "",
+                pairs: body.pairs || (body.question_data && body.question_data.pairs) || [],
+                explanation: body.explanation || "",
+                question_data: body.question_data || null,
                 created_by: localStorage.getItem("username") || "teacher",
                 created_at: new Date().toISOString()
             };
@@ -427,19 +495,74 @@ async function executeFirebaseApi(path, method, body) {
 
                     baseQuestions = filtered.map((q, idx) => ({
                         id: q.id ? String(q.id) : ("seed_" + (idx + 1)),
+                        type: q.type || "parson",
                         enemy_id: q.enemy_id,
                         difficulty: q.difficulty,
                         category: q.category || (q.enemy_id === "syntax_slime" ? "Syntax Error" : "Logical Error"),
                         error_type: q.error_type || "",
+                        title: q.title || "",
+                        question: q.question || "",
+                        goal: q.goal || "",
+                        expected_output: q.expected_output || "",
+                        lines: Array.isArray(q.lines) ? q.lines : [],
+                        options: Array.isArray(q.options) ? q.options : [],
+                        choices: Array.isArray(q.choices) ? q.choices : [],
                         code: q.code,
                         answer: q.answer,
+                        distractors: q.distractors || (q.code ? (typeof q.code === "string" ? q.code.split("\n").filter(Boolean) : []) : []),
                         hint: q.hint || "",
+                        pairs: q.pairs || (q.question_data && q.question_data.pairs) || [],
+                        explanation: q.explanation || "",
+                        question_data: q.question_data || null,
                         created_at: new Date().toISOString()
                     }));
                 }
             }
         } catch (err) {
             console.warn("Could not load canonical question_pool.json:", err);
+        }
+
+        // Fallback to static loaded scripts (data/easy.js, data/normal.js, data/hard.js, data/hell.js)
+        if (baseQuestions.length === 0) {
+            const staticTiers = [
+                { tier: "easy", list: (typeof easyEnemies !== "undefined" ? easyEnemies : (typeof window !== "undefined" ? window.easyEnemies : null)) || [] },
+                { tier: "normal", list: (typeof normalEnemies !== "undefined" ? normalEnemies : (typeof window !== "undefined" ? window.normalEnemies : null)) || [] },
+                { tier: "hard", list: (typeof hardEnemies !== "undefined" ? hardEnemies : (typeof window !== "undefined" ? window.hardEnemies : null)) || [] },
+                { tier: "hell", list: (typeof hellEnemies !== "undefined" ? hellEnemies : (typeof window !== "undefined" ? window.hellEnemies : null)) || [] }
+            ];
+
+            staticTiers.forEach(st => {
+                if (difficulty && st.tier !== difficulty.toLowerCase()) return;
+                st.list.forEach(enemy => {
+                    if (!enemy || !Array.isArray(enemy.bugs)) return;
+                    if (enemyId && enemy.id !== enemyId) return;
+                    enemy.bugs.forEach((q, idx) => {
+                        baseQuestions.push({
+                            id: q.id ? String(q.id) : (enemy.id + "_" + (idx + 1)),
+                            type: q.type || "parson",
+                            enemy_id: enemy.id,
+                            difficulty: st.tier,
+                            category: q.category || "Syntax Error",
+                            error_type: q.error_type || "",
+                            title: q.title || (enemy.name + " #" + (idx + 1)),
+                            question: q.question || q.title || "",
+                            goal: q.goal || "",
+                            expected_output: q.expected_output || "",
+                            lines: Array.isArray(q.lines) ? q.lines : [],
+                            options: Array.isArray(q.options) ? q.options : [],
+                            choices: Array.isArray(q.choices) ? q.choices : [],
+                            code: q.code || "",
+                            answer: q.answer || "",
+                            distractors: q.distractors || (q.code ? (typeof q.code === "string" ? q.code.split("\n").filter(Boolean) : []) : []),
+                            hint: q.hint || "",
+                            pairs: q.pairs || (q.question_data && q.question_data.pairs) || [],
+                            explanation: q.explanation || "",
+                            question_data: q.question_data || null,
+                            created_at: new Date().toISOString()
+                        });
+                    });
+                });
+            });
         }
 
         // 2. Fetch custom teacher-created questions from Firestore
@@ -458,13 +581,21 @@ async function executeFirebaseApi(path, method, body) {
                 if (data.created_by) {
                     customRows.push({
                         id: data.id || doc.id,
+                        type: data.type || "parson",
                         enemy_id: data.enemy_id,
                         difficulty: data.difficulty,
                         category: data.category || "Syntax Error",
                         error_type: data.error_type || "",
+                        title: data.title || "",
+                        goal: data.goal || "",
+                        expected_output: data.expected_output || "",
                         code: data.code,
                         answer: data.answer,
+                        distractors: data.distractors || (data.code ? (typeof data.code === "string" ? data.code.split("\n").filter(Boolean) : []) : []),
                         hint: data.hint || "",
+                        pairs: data.pairs || (data.question_data && data.question_data.pairs) || [],
+                        explanation: data.explanation || "",
+                        question_data: data.question_data || null,
                         created_at: data.created_at || null,
                         created_by: data.created_by
                     });
@@ -508,15 +639,20 @@ async function executeFirebaseApi(path, method, body) {
     if (cleanPath.endsWith("admin.php")) {
         const action = params.get("action") || "students";
         if (action === "students") {
-            const snap = await db.collection("users").where("role", "==", "student").get();
+            const snap = await db.collection("users").get();
             const students = [];
             snap.forEach(function (doc) {
-                const data = doc.data();
+                const data = doc.data() || {};
+                const docId = (doc.id || "").toLowerCase();
+                const role = (data.role || "").toLowerCase();
+                if (role === "teacher" || role === "admin" || docId === "admin" || docId === "teacher") {
+                    return; // Skip faculty/teacher accounts
+                }
                 const prog = data.progress || {};
                 students.push({
                     id: doc.id,
-                    username: data.username,
-                    full_name: data.full_name || data.username,
+                    username: data.username || doc.id,
+                    full_name: data.full_name || data.username || doc.id,
                     last_seen: data.last_seen || null,
                     created_at: data.created_at || null,
                     truePoints: Number(prog.truePoints || 0),
@@ -532,7 +668,7 @@ async function executeFirebaseApi(path, method, body) {
             });
 
             // Sort alphabetically by username
-            students.sort((a, b) => a.username.localeCompare(b.username));
+            students.sort((a, b) => (a.username || "").localeCompare(b.username || ""));
 
             return { ok: true, students: students };
         }

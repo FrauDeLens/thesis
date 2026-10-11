@@ -6,8 +6,8 @@
 #difficulty-selection {
     display: none;
     position: relative;
-    width: 1920px;
-    height: 1080px;
+    width: 100%;
+    min-height: 100vh;
     box-sizing: border-box;
     background-image:
         linear-gradient(rgba(10, 6, 22, 0.75), rgba(5, 3, 14, 0.92)),
@@ -15,9 +15,19 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    overflow: hidden;
-    padding: 68px 80px 30px 80px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: clamp(14px, 2.5vh, 36px) clamp(16px, 2.5vw, 40px);
     font-family: 'Inter', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#difficulty-selection:not([style*="display: none"]),
+#difficulty-selection[style*="display: flex"],
+#difficulty-selection[style*="display: block"] {
+    display: flex !important;
 }
 
 /* Background vignette */
@@ -37,7 +47,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 36px;
+    margin-bottom: clamp(10px, 1.8vh, 26px);
+    max-width: 1550px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    flex-shrink: 0;
 }
 
 .diff-back-btn {
@@ -45,9 +60,9 @@
     border: 1px solid #7c3aed;
     color: #e9d5ff;
     font-family: 'Inter', sans-serif;
-    font-size: 15px;
+    font-size: clamp(12.5px, 1.2vmin + 2px, 15px);
     font-weight: 600;
-    padding: 12px 24px;
+    padding: clamp(8px, 1vh, 12px) clamp(14px, 1.5vw, 24px);
     border-radius: 10px;
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
@@ -69,9 +84,9 @@
 }
 
 .diff-title-wrap h2 {
-    margin: 0 0 8px 0;
+    margin: 0 0 clamp(2px, 0.5vh, 6px) 0;
     font-family: 'Inter', sans-serif;
-    font-size: 42px;
+    font-size: clamp(22px, 2.8vmin + 6px, 38px);
     font-weight: 800;
     color: #ffffff;
     letter-spacing: 1px;
@@ -81,13 +96,13 @@
 .diff-subtitle {
     margin: 0;
     font-family: 'Inter', sans-serif;
-    font-size: 17px;
+    font-size: clamp(12px, 1.1vmin + 2px, 15px);
     color: #c4b5fd;
     letter-spacing: 0.3px;
 }
 
 .diff-header-spacer {
-    width: 140px;
+    width: clamp(70px, 8vw, 140px);
 }
 
 /* =========================================================
@@ -98,26 +113,32 @@
     position: relative;
     z-index: 5;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
-    height: 720px;
-    align-items: stretch;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: clamp(10px, 1.5vw, 24px);
+    min-height: 0;
+    flex: 1;
+    max-width: 1550px;
+    width: 100%;
+    margin: auto auto;
+    align-items: center;
 }
 
 .diff-stage-card {
-    background: linear-gradient(180deg, rgba(25, 18, 48, 0.92) 0%, rgba(12, 8, 26, 0.96) 100%);
+    background: linear-gradient(180deg, rgba(25, 18, 48, 0.94) 0%, rgba(12, 8, 26, 0.98) 100%);
     border: 2px solid #5a388a;
-    border-radius: 20px;
-    padding: 32px 26px;
+    border-radius: 18px;
+    padding: clamp(12px, 1.8vh, 22px) clamp(12px, 1.4vw, 22px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(120, 60, 200, 0.15);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.65), 0 0 25px rgba(120, 60, 200, 0.15);
     backdrop-filter: blur(10px);
     transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
     box-sizing: border-box;
     position: relative;
     overflow: hidden;
+    min-height: clamp(360px, 56vh, 510px);
+    max-height: clamp(390px, 60vh, 540px);
 }
 
 .diff-stage-card:hover {
@@ -163,27 +184,27 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: clamp(10px, 1.4vmin, 20px);
 }
 
 .card-star-badge {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
+    font-size: clamp(10px, 1vmin, 12px);
     font-weight: 700;
     color: #ffd166;
     background: rgba(255, 209, 102, 0.15);
-    padding: 4px 10px;
+    padding: 3px 8px;
     border-radius: 20px;
     border: 1px solid rgba(255, 209, 102, 0.4);
 }
 
 .card-powerup-badge {
     font-family: 'Inter', sans-serif;
-    font-size: 12px;
+    font-size: clamp(10px, 1vmin, 12px);
     font-weight: 700;
     color: #6ee7b7;
     background: rgba(16, 185, 129, 0.15);
-    padding: 4px 10px;
+    padding: 3px 8px;
     border-radius: 20px;
     border: 1px solid rgba(16, 185, 129, 0.4);
 }
@@ -194,11 +215,67 @@
     border: 1px solid rgba(239, 68, 68, 0.4);
 }
 
+.card-powerup-badge.paid {
+    color: #fde047;
+    background: rgba(234, 179, 8, 0.15);
+    border: 1px solid rgba(234, 179, 8, 0.4);
+}
+
+/* Card Monster / Boss Preview Spotlight */
+.diff-card-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: clamp(80px, 12vh, 120px);
+    margin: clamp(4px, 0.8vh, 10px) 0;
+    position: relative;
+    pointer-events: none;
+}
+
+.diff-card-preview::after {
+    content: "";
+    position: absolute;
+    bottom: 2px;
+    width: clamp(70px, 65%, 130px);
+    height: 16px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.4) 0%, transparent 75%);
+    filter: blur(4px);
+    z-index: 1;
+}
+
+.card-easy .diff-card-preview::after {
+    background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.5) 0%, transparent 75%);
+}
+.card-normal .diff-card-preview::after {
+    background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.5) 0%, transparent 75%);
+}
+.card-hard .diff-card-preview::after {
+    background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.5) 0%, transparent 75%);
+}
+.card-hell .diff-card-preview::after {
+    background: radial-gradient(ellipse at center, rgba(239, 68, 68, 0.55) 0%, transparent 75%);
+}
+
+.diff-boss-preview-img {
+    max-height: 100%;
+    max-width: 90%;
+    object-fit: contain;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.75));
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.diff-stage-card:hover .diff-boss-preview-img {
+    transform: scale(1.12) translateY(-4px);
+}
+
 /* Card Titles */
 .card-title {
-    margin: 0 0 6px 0;
+    margin: 0 0 2px 0;
     font-family: 'Inter', sans-serif;
-    font-size: 32px;
+    font-size: clamp(18px, 2.2vmin, 28px);
     font-weight: 800;
     letter-spacing: 0.5px;
     color: #ffffff;
@@ -210,30 +287,30 @@
 .card-hell .card-title { color: #f87171; }
 
 .card-domain {
-    margin: 0 0 24px 0;
-    font-size: 15px;
+    margin: 0 0 clamp(4px, 0.8vh, 12px) 0;
+    font-size: clamp(11px, 1vmin + 2px, 13.5px);
     color: #c4b5fd;
-    line-height: 1.4;
-    min-height: 42px;
+    line-height: 1.35;
+    min-height: auto;
 }
 
 /* Card Vitals Info Box */
 .card-info-box {
     background: rgba(12, 8, 24, 0.7);
     border: 1px solid rgba(120, 80, 180, 0.25);
-    border-radius: 14px;
-    padding: 18px 20px;
+    border-radius: 12px;
+    padding: clamp(6px, 1vh, 14px) clamp(8px, 1vw, 14px);
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-bottom: 28px;
+    gap: clamp(4px, 0.6vh, 8px);
+    margin-bottom: clamp(6px, 1vh, 16px);
 }
 
 .card-info-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 14px;
+    font-size: clamp(10.5px, 0.9vmin + 2px, 13px);
     color: #cbd5e1;
 }
 
@@ -250,10 +327,10 @@
 /* Play Button */
 .diff-play-btn {
     width: 100%;
-    height: 58px;
-    border-radius: 12px;
+    height: clamp(38px, 4.8vh, 52px);
+    border-radius: 10px;
     font-family: 'Inter', sans-serif;
-    font-size: 17px;
+    font-size: clamp(12.5px, 1.2vmin + 2px, 16px);
     font-weight: 700;
     cursor: pointer;
     border: none;
