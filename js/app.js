@@ -80,9 +80,9 @@ function showScreen(screen) {
         window.BugHuntCompiler.open();
     }
 
-    // Toggle Global Accessibility Bar visibility: show on Main Menu & Leaderboard! Hide on Title, Login, Register, Battle, etc.
+    // Toggle Global Accessibility Bar visibility: ONLY show on Main Menu! Hide on Title, Login, Register, Battle, Leaderboard, etc.
     const globalAccessBar = document.getElementById("global-access-bar");
-    const showAccessBar = (screen === mainMenu || screen === leaderboardScreen);
+    const showAccessBar = (screen === mainMenu);
     if (globalAccessBar) {
         globalAccessBar.style.display = showAccessBar ? "flex" : "none";
     }

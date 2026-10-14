@@ -2150,6 +2150,7 @@ body.in-battle #global-access-bar,
 #game-container:has(#shop-screen:not([style*="display: none"])) #global-access-bar,
 #game-container:has(#about-screen:not([style*="display: none"])) #global-access-bar,
 #game-container:has(#compiler-screen:not([style*="display: none"])) #global-access-bar,
+#game-container:has(#leaderboard-screen:not([style*="display: none"])) #global-access-bar,
 #game-container:has(#admin-screen:not([style*="display: none"])) #global-access-bar {
     display: none !important;
 }

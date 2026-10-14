@@ -670,3 +670,30 @@
     color: #64748b;
     margin-top: 4px;
 }
+
+/* =========================================================
+   RESPONSIVE TOP NAVIGATION & PODIUM
+========================================================= */
+@media (max-width: 768px) {
+    .lb-top-nav {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 12px;
+    }
+    .lb-header-titles {
+        grid-column: 1 / -1;
+        order: 2;
+        width: 100%;
+        text-align: center;
+        margin-top: 8px;
+    }
+    .lb-back-btn {
+        order: 1;
+    }
+    .lb-nav-actions {
+        order: 1;
+        margin-left: auto;
+    }
+}
+
