@@ -2123,6 +2123,12 @@ select.admin-select,
     color: #e9d5ff;
 }
 
+.qcard-type-badge.type-quiz {
+    background: rgba(14, 165, 233, 0.2);
+    border: 1px solid #0ea5e9;
+    color: #7dd3fc;
+}
+
 .qcard-type-badge.type-memory {
     background: rgba(56, 189, 248, 0.2);
     border: 1px solid #38bdf8;
@@ -2133,6 +2139,54 @@ select.admin-select,
     background: rgba(244, 63, 94, 0.2);
     border: 1px solid #f43f5e;
     color: #fecdd3;
+}
+
+/* Quiz Question Card Options Grid */
+.qcard-quiz-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.qcard-quiz-choice {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(18, 10, 32, 0.85);
+    border: 1px solid rgba(139, 92, 246, 0.25);
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: #e2e8f0;
+    transition: all 0.15s ease;
+}
+
+.qcard-quiz-choice.correct {
+    background: rgba(16, 185, 129, 0.18);
+    border-color: #10b981;
+    color: #a7f3d0;
+    font-weight: 600;
+}
+
+.qcard-quiz-choice-letter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    background: rgba(139, 92, 246, 0.3);
+    color: #ddd6fe;
+    flex-shrink: 0;
+}
+
+.qcard-quiz-choice.correct .qcard-quiz-choice-letter {
+    background: #10b981;
+    color: #064e3b;
 }
 
 /* Memory Match Pairs List in Admin Modal */

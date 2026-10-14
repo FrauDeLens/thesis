@@ -20,11 +20,14 @@
     <link rel="stylesheet" href="css/auth.css?v=105">
     <link rel="stylesheet" href="css/menu.css?v=105">
     <link rel="stylesheet" href="css/difficulty.css?v=105">
-    <link rel="stylesheet" href="css/battle.css?v=105">
-    <link rel="stylesheet" href="css/battle-end-screens.css?v=105">
-    <link rel="stylesheet" href="css/enemy-showcase.css?v=105">
-    <link rel="stylesheet" href="css/study.css?v=105">
-    <link rel="stylesheet" href="css/admin.css?v=105">
+    <link rel="stylesheet" href="css/battle.css?v=112">
+    <link rel="stylesheet" href="css/battle-end-screens.css?v=110">
+    <link rel="stylesheet" href="css/enemy-showcase.css?v=110">
+    <link rel="stylesheet" href="css/study.css?v=110">
+    <link rel="stylesheet" href="css/admin.css?v=110">
+    <link rel="stylesheet" href="css/themes.css?v=110">
+    <link rel="stylesheet" href="css/leaderboard.css?v=111">
+    <link rel="stylesheet" href="css/compiler.css?v=110">
 
 </head>
 
@@ -38,15 +41,10 @@
     =============================================== -->
         <div id="global-access-bar" class="global-access-bar" style="display: none;">
             <div class="access-tools-left">
-                <button id="toggle-colorblind-btn" class="access-pill-btn" type="button"
-                    title="Toggle Color Blind Friendly Palette">
-                    <span class="access-icon">👁️</span>
-                    <span id="colorblind-btn-text">Color Blind: OFF</span>
-                </button>
-                <button id="toggle-theme-btn" class="access-pill-btn" type="button"
-                    title="Toggle High-Contrast Dark Mode">
-                    <span class="access-icon">🌙</span>
-                    <span id="theme-btn-text">Dark: Balanced</span>
+                <button id="toggle-theme-picker-btn" class="access-pill-btn theme-pill" type="button"
+                    title="Select Color Scheme & Theme">
+                    <span id="theme-selector-btn-icon" class="access-icon">🎨</span>
+                    <span id="theme-selector-btn-text">Cyber Violet</span>
                 </button>
             </div>
             <div class="access-tools-right">
@@ -308,8 +306,16 @@
                     ⚔️ Start Game
                 </button>
 
+                <button id="leaderboard-button" class="menu-btn menu-btn-leaderboard" data-i18n="menu_leaderboard">
+                    🏅 Leaderboard
+                </button>
+
                 <button id="codex-button" class="menu-btn" data-i18n="menu_python_codex">
                     📖 Python Codex
+                </button>
+
+                <button id="compiler-button" class="menu-btn menu-btn-compiler" data-i18n="menu_python_compiler">
+                    ⚡ Online Compiler
                 </button>
 
                 <button id="shop-button" class="menu-btn" data-i18n="menu_shop">
@@ -627,6 +633,237 @@
                         id="codex-modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==========================
+         ONLINE PYTHON COMPILER & SANDBOX SCREEN
+    ========================== -->
+        <div id="compiler-screen" style="display: none;">
+            <div class="compiler-header">
+                <button id="compiler-back-button" class="compiler-back-btn" type="button" title="Return to Main Menu">
+                    <span>&larr;</span> <span data-i18n="lb_back_btn">Main Menu</span>
+                </button>
+                <div class="compiler-header-center">
+                    <h1 class="compiler-title">🐍 PYTHON COMPILER</h1>
+                    <p class="compiler-subtitle">Interactive In-Browser Execution &amp; Bug Testing Lab</p>
+                </div>
+                <div class="compiler-header-actions">
+                    <button id="compiler-run-btn" class="compiler-run-btn" type="button" title="Execute Code (Ctrl + Enter)">
+                        <span>▶</span> <span>RUN CODE</span>
+                    </button>
+                    <button id="compiler-reset-btn" class="compiler-tool-btn" type="button" title="Reload Topic Code Sample">
+                        <span>🔄</span> <span>Reset Code</span>
+                    </button>
+                    <button id="compiler-clear-code-btn" class="compiler-tool-btn" type="button" title="Clear Code Editor">
+                        <span>🧹</span> <span>Clear</span>
+                    </button>
+                    <button id="compiler-clear-output-btn" class="compiler-tool-btn" type="button" title="Clear Terminal Console">
+                        <span>🗑️</span> <span>Clear Output</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="compiler-workspace">
+                <!-- Left Pane: Curriculum & Topic Browser -->
+                <div class="compiler-topics-pane">
+                    <!-- Difficulty Segmented Tabs -->
+                    <div class="compiler-tabs-bar">
+                        <button class="compiler-tab active" data-diff="easy" type="button" title="Easy Topics">
+                            <span class="tab-diff-name">EASY</span>
+                        </button>
+                        <button class="compiler-tab" data-diff="normal" type="button" title="Normal Topics">
+                            <span class="tab-diff-name">NORMAL</span>
+                        </button>
+                        <button class="compiler-tab" data-diff="hard" type="button" title="Hard Topics">
+                            <span class="tab-diff-name">HARD</span>
+                        </button>
+                        <button class="compiler-tab" data-diff="hell" type="button" title="Hell Topics">
+                            <span class="tab-diff-name">HELL</span>
+                        </button>
+                    </div>
+
+                    <!-- Topic Search Filter -->
+                    <div class="compiler-search-box">
+                        <span style="font-size: 12px; margin-right: 6px; color: #a855f7;">🔍</span>
+                        <input type="text" id="compiler-search-input" placeholder="Search topic or bug...">
+                    </div>
+
+                    <!-- Topic List -->
+                    <div id="compiler-topic-list" class="compiler-topic-list">
+                        <!-- Populated dynamically via js/compiler.js -->
+                    </div>
+
+                    <!-- Quick Topic Intel Box -->
+                    <div class="compiler-topic-intel-box">
+                        <div id="compiler-intel-topic-title" class="compiler-intel-title">
+                            <span>⚡</span> <span>Syntax &amp; Punctuations</span>
+                        </div>
+                        <div class="compiler-template-btns">
+                            <button id="compiler-load-example-btn" class="compiler-tmpl-btn" type="button" title="Load working code example">
+                                📄 Example Code
+                            </button>
+                            <button id="compiler-load-blueprint-btn" class="compiler-tmpl-btn" type="button" title="Load clean syntax template">
+                                📐 Blueprint
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Split Area: Code Editor + Terminal Console -->
+                <div class="compiler-editor-console-pane">
+                    <!-- Top: Code Editor Panel -->
+                    <div class="compiler-editor-panel">
+                        <div class="compiler-editor-bar">
+                            <div class="compiler-file-tab">
+                                <span>🐍</span>
+                                <span id="compiler-active-topic-name">main.py (Python 3)</span>
+                            </div>
+                            <div class="compiler-editor-info">
+                                <span id="compiler-char-count">0 lines | 0 chars</span>
+                                <span class="compiler-shortcut-hint">Ctrl + Enter to Run</span>
+                            </div>
+                        </div>
+                        <div class="compiler-editor-body">
+                            <div id="compiler-line-numbers" class="compiler-line-numbers">1<br></div>
+                            <textarea id="compiler-code-input" class="compiler-textarea" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="# Type Python code here..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Bottom: Terminal / Console Output Panel -->
+                    <div class="compiler-terminal-panel">
+                        <div class="compiler-terminal-bar">
+                            <div class="compiler-term-status">
+                                <span id="compiler-status-dot" class="compiler-status-dot idle"></span>
+                                <span id="compiler-status-text">TERMINAL READY</span>
+                            </div>
+                            <div class="compiler-term-meta">
+                                <span id="compiler-exec-time" class="compiler-exec-time"></span>
+                                <span style="color: #64748b; font-size: 11px;">Skulpt Python 3.x</span>
+                            </div>
+                        </div>
+                        <pre id="compiler-terminal-output" class="compiler-terminal-output"><span style="color: #64748b;">// Ready. Select a topic on the left or type your Python code, then click [▶ RUN CODE].</span></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ==========================
+         LEADERBOARD / HALL OF FAME SCREEN
+    ========================== -->
+        <div id="leaderboard-screen" style="display: none;">
+            <!-- Top Nav -->
+            <div class="lb-top-nav">
+                <button id="leaderboard-back-button" class="lb-back-btn" type="button" data-i18n="lb_back_btn">
+                    <span>◀</span>
+                    <span>Back to Menu</span>
+                </button>
+                <div class="lb-header-titles">
+                    <span class="lb-badge-pill">✦ BUGHUNT HALL OF FAME ✦</span>
+                    <h2 class="lb-main-title" data-i18n="lb_title">LEADERBOARD</h2>
+                    <p class="lb-subtitle" data-i18n="lb_subtitle">Top Student Hunters Ranked by True Points &amp; Python Trophies</p>
+                </div>
+                <div class="lb-nav-actions">
+                    <button id="leaderboard-refresh-btn" class="lb-refresh-btn" type="button" title="Refresh Standings">
+                        <span class="refresh-icon">🔄</span>
+                        <span data-i18n="lb_refresh">Refresh</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Current User Hero Status Banner -->
+            <div class="lb-player-hero-card">
+                <div class="lb-player-avatar-box">
+                    <span id="lb-hero-avatar-letter">👤</span>
+                    <span id="lb-hero-rank-chip" class="lb-player-rank-chip">RANK #--</span>
+                </div>
+                <div class="lb-player-info">
+                    <span class="lb-player-tagline">YOUR CURRENT STANDING</span>
+                    <h3 id="lb-hero-name" class="lb-player-fullname">Student Hunter</h3>
+                    <span id="lb-hero-username" class="lb-player-submeta">@student</span>
+                </div>
+                <div class="lb-player-stats-strip">
+                    <div class="lb-stat-pill">
+                        <div class="lb-stat-label">True Points</div>
+                        <div id="lb-hero-tp" class="lb-stat-val gold">⭐ 0 TP</div>
+                    </div>
+                    <div class="lb-stat-pill">
+                        <div class="lb-stat-label">Trophies</div>
+                        <div id="lb-hero-trophies" class="lb-stat-val green">🏆 0 / 24</div>
+                    </div>
+                    <div class="lb-stat-pill">
+                        <div class="lb-stat-label">Sector Clearance</div>
+                        <div id="lb-hero-sector" class="lb-stat-val">Stage 1 (Easy)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top 3 Podium Showcase -->
+            <div id="lb-podium-wrap" class="lb-podium-wrap">
+                <!-- 2nd Place -->
+                <div class="podium-card podium-second">
+                    <div class="podium-crown">🥈</div>
+                    <span class="podium-rank-badge">RANK #2</span>
+                    <h4 id="p2-name" class="podium-name">Player 2</h4>
+                    <span id="p2-handle" class="podium-handle">@hunter2</span>
+                    <div id="p2-score" class="podium-points-pill">⭐ 0 TP</div>
+                </div>
+                <!-- 1st Place (Champion) -->
+                <div class="podium-card podium-first">
+                    <div class="podium-crown">👑</div>
+                    <span class="podium-rank-badge">CHAMPION #1</span>
+                    <h4 id="p1-name" class="podium-name">Player 1</h4>
+                    <span id="p1-handle" class="podium-handle">@champion</span>
+                    <div id="p1-score" class="podium-points-pill">⭐ 0 TP</div>
+                </div>
+                <!-- 3rd Place -->
+                <div class="podium-card podium-third">
+                    <div class="podium-crown">🥉</div>
+                    <span class="podium-rank-badge">RANK #3</span>
+                    <h4 id="p3-name" class="podium-name">Player 3</h4>
+                    <span id="p3-handle" class="podium-handle">@hunter3</span>
+                    <div id="p3-score" class="podium-points-pill">⭐ 0 TP</div>
+                </div>
+            </div>
+
+            <!-- Controls: Filter Tabs + Search -->
+            <div class="lb-controls-bar">
+                <div class="lb-filter-tabs">
+                    <button type="button" class="lb-filter-tab active" data-filter="tp" data-i18n="lb_filter_all">⭐ True Points</button>
+                    <button type="button" class="lb-filter-tab" data-filter="trophies" data-i18n="lb_filter_trophies">🏆 Trophies</button>
+                    <button type="button" class="lb-filter-tab" data-filter="sector" data-i18n="lb_filter_sector">💀 Highest Sector</button>
+                </div>
+                <div class="lb-search-box">
+                    <span class="lb-search-icon">🔍</span>
+                    <input id="leaderboard-search-input" class="lb-search-input" type="text" placeholder="Search student or hunter name..." autocomplete="off">
+                </div>
+            </div>
+
+            <!-- Leaderboard Rankings Table -->
+            <div class="lb-table-card">
+                <div style="overflow-x: auto;">
+                    <table class="lb-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 80px;">Rank</th>
+                                <th>Bug Hunter</th>
+                                <th>Sector Clearance</th>
+                                <th>Trophies</th>
+                                <th>True Points</th>
+                                <th>Activity</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lb-table-body">
+                            <!-- Populated dynamically via js/leaderboard.js -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="lb-empty-state" class="lb-empty-box" style="display: none;">
+                    <div class="lb-empty-icon">🔍</div>
+                    <div class="lb-empty-text">No student hunters match your search.</div>
+                    <div class="lb-empty-sub">Try searching by username or changing the category filter.</div>
                 </div>
             </div>
         </div>
@@ -1247,7 +1484,7 @@
                                         <div class="tut-step-body">
                                             <h5>RUN &amp; EXECUTE PATCH</h5>
                                             <p>Click <strong>⩒ RUN &amp; EXECUTE PATCH</strong>. When your solution
-                                                matches the goal and expected output, Frau deals 1 DMG!</p>
+                                                matches the goal and expected output, you deal 1 DMG!</p>
                                         </div>
                                     </div>
                                 </div>
@@ -1260,8 +1497,8 @@
                                     </div>
                                     <div class="tut-tip-card warn">
                                         <span class="tip-icon">❤️</span>
-                                        <span><strong>Defend Frau:</strong> Incorrect solutions cost 1 Heart. Protect
-                                            Frau and defeat the bug!</span>
+                                        <span><strong>Defend Your Code:</strong> Incorrect solutions cost 1 Heart. Protect
+                                            your hearts and defeat the bug!</span>
                                     </div>
                                 </div>
                             </div>
@@ -1394,14 +1631,14 @@
                 <!-- 4. PLAYER SPRITE & PEDESTAL (Bottom Left Arena Field) -->
                 <div id="player-stage-wrap" class="pokemon-stage-wrap player-stage">
                     <div class="pokemon-ground-pedestal player-ground"></div>
-                    <img id="player-sprite" src="css/Sprites/user/idle.png" alt="Frau" draggable="false"
+                    <img id="player-sprite" src="css/Sprites/user/idle.png" alt="Player" draggable="false"
                         class="pokemon-sprite player-sprite">
                 </div>
 
                 <!-- 5. PLAYER STATUS PLATE (Top Left Pokemon Card) -->
                 <div id="player-pokemon-card" class="pokemon-hud-card player-card">
                     <div class="pokemon-card-header">
-                        <span class="pokemon-combatant-name">FRAU</span>
+                        <span id="player-combatant-name" class="pokemon-combatant-name">PLAYER</span>
                         <div class="player-header-pills">
                             <button id="combat-log-toggle-btn" class="combat-log-pill-btn" type="button"
                                 title="Toggle Combat Feedback & Execution Log">
@@ -1571,12 +1808,12 @@
                     <div class="dialogue-tag-strip">
                         <div class="log-strip-title">
                             <span class="log-dot"></span>
-                            <span class="speaker-label">FRAU // COMBAT LOG</span>
+                            <span class="speaker-label">COMBAT LOG</span>
                         </div>
                         <button id="close-dialogue-btn" class="dialogue-close-btn" type="button"
                             title="Close Combat Log">✕</button>
                     </div>
-                    <div id="dialogue-text" class="pokemon-dialogue-text">A wild bug appeared! What will Frau do?</div>
+                    <div id="dialogue-text" class="pokemon-dialogue-text">A wild bug appeared! What will you do?</div>
                 </div>
 
             </div>
@@ -1843,7 +2080,7 @@
                                         <h3 class="panel-header-title">QUESTION & ANSWER BANK</h3>
                                         <span id="question-bank-count" class="bank-count-pill">0 Questions</span>
                                     </div>
-                                    <p class="panel-header-desc">Search, filter, inspect and manage Parsons puzzle
+                                    <p class="panel-header-desc">Search, filter, inspect and manage Parson Puzzle and Quiz
                                         challenges currently in the active game pool.</p>
                                 </div>
 
@@ -1875,10 +2112,9 @@
 
                                     <div class="bank-enemy-select-wrap">
                                         <select id="question-bank-type-filter" class="admin-select">
-                                            <option value="all">All Challenge Types</option>
+                                            <option value="all">🎮 All Challenge Types</option>
                                             <option value="parson">🧩 Parson Puzzle</option>
-                                            <option value="memory">🃏 Memory Match</option>
-                                            <option value="spotBug">🐞 Spot the Bug</option>
+                                            <option value="quiz">📝 Quiz Question</option>
                                         </select>
                                     </div>
 
@@ -1978,8 +2214,7 @@
                             <span class="modal-title-icon">➕</span>
                             <div>
                                 <h3 class="modal-title-text" id="admin-add-modal-title">ADD NEW BATTLE CHALLENGE</h3>
-                                <p class="modal-subtitle-text">Create a Parson Puzzle, Memory Match, or Spot the Bug
-                                    question.</p>
+                                <p class="modal-subtitle-text">Create a Parson Puzzle or Quiz question for student battles.</p>
                             </div>
                         </div>
                         <button id="close-add-modal-btn" class="modal-close-btn" type="button"
@@ -1987,15 +2222,17 @@
                     </div>
 
                     <div class="admin-modal-body">
-                        <!-- Challenge Mechanic Indicator -->
+                        <!-- Challenge Gameplay Type Selector -->
                         <div class="form-field-group">
                             <div class="field-label-row">
-                                <label>Battle Challenge System</label>
-                                <span class="field-pill pill-solution">🧩 PARSONS PUZZLE MECHANIC</span>
+                                <label for="question-type">Challenge Gameplay Type</label>
+                                <span class="field-pill pill-solution" id="add-question-type-pill">CHALLENGE MECHANIC</span>
                             </div>
-                            <input type="hidden" id="question-type" value="parson">
-                            <span class="field-help">Students spot &amp; exclude buggy distractor lines, then rearrange
-                                remaining code blocks to match the expected output.</span>
+                            <select id="question-type" class="admin-select" style="width: 100%;">
+                                <option value="parson">🧩 Parson Puzzle (Drag &amp; Drop Reorderable Code Blocks)</option>
+                                <option value="quiz">📝 Quiz Question (Multiple Choice Question)</option>
+                            </select>
+                            <span class="field-help" id="question-type-help">🧩 Parson Puzzle: Students rearrange scrambled code lines and exclude buggy distractors.</span>
                         </div>
 
                         <!-- Row 1: Difficulty Tier & Error Category -->
@@ -2004,8 +2241,7 @@
                                 <label for="question-difficulty">Difficulty Tier</label>
                                 <select id="question-difficulty" class="admin-select">
                                     <option value="easy">🟢 Easy Tier (Stage 1: Basics - 2 min timer)</option>
-                                    <option value="normal">🔵 Normal Tier (Stage 2: Intermediate - 1.5 min timer)
-                                    </option>
+                                    <option value="normal">🔵 Normal Tier (Stage 2: Intermediate - 1.5 min timer)</option>
                                     <option value="hard">🟣 Hard Tier (Stage 3: Advanced - 1 min timer)</option>
                                     <option value="hell">🔴 Hell Tier (Stage 4: Expert - 1 min timer)</option>
                                 </select>
@@ -2013,15 +2249,11 @@
 
                             <div class="form-field-group">
                                 <div class="field-label-row">
-                                    <label for="question-error-type">Category / Topic</label>
-                                    <span class="field-pill pill-category">CATEGORY</span>
+                                    <label for="question-error-type">Concept / Topic Tag (Optional)</label>
+                                    <span class="field-pill pill-hint">TOPIC</span>
                                 </div>
-                                <select id="question-error-type" class="admin-select">
-                                    <option value="Syntax Error">⚡ Syntax Error</option>
-                                    <option value="Logical Error">🧠 Logical Error</option>
-                                    <option value="Runtime Error">💥 Runtime Error</option>
-                                </select>
-                                <input type="hidden" id="question-category" value="Syntax Error">
+                                <input id="question-error-type" type="text"
+                                    placeholder="e.g., Loops, Variables, Functions, Recursion">
                             </div>
                         </div>
 
@@ -2035,7 +2267,7 @@
                             <span class="field-help">Select the monster or bug guarded by this challenge.</span>
                         </div>
 
-                        <!-- Row 3: Challenge Title / Prompt Question -->
+                        <!-- Row 3: Challenge Title -->
                         <div class="form-field-group">
                             <div class="field-label-row">
                                 <label for="question-title">Challenge Mission Title</label>
@@ -2093,6 +2325,83 @@
                             </div>
                         </div>
 
+                        <!-- QUIZ FIELDS -->
+                        <div id="add-type-quiz-section" style="display: none;">
+                            <!-- Question / Problem Prompt -->
+                            <div class="form-field-group">
+                                <div class="field-label-row">
+                                    <label for="question-quiz-prompt">📝 Quiz Question / Problem Prompt</label>
+                                    <span class="field-pill pill-solution">PROMPT</span>
+                                </div>
+                                <textarea id="question-quiz-prompt" rows="2"
+                                    placeholder="e.g., Select the correct line of code to fix the broken print statement."></textarea>
+                                <span class="field-help">The main debugging question shown to the student.</span>
+                            </div>
+
+                            <!-- Optional Goal & Code context -->
+                            <div class="form-grid-2cols">
+                                <div class="form-field-group">
+                                    <div class="field-label-row">
+                                        <label for="question-quiz-goal">🎯 Function Goal (Optional)</label>
+                                        <span class="field-pill pill-solution">OBJECTIVE</span>
+                                    </div>
+                                    <input id="question-quiz-goal" type="text"
+                                        placeholder="e.g., Print the message 'Hello, World!'.">
+                                </div>
+                                <div class="form-field-group">
+                                    <div class="field-label-row">
+                                        <label for="question-quiz-code">💻 Buggy Code Snippet / Context (Optional)</label>
+                                        <span class="field-pill pill-challenge">CODE CONTEXT</span>
+                                    </div>
+                                    <input id="question-quiz-code" type="text"
+                                        placeholder="e.g., print(message">
+                                </div>
+                            </div>
+
+                            <!-- Multiple Choice Options (4 Choices) -->
+                            <div class="form-field-group">
+                                <div class="field-label-row">
+                                    <label>🔘 Multiple Choice Options (4 Choices)</label>
+                                    <span class="field-pill pill-solution">OPTIONS</span>
+                                </div>
+                                <span class="field-help" style="margin-bottom: 6px; display: block;">Enter the 4 options. Designate which option is the correct answer below.</span>
+
+                                <div style="display: flex; flex-direction: column; gap: 8px;">
+                                    <div class="admin-pair-row">
+                                        <span style="font-weight: bold; color: #a855f7; min-width: 28px;">A)</span>
+                                        <input id="question-quiz-opt-a" type="text" class="pair-input" placeholder="Option A (e.g. print(message))">
+                                    </div>
+                                    <div class="admin-pair-row">
+                                        <span style="font-weight: bold; color: #a855f7; min-width: 28px;">B)</span>
+                                        <input id="question-quiz-opt-b" type="text" class="pair-input" placeholder="Option B (e.g. print(message)">
+                                    </div>
+                                    <div class="admin-pair-row">
+                                        <span style="font-weight: bold; color: #a855f7; min-width: 28px;">C)</span>
+                                        <input id="question-quiz-opt-c" type="text" class="pair-input" placeholder="Option C (e.g. print message)">
+                                    </div>
+                                    <div class="admin-pair-row">
+                                        <span style="font-weight: bold; color: #a855f7; min-width: 28px;">D)</span>
+                                        <input id="question-quiz-opt-d" type="text" class="pair-input" placeholder="Option D (e.g. echo(message))">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Correct Option Selector -->
+                            <div class="form-field-group">
+                                <div class="field-label-row">
+                                    <label for="question-quiz-correct">✅ Correct Answer Option</label>
+                                    <span class="field-pill pill-solution">CORRECT ANSWER</span>
+                                </div>
+                                <select id="question-quiz-correct" class="admin-select" style="width: 100%;">
+                                    <option value="A">Option A is the correct answer</option>
+                                    <option value="B">Option B is the correct answer</option>
+                                    <option value="C">Option C is the correct answer</option>
+                                    <option value="D">Option D is the correct answer</option>
+                                </select>
+                                <span class="field-help">The selected choice will be marked as correct during student battle validation.</span>
+                            </div>
+                        </div>
+
                         <!-- Row 7: Hint -->
                         <div class="form-field-group">
                             <div class="field-label-row">
@@ -2147,8 +2456,7 @@
                             </div>
                             <select id="edit-question-type" class="admin-select" style="width: 100%;">
                                 <option value="parson">🧩 Parson Puzzle (Order Scrambled Code Blocks)</option>
-                                <option value="memory">🃏 Memory Match (Pair Python Terms &amp; Definitions)</option>
-                                <option value="spotBug">🐞 Spot the Bug (Select Incorrect Code Line)</option>
+                                <option value="quiz">📝 Quiz Question (Multiple Choice Question)</option>
                             </select>
                         </div>
 
@@ -2166,15 +2474,11 @@
 
                             <div class="form-field-group">
                                 <div class="field-label-row">
-                                    <label for="edit-question-error-type">Category / Topic</label>
-                                    <span class="field-pill pill-category">CATEGORY</span>
+                                    <label for="edit-question-error-type">Concept / Topic Tag (Optional)</label>
+                                    <span class="field-pill pill-hint">TOPIC</span>
                                 </div>
-                                <select id="edit-question-error-type" class="admin-select">
-                                    <option value="Syntax Error">⚡ Syntax Error</option>
-                                    <option value="Logical Error">🧠 Logical Error</option>
-                                    <option value="Runtime Error">💥 Runtime Error</option>
-                                </select>
-                                <input type="hidden" id="edit-question-category" value="Syntax Error">
+                                <input id="edit-question-error-type" type="text"
+                                    placeholder="e.g., Loops, Variables, Functions, Recursion">
                             </div>
                         </div>
 
@@ -2244,58 +2548,79 @@
                             </div>
                         </div>
 
-                        <!-- EDIT TYPE-SPECIFIC SECTION: MEMORY MATCH -->
-                        <div id="edit-type-memory-section" style="display: none;">
+                        <!-- EDIT TYPE-SPECIFIC SECTION: QUIZ -->
+                        <div id="edit-type-quiz-section" style="display: none;">
+                            <!-- Question / Problem Prompt -->
                             <div class="form-field-group">
                                 <div class="field-label-row">
-                                    <label>🃏 Memory Pairs (Card A ↔ Card B)</label>
-                                    <span class="field-pill pill-solution">MATCHING PAIRS</span>
+                                    <label for="edit-question-quiz-prompt">📝 Quiz Question / Problem Prompt</label>
+                                    <span class="field-pill pill-solution">PROMPT</span>
                                 </div>
-                                <span class="field-help" style="margin-bottom: 8px; display: block;">Pairs of
-                                    concepts/code and meanings.</span>
-                                <div id="edit-memory-pairs-list" class="admin-pairs-list">
-                                    <!-- Dynamic pair rows rendered via js/admin.js -->
-                                </div>
-                                <button id="edit-memory-pair-btn" type="button" class="admin-secondary-action-btn"
-                                    style="margin-top: 8px; width: auto; align-self: flex-start;">
-                                    <span>➕ Add Pair</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- EDIT TYPE-SPECIFIC SECTION: SPOT THE BUG -->
-                        <div id="edit-type-spotbug-section" style="display: none;">
-                            <div class="form-field-group">
-                                <div class="field-label-row">
-                                    <label for="edit-question-spotbug-code">Python Code Snippet (Line by Line)</label>
-                                    <span class="field-pill pill-challenge">CODE SNIPPET</span>
-                                </div>
-                                <textarea id="edit-question-spotbug-code" rows="6" spellcheck="false"
-                                    placeholder="Enter Python snippet lines"></textarea>
-                                <span class="field-help">Students will see these numbered lines and select the
-                                    bug.</span>
+                                <textarea id="edit-question-quiz-prompt" rows="2"
+                                    placeholder="e.g., Select the correct line of code to fix the broken print statement."></textarea>
+                                <span class="field-help">The main debugging question shown to the student.</span>
                             </div>
 
+                            <!-- Optional Goal & Code context -->
                             <div class="form-grid-2cols">
                                 <div class="form-field-group">
                                     <div class="field-label-row">
-                                        <label for="edit-question-spotbug-line">Buggy Line Selection</label>
-                                        <span class="field-pill pill-category">CORRECT BUGGY LINE</span>
+                                        <label for="edit-question-quiz-goal">🎯 Function Goal (Optional)</label>
+                                        <span class="field-pill pill-solution">OBJECTIVE</span>
                                     </div>
-                                    <select id="edit-question-spotbug-line" class="admin-select">
-                                        <option value="1">Line 1</option>
-                                    </select>
+                                    <input id="edit-question-quiz-goal" type="text"
+                                        placeholder="e.g., Print the message 'Hello, World!'.">
                                 </div>
-
                                 <div class="form-field-group">
                                     <div class="field-label-row">
-                                        <label for="edit-question-spotbug-explanation">Bug Explanation
-                                            (Optional)</label>
-                                        <span class="field-pill pill-hint">EXPLANATION</span>
+                                        <label for="edit-question-quiz-code">💻 Buggy Code Snippet / Context (Optional)</label>
+                                        <span class="field-pill pill-challenge">CODE CONTEXT</span>
                                     </div>
-                                    <input id="edit-question-spotbug-explanation" type="text"
-                                        placeholder="e.g., Missing colon or invalid syntax">
+                                    <input id="edit-question-quiz-code" type="text"
+                                        placeholder="e.g., print(message">
                                 </div>
+                            </div>
+
+                            <!-- Multiple Choice Options (4 Choices) -->
+                            <div class="form-field-group">
+                                <div class="field-label-row">
+                                    <label>🔘 Multiple Choice Options (4 Choices)</label>
+                                    <span class="field-pill pill-solution">OPTIONS</span>
+                                </div>
+                                <span class="field-help" style="margin-bottom: 6px; display: block;">Enter the 4 options. Designate which option is the correct answer below.</span>
+
+                                <div style="display: flex; flex-direction: column; gap: 8px;">
+                                    <div class="admin-pair-row">
+                                        <span style="font-weight: bold; color: #a855f7; min-width: 28px;">A)</span>
+                                        <input id="edit-question-quiz-opt-a" type="text" class="pair-input" placeholder="Option A">
+                                    </div>
+                                    <div class="admin-pair-row">
+                                        <span style="font-weight: bold; color: #a855f7; min-width: 28px;">B)</span>
+                                        <input id="edit-question-quiz-opt-b" type="text" class="pair-input" placeholder="Option B">
+                                    </div>
+                                    <div class="admin-pair-row">
+                                        <span style="font-weight: bold; color: #a855f7; min-width: 28px;">C)</span>
+                                        <input id="edit-question-quiz-opt-c" type="text" class="pair-input" placeholder="Option C">
+                                    </div>
+                                    <div class="admin-pair-row">
+                                        <span style="font-weight: bold; color: #a855f7; min-width: 28px;">D)</span>
+                                        <input id="edit-question-quiz-opt-d" type="text" class="pair-input" placeholder="Option D">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Correct Option Selector -->
+                            <div class="form-field-group">
+                                <div class="field-label-row">
+                                    <label for="edit-question-quiz-correct">✅ Correct Answer Option</label>
+                                    <span class="field-pill pill-solution">CORRECT ANSWER</span>
+                                </div>
+                                <select id="edit-question-quiz-correct" class="admin-select" style="width: 100%;">
+                                    <option value="A">Option A is the correct answer</option>
+                                    <option value="B">Option B is the correct answer</option>
+                                    <option value="C">Option C is the correct answer</option>
+                                    <option value="D">Option D is the correct answer</option>
+                                </select>
                             </div>
                         </div>
 
@@ -2616,6 +2941,29 @@
             </div>
         </div>
 
+        <!-- ==============================================
+         THEME SELECTOR MODAL (DYNAMIC COLOR SCHEME)
+    =============================================== -->
+        <div id="theme-modal-backdrop" class="theme-modal-backdrop" style="display: none;"></div>
+        <div id="theme-modal-container" class="theme-modal-container" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="theme-modal-title">
+            <div class="theme-modal-header">
+                <div class="theme-modal-title-group">
+                    <span class="theme-modal-badge">PALETTE CUSTOMIZER</span>
+                    <h2 id="theme-modal-title" class="theme-modal-title">Select Color Theme</h2>
+                    <p class="theme-modal-desc">Switch the visual atmosphere and glowing color accents across the BugHunt arena.</p>
+                </div>
+                <button id="theme-modal-close-btn" class="theme-modal-close-btn" type="button" aria-label="Close Theme Modal">&times;</button>
+            </div>
+
+            <!-- Dynamic Cards Grid (Populated by js/theme.js) -->
+            <div id="theme-cards-grid" class="theme-grid"></div>
+
+            <div class="theme-modal-footer">
+                <span id="theme-modal-active-status" class="theme-modal-status-text">Active Theme: Cyber Violet</span>
+                <span>Auto-saved to your browser</span>
+            </div>
+        </div>
+
     </div>
 
 
@@ -2628,10 +2976,10 @@
      LOCALIZATION & I18N SYSTEM
 ========================== -->
     <script src="js/i18n.js?v=105"></script>
-    <script src="data/easy.js?v=105"></script>
-    <script src="data/normal.js?v=105"></script>
-    <script src="data/hard.js?v=105"></script>
-    <script src="data/hell.js?v=105"></script>
+    <script src="data/easy.js?v=112"></script>
+    <script src="data/normal.js?v=112"></script>
+    <script src="data/hard.js?v=112"></script>
+    <script src="data/hell.js?v=112"></script>
     <script src="data/enemyGuides.js?v=105"></script>
     <script src="data/pythonLessons.js?v=105"></script>
 
@@ -2651,10 +2999,15 @@
     <script src="js/points.js?v=105"></script>
     <script src="js/difficulty.js?v=105"></script>
     <script src="js/enemyShowcase.js?v=105"></script>
-    <script src="js/game.js?v=105"></script>
+    <script src="js/game.js?v=112"></script>
     <script src="js/study.js?v=105"></script>
     <script src="js/admin.js?v=105"></script>
-    <script src="js/app.js?v=105"></script>
+    <script src="js/theme.js?v=106"></script>
+    <script src="js/leaderboard.js?v=111"></script>
+    <script src="js/skulpt.min.js"></script>
+    <script src="js/skulpt-stdlib.js"></script>
+    <script src="js/compiler.js?v=107"></script>
+    <script src="js/app.js?v=107"></script>
 
 
 </body>

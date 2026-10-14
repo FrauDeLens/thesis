@@ -1,8 +1,4 @@
-// =========================================================
-// BUGHUNT: HARD DIFFICULTY ENEMY QUESTION POOL (data/hard.js)
-// Curated 72 questions (6 Parsons + 6 Quiz per enemy)
-// Bilingual: English (default) & Everyday Conversational Filipino
-// =========================================================
+// HARD SECTOR — Advanced Concepts (6 Enemies, 20 questions each: 10 Parsons, 10 Quizzes = 120 total)
 
 const recursionPhantom = {
     "id": "recursion_phantom",
@@ -14,7 +10,7 @@ const recursionPhantom = {
     "intro": "I drift through tree traversals and divide-and-conquer depths!\nOne missing return in your branch and you vanish into the stack abyss!",
     "bugs": [
         {
-            "id": 121,
+            "id": "hard_rp_p1",
             "enemy_id": "recursion_phantom",
             "difficulty": "hard",
             "category": "Advanced Algorithms",
@@ -41,12 +37,12 @@ const recursionPhantom = {
             "question_en": "Arrange the recursive code blocks with a valid base case. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang recursive code blocks na may tamang base case. Alisin ang distractor.",
             "goal_en": "Compute Fibonacci recursively using a dictionary cache to prevent redundant calls.",
-            "goal_fil": "Lutasin ang program: Compute Fibonacci recursively using a dictionary cache to prevent redundant calls.",
+            "goal_fil": "Layunin: Compute Fibonacci recursively using a dictionary cache to prevent redundant calls.",
             "hint_en": "Store calculated values in memo[n] and recursively sum fib(n-1) and fib(n-2).",
             "hint_fil": "Tandaan: Store calculated values in memo[n] and recursively sum fib(n-1) and fib(n-2)."
         },
         {
-            "id": 122,
+            "id": "hard_rp_p2",
             "enemy_id": "recursion_phantom",
             "difficulty": "hard",
             "category": "Advanced Algorithms",
@@ -75,12 +71,12 @@ const recursionPhantom = {
             "question_en": "Arrange the code blocks to process the list correctly. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block para maayos na maproseso ang list. Alisin ang distractor.",
             "goal_en": "Recursively flatten nested lists into a single flat list.",
-            "goal_fil": "Lutasin ang program: Recursively flatten nested lists into a single flat list.",
+            "goal_fil": "Layunin: Recursively flatten nested lists into a single flat list.",
             "hint_en": "Check if the item is a list with isinstance(), and recursively call flatten().",
             "hint_fil": "Tandaan: Check if the item is a list with isinstance(), and recursively call flatten()."
         },
         {
-            "id": 123,
+            "id": "hard_rp_p3",
             "enemy_id": "recursion_phantom",
             "difficulty": "hard",
             "category": "Advanced Algorithms",
@@ -108,12 +104,12 @@ const recursionPhantom = {
             "question_en": "Arrange the recursive code blocks with a valid base case. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang recursive code blocks na may tamang base case. Alisin ang distractor.",
             "goal_en": "Find target index in a sorted list using recursive divide-and-conquer.",
-            "goal_fil": "Lutasin ang program: Find target index in a sorted list using recursive divide-and-conquer.",
+            "goal_fil": "Layunin: Find target index in a sorted list using recursive divide-and-conquer.",
             "hint_en": "When arr[mid] is less than target, search the right half by setting low to mid + 1.",
             "hint_fil": "Tandaan: When arr[mid] is less than target, search the right half by setting low to mid + 1."
         },
         {
-            "id": 124,
+            "id": "hard_rp_p4",
             "enemy_id": "recursion_phantom",
             "difficulty": "hard",
             "category": "Advanced Algorithms",
@@ -139,12 +135,12 @@ const recursionPhantom = {
             "question_en": "Arrange the code blocks with proper conditional branching. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block na may tamang if/else conditions. Alisin ang distractor.",
             "goal_en": "Recursively check whether a string reads the same forwards and backwards.",
-            "goal_fil": "Lutasin ang program: Recursively check whether a string reads the same forwards and backwards.",
+            "goal_fil": "Layunin: Recursively check whether a string reads the same forwards and backwards.",
             "hint_en": "Use len(list) to get the total number of items, not .length.",
             "hint_fil": "Base case: length <= 1 returns True. Check matching ends s[0] and s[-1], then recurse on s[1:-1]."
         },
         {
-            "id": 125,
+            "id": "hard_rp_p5",
             "enemy_id": "recursion_phantom",
             "difficulty": "hard",
             "category": "Advanced Algorithms",
@@ -171,12 +167,12 @@ const recursionPhantom = {
             "question_en": "Arrange the recursive code blocks with a valid base case. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang recursive code blocks na may tamang base case. Alisin ang distractor.",
             "goal_en": "Compute x raised to power n in O(log n) time using recursive divide-and-conquer.",
-            "goal_fil": "Lutasin ang program: Compute x raised to power n in O(log n) time using recursive divide-and-conquer.",
+            "goal_fil": "Layunin: Compute x raised to power n in O(log n) time using recursive divide-and-conquer.",
             "hint_en": "Any non-zero number to the power 0 is 1. When n is even, square the half result.",
             "hint_fil": "Tandaan: Any non-zero number to the power 0 is 1. When n is even, square the half result."
         },
         {
-            "id": 126,
+            "id": "hard_rp_p6",
             "enemy_id": "recursion_phantom",
             "difficulty": "hard",
             "category": "Advanced Algorithms",
@@ -205,12 +201,12 @@ const recursionPhantom = {
             "question_en": "Arrange the recursive code blocks with a valid base case. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang recursive code blocks na may tamang base case. Alisin ang distractor.",
             "goal_en": "Traverse a nested dictionary binary tree and sum all node values recursively.",
-            "goal_fil": "Lutasin ang program: Traverse a nested dictionary binary tree and sum all node values recursively.",
+            "goal_fil": "Layunin: Traverse a nested dictionary binary tree and sum all node values recursively.",
             "hint_en": "Use .get('left') to safely handle missing child nodes and avoid KeyError.",
             "hint_fil": "Tandaan: Use .get('left') to safely handle missing child nodes and avoid KeyError."
         },
         {
-            "id": 127,
+            "id": "hard_rp_p7",
             "enemy_id": "recursion_phantom",
             "difficulty": "hard",
             "category": "Advanced Algorithms",
@@ -235,12 +231,12 @@ const recursionPhantom = {
             "question_en": "Arrange the recursive code blocks with a valid base case. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang recursive code blocks na may tamang base case. Alisin ang distractor.",
             "goal_en": "Recursively reverse a string by extracting the last character and recursing.",
-            "goal_fil": "Lutasin ang program: Recursively reverse a string by extracting the last character and recursing.",
+            "goal_fil": "Layunin: Recursively reverse a string by extracting the last character and recursing.",
             "hint_en": "Prepend the last character s[-1] to the reversed remaining substring s[:-1].",
             "hint_fil": "Tandaan: Prepend the last character s[-1] to the reversed remaining substring s[:-1]."
         },
         {
-            "id": 128,
+            "id": "hard_rp_p8",
             "enemy_id": "recursion_phantom",
             "difficulty": "hard",
             "category": "Advanced Algorithms",
@@ -265,12 +261,12 @@ const recursionPhantom = {
             "question_en": "Arrange the recursive code blocks with a valid base case. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang recursive code blocks na may tamang base case. Alisin ang distractor.",
             "goal_en": "Find the Greatest Common Divisor of two integers using recursive Euclidean algorithm.",
-            "goal_fil": "Lutasin ang program: Find the Greatest Common Divisor of two integers using recursive Euclidean algorithm.",
+            "goal_fil": "Hanapin ang Greatest Common Divisor ng dalawang integer gamit ang recursive Euclidean algorithm.",
             "hint_en": "Use double equals == for comparison checks, not single equals =.",
             "hint_fil": "Euclid's rule: gcd(a, b) = gcd(b, a % b) with base case b == 0."
         },
         {
-            "id": 129,
+            "id": "hard_rp_p9",
             "enemy_id": "recursion_phantom",
             "difficulty": "hard",
             "category": "Advanced Algorithms",
@@ -295,12 +291,12 @@ const recursionPhantom = {
             "question_en": "Arrange the recursive code blocks with a valid base case. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang recursive code blocks na may tamang base case. Alisin ang distractor.",
             "goal_en": "Return a list of countdown numbers from n down to 1 using pure recursion.",
-            "goal_fil": "Lutasin ang program: Return a list of countdown numbers from n down to 1 using pure recursion.",
+            "goal_fil": "I-return ang list ng countdown numbers mula n pababa sa 1 gamit ang pure recursion.",
             "hint_en": "To order from largest to smallest, concatenate [n] before countdown_list(n - 1).",
             "hint_fil": "Tandaan: To order from largest to smallest, concatenate [n] before countdown_list(n - 1)."
         },
         {
-            "id": 130,
+            "id": "hard_rp_p10",
             "enemy_id": "recursion_phantom",
             "difficulty": "hard",
             "category": "Advanced Algorithms",
@@ -325,70 +321,443 @@ const recursionPhantom = {
             "question_en": "Arrange the recursive code blocks with a valid base case. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang recursive code blocks na may tamang base case. Alisin ang distractor.",
             "goal_en": "Calculate the sum of all digits in an integer without string conversion.",
-            "goal_fil": "Lutasin ang program: Calculate the sum of all digits in an integer without string conversion.",
+            "goal_fil": "Kalkulahin ang sum ng lahat ng digits sa integer nang hindi gumagamit ng string conversion.",
             "hint_en": "Use integer division n // 10 to discard the last digit, keeping values as ints.",
             "hint_fil": "Tandaan: Use integer division n // 10 to discard the last digit, keeping values as ints."
         },
         {
-            "id": 131,
+            "id": "hard_rp_q1",
             "enemy_id": "recursion_phantom",
             "difficulty": "hard",
-            "category": "Advanced Algorithms",
-            "error_type": "RecursionError: infinite recursion",
-            "title": "Recursion Phantom #11: Recursive List Length Counter",
-            "question": "Arrange the code blocks to process the list correctly. Exclude the distractor.",
-            "goal": "Calculate the length of a list recursively without using Python's built-in len().",
-            "expected_output": "Length: 4",
+            "category": "Missing Return",
+            "error_type": "LogicError: returns None",
+            "title": "Recursion Phantom Quiz #1: Missing Return in Recursive Case",
+            "question": "Why does calling recursive_sum(3) return None when 'return' is omitted before recursive_sum(n - 1)?",
+            "goal": "Identify that recursive return values must be explicitly propagated.",
+            "expected_output": "None returned",
             "lines": [
-                "def rec_len(lst):",
-                "    if not lst: return 0",
-                "    return 1 + rec_len(lst[1:])",
-                "print(\"Length:\", rec_len([10, 20, 30, 40]))"
+                "def rec_sum(n):",
+                "    if n == 1: return 1",
+                "    rec_sum(n - 1)  # Missing return!"
             ],
+            "code": "rec_sum(n - 1)",
+            "answer": "The inner recursive call's value is discarded instead of passed back to the caller",
             "distractors": [
-                "    return 1 + rec_len(lst)"
+                "Python deletes the call stack when return is missing",
+                "The function automatically raises an EOFError",
+                "The return value is saved to a global variable instead"
             ],
-            "hint": "Base case: empty list returns 0. Slice lst[1:] to reduce the list each step.",
-            "code": "    return 1 + rec_len(lst)",
-            "answer": "def rec_len(lst):\n    if not lst: return 0\n    return 1 + rec_len(lst[1:])\nprint(\"Length:\", rec_len([10, 20, 30, 40]))",
-            "type": "parson",
-            "question_en": "Arrange the code blocks to process the list correctly. Exclude the distractor.",
-            "question_fil": "I-drag at i-ayos ang mga block para maayos na maproseso ang list. Alisin ang distractor.",
-            "goal_en": "Calculate the length of a list recursively without using Python's built-in len().",
-            "goal_fil": "Lutasin ang program: Calculate the length of a list recursively without using Python's built-in len().",
-            "hint_en": "Base case: empty list returns 0. Slice lst[1:] to reduce the list each step.",
-            "hint_fil": "Tandaan: Base case: empty list returns 0. Slice lst[1:] to reduce the list each step."
+            "options": [
+                "The inner recursive call's value is discarded instead of passed back to the caller",
+                "Python deletes the call stack when return is missing",
+                "The function automatically raises an EOFError",
+                "The return value is saved to a global variable instead"
+            ],
+            "choices": [
+                "The inner recursive call's value is discarded instead of passed back to the caller",
+                "Python deletes the call stack when return is missing",
+                "The function automatically raises an EOFError",
+                "The return value is saved to a global variable instead"
+            ],
+            "hint": "In Python, omitting return in a code branch causes that branch to evaluate to None.",
+            "type": "quiz",
+            "question_en": "Why does calling recursive_sum(3) return None when 'return' is omitted before recursive_sum(n - 1)?",
+            "question_fil": "Bakit nagbabalik ng None ang recursive function kapag walang return sa recursive call?",
+            "goal_en": "Identify that recursive return values must be explicitly propagated.",
+            "goal_fil": "Alamin na kailangang i-return ang halaga ng recursive call.",
+            "hint_en": "In Python, omitting return in a code branch causes that branch to evaluate to None.",
+            "hint_fil": "Nagiging None ang resulta kapag nakalimutan ang 'return' sa recursive call."
         },
         {
-            "id": 132,
+            "id": "hard_rp_q2",
             "enemy_id": "recursion_phantom",
             "difficulty": "hard",
-            "category": "Advanced Algorithms",
-            "error_type": "IndexError: list index out of range",
-            "title": "Recursion Phantom #12: Maximum Depth of Nested Structure",
-            "question": "Arrange the recursive code blocks with a valid base case. Exclude the distractor.",
-            "goal": "Calculate the maximum nesting depth of arbitrarily nested lists recursively.",
-            "expected_output": "Max Depth: 3",
+            "category": "Base Case Inversion",
+            "error_type": "RecursionError: maximum recursion depth exceeded",
+            "title": "Recursion Phantom Quiz #2: Inverted Base Case Condition",
+            "question": "What happens if the base case condition is mistakenly written as 'if n > 0: return 1'?",
+            "goal": "Identify premature termination or infinite recursion from inverted conditions.",
+            "expected_output": "Premature termination",
             "lines": [
-                "def max_depth(val):",
-                "    if not isinstance(val, list): return 0",
-                "    if not val: return 1",
-                "    return 1 + max(max_depth(item) for item in val)",
-                "print(\"Max Depth:\", max_depth([1, [2, [3]]]))"
+                "def fact(n):",
+                "    if n > 0: return 1  # Inverted base case!",
+                "    return n * fact(n - 1)"
             ],
+            "code": "if n > 0: return 1",
+            "answer": "The function terminates immediately on the very first call with n > 0, returning 1 prematurely",
             "distractors": [
-                "    return 1 + max_depth(val[0])"
+                "The function divides by zero and crashes",
+                "Python converts all recursive calls into iterative while loops",
+                "The return type changes into a boolean"
             ],
-            "hint": "Iterate across all items in val with a generator expression inside max().",
-            "code": "    return 1 + max_depth(val[0])",
-            "answer": "def max_depth(val):\n    if not isinstance(val, list): return 0\n    if not val: return 1\n    return 1 + max(max_depth(item) for item in val)\nprint(\"Max Depth:\", max_depth([1, [2, [3]]]))",
-            "type": "parson",
-            "question_en": "Arrange the recursive code blocks with a valid base case. Exclude the distractor.",
-            "question_fil": "I-drag at i-ayos ang recursive code blocks na may tamang base case. Alisin ang distractor.",
-            "goal_en": "Calculate the maximum nesting depth of arbitrarily nested lists recursively.",
-            "goal_fil": "Lutasin ang program: Calculate the maximum nesting depth of arbitrarily nested lists recursively.",
-            "hint_en": "Iterate across all items in val with a generator expression inside max().",
-            "hint_fil": "Tandaan: Iterate across all items in val with a generator expression inside max()."
+            "options": [
+                "The function terminates immediately on the very first call with n > 0, returning 1 prematurely",
+                "The function divides by zero and crashes",
+                "Python converts all recursive calls into iterative while loops",
+                "The return type changes into a boolean"
+            ],
+            "choices": [
+                "The function terminates immediately on the very first call with n > 0, returning 1 prematurely",
+                "The function divides by zero and crashes",
+                "Python converts all recursive calls into iterative while loops",
+                "The return type changes into a boolean"
+            ],
+            "hint": "A base case must test for the smallest stopping state (like n <= 1), not the active recurrence state.",
+            "type": "quiz",
+            "question_en": "What happens if the base case condition is mistakenly written as 'if n > 0: return 1'?",
+            "question_fil": "Ano ang mangyayari kung binaligtad ang base case sa 'if n > 0: return 1'?",
+            "goal_en": "Identify premature termination or infinite recursion from inverted conditions.",
+            "goal_fil": "Tukuyin ang maagang paghinto ng recursion dahil sa maling base case.",
+            "hint_en": "A base case must test for the smallest stopping state (like n <= 1), not the active recurrence state.",
+            "hint_fil": "Dapat sa pinakamaliit na stopping state nagti-trigger ang base case tulad ng n <= 1."
+        },
+        {
+            "id": "hard_rp_q3",
+            "enemy_id": "recursion_phantom",
+            "difficulty": "hard",
+            "category": "Memoization",
+            "error_type": "PerformanceBug: Exponential Complexity",
+            "title": "Recursion Phantom Quiz #3: Time Complexity of Memoized Recursion",
+            "question": "How does memoizing Fibonacci results in a dictionary improve its algorithmic time complexity?",
+            "goal": "Understand memoization reducing O(2^n) to O(n).",
+            "expected_output": "Reduced from O(2^n) to O(n)",
+            "lines": [
+                "def fib(n, memo={}):",
+                "    if n <= 1: return n",
+                "    if n not in memo: memo[n] = fib(n-1) + fib(n-2)",
+                "    return memo[n]"
+            ],
+            "code": "memo[n] = fib(n-1) + fib(n-2)",
+            "answer": "It eliminates redundant subproblem recalculations, reducing complexity from O(2^n) to O(n)",
+            "distractors": [
+                "It runs the function on a separate GPU thread",
+                "It forces Python to compile the function into C bytecode",
+                "It converts the dictionary keys into sorted integers"
+            ],
+            "options": [
+                "It eliminates redundant subproblem recalculations, reducing complexity from O(2^n) to O(n)",
+                "It runs the function on a separate GPU thread",
+                "It forces Python to compile the function into C bytecode",
+                "It converts the dictionary keys into sorted integers"
+            ],
+            "choices": [
+                "It eliminates redundant subproblem recalculations, reducing complexity from O(2^n) to O(n)",
+                "It runs the function on a separate GPU thread",
+                "It forces Python to compile the function into C bytecode",
+                "It converts the dictionary keys into sorted integers"
+            ],
+            "hint": "Memoization caches computed subproblems so each unique state is calculated only once.",
+            "type": "quiz",
+            "question_en": "How does memoizing Fibonacci results in a dictionary improve its algorithmic time complexity?",
+            "question_fil": "Paano napapabilis ng memoization ang time complexity ng Fibonacci mula O(2^n) patungong O(n)?",
+            "goal_en": "Understand memoization reducing O(2^n) to O(n).",
+            "goal_fil": "Maunawaan ang pagbawas ng time complexity mula O(2^n) sa O(n) dahil sa memoization.",
+            "hint_en": "Memoization caches computed subproblems so each unique state is calculated only once.",
+            "hint_fil": "Iniimbak ng memoization ang kinalkula na subproblems para minsanan lang kalkulahin."
+        },
+        {
+            "id": "hard_rp_q4",
+            "enemy_id": "recursion_phantom",
+            "difficulty": "hard",
+            "category": "Deep Flattening",
+            "error_type": "TypeError: can only concatenate list to list",
+            "title": "Recursion Phantom Quiz #4: Recursive List Flattening Branch",
+            "question": "In recursive list flattening, what check distinguishes a nested sublist from an individual element?",
+            "goal": "Identify isinstance(item, list) check.",
+            "expected_output": "isinstance(item, list)",
+            "lines": [
+                "def flatten(lst):",
+                "    out = []",
+                "    for item in lst:",
+                "        if isinstance(item, list): out.extend(flatten(item))",
+                "        else: out.append(item)",
+                "    return out"
+            ],
+            "code": "if type(item) == 'list':",
+            "answer": "isinstance(item, list)",
+            "distractors": [
+                "item.is_list()",
+                "type(item) == 'array'",
+                "hasattr(item, 'split')"
+            ],
+            "options": [
+                "isinstance(item, list)",
+                "item.is_list()",
+                "type(item) == 'array'",
+                "hasattr(item, 'split')"
+            ],
+            "choices": [
+                "isinstance(item, list)",
+                "item.is_list()",
+                "type(item) == 'array'",
+                "hasattr(item, 'split')"
+            ],
+            "hint": "Use isinstance(x, list) to test if an item is a list before making a recursive call.",
+            "type": "quiz",
+            "question_en": "In recursive list flattening, what check distinguishes a nested sublist from an individual element?",
+            "question_fil": "Sa recursive list flattening, anong pagsusuri ang nagbubukod sa nested list mula sa simpleng elemento?",
+            "goal_en": "Identify isinstance(item, list) check.",
+            "goal_fil": "Gamitin ang isinstance(item, list) para tukuyin ang sublist.",
+            "hint_en": "Use isinstance(x, list) to test if an item is a list before making a recursive call.",
+            "hint_fil": "Gamitin ang isinstance(x, list) bago mag-recursive call sa sublist."
+        },
+        {
+            "id": "hard_rp_q5",
+            "enemy_id": "recursion_phantom",
+            "difficulty": "hard",
+            "category": "Binary Search Midpoint",
+            "error_type": "TypeError: list indices must be integers",
+            "title": "Recursion Phantom Quiz #5: Binary Search Midpoint Calculation",
+            "question": "Why must integer floor division // be used when computing the midpoint index in recursive binary search?",
+            "goal": "Ensure midpoint is integer index.",
+            "expected_output": "Midpoint must be integer",
+            "lines": [
+                "def bsearch(arr, target, low, high):",
+                "    mid = (low + high) // 2",
+                "    # arr[mid] lookup"
+            ],
+            "code": "mid = (low + high) / 2",
+            "answer": "Standard division / produces a float, which causes a TypeError when indexing a list",
+            "distractors": [
+                "Standard division / rounds down to negative infinity",
+                "Binary search requires complex numbers",
+                "Floor division // automatically reverses the array"
+            ],
+            "options": [
+                "Standard division / produces a float, which causes a TypeError when indexing a list",
+                "Standard division / rounds down to negative infinity",
+                "Binary search requires complex numbers",
+                "Floor division // automatically reverses the array"
+            ],
+            "choices": [
+                "Standard division / produces a float, which causes a TypeError when indexing a list",
+                "Standard division / rounds down to negative infinity",
+                "Binary search requires complex numbers",
+                "Floor division // automatically reverses the array"
+            ],
+            "hint": "List indices in Python must be integers; regular division / produces floats.",
+            "type": "quiz",
+            "question_en": "Why must integer floor division // be used when computing the midpoint index in recursive binary search?",
+            "question_fil": "Bakit kailangang floor division // ang gamitin sa pagkuha ng mid index sa binary search?",
+            "goal_en": "Ensure midpoint is integer index.",
+            "goal_fil": "Tiyaking integer ang index ng midpoint para iwas TypeError.",
+            "hint_en": "List indices in Python must be integers; regular division / produces floats.",
+            "hint_fil": "Dapat integer ang index sa listahan; float ang ibinabalik ng karaniwang / division."
+        },
+        {
+            "id": "hard_rp_q6",
+            "enemy_id": "recursion_phantom",
+            "difficulty": "hard",
+            "category": "Tail Recursion Accumulator",
+            "error_type": "PatternRecognition",
+            "title": "Recursion Phantom Quiz #6: Tail Recursive Accumulator Pattern",
+            "question": "In tail-recursive functions, what role does the accumulator parameter serve?",
+            "goal": "Understand accumulator carrying partial results forward.",
+            "expected_output": "Carries partial results forward",
+            "lines": [
+                "def fact_tail(n, acc=1):",
+                "    if n <= 1: return acc",
+                "    return fact_tail(n - 1, acc * n)"
+            ],
+            "code": "fact_tail(n - 1, acc * n)",
+            "answer": "It accumulates the running partial result and passes it forward to the next recursive frame",
+            "distractors": [
+                "It counts the number of CPU cores running in parallel",
+                "It automatically prevents Python from allocating any memory",
+                "It converts recursive functions into generator objects"
+            ],
+            "options": [
+                "It accumulates the running partial result and passes it forward to the next recursive frame",
+                "It counts the number of CPU cores running in parallel",
+                "It automatically prevents Python from allocating any memory",
+                "It converts recursive functions into generator objects"
+            ],
+            "choices": [
+                "It accumulates the running partial result and passes it forward to the next recursive frame",
+                "It counts the number of CPU cores running in parallel",
+                "It automatically prevents Python from allocating any memory",
+                "It converts recursive functions into generator objects"
+            ],
+            "hint": "The accumulator carries the calculated result along the call chain so no work is needed on the return path.",
+            "type": "quiz",
+            "question_en": "In tail-recursive functions, what role does the accumulator parameter serve?",
+            "question_fil": "Sa tail-recursive functions, ano ang ginagampanang papel ng accumulator parameter?",
+            "goal_en": "Understand accumulator carrying partial results forward.",
+            "goal_fil": "Maunawaan ang pagdala ng partial results gamit ang accumulator.",
+            "hint_en": "The accumulator carries the calculated result along the call chain so no work is needed on the return path.",
+            "hint_fil": "Dala ng accumulator ang naipong resulta patungo sa susunod na recursive call."
+        },
+        {
+            "id": "hard_rp_q7",
+            "enemy_id": "recursion_phantom",
+            "difficulty": "hard",
+            "category": "Tree Depth Calculation",
+            "error_type": "OffByOneError",
+            "title": "Recursion Phantom Quiz #7: Binary Tree Max Depth Formula",
+            "question": "Select the correct recursive formula to calculate the maximum depth of a binary tree.",
+            "goal": "Calculate 1 + max(left_depth, right_depth).",
+            "expected_output": "1 + max(left, right)",
+            "lines": [
+                "def max_depth(node):",
+                "    if node is None: return 0",
+                "    return 1 + max(max_depth(node.left), max_depth(node.right))"
+            ],
+            "code": "return max(max_depth(node.left), max_depth(node.right))",
+            "answer": "1 + max(max_depth(node.left), max_depth(node.right))",
+            "distractors": [
+                "max(max_depth(node.left), max_depth(node.right))",
+                "1 + max_depth(node.left) + max_depth(node.right)",
+                "2 * max(max_depth(node.left), max_depth(node.right))"
+            ],
+            "options": [
+                "1 + max(max_depth(node.left), max_depth(node.right))",
+                "max(max_depth(node.left), max_depth(node.right))",
+                "1 + max_depth(node.left) + max_depth(node.right)",
+                "2 * max(max_depth(node.left), max_depth(node.right))"
+            ],
+            "choices": [
+                "1 + max(max_depth(node.left), max_depth(node.right))",
+                "max(max_depth(node.left), max_depth(node.right))",
+                "1 + max_depth(node.left) + max_depth(node.right)",
+                "2 * max(max_depth(node.left), max_depth(node.right))"
+            ],
+            "hint": "The current node contributes 1 level of depth plus the maximum of its two subtrees.",
+            "type": "quiz",
+            "question_en": "Select the correct recursive formula to calculate the maximum depth of a binary tree.",
+            "question_fil": "Piliin ang tamang recursive formula para kalkulahin ang maximum depth ng binary tree.",
+            "goal_en": "Calculate 1 + max(left_depth, right_depth).",
+            "goal_fil": "Kalkulahin ang 1 + max(kaliwa, kanan) para sa depth ng tree.",
+            "hint_en": "The current node contributes 1 level of depth plus the maximum of its two subtrees.",
+            "hint_fil": "Nagdadagdag ng 1 level ang kasalukuyang node kasama ang pinakamalalim na sangay."
+        },
+        {
+            "id": "hard_rp_q8",
+            "enemy_id": "recursion_phantom",
+            "difficulty": "hard",
+            "category": "Euclidean GCD",
+            "error_type": "ZeroDivisionError",
+            "title": "Recursion Phantom Quiz #8: Euclidean Algorithm Base Case",
+            "question": "In the Euclidean algorithm gcd(a, b), what is the correct base condition when b reaches 0?",
+            "goal": "Return a when b == 0.",
+            "expected_output": "if b == 0: return a",
+            "lines": [
+                "def gcd(a, b):",
+                "    if b == 0: return a",
+                "    return gcd(b, a % b)"
+            ],
+            "code": "if a == 0: return b",
+            "answer": "if b == 0: return a",
+            "distractors": [
+                "if b == 0: return 0",
+                "if a == b: return 0",
+                "if b == 1: return a % b"
+            ],
+            "options": [
+                "if b == 0: return a",
+                "if b == 0: return 0",
+                "if a == b: return 0",
+                "if b == 1: return a % b"
+            ],
+            "choices": [
+                "if b == 0: return a",
+                "if b == 0: return 0",
+                "if a == b: return 0",
+                "if b == 1: return a % b"
+            ],
+            "hint": "When the divisor b becomes 0, the remainder is 0 and 'a' is the greatest common divisor.",
+            "type": "quiz",
+            "question_en": "In the Euclidean algorithm gcd(a, b), what is the correct base condition when b reaches 0?",
+            "question_fil": "Sa Euclidean algorithm gcd(a, b), ano ang tamang base condition kapag naging 0 ang b?",
+            "goal_en": "Return a when b == 0.",
+            "goal_fil": "Ibalik ang 'a' kapag ang b ay 0 na sa gcd.",
+            "hint_en": "When the divisor b becomes 0, the remainder is 0 and 'a' is the greatest common divisor.",
+            "hint_fil": "Kapag naging 0 ang b, ang natitirang 'a' ang pinakamalaking divisor."
+        },
+        {
+            "id": "hard_rp_q9",
+            "enemy_id": "recursion_phantom",
+            "difficulty": "hard",
+            "category": "Mutual Recursion",
+            "error_type": "RecursionError",
+            "title": "Recursion Phantom Quiz #9: Mutual Recursion Base State",
+            "question": "When two functions call each other recursively (mutual recursion), what must at least one function contain?",
+            "goal": "Identify need for terminal base case in mutual recursion.",
+            "expected_output": "Must contain terminal base case",
+            "lines": [
+                "def is_even(n): return True if n == 0 else is_odd(n - 1)",
+                "def is_odd(n): return False if n == 0 else is_even(n - 1)"
+            ],
+            "code": "def is_even(n): return is_odd(n - 1)",
+            "answer": "A terminal base case that returns without calling the other function",
+            "distractors": [
+                "A while loop running in parallel",
+                "A try-except block catching OverflowError",
+                "An import statement reloading the module"
+            ],
+            "options": [
+                "A terminal base case that returns without calling the other function",
+                "A while loop running in parallel",
+                "A try-except block catching OverflowError",
+                "An import statement reloading the module"
+            ],
+            "choices": [
+                "A terminal base case that returns without calling the other function",
+                "A while loop running in parallel",
+                "A try-except block catching OverflowError",
+                "An import statement reloading the module"
+            ],
+            "hint": "Mutual recursion requires at least one terminating condition to stop the mutual ping-pong calls.",
+            "type": "quiz",
+            "question_en": "When two functions call each other recursively (mutual recursion), what must at least one function contain?",
+            "question_fil": "Kapag dalawang function ang nagtatawagan (mutual recursion), ano ang kailangang taglayin ng kahit isa sa kanila?",
+            "goal_en": "Identify need for terminal base case in mutual recursion.",
+            "goal_fil": "Alamin na kailangan ng base case na humihinto nang hindi tumatawag sa kabila.",
+            "hint_en": "Mutual recursion requires at least one terminating condition to stop the mutual ping-pong calls.",
+            "hint_fil": "Kailangan ng base case para huminto ang palitang tawag sa mutual recursion."
+        },
+        {
+            "id": "hard_rp_q10",
+            "enemy_id": "recursion_phantom",
+            "difficulty": "hard",
+            "category": "Shared Mutable Argument Trap",
+            "error_type": "StateCorruption",
+            "title": "Recursion Phantom Quiz #10: Mutable Default Parameter in Recursion",
+            "question": "Why is defining def collect(item, acc=[]): dangerous in recursive functions?",
+            "goal": "Avoid mutable default argument in recursive functions.",
+            "expected_output": "Default list shared across calls",
+            "lines": [
+                "def collect(item, acc=None):",
+                "    if acc is None: acc = []",
+                "    acc.append(item)",
+                "    return acc"
+            ],
+            "code": "def collect(item, acc=[]):",
+            "answer": "The same list instance is reused across independent invocations, causing state leakage",
+            "distractors": [
+                "Python deletes empty lists on function exit",
+                "Lists cannot be passed as parameters in recursive calls",
+                "Default parameters cause an immediate SyntaxError"
+            ],
+            "options": [
+                "The same list instance is reused across independent invocations, causing state leakage",
+                "Python deletes empty lists on function exit",
+                "Lists cannot be passed as parameters in recursive calls",
+                "Default parameters cause an immediate SyntaxError"
+            ],
+            "choices": [
+                "The same list instance is reused across independent invocations, causing state leakage",
+                "Python deletes empty lists on function exit",
+                "Lists cannot be passed as parameters in recursive calls",
+                "Default parameters cause an immediate SyntaxError"
+            ],
+            "hint": "Default argument expressions are evaluated once when the function is defined, sharing the list.",
+            "type": "quiz",
+            "question_en": "Why is defining def collect(item, acc=[]): dangerous in recursive functions?",
+            "question_fil": "Bakit mapanganib ang paggamit ng mutable default parameter tulad ng acc=[] sa recursion?",
+            "goal_en": "Avoid mutable default argument in recursive functions.",
+            "goal_fil": "Iwasan ang mutable default parameter dahil nagiging shared ang listahan.",
+            "hint_en": "Default argument expressions are evaluated once when the function is defined, sharing the list.",
+            "hint_fil": "Minsan lang nabubuo ang default argument, kaya naitatabi ang luma nitong laman."
         }
     ]
 };
@@ -403,7 +772,7 @@ const dictionaryGolem = {
     "intro": "Nested mappings, hashing collisions, comprehension matrices! My armor is forged from complex data structures!",
     "bugs": [
         {
-            "id": 133,
+            "id": "hard_dg_p1",
             "enemy_id": "dictionary_golem",
             "difficulty": "hard",
             "category": "Data Structures",
@@ -427,12 +796,12 @@ const dictionaryGolem = {
             "question_en": "Arrange the code blocks to store and retrieve dictionary values. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block para ma-store at makuha ang values sa dictionary. Alisin ang distractor.",
             "goal_en": "Create a squared mapping for numbers using a clean dictionary comprehension.",
-            "goal_fil": "Lutasin ang program: Create a squared mapping for numbers using a clean dictionary comprehension.",
+            "goal_fil": "Layunin: Create a squared mapping for numbers using a clean dictionary comprehension.",
             "hint_en": "Dictionary comprehensions use curly braces {key: val for x in iterable}.",
             "hint_fil": "Tandaan: Dictionary comprehensions use curly braces {key: val for x in iterable}."
         },
         {
-            "id": 134,
+            "id": "hard_dg_p2",
             "enemy_id": "dictionary_golem",
             "difficulty": "hard",
             "category": "Data Structures",
@@ -458,12 +827,12 @@ const dictionaryGolem = {
             "question_en": "Arrange the code blocks to store and retrieve dictionary values. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block para ma-store at makuha ang values sa dictionary. Alisin ang distractor.",
             "goal_en": "Count word frequencies using dict.get() with a default count of 0.",
-            "goal_fil": "Lutasin ang program: Count word frequencies using dict.get() with a default count of 0.",
+            "goal_fil": "Bilangin ang frequency ng bawat salita gamit ang dict.get() na may default na 0.",
             "hint_en": "Review your Python syntax, variable names, and line sequence.",
             "hint_fil": "Using counts[w] on an uninitialized key raises KeyError; use counts.get(w, 0)."
         },
         {
-            "id": 135,
+            "id": "hard_dg_p3",
             "enemy_id": "dictionary_golem",
             "difficulty": "hard",
             "category": "Data Structures",
@@ -487,12 +856,12 @@ const dictionaryGolem = {
             "question_en": "Arrange the code blocks to store and retrieve dictionary values. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block para ma-store at makuha ang values sa dictionary. Alisin ang distractor.",
             "goal_en": "Swap keys and values in a dictionary using a dictionary comprehension.",
-            "goal_fil": "Lutasin ang program: Swap keys and values in a dictionary using a dictionary comprehension.",
+            "goal_fil": "Layunin: Swap keys and values in a dictionary using a dictionary comprehension.",
             "hint_en": "Iterate over stats.items() to unpack (key, value) pairs simultaneously.",
             "hint_fil": "Tandaan: Iterate over stats.items() to unpack (key, value) pairs simultaneously."
         },
         {
-            "id": 136,
+            "id": "hard_dg_p4",
             "enemy_id": "dictionary_golem",
             "difficulty": "hard",
             "category": "Data Structures",
@@ -504,7 +873,8 @@ const dictionaryGolem = {
             "lines": [
                 "base_stats = {\"hp\": 100, \"atk\": 20}",
                 "gear_buffs = {\"hp\": 150, \"def\": 15}",
-                "merged = {**base_stats, **gear_buffs}",
+                "merged = base_stats.copy()",
+                "merged.update(gear_buffs)",
                 "print(\"Merged:\", merged)"
             ],
             "distractors": [
@@ -512,17 +882,17 @@ const dictionaryGolem = {
             ],
             "hint": "Review your Python syntax, variable names, and line sequence.",
             "code": "merged = base_stats + gear_buffs",
-            "answer": "base_stats = {\"hp\": 100, \"atk\": 20}\ngear_buffs = {\"hp\": 150, \"def\": 15}\nmerged = {**base_stats, **gear_buffs}\nprint(\"Merged:\", merged)",
+            "answer": "base_stats = {\"hp\": 100, \"atk\": 20}\ngear_buffs = {\"hp\": 150, \"def\": 15}\nmerged = base_stats.copy()\nmerged.update(gear_buffs)\nprint(\"Merged:\", merged)",
             "type": "parson",
             "question_en": "Arrange the code blocks to store and retrieve dictionary values. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block para ma-store at makuha ang values sa dictionary. Alisin ang distractor.",
             "goal_en": "Merge two dictionaries with overwriting precedence using PEP 448 dictionary unpacking.",
-            "goal_fil": "Lutasin ang program: Merge two dictionaries with overwriting precedence using PEP 448 dictionary unpacking.",
+            "goal_fil": "I-merge ang dalawang dictionary gamit ang dict update o unpacking.",
             "hint_en": "Review your Python syntax, variable names, and line sequence.",
             "hint_fil": "Dictionaries cannot be combined with +; use double-star unpacking {**d1, **d2}."
         },
         {
-            "id": 137,
+            "id": "hard_dg_p5",
             "enemy_id": "dictionary_golem",
             "difficulty": "hard",
             "category": "Data Structures",
@@ -546,12 +916,12 @@ const dictionaryGolem = {
             "question_en": "Arrange the code blocks to store and retrieve dictionary values. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block para ma-store at makuha ang values sa dictionary. Alisin ang distractor.",
             "goal_en": "Filter dictionary key-values to keep only items matching a threshold condition.",
-            "goal_fil": "Lutasin ang program: Filter dictionary key-values to keep only items matching a threshold condition.",
+            "goal_fil": "Layunin: Filter dictionary key-values to keep only items matching a threshold condition.",
             "hint_en": "Review your Python syntax, variable names, and line sequence.",
             "hint_fil": "scores.values() returns values only; use scores.items() to unpack key and value."
         },
         {
-            "id": 138,
+            "id": "hard_dg_p6",
             "enemy_id": "dictionary_golem",
             "difficulty": "hard",
             "category": "Data Structures",
@@ -577,12 +947,12 @@ const dictionaryGolem = {
             "question_en": "Arrange the code blocks to store and retrieve dictionary values. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block para ma-store at makuha ang values sa dictionary. Alisin ang distractor.",
             "goal_en": "Safely navigate nested dictionaries using chained .get() calls.",
-            "goal_fil": "Lutasin ang program: Safely navigate nested dictionaries using chained .get() calls.",
+            "goal_fil": "Layunin: Safely navigate nested dictionaries using chained .get() calls.",
             "hint_en": "Direct indexing with ['hero'] throws KeyError if the key doesn't exist.",
             "hint_fil": "Tandaan: Direct indexing with ['hero'] throws KeyError if the key doesn't exist."
         },
         {
-            "id": 139,
+            "id": "hard_dg_p7",
             "enemy_id": "dictionary_golem",
             "difficulty": "hard",
             "category": "Data Structures",
@@ -607,12 +977,12 @@ const dictionaryGolem = {
             "question_en": "Arrange the code blocks to process the list correctly. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block para maayos na maproseso ang list. Alisin ang distractor.",
             "goal_en": "Zip two lists together to construct a clean dictionary mapping.",
-            "goal_fil": "Lutasin ang program: Zip two lists together to construct a clean dictionary mapping.",
+            "goal_fil": "Layunin: Zip two lists together to construct a clean dictionary mapping.",
             "hint_en": "Pass the zipped pairs zip(items, quantities) to the dict() constructor.",
             "hint_fil": "Tandaan: Pass the zipped pairs zip(items, quantities) to the dict() constructor."
         },
         {
-            "id": 140,
+            "id": "hard_dg_p8",
             "enemy_id": "dictionary_golem",
             "difficulty": "hard",
             "category": "Data Structures",
@@ -636,12 +1006,12 @@ const dictionaryGolem = {
             "question_en": "Arrange the code blocks to store and retrieve dictionary values. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block para ma-store at makuha ang values sa dictionary. Alisin ang distractor.",
             "goal_en": "Sort dictionary items descending by their values using sorted() and a key lambda.",
-            "goal_fil": "Lutasin ang program: Sort dictionary items descending by their values using sorted() and a key lambda.",
+            "goal_fil": "Layunin: Sort dictionary items descending by their values using sorted() and a key lambda.",
             "hint_en": "Sorting power only gives keys (strings) where x[1] is the second letter! Use power.items().",
             "hint_fil": "Tandaan: Sorting power only gives keys (strings) where x[1] is the second letter! Use power.items()."
         },
         {
-            "id": 141,
+            "id": "hard_dg_p9",
             "enemy_id": "dictionary_golem",
             "difficulty": "hard",
             "category": "Data Structures",
@@ -667,12 +1037,12 @@ const dictionaryGolem = {
             "question_en": "Arrange the code blocks to store and retrieve dictionary values. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block para ma-store at makuha ang values sa dictionary. Alisin ang distractor.",
             "goal_en": "Group list items by category into lists inside a dictionary.",
-            "goal_fil": "Lutasin ang program: Group list items by category into lists inside a dictionary.",
+            "goal_fil": "Layunin: Group list items by category into lists inside a dictionary.",
             "hint_en": "Directly calling bag[cat].append() crashes when cat is seen for the first time.",
             "hint_fil": "Tandaan: Directly calling bag[cat].append() crashes when cat is seen for the first time."
         },
         {
-            "id": 142,
+            "id": "hard_dg_p10",
             "enemy_id": "dictionary_golem",
             "difficulty": "hard",
             "category": "Data Structures",
@@ -698,67 +1068,433 @@ const dictionaryGolem = {
             "question_en": "Arrange the code blocks to store and retrieve dictionary values. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block para ma-store at makuha ang values sa dictionary. Alisin ang distractor.",
             "goal_en": "Safely remove keys matching a criteria from a copy of a dictionary.",
-            "goal_fil": "Lutasin ang program: Safely remove keys matching a criteria from a copy of a dictionary.",
+            "goal_fil": "Ligtas na tanggalin ang mga keys na tumutugma sa condition mula sa kopya ng dictionary.",
             "hint_en": "Modifying a dictionary size during direct iteration raises RuntimeError.",
             "hint_fil": "Tandaan: Modifying a dictionary size during direct iteration raises RuntimeError."
         },
         {
-            "id": 143,
+            "id": "hard_dg_q1",
             "enemy_id": "dictionary_golem",
             "difficulty": "hard",
-            "category": "Data Structures",
-            "error_type": "ValueError: too many values to unpack",
-            "title": "Dictionary Golem #11: Transforming Values with Dict Comprehension",
-            "question": "Arrange the code blocks to store and retrieve dictionary values. Exclude the distractor.",
-            "goal": "Apply an upper case string transformation to all dictionary values.",
-            "expected_output": "Labels: {'start': 'READY', 'finish': 'GOAL'}",
+            "category": "Dict Filtering",
+            "error_type": "SyntaxError",
+            "title": "Dictionary Golem Quiz #1: Filtering Dictionary with Comprehension",
+            "question": "Select the correct dictionary comprehension to filter entries where value >= 10.",
+            "goal": "Filter scores dict keeping only entries >= 10.",
+            "expected_output": "Filtered dictionary",
             "lines": [
-                "stages = {\"start\": \"ready\", \"finish\": \"goal\"}",
-                "upper_stages = {k: v.upper() for k, v in stages.items()}",
-                "print(\"Labels:\", upper_stages)"
+                "scores = {'a': 5, 'b': 15, 'c': 10}",
+                "passing = {k: v for k, v in scores.items() if v >= 10}",
+                "print(passing)"
             ],
+            "code": "passing = {k: v in scores if v >= 10}",
+            "answer": "{k: v for k, v in scores.items() if v >= 10}",
             "distractors": [
-                "upper_stages = {k.upper(): v for k, v in stages}"
+                "{k: v in scores if v >= 10}",
+                "{for k, v in scores.items(): if v >= 10 k: v}",
+                "[k: v for k, v in scores if v >= 10]"
             ],
-            "hint": "Unpack stages.items() to access v, and apply v.upper() to the values.",
-            "code": "upper_stages = {k.upper(): v for k, v in stages}",
-            "answer": "stages = {\"start\": \"ready\", \"finish\": \"goal\"}\nupper_stages = {k: v.upper() for k, v in stages.items()}\nprint(\"Labels:\", upper_stages)",
-            "type": "parson",
-            "question_en": "Arrange the code blocks to store and retrieve dictionary values. Exclude the distractor.",
-            "question_fil": "I-drag at i-ayos ang mga block para ma-store at makuha ang values sa dictionary. Alisin ang distractor.",
-            "goal_en": "Apply an upper case string transformation to all dictionary values.",
-            "goal_fil": "Lutasin ang program: Apply an upper case string transformation to all dictionary values.",
-            "hint_en": "Unpack stages.items() to access v, and apply v.upper() to the values.",
-            "hint_fil": "Tandaan: Unpack stages.items() to access v, and apply v.upper() to the values."
+            "options": [
+                "{k: v for k, v in scores.items() if v >= 10}",
+                "{k: v in scores if v >= 10}",
+                "{for k, v in scores.items(): if v >= 10 k: v}",
+                "[k: v for k, v in scores if v >= 10]"
+            ],
+            "choices": [
+                "{k: v for k, v in scores.items() if v >= 10}",
+                "{k: v in scores if v >= 10}",
+                "{for k, v in scores.items(): if v >= 10 k: v}",
+                "[k: v for k, v in scores if v >= 10]"
+            ],
+            "hint": "Dictionary comprehension syntax requires {key: value for key, value in dict.items() if condition}.",
+            "type": "quiz",
+            "question_en": "Select the correct dictionary comprehension to filter entries where value >= 10.",
+            "question_fil": "Piliin ang tamang dictionary comprehension para i-filter ang entries na value >= 10.",
+            "goal_en": "Filter scores dict keeping only entries >= 10.",
+            "goal_fil": "I-filter ang dictionary para panatilihin ang values na >= 10.",
+            "hint_en": "Dictionary comprehension syntax requires {key: value for key, value in dict.items() if condition}.",
+            "hint_fil": "Ayos ng dict comprehension: {k: v for k, v in d.items() if kondisyon}."
         },
         {
-            "id": 144,
+            "id": "hard_dg_q2",
             "enemy_id": "dictionary_golem",
             "difficulty": "hard",
-            "category": "Data Structures",
-            "error_type": "AttributeError: 'dict' object has no attribute 'has_key'",
-            "title": "Dictionary Golem #12: Key Existence Check with In Operator",
-            "question": "Arrange the code blocks to store and retrieve dictionary values. Exclude the distractor.",
-            "goal": "Verify key presence cleanly using the in keyword instead of catching KeyError.",
-            "expected_output": "Found secret: False",
+            "category": "Frequency Counter",
+            "error_type": "KeyError",
+            "title": "Dictionary Golem Quiz #2: Safe Frequency Increment with Get",
+            "question": "Select the line that safely increments a word's count in frequency dict without raising KeyError.",
+            "goal": "Increment word count with fallback default 0.",
+            "expected_output": "Word count incremented",
             "lines": [
-                "vault = {\"gold\": 1000, \"gems\": 50}",
-                "has_secret = \"secret\" in vault",
-                "print(\"Found secret:\", has_secret)"
+                "counts = {}",
+                "word = \"dragon\"",
+                "counts[word] = counts.get(word, 0) + 1"
             ],
+            "code": "counts[word] = counts[word] + 1",
+            "answer": "counts[word] = counts.get(word, 0) + 1",
             "distractors": [
-                "has_secret = vault.has_key(\"secret\")"
+                "counts[word] = counts[word] + 1",
+                "counts.increment(word)",
+                "counts[word] += counts[word] or 0"
             ],
-            "hint": "Review your Python syntax, variable names, and line sequence.",
-            "code": "has_secret = vault.has_key(\"secret\")",
-            "answer": "vault = {\"gold\": 1000, \"gems\": 50}\nhas_secret = \"secret\" in vault\nprint(\"Found secret:\", has_secret)",
-            "type": "parson",
-            "question_en": "Arrange the code blocks to store and retrieve dictionary values. Exclude the distractor.",
-            "question_fil": "I-drag at i-ayos ang mga block para ma-store at makuha ang values sa dictionary. Alisin ang distractor.",
-            "goal_en": "Verify key presence cleanly using the in keyword instead of catching KeyError.",
-            "goal_fil": "Lutasin ang program: Verify key presence cleanly using the in keyword instead of catching KeyError.",
-            "hint_en": "Review your Python syntax, variable names, and line sequence.",
-            "hint_fil": "Python 3 removed .has_key(); use the 'key in dict' operator syntax."
+            "options": [
+                "counts[word] = counts.get(word, 0) + 1",
+                "counts[word] = counts[word] + 1",
+                "counts.increment(word)",
+                "counts[word] += counts[word] or 0"
+            ],
+            "choices": [
+                "counts[word] = counts.get(word, 0) + 1",
+                "counts[word] = counts[word] + 1",
+                "counts.increment(word)",
+                "counts[word] += counts[word] or 0"
+            ],
+            "hint": "counts.get(word, 0) returns 0 if the word hasn't been encountered yet.",
+            "type": "quiz",
+            "question_en": "Select the line that safely increments a word's count in frequency dict without raising KeyError.",
+            "question_fil": "Piliin ang linyang ligtas na nagdadagdag ng bilang ng salita sa frequency dictionary.",
+            "goal_en": "Increment word count with fallback default 0.",
+            "goal_fil": "Dagdagan ang bilang ng salita gamit ang get(word, 0).",
+            "hint_en": "counts.get(word, 0) returns 0 if the word hasn't been encountered yet.",
+            "hint_fil": "Nagbabalik ng 0 ang get(word, 0) kung bago pa lang ang salita."
+        },
+        {
+            "id": "hard_dg_q3",
+            "enemy_id": "dictionary_golem",
+            "difficulty": "hard",
+            "category": "Dict Inversion",
+            "error_type": "CollisionRisk",
+            "title": "Dictionary Golem Quiz #3: Inverting Dictionaries and Value Collisions",
+            "question": "What happens when inverting a dictionary {k: v} into {v: k} if two original keys share the same value?",
+            "goal": "Identify that duplicate values overwrite each other during inversion.",
+            "expected_output": "Duplicate values overwrite",
+            "lines": [
+                "d = {'a': 1, 'b': 1}",
+                "inv = {v: k for k, v in d.items()}",
+                "print(len(inv))  # Only 1 key remains!"
+            ],
+            "code": "inv = {v: k for k, v in d.items()}",
+            "answer": "One of the keys is overwritten because dictionary keys must be unique",
+            "distractors": [
+                "Python raises an InversionError",
+                "Both keys are automatically merged into a string",
+                "The second key is placed in a separate tuple"
+            ],
+            "options": [
+                "One of the keys is overwritten because dictionary keys must be unique",
+                "Python raises an InversionError",
+                "Both keys are automatically merged into a string",
+                "The second key is placed in a separate tuple"
+            ],
+            "choices": [
+                "One of the keys is overwritten because dictionary keys must be unique",
+                "Python raises an InversionError",
+                "Both keys are automatically merged into a string",
+                "The second key is placed in a separate tuple"
+            ],
+            "hint": "Dictionary keys are strictly unique; duplicate assignment overwrites previous values.",
+            "type": "quiz",
+            "question_en": "What happens when inverting a dictionary {k: v} into {v: k} if two original keys share the same value?",
+            "question_fil": "Ano ang mangyayari sa pagbabaligtad ng dictionary kung may magkaparehong value ang dalawang susi?",
+            "goal_en": "Identify that duplicate values overwrite each other during inversion.",
+            "goal_fil": "Alamin na napapatungan ang kaparehong value dahil unique ang keys.",
+            "hint_en": "Dictionary keys are strictly unique; duplicate assignment overwrites previous values.",
+            "hint_fil": "Kailangang natatangi ang keys kaya napapatungan ang nauna."
+        },
+        {
+            "id": "hard_dg_q4",
+            "enemy_id": "dictionary_golem",
+            "difficulty": "hard",
+            "category": "Dict Unpacking",
+            "error_type": "SyntaxError",
+            "title": "Dictionary Golem Quiz #4: Dictionary Merging with Unpacking Operator",
+            "question": "Select the expression that merges dict d1 and d2 into a new dictionary using double asterisks (**).",
+            "goal": "Merge dictionaries using {**d1, **d2}.",
+            "expected_output": "{**d1, **d2}",
+            "lines": [
+                "d1 = {'a': 1}",
+                "d2 = {'b': 2}",
+                "merged = {**d1, **d2}"
+            ],
+            "code": "merged = {*d1, *d2}",
+            "answer": "{**d1, **d2}",
+            "distractors": [
+                "{*d1, *d2}",
+                "d1 + d2",
+                "{d1 && d2}"
+            ],
+            "options": [
+                "{**d1, **d2}",
+                "{*d1, *d2}",
+                "d1 + d2",
+                "{d1 && d2}"
+            ],
+            "choices": [
+                "{**d1, **d2}",
+                "{*d1, *d2}",
+                "d1 + d2",
+                "{d1 && d2}"
+            ],
+            "hint": "Use double splat ** for dictionary unpacking; a single * unpacks only keys into a set.",
+            "type": "quiz",
+            "question_en": "Select the expression that merges dict d1 and d2 into a new dictionary using double asterisks (**).",
+            "question_fil": "Piliin ang expression na nagsasama ng d1 at d2 gamit ang double asterisk (**).",
+            "goal_en": "Merge dictionaries using {**d1, **d2}.",
+            "goal_fil": "Pagsamahin ang dalawang dictionary gamit ang {**d1, **d2}.",
+            "hint_en": "Use double splat ** for dictionary unpacking; a single * unpacks only keys into a set.",
+            "hint_fil": "Dalawang asterisk (**) ang kailangan para mag-unpack ng dictionary."
+        },
+        {
+            "id": "hard_dg_q5",
+            "enemy_id": "dictionary_golem",
+            "difficulty": "hard",
+            "category": "Parallel Zip Dict",
+            "error_type": "TypeError",
+            "title": "Dictionary Golem Quiz #5: Constructing Dictionary from Parallel Lists",
+            "question": "Select the Python built-in combination that constructs a dictionary from parallel keys and values lists.",
+            "goal": "Construct dict using dict(zip(keys, values)).",
+            "expected_output": "dict(zip(keys, values))",
+            "lines": [
+                "keys = ['id', 'name']",
+                "values = [101, 'Hero']",
+                "record = dict(zip(keys, values))"
+            ],
+            "code": "record = dict(keys, values)",
+            "answer": "dict(zip(keys, values))",
+            "distractors": [
+                "dict(keys, values)",
+                "dict.combine(keys, values)",
+                "{keys: values}"
+            ],
+            "options": [
+                "dict(zip(keys, values))",
+                "dict(keys, values)",
+                "dict.combine(keys, values)",
+                "{keys: values}"
+            ],
+            "choices": [
+                "dict(zip(keys, values))",
+                "dict(keys, values)",
+                "dict.combine(keys, values)",
+                "{keys: values}"
+            ],
+            "hint": "zip() pairs corresponding elements from two lists into tuples, which dict() converts into key-value pairs.",
+            "type": "quiz",
+            "question_en": "Select the Python built-in combination that constructs a dictionary from parallel keys and values lists.",
+            "question_fil": "Piliin ang paraan para bumuo ng dictionary mula sa dalawang listahan gamit ang dict(zip()).",
+            "goal_en": "Construct dict using dict(zip(keys, values)).",
+            "goal_fil": "Bumuo ng dictionary gamit ang dict(zip(keys, values)).",
+            "hint_en": "zip() pairs corresponding elements from two lists into tuples, which dict() converts into key-value pairs.",
+            "hint_fil": "Pinagpapares ng zip() ang dalawang listahan para gawing dictionary."
+        },
+        {
+            "id": "hard_dg_q6",
+            "enemy_id": "dictionary_golem",
+            "difficulty": "hard",
+            "category": "Sorting by Value",
+            "error_type": "SortingError",
+            "title": "Dictionary Golem Quiz #6: Sorting Dictionary Items by Values",
+            "question": "Select the correct sorted() call to sort dictionary items in ascending order by their numerical values.",
+            "goal": "Sort items by item[1].",
+            "expected_output": "Sorted by value",
+            "lines": [
+                "stats = {'a': 30, 'b': 10, 'c': 20}",
+                "sorted_items = sorted(stats.items(), key=lambda item: item[1])"
+            ],
+            "code": "sorted(stats, key=lambda x: x.value)",
+            "answer": "sorted(stats.items(), key=lambda item: item[1])",
+            "distractors": [
+                "sorted(stats, key=lambda x: x.value)",
+                "stats.sort_by_values()",
+                "sorted(stats.values())"
+            ],
+            "options": [
+                "sorted(stats.items(), key=lambda item: item[1])",
+                "sorted(stats, key=lambda x: x.value)",
+                "stats.sort_by_values()",
+                "sorted(stats.values())"
+            ],
+            "choices": [
+                "sorted(stats.items(), key=lambda item: item[1])",
+                "sorted(stats, key=lambda x: x.value)",
+                "stats.sort_by_values()",
+                "sorted(stats.values())"
+            ],
+            "hint": "Each element in dict.items() is a (key, value) tuple, so item[1] extracts the value.",
+            "type": "quiz",
+            "question_en": "Select the correct sorted() call to sort dictionary items in ascending order by their numerical values.",
+            "question_fil": "Piliin ang tamang sorted() call para i-ayos ang items ayon sa value (item[1]).",
+            "goal_en": "Sort items by item[1].",
+            "goal_fil": "I-sort ang items ng dictionary ayon sa value.",
+            "hint_en": "Each element in dict.items() is a (key, value) tuple, so item[1] extracts the value.",
+            "hint_fil": "Pangalawang elemento (item[1]) ang value sa bawat pares ng items()."
+        },
+        {
+            "id": "hard_dg_q7",
+            "enemy_id": "dictionary_golem",
+            "difficulty": "hard",
+            "category": "Setdefault Grouping",
+            "error_type": "KeyError",
+            "title": "Dictionary Golem Quiz #7: Grouping with setdefault()",
+            "question": "How does dict.setdefault(category, []).append(item) safely group elements?",
+            "goal": "Understand setdefault initializing missing keys with empty list.",
+            "expected_output": "Initializes missing key with empty list",
+            "lines": [
+                "groups = {}",
+                "groups.setdefault('potions', []).append('healing')"
+            ],
+            "code": "groups['potions'].append('healing')",
+            "answer": "If 'category' is not in dict, it sets dict[category] = [] before appending",
+            "distractors": [
+                "It converts the dictionary into a tuple",
+                "It creates a temporary global list named category",
+                "It sorts all existing list items alphabetically"
+            ],
+            "options": [
+                "If 'category' is not in dict, it sets dict[category] = [] before appending",
+                "It converts the dictionary into a tuple",
+                "It creates a temporary global list named category",
+                "It sorts all existing list items alphabetically"
+            ],
+            "choices": [
+                "If 'category' is not in dict, it sets dict[category] = [] before appending",
+                "It converts the dictionary into a tuple",
+                "It creates a temporary global list named category",
+                "It sorts all existing list items alphabetically"
+            ],
+            "hint": "setdefault() returns the existing value if key is present, or assigns and returns default if missing.",
+            "type": "quiz",
+            "question_en": "How does dict.setdefault(category, []).append(item) safely group elements?",
+            "question_fil": "Paano ligtas na nagpapangkat ang setdefault(category, []).append(item)?",
+            "goal_en": "Understand setdefault initializing missing keys with empty list.",
+            "goal_fil": "Maunawaan ang paggawa ng panimulang listahan kapag wala pa ang susi.",
+            "hint_en": "setdefault() returns the existing value if key is present, or assigns and returns default if missing.",
+            "hint_fil": "Naglalagay ng default na [] ang setdefault kung wala pa ang key."
+        },
+        {
+            "id": "hard_dg_q8",
+            "enemy_id": "dictionary_golem",
+            "difficulty": "hard",
+            "category": "Unhashable Key Error",
+            "error_type": "TypeError: unhashable type: 'list'",
+            "title": "Dictionary Golem Quiz #8: Valid Dictionary Key Requirements",
+            "question": "Which of the following data types CANNOT be used as a dictionary key in Python?",
+            "goal": "Identify that mutable lists cannot be dictionary keys.",
+            "expected_output": "List is unhashable",
+            "lines": [
+                "# d[[1, 2]] = 'val' -> TypeError: unhashable type: 'list'!"
+            ],
+            "code": "d[[1, 2]] = 'val'",
+            "answer": "A list [1, 2]",
+            "distractors": [
+                "A tuple (1, 2)",
+                "A string 'key'",
+                "An integer 42"
+            ],
+            "options": [
+                "A list [1, 2]",
+                "A tuple (1, 2)",
+                "A string 'key'",
+                "An integer 42"
+            ],
+            "choices": [
+                "A list [1, 2]",
+                "A tuple (1, 2)",
+                "A string 'key'",
+                "An integer 42"
+            ],
+            "hint": "Dictionary keys must be hashable and immutable; mutable collections like lists cannot be keys.",
+            "type": "quiz",
+            "question_en": "Which of the following data types CANNOT be used as a dictionary key in Python?",
+            "question_fil": "Alin sa mga sumusunod ang HINDI maaaring gawing key sa Python dictionary?",
+            "goal_en": "Identify that mutable lists cannot be dictionary keys.",
+            "goal_fil": "Tukuyin na hindi puwedeng maging key ang mutable list.",
+            "hint_en": "Dictionary keys must be hashable and immutable; mutable collections like lists cannot be keys.",
+            "hint_fil": "Dapat immutable at hashable ang key; bawal ang listahan."
+        },
+        {
+            "id": "hard_dg_q9",
+            "enemy_id": "dictionary_golem",
+            "difficulty": "hard",
+            "category": "Fromkeys Shared Trap",
+            "error_type": "SharedStateMutation",
+            "title": "Dictionary Golem Quiz #9: Mutable Default Trap in fromkeys()",
+            "question": "Why is dict.fromkeys(['a', 'b'], []) dangerous when appending to one of the lists?",
+            "goal": "Identify that fromkeys assigns the exact same mutable reference to all keys.",
+            "expected_output": "Same list reference shared across keys",
+            "lines": [
+                "d = dict.fromkeys(['a', 'b'], [])",
+                "d['a'].append(99)",
+                "print(d['b'])  # Also contains [99]!"
+            ],
+            "code": "d = dict.fromkeys(['a', 'b'], [])",
+            "answer": "All keys reference the exact same list in memory, so modifying one modifies all",
+            "distractors": [
+                "fromkeys converts all values to read-only frozen sets",
+                "The list is deleted when fromkeys finishes executing",
+                "Python throws a KeyError on lookup"
+            ],
+            "options": [
+                "All keys reference the exact same list in memory, so modifying one modifies all",
+                "fromkeys converts all values to read-only frozen sets",
+                "The list is deleted when fromkeys finishes executing",
+                "Python throws a KeyError on lookup"
+            ],
+            "choices": [
+                "All keys reference the exact same list in memory, so modifying one modifies all",
+                "fromkeys converts all values to read-only frozen sets",
+                "The list is deleted when fromkeys finishes executing",
+                "Python throws a KeyError on lookup"
+            ],
+            "hint": "dict.fromkeys assigns the identical object reference to every key; use dict comprehension instead.",
+            "type": "quiz",
+            "question_en": "Why is dict.fromkeys(['a', 'b'], []) dangerous when appending to one of the lists?",
+            "question_fil": "Bakit mapanganib ang dict.fromkeys(['a', 'b'], []) kapag nag-append sa isang key?",
+            "goal_en": "Identify that fromkeys assigns the exact same mutable reference to all keys.",
+            "goal_fil": "Alamin na iisang reference ng listahan ang ibinabahagi sa lahat ng keys.",
+            "hint_en": "dict.fromkeys assigns the identical object reference to every key; use dict comprehension instead.",
+            "hint_fil": "Iisang memory reference ang nilalagay ng fromkeys sa lahat ng susi."
+        },
+        {
+            "id": "hard_dg_q10",
+            "enemy_id": "dictionary_golem",
+            "difficulty": "hard",
+            "category": "Fast Key Membership",
+            "error_type": "PerformanceOptimization",
+            "title": "Dictionary Golem Quiz #10: Time Complexity of Key Lookup",
+            "question": "What is the average time complexity of checking if a key exists in a Python dictionary using 'if key in d:'?",
+            "goal": "Confirm O(1) average lookup time for dictionary hash table.",
+            "expected_output": "O(1) average time",
+            "lines": [
+                "if 'user_id' in registry: grant_access()"
+            ],
+            "code": "if 'user_id' in registry:",
+            "answer": "O(1) constant time due to underlying hash table lookup",
+            "distractors": [
+                "O(n) linear scan through all keys",
+                "O(log n) binary search tree traversal",
+                "O(n^2) quadratic nested comparison"
+            ],
+            "options": [
+                "O(1) constant time due to underlying hash table lookup",
+                "O(n) linear scan through all keys",
+                "O(log n) binary search tree traversal",
+                "O(n^2) quadratic nested comparison"
+            ],
+            "choices": [
+                "O(1) constant time due to underlying hash table lookup",
+                "O(n) linear scan through all keys",
+                "O(log n) binary search tree traversal",
+                "O(n^2) quadratic nested comparison"
+            ],
+            "hint": "Python dictionaries use hash tables, allowing near-instant O(1) key lookups on average.",
+            "type": "quiz",
+            "question_en": "What is the average time complexity of checking if a key exists in a Python dictionary using 'if key in d:'?",
+            "question_fil": "Ano ang average time complexity ng pagsusuri ng key sa dictionary gamit ang 'if key in d:'?",
+            "goal_en": "Confirm O(1) average lookup time for dictionary hash table.",
+            "goal_fil": "Kumpirmahin ang O(1) bilis ng paghahanap sa hash table ng dictionary.",
+            "hint_en": "Python dictionaries use hash tables, allowing near-instant O(1) key lookups on average.",
+            "hint_fil": "Hash table ang ilalim ng dictionary kaya O(1) constant time ito sa average."
         }
     ]
 };
@@ -773,7 +1509,7 @@ const classKnight = {
     "intro": "Dunder methods, property decorators, and encapsulation! A true knight masters __str__, __repr__, and private attributes!",
     "bugs": [
         {
-            "id": 145,
+            "id": "hard_ck_p1",
             "enemy_id": "class_knight",
             "difficulty": "hard",
             "category": "Object-Oriented Architecture",
@@ -802,12 +1538,12 @@ const classKnight = {
             "question_en": "Arrange the code blocks to define the class and instantiate the object. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block para magawa ang class at object. Alisin ang distractor.",
             "goal_en": "Define a Knight subclass that inherits from a Hero parent class.",
-            "goal_fil": "Lutasin ang program: Define a Knight subclass that inherits from a Hero parent class.",
+            "goal_fil": "Layunin: Define a Knight subclass that inherits from a Hero parent class.",
             "hint_en": "In Python, inheritance syntax is class SubClass(ParentClass): without 'extends'.",
             "hint_fil": "Tandaan: In Python, inheritance syntax is class SubClass(ParentClass): without 'extends'."
         },
         {
-            "id": 146,
+            "id": "hard_ck_p2",
             "enemy_id": "class_knight",
             "difficulty": "hard",
             "category": "Object-Oriented Architecture",
@@ -837,12 +1573,12 @@ const classKnight = {
             "question_en": "Arrange the code blocks to define the class and instantiate the object. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block para magawa ang class at object. Alisin ang distractor.",
             "goal_en": "Call the parent class constructor using super().__init__() to initialize base state.",
-            "goal_fil": "Lutasin ang program: Call the parent class constructor using super().__init__() to initialize base state.",
+            "goal_fil": "Layunin: Call the parent class constructor using super().__init__() to initialize base state.",
             "hint_en": "Calling parent constructor via super().__init__(name) passes self automatically.",
             "hint_fil": "Tandaan: Calling parent constructor via super().__init__(name) passes self automatically."
         },
         {
-            "id": 147,
+            "id": "hard_ck_p3",
             "enemy_id": "class_knight",
             "difficulty": "hard",
             "category": "Object-Oriented Architecture",
@@ -870,12 +1606,12 @@ const classKnight = {
             "question_en": "Arrange the code blocks to define the class and instantiate the object. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block para magawa ang class at object. Alisin ang distractor.",
             "goal_en": "Override parent attack method in Knight to apply class-specific behavior.",
-            "goal_fil": "Lutasin ang program: Override parent attack method in Knight to apply class-specific behavior.",
+            "goal_fil": "Layunin: Override parent attack method in Knight to apply class-specific behavior.",
             "hint_en": "Python methods are overridden simply by defining the same method name in the subclass.",
             "hint_fil": "Tandaan: Python methods are overridden simply by defining the same method name in the subclass."
         },
         {
-            "id": 148,
+            "id": "hard_ck_p4",
             "enemy_id": "class_knight",
             "difficulty": "hard",
             "category": "Object-Oriented Architecture",
@@ -904,12 +1640,12 @@ const classKnight = {
             "question_en": "Arrange the code blocks to define the class and instantiate the object. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block para magawa ang class at object. Alisin ang distractor.",
             "goal_en": "Call parent method via super().attack() and add bonus damage in subclass.",
-            "goal_fil": "Lutasin ang program: Call parent method via super().attack() and add bonus damage in subclass.",
+            "goal_fil": "Layunin: Call parent method via super().attack() and add bonus damage in subclass.",
             "hint_en": "super is a built-in callable function: call super() with parentheses before accessing methods.",
             "hint_fil": "Tandaan: super is a built-in callable function: call super() with parentheses before accessing methods."
         },
         {
-            "id": 149,
+            "id": "hard_ck_p5",
             "enemy_id": "class_knight",
             "difficulty": "hard",
             "category": "Object-Oriented Architecture",
@@ -936,12 +1672,12 @@ const classKnight = {
             "question_en": "Arrange the code blocks to define the class and instantiate the object. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block para magawa ang class at object. Alisin ang distractor.",
             "goal_en": "Invoke a shared battle_cry method across a list containing different subclasses.",
-            "goal_fil": "Lutasin ang program: Invoke a shared battle_cry method across a list containing different subclasses.",
+            "goal_fil": "Layunin: Invoke a shared battle_cry method across a list containing different subclasses.",
             "hint_en": "Python uses zero-based indexing: the first item is at index 0.",
             "hint_fil": "army is a list of objects; index army[0] to invoke the instance method shout()."
         },
         {
-            "id": 150,
+            "id": "hard_ck_p6",
             "enemy_id": "class_knight",
             "difficulty": "hard",
             "category": "Object-Oriented Architecture",
@@ -969,12 +1705,12 @@ const classKnight = {
             "question_en": "Arrange the code blocks to define the class and instantiate the object. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block para magawa ang class at object. Alisin ang distractor.",
             "goal_en": "Access an internal protected attribute with convention getter method.",
-            "goal_fil": "Lutasin ang program: Access an internal protected attribute with convention getter method.",
+            "goal_fil": "Layunin: Access an internal protected attribute with convention getter method.",
             "hint_en": "Assign values using single equals =. Double equals == is equality comparison.",
             "hint_fil": "Tandaan: Assign values using single equals =. Double equals == is equality comparison."
         },
         {
-            "id": 151,
+            "id": "hard_ck_p7",
             "enemy_id": "class_knight",
             "difficulty": "hard",
             "category": "Object-Oriented Architecture",
@@ -999,12 +1735,12 @@ const classKnight = {
             "question_en": "Arrange the code blocks to define the class and instantiate the object. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block para magawa ang class at object. Alisin ang distractor.",
             "goal_en": "Confirm subclass relationship using Python's built-in issubclass() function.",
-            "goal_fil": "Lutasin ang program: Confirm subclass relationship using Python's built-in issubclass() function.",
+            "goal_fil": "Layunin: Confirm subclass relationship using Python's built-in issubclass() function.",
             "hint_en": "issubclass is a built-in function taking two class arguments: issubclass(sub, base).",
             "hint_fil": "Tandaan: issubclass is a built-in function taking two class arguments: issubclass(sub, base)."
         },
         {
-            "id": 152,
+            "id": "hard_ck_p8",
             "enemy_id": "class_knight",
             "difficulty": "hard",
             "category": "Object-Oriented Architecture",
@@ -1030,12 +1766,12 @@ const classKnight = {
             "question_en": "Arrange the code blocks to define the class and instantiate the object. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block para magawa ang class at object. Alisin ang distractor.",
             "goal_en": "Validate that an object is an instance of a parent class using isinstance().",
-            "goal_fil": "Lutasin ang program: Validate that an object is an instance of a parent class using isinstance().",
+            "goal_fil": "I-validate na ang object ay instance ng parent class gamit ang isinstance().",
             "hint_en": "Use double equals == for comparison checks, not single equals =.",
             "hint_fil": "type(k) == Entity is False because k is of type Knight; use isinstance() to support inheritance."
         },
         {
-            "id": 153,
+            "id": "hard_ck_p9",
             "enemy_id": "class_knight",
             "difficulty": "hard",
             "category": "Object-Oriented Architecture",
@@ -1049,28 +1785,28 @@ const classKnight = {
                 "    def __init__(self, name): self.name = name",
                 "class Knight(Hero):",
                 "    def __init__(self, name, title):",
-                "        super().__init__(name)",
+                "        super(Knight, self).__init__(name)",
                 "        self.title = title",
                 "    def __str__(self):",
-                "        return f\"{self.name} the {self.title}\"",
+                "        return self.name + \" the \" + self.title",
                 "print(str(Knight(\"Arthur\", \"Paladin\")))"
             ],
             "distractors": [
-                "    def __str__(self):\n        print(f\"{self.name} the {self.title}\")"
+                "    def __str__(self):\n        print(self.name + \" the \" + self.title)"
             ],
             "hint": "The __str__ magic method must return a string, not print it.",
-            "code": "    def __str__(self):\n        print(f\"{self.name} the {self.title}\")",
-            "answer": "class Hero:\n    def __init__(self, name): self.name = name\nclass Knight(Hero):\n    def __init__(self, name, title):\n        super().__init__(name)\n        self.title = title\n    def __str__(self):\n        return f\"{self.name} the {self.title}\"\nprint(str(Knight(\"Arthur\", \"Paladin\")))",
+            "code": "    def __str__(self):\n        print(self.name + \" the \" + self.title)",
+            "answer": "class Hero:\n    def __init__(self, name): self.name = name\nclass Knight(Hero):\n    def __init__(self, name, title):\n        super(Knight, self).__init__(name)\n        self.title = title\n    def __str__(self):\n        return self.name + \" the \" + self.title\nprint(str(Knight(\"Arthur\", \"Paladin\")))",
             "type": "parson",
             "question_en": "Arrange the code blocks to define the class and instantiate the object. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block para magawa ang class at object. Alisin ang distractor.",
             "goal_en": "Define __str__ on subclass incorporating parent name and subclass details.",
-            "goal_fil": "Lutasin ang program: Define __str__ on subclass incorporating parent name and subclass details.",
+            "goal_fil": "Layunin: Define __str__ on subclass incorporating parent name and subclass details.",
             "hint_en": "The __str__ magic method must return a string, not print it.",
             "hint_fil": "Tandaan: The __str__ magic method must return a string, not print it."
         },
         {
-            "id": 154,
+            "id": "hard_ck_p10",
             "enemy_id": "class_knight",
             "difficulty": "hard",
             "category": "Object-Oriented Architecture",
@@ -1098,75 +1834,445 @@ const classKnight = {
             "question_en": "Arrange the code blocks to define the class and instantiate the object. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block para magawa ang class at object. Alisin ang distractor.",
             "goal_en": "Return self from methods to enable fluent method chaining on knight instances.",
-            "goal_fil": "Lutasin ang program: Return self from methods to enable fluent method chaining on knight instances.",
+            "goal_fil": "Layunin: Return self from methods to enable fluent method chaining on knight instances.",
             "hint_en": "To support chaining .heal().heal(), the method must explicitly return self.",
             "hint_fil": "Tandaan: To support chaining .heal().heal(), the method must explicitly return self."
         },
         {
-            "id": 155,
+            "id": "hard_ck_q1",
             "enemy_id": "class_knight",
             "difficulty": "hard",
-            "category": "Object-Oriented Architecture",
-            "error_type": "NameError: name 'self' is not defined",
-            "title": "Class Knight #11: Class Variable Inheritance",
-            "question": "Arrange the code blocks in proper order to initialize and use the variables. Exclude the distractor.",
-            "goal": "Demonstrate class variables shared across all instances of base and derived classes.",
-            "expected_output": "Faction: Alliance",
-            "lines": [
-                "class Hero:",
-                "    faction = \"Alliance\"",
-                "class Knight(Hero):",
-                "    pass",
-                "k = Knight()",
-                "print(\"Faction:\", k.faction)"
-            ],
-            "distractors": [
-                "    self.faction = \"Alliance\""
-            ],
-            "hint": "Class variables are declared directly inside the class body without self.",
-            "code": "    self.faction = \"Alliance\"",
-            "answer": "class Hero:\n    faction = \"Alliance\"\nclass Knight(Hero):\n    pass\nk = Knight()\nprint(\"Faction:\", k.faction)",
-            "type": "parson",
-            "question_en": "Arrange the code blocks in proper order to initialize and use the variables. Exclude the distractor.",
-            "question_fil": "I-drag at i-ayos ang mga block para ma-set at magamit ang variables. Alisin ang sirang block.",
-            "goal_en": "Demonstrate class variables shared across all instances of base and derived classes.",
-            "goal_fil": "Lutasin ang program: Demonstrate class variables shared across all instances of base and derived classes.",
-            "hint_en": "Class variables are declared directly inside the class body without self.",
-            "hint_fil": "Tandaan: Class variables are declared directly inside the class body without self."
-        },
-        {
-            "id": 156,
-            "enemy_id": "class_knight",
-            "difficulty": "hard",
-            "category": "Object-Oriented Architecture",
-            "error_type": "Logical Error: Shared class attribute mutation",
-            "title": "Class Knight #12: Multiple Instances State Independence",
-            "question": "Arrange the code blocks to define the class and instantiate the object. Exclude the distractor.",
-            "goal": "Multiple Instances State Independence.",
-            "expected_output": "Arthur HP: 90, Lancelot HP: 100",
+            "category": "Instance Variable Init",
+            "error_type": "AttributeError",
+            "title": "Class Knight Quiz #1: Constructor Instance Variable Binding",
+            "question": "Select the correct line in __init__ to attach parameter 'hp' to the instance.",
+            "goal": "Bind parameter to instance variable using self.hp = hp.",
+            "expected_output": "self.hp = hp",
             "lines": [
                 "class Knight:",
-                "    def __init__(self, name):",
-                "        self.name = name",
-                "        self.hp = 100",
-                "k1 = Knight(\"Arthur\")",
-                "k2 = Knight(\"Lancelot\")",
-                "k1.hp -= 10",
-                "print(f\"{k1.name} HP: {k1.hp}, {k2.name} HP: {k2.hp}\")"
+                "    def __init__(self, hp):",
+                "        self.hp = hp"
             ],
+            "code": "hp = hp",
+            "answer": "self.hp = hp",
             "distractors": [
-                "    hp = 100\n    def __init__(self, name):\n        self.name = name"
+                "hp = hp",
+                "this.hp = hp",
+                "Knight.hp = hp"
             ],
-            "hint": "Instance attributes must be initialized on self inside __init__ so they aren't shared across all objects.",
-            "code": "    hp = 100\n    def __init__(self, name):\n        self.name = name",
-            "answer": "class Knight:\n    def __init__(self, name):\n        self.name = name\n        self.hp = 100\nk1 = Knight(\"Arthur\")\nk2 = Knight(\"Lancelot\")\nk1.hp -= 10\nprint(f\"{k1.name} HP: {k1.hp}, {k2.name} HP: {k2.hp}\")",
-            "type": "parson",
-            "question_en": "Arrange the code blocks to define the class and instantiate the object. Exclude the distractor.",
-            "question_fil": "I-drag at i-ayos ang mga block para magawa ang class at object. Alisin ang distractor.",
-            "goal_en": "Multiple Instances State Independence.",
-            "goal_fil": "Verify that two Knight instances maintain separate, independent instance state.",
-            "hint_en": "Instance attributes must be initialized on self inside __init__ so they aren't shared across all objects.",
-            "hint_fil": "Tandaan: Instance attributes must be initialized on self inside __init__ so they aren't shared across all objects."
+            "options": [
+                "self.hp = hp",
+                "hp = hp",
+                "this.hp = hp",
+                "Knight.hp = hp"
+            ],
+            "choices": [
+                "self.hp = hp",
+                "hp = hp",
+                "this.hp = hp",
+                "Knight.hp = hp"
+            ],
+            "hint": "Prefixing with 'self.' stores the variable on the object instance being initialized.",
+            "type": "quiz",
+            "question_en": "Select the correct line in __init__ to attach parameter 'hp' to the instance.",
+            "question_fil": "Piliin ang tamang linya sa __init__ para ikabit ang hp sa object instance.",
+            "goal_en": "Bind parameter to instance variable using self.hp = hp.",
+            "goal_fil": "Ikabit ang attribute gamit ang self.hp = hp.",
+            "hint_en": "Prefixing with 'self.' stores the variable on the object instance being initialized.",
+            "hint_fil": "Ang 'self.' ang nag-iimbak ng variable sa mismong instance."
+        },
+        {
+            "id": "hard_ck_q2",
+            "enemy_id": "class_knight",
+            "difficulty": "hard",
+            "category": "Name Mangling",
+            "error_type": "AttributeError",
+            "title": "Class Knight Quiz #2: Double Underscore Private Name Mangling",
+            "question": "How does Python internally rename a private attribute declared as self.__pin inside class Vault?",
+            "goal": "Identify _Vault__pin name mangling.",
+            "expected_output": "_Vault__pin",
+            "lines": [
+                "class Vault:",
+                "    def __init__(self, pin): self.__pin = pin",
+                "# vault.__pin raises AttributeError!"
+            ],
+            "code": "vault.__pin",
+            "answer": "_Vault__pin",
+            "distractors": [
+                "__pin_Vault",
+                "private__pin",
+                "Vault.__pin"
+            ],
+            "options": [
+                "_Vault__pin",
+                "__pin_Vault",
+                "private__pin",
+                "Vault.__pin"
+            ],
+            "choices": [
+                "_Vault__pin",
+                "__pin_Vault",
+                "private__pin",
+                "Vault.__pin"
+            ],
+            "hint": "Python mangles double-underscore attributes by prefixing with _ClassName: _Vault__pin.",
+            "type": "quiz",
+            "question_en": "How does Python internally rename a private attribute declared as self.__pin inside class Vault?",
+            "question_fil": "Ano ang internal na pangalan ng self.__pin sa loob ng class Vault ayon sa name mangling?",
+            "goal_en": "Identify _Vault__pin name mangling.",
+            "goal_fil": "Tukuyin ang _Vault__pin bilang resulta ng private name mangling.",
+            "hint_en": "Python mangles double-underscore attributes by prefixing with _ClassName: _Vault__pin.",
+            "hint_fil": "Nagdaragdag ng _ClassName sa unahan ang Python sa name mangling: _Vault__pin."
+        },
+        {
+            "id": "hard_ck_q3",
+            "enemy_id": "class_knight",
+            "difficulty": "hard",
+            "category": "Property Decorator",
+            "error_type": "SyntaxError",
+            "title": "Class Knight Quiz #3: Getter Property with @property",
+            "question": "What decorator turns a method into a read-only getter attribute accessed without parentheses?",
+            "goal": "Identify @property decorator.",
+            "expected_output": "@property",
+            "lines": [
+                "class Hero:",
+                "    @property",
+                "    def is_alive(self): return self.hp > 0",
+                "# hero.is_alive accessed without ()"
+            ],
+            "code": "@getter",
+            "answer": "@property",
+            "distractors": [
+                "@getter",
+                "@attribute",
+                "@read_only"
+            ],
+            "options": [
+                "@property",
+                "@getter",
+                "@attribute",
+                "@read_only"
+            ],
+            "choices": [
+                "@property",
+                "@getter",
+                "@attribute",
+                "@read_only"
+            ],
+            "hint": "Use the built-in @property decorator to define managed getter attributes.",
+            "type": "quiz",
+            "question_en": "What decorator turns a method into a read-only getter attribute accessed without parentheses?",
+            "question_fil": "Anong decorator ang nagpapalit sa method upang maging getter attribute na walang panaklong?",
+            "goal_en": "Identify @property decorator.",
+            "goal_fil": "Tukuyin ang @property decorator.",
+            "hint_en": "Use the built-in @property decorator to define managed getter attributes.",
+            "hint_fil": "Gamitin ang @property para ma-access ang method tulad ng karaniwang attribute."
+        },
+        {
+            "id": "hard_ck_q4",
+            "enemy_id": "class_knight",
+            "difficulty": "hard",
+            "category": "Property Setter",
+            "error_type": "AttributeError: can't set attribute",
+            "title": "Class Knight Quiz #4: Validating Values with Property Setter",
+            "question": "Select the correct decorator to define a setter for a property named 'level'.",
+            "goal": "Use @level.setter decorator.",
+            "expected_output": "@level.setter",
+            "lines": [
+                "class Knight:",
+                "    @property",
+                "    def level(self): return self._level",
+                "    @level.setter",
+                "    def level(self, val):",
+                "        if val < 1: raise ValueError(\"Level too low\")",
+                "        self._level = val"
+            ],
+            "code": "@setter(level)",
+            "answer": "@level.setter",
+            "distractors": [
+                "@setter(level)",
+                "@property.set",
+                "@set_level"
+            ],
+            "options": [
+                "@level.setter",
+                "@setter(level)",
+                "@property.set",
+                "@set_level"
+            ],
+            "choices": [
+                "@level.setter",
+                "@setter(level)",
+                "@property.set",
+                "@set_level"
+            ],
+            "hint": "The setter decorator format is @<property_name>.setter.",
+            "type": "quiz",
+            "question_en": "Select the correct decorator to define a setter for a property named 'level'.",
+            "question_fil": "Piliin ang tamang decorator para sa setter ng property na 'level'.",
+            "goal_en": "Use @level.setter decorator.",
+            "goal_fil": "Gamitin ang @level.setter para sa pagtatakda ng property.",
+            "hint_en": "The setter decorator format is @<property_name>.setter.",
+            "hint_fil": "Ang format ng setter decorator ay @<property_name>.setter."
+        },
+        {
+            "id": "hard_ck_q5",
+            "enemy_id": "class_knight",
+            "difficulty": "hard",
+            "category": "Type Checking",
+            "error_type": "TypeConfusion",
+            "title": "Class Knight Quiz #5: isinstance() vs type() Exact Match",
+            "question": "Why is isinstance(obj, Parent) preferred over type(obj) == Parent when checking object types?",
+            "goal": "Explain that isinstance() respects inheritance and subclasses.",
+            "expected_output": "isinstance() recognizes subclasses",
+            "lines": [
+                "class Knight(Hero): pass",
+                "k = Knight()",
+                "isinstance(k, Hero)  # True",
+                "type(k) == Hero      # False!"
+            ],
+            "code": "type(k) == Hero",
+            "answer": "isinstance() returns True for subclasses, supporting polymorphism and inheritance hierarchies",
+            "distractors": [
+                "type() raises a TypeError on custom class objects",
+                "isinstance() converts objects into string representations",
+                "type() only works on integers and floats"
+            ],
+            "options": [
+                "isinstance() returns True for subclasses, supporting polymorphism and inheritance hierarchies",
+                "type() raises a TypeError on custom class objects",
+                "isinstance() converts objects into string representations",
+                "type() only works on integers and floats"
+            ],
+            "choices": [
+                "isinstance() returns True for subclasses, supporting polymorphism and inheritance hierarchies",
+                "type() raises a TypeError on custom class objects",
+                "isinstance() converts objects into string representations",
+                "type() only works on integers and floats"
+            ],
+            "hint": "isinstance() handles derived classes properly, while type() checks for exact class identity only.",
+            "type": "quiz",
+            "question_en": "Why is isinstance(obj, Parent) preferred over type(obj) == Parent when checking object types?",
+            "question_fil": "Bakit mas mainam ang isinstance(obj, Parent) kaysa type(obj) == Parent?",
+            "goal_en": "Explain that isinstance() respects inheritance and subclasses.",
+            "goal_fil": "Ipaliwanag na kinikilala ng isinstance() ang mga subclass.",
+            "hint_en": "isinstance() handles derived classes properly, while type() checks for exact class identity only.",
+            "hint_fil": "Sumusuporta sa inheritance ang isinstance(), habang eksaktong klase lang ang tinitingnan ng type()."
+        },
+        {
+            "id": "hard_ck_q6",
+            "enemy_id": "class_knight",
+            "difficulty": "hard",
+            "category": "Method Chaining",
+            "error_type": "AttributeError: 'NoneType' object has no attribute",
+            "title": "Class Knight Quiz #6: Method Chaining Return Value",
+            "question": "What must a method return to enable chaining syntax like knight.buff().attack()?",
+            "goal": "Identify returning self for method chaining.",
+            "expected_output": "return self",
+            "lines": [
+                "class Knight:",
+                "    def buff(self):",
+                "        self.atk += 5",
+                "        return self  # Enables chaining!",
+                "    def attack(self): return f\"Attacking with {self.atk}\""
+            ],
+            "code": "def buff(self): self.atk += 5",
+            "answer": "return self",
+            "distractors": [
+                "return True",
+                "return None",
+                "return Knight"
+            ],
+            "options": [
+                "return self",
+                "return True",
+                "return None",
+                "return Knight"
+            ],
+            "choices": [
+                "return self",
+                "return True",
+                "return None",
+                "return Knight"
+            ],
+            "hint": "Returning 'self' allows subsequent method calls to be chained on the same instance.",
+            "type": "quiz",
+            "question_en": "What must a method return to enable chaining syntax like knight.buff().attack()?",
+            "question_fil": "Ano ang dapat i-return ng method para magamit ang chaining tulad ng knight.buff().attack()?",
+            "goal_en": "Identify returning self for method chaining.",
+            "goal_fil": "Ibalik ang self para magawa ang method chaining.",
+            "hint_en": "Returning 'self' allows subsequent method calls to be chained on the same instance.",
+            "hint_fil": "Ibalik ang 'self' para maipagpatuloy ang pagtawag ng methods sa iisang linya."
+        },
+        {
+            "id": "hard_ck_q7",
+            "enemy_id": "class_knight",
+            "difficulty": "hard",
+            "category": "Attribute Shadowing",
+            "error_type": "LogicError",
+            "title": "Class Knight Quiz #7: Class Attribute Shadowing",
+            "question": "What occurs when assigning knight1.armor = 20 when armor is originally defined at the class level?",
+            "goal": "Understand instance attribute shadowing class attribute.",
+            "expected_output": "Creates instance attribute shadowing class",
+            "lines": [
+                "class Knight: armor = 10",
+                "k1, k2 = Knight(), Knight()",
+                "k1.armor = 20",
+                "print(k2.armor)  # Still 10!"
+            ],
+            "code": "k1.armor = 20",
+            "answer": "An instance attribute 'armor' is created on k1, shadowing the class attribute without altering k2",
+            "distractors": [
+                "All Knight instances have their armor updated to 20",
+                "Python raises an ImmutableClassError",
+                "k2.armor is reset to 0"
+            ],
+            "options": [
+                "An instance attribute 'armor' is created on k1, shadowing the class attribute without altering k2",
+                "All Knight instances have their armor updated to 20",
+                "Python raises an ImmutableClassError",
+                "k2.armor is reset to 0"
+            ],
+            "choices": [
+                "An instance attribute 'armor' is created on k1, shadowing the class attribute without altering k2",
+                "All Knight instances have their armor updated to 20",
+                "Python raises an ImmutableClassError",
+                "k2.armor is reset to 0"
+            ],
+            "hint": "Assigning through an instance creates an instance-level attribute that shadows the class-level variable.",
+            "type": "quiz",
+            "question_en": "What occurs when assigning knight1.armor = 20 when armor is originally defined at the class level?",
+            "question_fil": "Ano ang nangyayari kapag nag-assign ng k1.armor = 20 kung class attribute ang armor?",
+            "goal_en": "Understand instance attribute shadowing class attribute.",
+            "goal_fil": "Maunawaan na sa k1 lang nalilikha ang attribute at hindi apektado ang k2.",
+            "hint_en": "Assigning through an instance creates an instance-level attribute that shadows the class-level variable.",
+            "hint_fil": "Nalilikha ang attribute sa instance level kaya natatakpan ang class attribute para lang sa k1."
+        },
+        {
+            "id": "hard_ck_q8",
+            "enemy_id": "class_knight",
+            "difficulty": "hard",
+            "category": "Attribute Deletion",
+            "error_type": "AttributeError",
+            "title": "Class Knight Quiz #8: Deleting Object Attributes with del",
+            "question": "Select the correct statement to delete the attribute 'status' from instance k.",
+            "goal": "Delete attribute using del k.status.",
+            "expected_output": "del k.status",
+            "lines": [
+                "k = Knight()",
+                "k.status = \"stunned\"",
+                "del k.status"
+            ],
+            "code": "k.status = None",
+            "answer": "del k.status",
+            "distractors": [
+                "k.delete('status')",
+                "remove k.status",
+                "k.status.clear()"
+            ],
+            "options": [
+                "del k.status",
+                "k.delete('status')",
+                "remove k.status",
+                "k.status.clear()"
+            ],
+            "choices": [
+                "del k.status",
+                "k.delete('status')",
+                "remove k.status",
+                "k.status.clear()"
+            ],
+            "hint": "Use Python's built-in 'del' statement to delete an attribute from an instance.",
+            "type": "quiz",
+            "question_en": "Select the correct statement to delete the attribute 'status' from instance k.",
+            "question_fil": "Piliin ang tamang statement para alisin ang attribute na 'status' gamit ang del.",
+            "goal_en": "Delete attribute using del k.status.",
+            "goal_fil": "Alisin ang attribute gamit ang del k.status.",
+            "hint_en": "Use Python's built-in 'del' statement to delete an attribute from an instance.",
+            "hint_fil": "Gamitin ang 'del' statement para burahin ang attribute sa object."
+        },
+        {
+            "id": "hard_ck_q9",
+            "enemy_id": "class_knight",
+            "difficulty": "hard",
+            "category": "Safe Attribute Inspection",
+            "error_type": "AttributeError",
+            "title": "Class Knight Quiz #9: Checking Attributes with hasattr()",
+            "question": "Select the safe built-in function to check if object hero possesses attribute 'shield' without raising AttributeError.",
+            "goal": "Use hasattr(hero, 'shield').",
+            "expected_output": "hasattr(hero, 'shield')",
+            "lines": [
+                "if hasattr(hero, \"shield\"): hero.shield.block()"
+            ],
+            "code": "if hero.shield != None:",
+            "answer": "hasattr(hero, \"shield\")",
+            "distractors": [
+                "hero.has_attribute(\"shield\")",
+                "hero.contains(\"shield\")",
+                "hero.__has__(\"shield\")"
+            ],
+            "options": [
+                "hasattr(hero, \"shield\")",
+                "hero.has_attribute(\"shield\")",
+                "hero.contains(\"shield\")",
+                "hero.__has__(\"shield\")"
+            ],
+            "choices": [
+                "hasattr(hero, \"shield\")",
+                "hero.has_attribute(\"shield\")",
+                "hero.contains(\"shield\")",
+                "hero.__has__(\"shield\")"
+            ],
+            "hint": "hasattr(object, name) returns True if the attribute exists, False otherwise.",
+            "type": "quiz",
+            "question_en": "Select the safe built-in function to check if object hero possesses attribute 'shield' without raising AttributeError.",
+            "question_fil": "Piliin ang ligtas na function para suriin kung may attribute na 'shield' ang object nang walang AttributeError.",
+            "goal_en": "Use hasattr(hero, 'shield').",
+            "goal_fil": "Gamitin ang hasattr() para sa ligtas na attribute check.",
+            "hint_en": "hasattr(object, name) returns True if the attribute exists, False otherwise.",
+            "hint_fil": "Nagbabalik ng True ang hasattr(object, name) kung umiiral ang attribute."
+        },
+        {
+            "id": "hard_ck_q10",
+            "enemy_id": "class_knight",
+            "difficulty": "hard",
+            "category": "Init Return Restriction",
+            "error_type": "TypeError: __init__() should return None",
+            "title": "Class Knight Quiz #10: Return Value Restriction on __init__",
+            "question": "What error is raised if __init__ attempts to return a value other than None (e.g. return self or return 10)?",
+            "goal": "Identify TypeError on non-None return in __init__.",
+            "expected_output": "TypeError: __init__() should return None",
+            "lines": [
+                "class BadInit:",
+                "    def __init__(self): return 10  # Crashes on instantiation!"
+            ],
+            "code": "def __init__(self): return 10",
+            "answer": "TypeError: __init__() should return None",
+            "distractors": [
+                "ValueError: invalid return code",
+                "SyntaxError: return not allowed in class",
+                "AttributeError: 'int' has no constructor"
+            ],
+            "options": [
+                "TypeError: __init__() should return None",
+                "ValueError: invalid return code",
+                "SyntaxError: return not allowed in class",
+                "AttributeError: 'int' has no constructor"
+            ],
+            "choices": [
+                "TypeError: __init__() should return None",
+                "ValueError: invalid return code",
+                "SyntaxError: return not allowed in class",
+                "AttributeError: 'int' has no constructor"
+            ],
+            "hint": "Python requires __init__ to return None; constructor instances are automatically returned by __new__.",
+            "type": "quiz",
+            "question_en": "What error is raised if __init__ attempts to return a value other than None (e.g. return self or return 10)?",
+            "question_fil": "Anong error ang lumalabas kapag nag-return ng value maliban sa None ang __init__?",
+            "goal_en": "Identify TypeError on non-None return in __init__.",
+            "goal_fil": "Tukuyin ang TypeError kapag nagbalik ng value ang __init__.",
+            "hint_en": "Python requires __init__ to return None; constructor instances are automatically returned by __new__.",
+            "hint_fil": "Dapat laging None ang return ng __init__ sa Python."
         }
     ]
 };
@@ -1181,7 +2287,7 @@ const inheritanceDragon = {
     "intro": "MROAAAR! Ancestral bloodlines flow through my code! Inherit from the base class, override methods, and call super() correctly!",
     "bugs": [
         {
-            "id": 157,
+            "id": "hard_id_p1",
             "enemy_id": "inheritance_dragon",
             "difficulty": "hard",
             "category": "Object-Oriented Architecture",
@@ -1210,12 +2316,12 @@ const inheritanceDragon = {
             "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
             "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
             "goal_en": "Combine capabilities from FlyingUnit and Monster in DragonBoss via multiple inheritance.",
-            "goal_fil": "Lutasin ang program: Combine capabilities from FlyingUnit and Monster in DragonBoss via multiple inheritance.",
+            "goal_fil": "Layunin: Combine capabilities from FlyingUnit and Monster in DragonBoss via multiple inheritance.",
             "hint_en": "Separate arguments inside function calls with a comma (,).",
             "hint_fil": "Multiple inheritance in Python uses comma separation: class Dragon(Flyer, Monster):."
         },
         {
-            "id": 158,
+            "id": "hard_id_p2",
             "enemy_id": "inheritance_dragon",
             "difficulty": "hard",
             "category": "Object-Oriented Architecture",
@@ -1250,7 +2356,7 @@ const inheritanceDragon = {
             "hint_fil": "Factory methods called on the class without an existing instance need the @classmethod decorator."
         },
         {
-            "id": 159,
+            "id": "hard_id_p3",
             "enemy_id": "inheritance_dragon",
             "difficulty": "hard",
             "category": "Object-Oriented Architecture",
@@ -1277,12 +2383,12 @@ const inheritanceDragon = {
             "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
             "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
             "goal_en": "Define a utility helper method that does not access instance or class state.",
-            "goal_fil": "Lutasin ang program: Define a utility helper method that does not access instance or class state.",
+            "goal_fil": "Layunin: Define a utility helper method that does not access instance or class state.",
             "hint_en": "Always include 'self' as the first parameter of an instance method.",
             "hint_fil": "Methods without self or cls should be annotated with @staticmethod."
         },
         {
-            "id": 160,
+            "id": "hard_id_p4",
             "enemy_id": "inheritance_dragon",
             "difficulty": "hard",
             "category": "Object-Oriented Architecture",
@@ -1311,12 +2417,12 @@ const inheritanceDragon = {
             "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
             "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
             "goal_en": "Track the total count of dragons spawned using a class variable incremented in __init__.",
-            "goal_fil": "Lutasin ang program: Track the total count of dragons spawned using a class variable incremented in __init__.",
+            "goal_fil": "Subaybayan ang kabuuang bilang ng spawned dragons gamit ang class variable sa __init__.",
             "hint_en": "self.spawn_count += 1 creates an instance attribute instead of updating the class counter.",
             "hint_fil": "Tandaan: self.spawn_count += 1 creates an instance attribute instead of updating the class counter."
         },
         {
-            "id": 161,
+            "id": "hard_id_p5",
             "enemy_id": "inheritance_dragon",
             "difficulty": "hard",
             "category": "Object-Oriented Architecture",
@@ -1344,12 +2450,12 @@ const inheritanceDragon = {
             "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
             "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
             "goal_en": "Enforce that all child classes implement a breath_weapon method by raising NotImplementedError.",
-            "goal_fil": "Lutasin ang program: Enforce that all child classes implement a breath_weapon method by raising NotImplementedError.",
+            "goal_fil": "Layunin: Enforce that all child classes implement a breath_weapon method by raising NotImplementedError.",
             "hint_en": "Raise NotImplementedError in base classes to enforce that child classes override the method.",
             "hint_fil": "Tandaan: Raise NotImplementedError in base classes to enforce that child classes override the method."
         },
         {
-            "id": 162,
+            "id": "hard_id_p6",
             "enemy_id": "inheritance_dragon",
             "difficulty": "hard",
             "category": "Object-Oriented Architecture",
@@ -1383,7 +2489,7 @@ const inheritanceDragon = {
             "hint_fil": "Properties decorated with @property are accessed as attributes without trailing parentheses ()."
         },
         {
-            "id": 163,
+            "id": "hard_id_p7",
             "enemy_id": "inheritance_dragon",
             "difficulty": "hard",
             "category": "Object-Oriented Architecture",
@@ -1414,12 +2520,12 @@ const inheritanceDragon = {
             "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
             "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
             "goal_en": "Validate values assigned to a property using a setter decorator.",
-            "goal_fil": "Lutasin ang program: Validate values assigned to a property using a setter decorator.",
+            "goal_fil": "Layunin: Validate values assigned to a property using a setter decorator.",
             "hint_en": "Review your Python syntax, variable names, and line sequence.",
             "hint_fil": "The setter decorator must reference the property name: @rage.setter."
         },
         {
-            "id": 164,
+            "id": "hard_id_p8",
             "enemy_id": "inheritance_dragon",
             "difficulty": "hard",
             "category": "Object-Oriented Architecture",
@@ -1447,12 +2553,12 @@ const inheritanceDragon = {
             "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
             "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
             "goal_en": "Attach reusable logging behavior to any class using a Mixin class.",
-            "goal_fil": "Lutasin ang program: Attach reusable logging behavior to any class using a Mixin class.",
+            "goal_fil": "Layunin: Attach reusable logging behavior to any class using a Mixin class.",
             "hint_en": "Inheritance requires class identifiers, not instantiated instances with parentheses.",
             "hint_fil": "Tandaan: Inheritance requires class identifiers, not instantiated instances with parentheses."
         },
         {
-            "id": 165,
+            "id": "hard_id_p9",
             "enemy_id": "inheritance_dragon",
             "difficulty": "hard",
             "category": "Object-Oriented Architecture",
@@ -1477,12 +2583,12 @@ const inheritanceDragon = {
             "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
             "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
             "goal_en": "Inspect the Method Resolution Order tuple using the __mro__ attribute.",
-            "goal_fil": "Lutasin ang program: Inspect the Method Resolution Order tuple using the __mro__ attribute.",
+            "goal_fil": "Layunin: Inspect the Method Resolution Order tuple using the __mro__ attribute.",
             "hint_en": "Review your Python syntax, variable names, and line sequence.",
             "hint_fil": "Dragon.__mro__ is a tuple of types; Dragon.mro is a method that needs calling as .mro()."
         },
         {
-            "id": 166,
+            "id": "hard_id_p10",
             "enemy_id": "inheritance_dragon",
             "difficulty": "hard",
             "category": "Object-Oriented Architecture",
@@ -1514,71 +2620,438 @@ const inheritanceDragon = {
             "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
             "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
             "goal_en": "Ensure all constructors in a multiple inheritance hierarchy execute via cooperative super().",
-            "goal_fil": "Lutasin ang program: Ensure all constructors in a multiple inheritance hierarchy execute via cooperative super().",
+            "goal_fil": "Layunin: Ensure all constructors in a multiple inheritance hierarchy execute via cooperative super().",
             "hint_en": "Calling Flyer.__init__(self) manually bypasses Breather.__init__ in the MRO chain.",
             "hint_fil": "Tandaan: Calling Flyer.__init__(self) manually bypasses Breather.__init__ in the MRO chain."
         },
         {
-            "id": 167,
+            "id": "hard_id_q1",
             "enemy_id": "inheritance_dragon",
             "difficulty": "hard",
-            "category": "Object-Oriented Architecture",
-            "error_type": "AttributeError: type object 'FireDragon' has no attribute 'Monster'",
-            "title": "Inheritance Dragon #11: Class Attribute Override in Subclass",
-            "question": "Arrange the code blocks to define the class and instantiate the object. Exclude the distractor.",
-            "goal": "Override a class attribute in a subclass without affecting the parent class.",
-            "expected_output": "Base Element: None, Dragon Element: Fire",
+            "category": "Subclass Syntax",
+            "error_type": "SyntaxError",
+            "title": "Inheritance Dragon Quiz #1: Class Inheritance Syntax",
+            "question": "Select the correct syntax to define a Dragon class that inherits from Monster.",
+            "goal": "Inherit Monster into Dragon.",
+            "expected_output": "class Dragon(Monster):",
             "lines": [
-                "class Monster:",
-                "    element = \"None\"",
-                "class FireDragon(Monster):",
-                "    element = \"Fire\"",
-                "print(f\"Base Element: {Monster.element}, Dragon Element: {FireDragon.element}\")"
+                "class Monster: pass",
+                "class Dragon(Monster): pass"
             ],
+            "code": "class Dragon extends Monster:",
+            "answer": "class Dragon(Monster):",
             "distractors": [
-                "FireDragon.Monster.element = \"Fire\""
+                "class Dragon extends Monster:",
+                "class Dragon inherits Monster:",
+                "class Dragon : Monster:"
             ],
-            "hint": "Subclasses override class attributes by declaring them in their own body.",
-            "code": "FireDragon.Monster.element = \"Fire\"",
-            "answer": "class Monster:\n    element = \"None\"\nclass FireDragon(Monster):\n    element = \"Fire\"\nprint(f\"Base Element: {Monster.element}, Dragon Element: {FireDragon.element}\")",
-            "type": "parson",
-            "question_en": "Arrange the code blocks to define the class and instantiate the object. Exclude the distractor.",
-            "question_fil": "I-drag at i-ayos ang mga block para magawa ang class at object. Alisin ang distractor.",
-            "goal_en": "Override a class attribute in a subclass without affecting the parent class.",
-            "goal_fil": "Lutasin ang program: Override a class attribute in a subclass without affecting the parent class.",
-            "hint_en": "Subclasses override class attributes by declaring them in their own body.",
-            "hint_fil": "Tandaan: Subclasses override class attributes by declaring them in their own body."
+            "options": [
+                "class Dragon(Monster):",
+                "class Dragon extends Monster:",
+                "class Dragon inherits Monster:",
+                "class Dragon : Monster:"
+            ],
+            "choices": [
+                "class Dragon(Monster):",
+                "class Dragon extends Monster:",
+                "class Dragon inherits Monster:",
+                "class Dragon : Monster:"
+            ],
+            "hint": "In Python, parent classes are specified inside parentheses following the class name.",
+            "type": "quiz",
+            "question_en": "Select the correct syntax to define a Dragon class that inherits from Monster.",
+            "question_fil": "Piliin ang tamang syntax sa pagmamana ng Dragon mula sa Monster.",
+            "goal_en": "Inherit Monster into Dragon.",
+            "goal_fil": "Magmana ng class gamit ang class Dragon(Monster):.",
+            "hint_en": "In Python, parent classes are specified inside parentheses following the class name.",
+            "hint_fil": "Inilalagay sa loob ng panaklong pagkatapos ng pangalan ng class ang parent class."
         },
         {
-            "id": 168,
+            "id": "hard_id_q2",
             "enemy_id": "inheritance_dragon",
             "difficulty": "hard",
-            "category": "Object-Oriented Architecture",
-            "error_type": "NameError: name 'breath' is not defined",
-            "title": "Inheritance Dragon #12: Checking Dynamic Attributes with hasattr",
-            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
-            "goal": "Inspect an object at runtime using hasattr() before invoking optional abilities.",
-            "expected_output": "Has breath: True",
+            "category": "Super Init",
+            "error_type": "AttributeError",
+            "title": "Inheritance Dragon Quiz #2: Calling Parent Constructor with super()",
+            "question": "Select the standard Python 3 syntax to call the parent class __init__ from a subclass.",
+            "goal": "Call super().__init__(...).",
+            "expected_output": "super().__init__(name)",
+            "lines": [
+                "class Dragon(Monster):",
+                "    def __init__(self, name, breath):",
+                "        super().__init__(name)",
+                "        self.breath = breath"
+            ],
+            "code": "Parent.__init__(self, name)",
+            "answer": "super().__init__(name)",
+            "distractors": [
+                "super.__init__(self, name)",
+                "parent().__init__(name)",
+                "super().init(name)"
+            ],
+            "options": [
+                "super().__init__(name)",
+                "super.__init__(self, name)",
+                "parent().__init__(name)",
+                "super().init(name)"
+            ],
+            "choices": [
+                "super().__init__(name)",
+                "super.__init__(self, name)",
+                "parent().__init__(name)",
+                "super().init(name)"
+            ],
+            "hint": "In Python 3, call super().__init__(*args) without passing 'self' explicitly.",
+            "type": "quiz",
+            "question_en": "Select the standard Python 3 syntax to call the parent class __init__ from a subclass.",
+            "question_fil": "Piliin ang tamang paraan ng pagtawag sa constructor ng parent class gamit ang super().",
+            "goal_en": "Call super().__init__(...).",
+            "goal_fil": "Tawagin ang parent constructor gamit ang super().__init__().",
+            "hint_en": "In Python 3, call super().__init__(*args) without passing 'self' explicitly.",
+            "hint_fil": "Sa Python 3, gamitin ang super().__init__(args) nang walang 'self'."
+        },
+        {
+            "id": "hard_id_q3",
+            "enemy_id": "inheritance_dragon",
+            "difficulty": "hard",
+            "category": "Method Overriding",
+            "error_type": "DesignPattern",
+            "title": "Inheritance Dragon Quiz #3: Subclass Method Overriding",
+            "question": "What occurs when a subclass defines a method with the exact same name as a parent class method?",
+            "goal": "Understand method overriding in subclass.",
+            "expected_output": "Subclass overrides parent method",
+            "lines": [
+                "class Monster: def roar(self): return \"Grr\"",
+                "class Dragon(Monster): def roar(self): return \"FWOOSH!\""
+            ],
+            "code": "def roar(self): return \"FWOOSH!\"",
+            "answer": "The subclass overrides the parent method, executing the subclass implementation for child instances",
+            "distractors": [
+                "Python raises a MethodRedefinitionError",
+                "Both methods execute in random sequence",
+                "The parent method deletes the subclass method"
+            ],
+            "options": [
+                "The subclass overrides the parent method, executing the subclass implementation for child instances",
+                "Python raises a MethodRedefinitionError",
+                "Both methods execute in random sequence",
+                "The parent method deletes the subclass method"
+            ],
+            "choices": [
+                "The subclass overrides the parent method, executing the subclass implementation for child instances",
+                "Python raises a MethodRedefinitionError",
+                "Both methods execute in random sequence",
+                "The parent method deletes the subclass method"
+            ],
+            "hint": "Method overriding replaces the parent behavior for instances of the subclass.",
+            "type": "quiz",
+            "question_en": "What occurs when a subclass defines a method with the exact same name as a parent class method?",
+            "question_fil": "Ano ang nangyayari kapag nagtakda ang subclass ng method na kapareho ng pangalan sa parent?",
+            "goal_en": "Understand method overriding in subclass.",
+            "goal_fil": "Maunawaan ang method overriding sa subclass.",
+            "hint_en": "Method overriding replaces the parent behavior for instances of the subclass.",
+            "hint_fil": "Napapalitan (override) ng subclass ang bersyon ng parent para sa mga anak nitong instance."
+        },
+        {
+            "id": "hard_id_q4",
+            "enemy_id": "inheritance_dragon",
+            "difficulty": "hard",
+            "category": "Extending Parent Method",
+            "error_type": "CodeDuplication",
+            "title": "Inheritance Dragon Quiz #4: Extending Parent Method Behavior",
+            "question": "Select the line that invokes the parent's attack() method and captures its return value inside the subclass.",
+            "goal": "Invoke parent method with super().attack().",
+            "expected_output": "super().attack()",
+            "lines": [
+                "class Dragon(Monster):",
+                "    def attack(self):",
+                "        base = super().attack()",
+                "        return base + \" with Fire!\""
+            ],
+            "code": "base = Monster.attack()",
+            "answer": "base = super().attack()",
+            "distractors": [
+                "base = Monster.attack()",
+                "base = parent.attack()",
+                "base = super.attack(self)"
+            ],
+            "options": [
+                "base = super().attack()",
+                "base = Monster.attack()",
+                "base = parent.attack()",
+                "base = super.attack(self)"
+            ],
+            "choices": [
+                "base = super().attack()",
+                "base = Monster.attack()",
+                "base = parent.attack()",
+                "base = super.attack(self)"
+            ],
+            "hint": "Call super().method() to execute the inherited logic before or after adding subclass logic.",
+            "type": "quiz",
+            "question_en": "Select the line that invokes the parent's attack() method and captures its return value inside the subclass.",
+            "question_fil": "Piliin ang linyang tumatawag sa attack() ng parent gamit ang super().",
+            "goal_en": "Invoke parent method with super().attack().",
+            "goal_fil": "Tawagin ang parent method gamit ang super().attack().",
+            "hint_en": "Call super().method() to execute the inherited logic before or after adding subclass logic.",
+            "hint_fil": "Gamitin ang super().method() para patakbuhin ang minanang logic."
+        },
+        {
+            "id": "hard_id_q5",
+            "enemy_id": "inheritance_dragon",
+            "difficulty": "hard",
+            "category": "Polymorphism",
+            "error_type": "PolymorphicDesign",
+            "title": "Inheritance Dragon Quiz #5: Polymorphic Method Dispatch",
+            "question": "What principle allows a loop to call creature.attack() across different subclasses without checking their concrete type?",
+            "goal": "Identify Polymorphism.",
+            "expected_output": "Polymorphism",
+            "lines": [
+                "for creature in [Dragon(), Goblin(), Slime()]:",
+                "    print(creature.attack())"
+            ],
+            "code": "for creature in army: creature.attack()",
+            "answer": "Polymorphism - different objects responding to the same method interface",
+            "distractors": [
+                "Encapsulation - hiding instance attributes",
+                "Compilation - translating code to machine language",
+                "Serialization - converting objects into bytes"
+            ],
+            "options": [
+                "Polymorphism - different objects responding to the same method interface",
+                "Encapsulation - hiding instance attributes",
+                "Compilation - translating code to machine language",
+                "Serialization - converting objects into bytes"
+            ],
+            "choices": [
+                "Polymorphism - different objects responding to the same method interface",
+                "Encapsulation - hiding instance attributes",
+                "Compilation - translating code to machine language",
+                "Serialization - converting objects into bytes"
+            ],
+            "hint": "Polymorphism allows different classes sharing a common interface to be treated uniformly.",
+            "type": "quiz",
+            "question_en": "What principle allows a loop to call creature.attack() across different subclasses without checking their concrete type?",
+            "question_fil": "Anong prinsipyo ang nagpapahintulot sa pagtawag ng iisang method sa iba't ibang uri ng objects?",
+            "goal_en": "Identify Polymorphism.",
+            "goal_fil": "Tukuyin ang Polymorphism bilang kakayahang tumugon sa parehong interface.",
+            "hint_en": "Polymorphism allows different classes sharing a common interface to be treated uniformly.",
+            "hint_fil": "Polymorphism ang tawag sa pagtugon ng iba't ibang klase sa parehong method."
+        },
+        {
+            "id": "hard_id_q6",
+            "enemy_id": "inheritance_dragon",
+            "difficulty": "hard",
+            "category": "Classmethod Factory",
+            "error_type": "TypeError",
+            "title": "Inheritance Dragon Quiz #6: @classmethod and cls Parameter",
+            "question": "What parameter does a method decorated with @classmethod receive as its first argument instead of 'self'?",
+            "goal": "Identify cls parameter in @classmethod.",
+            "expected_output": "cls (the class itself)",
             "lines": [
                 "class Dragon:",
-                "    def breath(self): return \"FIRE\"",
-                "d = Dragon()",
-                "has_breath = hasattr(d, \"breath\")",
-                "print(\"Has breath:\", has_breath)"
+                "    @classmethod",
+                "    def spawn_boss(cls, name): return cls(name, hp=1000)"
             ],
+            "code": "def spawn_boss(self, name):",
+            "answer": "cls (the class itself, allowing subclass-safe instantiation)",
             "distractors": [
-                "has_breath = hasattr(d, breath)"
+                "self (the instance)",
+                "super (the parent class)",
+                "None (class methods take no first argument)"
             ],
-            "hint": "Strings must be enclosed in matching quotation marks (' or \").",
-            "code": "has_breath = hasattr(d, breath)",
-            "answer": "class Dragon:\n    def breath(self): return \"FIRE\"\nd = Dragon()\nhas_breath = hasattr(d, \"breath\")\nprint(\"Has breath:\", has_breath)",
-            "type": "parson",
-            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
-            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
-            "goal_en": "Inspect an object at runtime using hasattr() before invoking optional abilities.",
-            "goal_fil": "Lutasin ang program: Inspect an object at runtime using hasattr() before invoking optional abilities.",
-            "hint_en": "Strings must be enclosed in matching quotation marks (' or \").",
-            "hint_fil": "hasattr takes attribute names as strings; unquoted breath raises NameError."
+            "options": [
+                "cls (the class itself, allowing subclass-safe instantiation)",
+                "self (the instance)",
+                "super (the parent class)",
+                "None (class methods take no first argument)"
+            ],
+            "choices": [
+                "cls (the class itself, allowing subclass-safe instantiation)",
+                "self (the instance)",
+                "super (the parent class)",
+                "None (class methods take no first argument)"
+            ],
+            "hint": "@classmethod passes the class object as 'cls' so factory methods construct the correct subclass.",
+            "type": "quiz",
+            "question_en": "What parameter does a method decorated with @classmethod receive as its first argument instead of 'self'?",
+            "question_fil": "Anong parameter ang tinatanggap ng method na may @classmethod bilang unang argumento?",
+            "goal_en": "Identify cls parameter in @classmethod.",
+            "goal_fil": "Tukuyin ang 'cls' bilang unang parameter sa classmethod.",
+            "hint_en": "@classmethod passes the class object as 'cls' so factory methods construct the correct subclass.",
+            "hint_fil": "'cls' ang ipinapasa ng Python sa @classmethod imbes na 'self'."
+        },
+        {
+            "id": "hard_id_q7",
+            "enemy_id": "inheritance_dragon",
+            "difficulty": "hard",
+            "category": "Staticmethod",
+            "error_type": "TypeError",
+            "title": "Inheritance Dragon Quiz #7: Static Utility Methods with @staticmethod",
+            "question": "How does a @staticmethod differ from regular instance methods and class methods?",
+            "goal": "Identify that staticmethod receives neither self nor cls.",
+            "expected_output": "Receives neither self nor cls",
+            "lines": [
+                "class MathHelper:",
+                "    @staticmethod",
+                "    def clamp(val, low, high): return max(low, min(val, high))"
+            ],
+            "code": "@staticmethod def clamp(val, low, high):",
+            "answer": "It receives neither 'self' nor 'cls' as an automatic first argument",
+            "distractors": [
+                "It can only be called from inside while loops",
+                "It converts all return values into floating point numbers",
+                "It cannot accept any arguments at all"
+            ],
+            "options": [
+                "It receives neither 'self' nor 'cls' as an automatic first argument",
+                "It can only be called from inside while loops",
+                "It converts all return values into floating point numbers",
+                "It cannot accept any arguments at all"
+            ],
+            "choices": [
+                "It receives neither 'self' nor 'cls' as an automatic first argument",
+                "It can only be called from inside while loops",
+                "It converts all return values into floating point numbers",
+                "It cannot accept any arguments at all"
+            ],
+            "hint": "@staticmethod acts like an ordinary isolated function bundled inside the class namespace.",
+            "type": "quiz",
+            "question_en": "How does a @staticmethod differ from regular instance methods and class methods?",
+            "question_fil": "Paano naiiba ang @staticmethod sa karaniwang instance methods at class methods?",
+            "goal_en": "Identify that staticmethod receives neither self nor cls.",
+            "goal_fil": "Alamin na walang natatanggap na 'self' o 'cls' ang staticmethod.",
+            "hint_en": "@staticmethod acts like an ordinary isolated function bundled inside the class namespace.",
+            "hint_fil": "Walang awtomatikong 'self' o 'cls' na ipinapasa sa @staticmethod."
+        },
+        {
+            "id": "hard_id_q8",
+            "enemy_id": "inheritance_dragon",
+            "difficulty": "hard",
+            "category": "Method Resolution Order",
+            "error_type": "MROConflict",
+            "title": "Inheritance Dragon Quiz #8: Method Resolution Order (MRO)",
+            "question": "In Python multiple inheritance, what attribute or method displays the exact class lookup order?",
+            "goal": "Identify Class.__mro__ or Class.mro().",
+            "expected_output": "Class.__mro__",
+            "lines": [
+                "class A: pass",
+                "class B(A): pass",
+                "print(B.__mro__)"
+            ],
+            "code": "B.get_order()",
+            "answer": "Class.__mro__ (or Class.mro())",
+            "distractors": [
+                "Class.__hierarchy__",
+                "Class.parent_tree()",
+                "Class.__resolution__"
+            ],
+            "options": [
+                "Class.__mro__ (or Class.mro())",
+                "Class.__hierarchy__",
+                "Class.parent_tree()",
+                "Class.__resolution__"
+            ],
+            "choices": [
+                "Class.__mro__ (or Class.mro())",
+                "Class.__hierarchy__",
+                "Class.parent_tree()",
+                "Class.__resolution__"
+            ],
+            "hint": "MRO stands for Method Resolution Order and is stored in the __mro__ attribute.",
+            "type": "quiz",
+            "question_en": "In Python multiple inheritance, what attribute or method displays the exact class lookup order?",
+            "question_fil": "Sa multiple inheritance, anong attribute ang nagpapakita ng pagkakasunod-sunod ng class lookup?",
+            "goal_en": "Identify Class.__mro__ or Class.mro().",
+            "goal_fil": "Tukuyin ang Class.__mro__ para sa Method Resolution Order.",
+            "hint_en": "MRO stands for Method Resolution Order and is stored in the __mro__ attribute.",
+            "hint_fil": "Method Resolution Order ang MRO at makikita sa __mro__."
+        },
+        {
+            "id": "hard_id_q9",
+            "enemy_id": "inheritance_dragon",
+            "difficulty": "hard",
+            "category": "Issubclass Check",
+            "error_type": "TypeError",
+            "title": "Inheritance Dragon Quiz #9: Subclass Verification with issubclass()",
+            "question": "Select the correct expression to check if class Dragon is a subclass of Monster.",
+            "goal": "Check hierarchy with issubclass(Dragon, Monster).",
+            "expected_output": "issubclass(Dragon, Monster)",
+            "lines": [
+                "class Monster: pass",
+                "class Dragon(Monster): pass",
+                "print(issubclass(Dragon, Monster))  # True"
+            ],
+            "code": "Dragon.is_child_of(Monster)",
+            "answer": "issubclass(Dragon, Monster)",
+            "distractors": [
+                "Dragon.is_child_of(Monster)",
+                "isinstance(Dragon, Monster)",
+                "Dragon in Monster"
+            ],
+            "options": [
+                "issubclass(Dragon, Monster)",
+                "Dragon.is_child_of(Monster)",
+                "isinstance(Dragon, Monster)",
+                "Dragon in Monster"
+            ],
+            "choices": [
+                "issubclass(Dragon, Monster)",
+                "Dragon.is_child_of(Monster)",
+                "isinstance(Dragon, Monster)",
+                "Dragon in Monster"
+            ],
+            "hint": "Use issubclass(ClassA, ClassB) to compare classes, and isinstance(obj, Class) for instances.",
+            "type": "quiz",
+            "question_en": "Select the correct expression to check if class Dragon is a subclass of Monster.",
+            "question_fil": "Piliin ang tamang expression para suriin kung subclass ang Dragon sa Monster.",
+            "goal_en": "Check hierarchy with issubclass(Dragon, Monster).",
+            "goal_fil": "Suriin ang class inheritance gamit ang issubclass(Dragon, Monster).",
+            "hint_en": "Use issubclass(ClassA, ClassB) to compare classes, and isinstance(obj, Class) for instances.",
+            "hint_fil": "issubclass() para sa klase sa klase, isinstance() para sa object sa klase."
+        },
+        {
+            "id": "hard_id_q10",
+            "enemy_id": "inheritance_dragon",
+            "difficulty": "hard",
+            "category": "Mixin Architecture",
+            "error_type": "ArchitecturePattern",
+            "title": "Inheritance Dragon Quiz #10: Mixin Classes in Python",
+            "question": "What is the primary architectural purpose of a 'Mixin' class in Python?",
+            "goal": "Identify mixin providing reusable modular functionality without standalone instantiation.",
+            "expected_output": "Provides modular reusable methods",
+            "lines": [
+                "class FlyingMixin:",
+                "    def fly(self): return \"Soaring through the clouds!\"",
+                "class Dragon(Monster, FlyingMixin): pass"
+            ],
+            "code": "class FlyingMixin: pass",
+            "answer": "To provide modular, reusable functionality across unrelated classes without being instantiated on its own",
+            "distractors": [
+                "To replace all standard library modules with custom code",
+                "To speed up integer arithmetic inside while loops",
+                "To automatically encrypt all instance attributes in memory"
+            ],
+            "options": [
+                "To provide modular, reusable functionality across unrelated classes without being instantiated on its own",
+                "To replace all standard library modules with custom code",
+                "To speed up integer arithmetic inside while loops",
+                "To automatically encrypt all instance attributes in memory"
+            ],
+            "choices": [
+                "To provide modular, reusable functionality across unrelated classes without being instantiated on its own",
+                "To replace all standard library modules with custom code",
+                "To speed up integer arithmetic inside while loops",
+                "To automatically encrypt all instance attributes in memory"
+            ],
+            "hint": "Mixins package specific behavior (like logging or serialization) to be mixed into diverse classes.",
+            "type": "quiz",
+            "question_en": "What is the primary architectural purpose of a 'Mixin' class in Python?",
+            "question_fil": "Ano ang pangunahing layunin ng 'Mixin' class sa Python?",
+            "goal_en": "Identify mixin providing reusable modular functionality without standalone instantiation.",
+            "goal_fil": "Alamin na ang Mixin ay nagbibigay ng modular na kakayahan nang hindi ginagawang sariling object.",
+            "hint_en": "Mixins package specific behavior (like logging or serialization) to be mixed into diverse classes.",
+            "hint_fil": "Nagsisilbing tagabigay ng karagdagang modular na kakayahan ang Mixin sa iba't ibang klase."
         }
     ]
 };
@@ -1593,7 +3066,7 @@ const exceptionReaper = {
     "intro": "Your code is dead! Unless... you define custom exceptions, chain tracebacks, and handle errors with surgical precision!",
     "bugs": [
         {
-            "id": 169,
+            "id": "hard_er_p1",
             "enemy_id": "exception_reaper",
             "difficulty": "hard",
             "category": "Exception Handling",
@@ -1621,12 +3094,12 @@ const exceptionReaper = {
             "question_en": "Arrange the code blocks to define the class and instantiate the object. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block para magawa ang class at object. Alisin ang distractor.",
             "goal_en": "Define a custom exception class inheriting from Python's Exception base class.",
-            "goal_fil": "Lutasin ang program: Define a custom exception class inheriting from Python's Exception base class.",
+            "goal_fil": "Layunin: Define a custom exception class inheriting from Python's Exception base class.",
             "hint_en": "Custom exceptions must inherit from Exception (or a subclass of BaseException).",
             "hint_fil": "Tandaan: Custom exceptions must inherit from Exception (or a subclass of BaseException)."
         },
         {
-            "id": 170,
+            "id": "hard_er_p2",
             "enemy_id": "exception_reaper",
             "difficulty": "hard",
             "category": "Exception Handling",
@@ -1652,12 +3125,12 @@ const exceptionReaper = {
             "question_en": "Arrange the code blocks into a valid try-except block to handle errors. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block sa tamang try-except structure para masalo ang error. Alisin ang distractor.",
             "goal_en": "Catch both ValueError and TypeError cleanly in a single except block tuple.",
-            "goal_fil": "Lutasin ang program: Catch both ValueError and TypeError cleanly in a single except block tuple.",
+            "goal_fil": "Layunin: Catch both ValueError and TypeError cleanly in a single except block tuple.",
             "hint_en": "Multiple exceptions must be grouped in a parenthesized tuple: except (A, B):.",
             "hint_fil": "Tandaan: Multiple exceptions must be grouped in a parenthesized tuple: except (A, B):."
         },
         {
-            "id": 171,
+            "id": "hard_er_p3",
             "enemy_id": "exception_reaper",
             "difficulty": "hard",
             "category": "Exception Handling",
@@ -1687,12 +3160,12 @@ const exceptionReaper = {
             "question_en": "Arrange the code blocks into a valid try-except block to handle errors. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block sa tamang try-except structure para masalo ang error. Alisin ang distractor.",
             "goal_en": "Ensure file or combat connection closes reliably using a finally block.",
-            "goal_fil": "Lutasin ang program: Ensure file or combat connection closes reliably using a finally block.",
+            "goal_fil": "Layunin: Ensure file or combat connection closes reliably using a finally block.",
             "hint_en": "Python uses the keyword 'finally:', not 'final:'.",
             "hint_fil": "Tandaan: Python uses the keyword 'finally:', not 'final:'."
         },
         {
-            "id": 172,
+            "id": "hard_er_p4",
             "enemy_id": "exception_reaper",
             "difficulty": "hard",
             "category": "Exception Handling",
@@ -1720,12 +3193,12 @@ const exceptionReaper = {
             "question_en": "Arrange the code blocks into a valid try-except block to handle errors. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block sa tamang try-except structure para masalo ang error. Alisin ang distractor.",
             "goal_en": "Execute code only when no exceptions were raised using the try/else clause.",
-            "goal_fil": "Lutasin ang program: Execute code only when no exceptions were raised using the try/else clause.",
+            "goal_fil": "Layunin: Execute code only when no exceptions were raised using the try/else clause.",
             "hint_en": "In Python try-except suites, code that runs only when no errors occur goes into 'else:'.",
             "hint_fil": "Tandaan: In Python try-except suites, code that runs only when no errors occur goes into 'else:'."
         },
         {
-            "id": 173,
+            "id": "hard_er_p5",
             "enemy_id": "exception_reaper",
             "difficulty": "hard",
             "category": "Exception Handling",
@@ -1733,31 +3206,31 @@ const exceptionReaper = {
             "title": "Exception Reaper #5: Exception Re-raising with Bare Raise",
             "question": "Arrange the code blocks into a valid try-except block to handle errors. Exclude the distractor.",
             "goal": "Log an error and propagate it upward to caller using a bare raise statement.",
-            "expected_output": "Logged: division by zero",
+            "expected_output": "Logged: ZeroDivisionError caught",
             "lines": [
                 "def safe_calc():",
                 "    try:",
                 "        return 10 / 0",
-                "    except ZeroDivisionError as err:",
-                "        print(\"Logged:\", err)",
+                "    except ZeroDivisionError:",
+                "        print(\"Logged: ZeroDivisionError caught\")",
                 "safe_calc()"
             ],
             "distractors": [
-                "    except ZeroDivisionError:\n        print(\"Logged:\", err)"
+                "    except ValueError:\n        print(\"Logged: ZeroDivisionError caught\")"
             ],
-            "hint": "To access the error message string, bind the exception instance with 'as err'.",
-            "code": "    except ZeroDivisionError:\n        print(\"Logged:\", err)",
-            "answer": "def safe_calc():\n    try:\n        return 10 / 0\n    except ZeroDivisionError as err:\n        print(\"Logged:\", err)\nsafe_calc()",
+            "hint": "Catch ZeroDivisionError when dealing with division by zero operations.",
+            "code": "    except ValueError:\n        print(\"Logged: ZeroDivisionError caught\")",
+            "answer": "def safe_calc():\n    try:\n        return 10 / 0\n    except ZeroDivisionError:\n        print(\"Logged: ZeroDivisionError caught\")\nsafe_calc()",
             "type": "parson",
             "question_en": "Arrange the code blocks into a valid try-except block to handle errors. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block sa tamang try-except structure para masalo ang error. Alisin ang distractor.",
-            "goal_en": "Log an error and propagate it upward to caller using a bare raise statement.",
-            "goal_fil": "Lutasin ang program: Log an error and propagate it upward to caller using a bare raise statement.",
-            "hint_en": "To access the error message string, bind the exception instance with 'as err'.",
-            "hint_fil": "Tandaan: To access the error message string, bind the exception instance with 'as err'."
+            "goal_en": "Catch ZeroDivisionError and print 'Logged: ZeroDivisionError caught'.",
+            "goal_fil": "Saluhin ang ZeroDivisionError at i-print ang 'Logged: ZeroDivisionError caught'.",
+            "hint_en": "Catch ZeroDivisionError when dealing with division by zero operations.",
+            "hint_fil": "Tandaan: ZeroDivisionError ang tamang exception kapag nag-divide sa zero."
         },
         {
-            "id": 174,
+            "id": "hard_er_p6",
             "enemy_id": "exception_reaper",
             "difficulty": "hard",
             "category": "Exception Handling",
@@ -1769,8 +3242,9 @@ const exceptionReaper = {
             "lines": [
                 "class SecurityError(Exception):",
                 "    def __init__(self, code, msg):",
-                "        super().__init__(msg)",
                 "        self.code = code",
+                "        self.msg = msg",
+                "    def __str__(self): return self.msg",
                 "try:",
                 "    raise SecurityError(403, \"Soul Denied\")",
                 "except SecurityError as e:",
@@ -1779,19 +3253,19 @@ const exceptionReaper = {
             "distractors": [
                 "class SecurityError(Exception):\n    def __init__(self, code, msg):\n        self.code = code"
             ],
-            "hint": "Remember to call super().__init__(msg) so the exception message prints cleanly.",
+            "hint": "Define __str__ or store the message so the exception prints cleanly.",
             "code": "class SecurityError(Exception):\n    def __init__(self, code, msg):\n        self.code = code",
-            "answer": "class SecurityError(Exception):\n    def __init__(self, code, msg):\n        super().__init__(msg)\n        self.code = code\ntry:\n    raise SecurityError(403, \"Soul Denied\")\nexcept SecurityError as e:\n    print(f\"Error [CODE {e.code}]: {e}\")",
+            "answer": "class SecurityError(Exception):\n    def __init__(self, code, msg):\n        self.code = code\n        self.msg = msg\n    def __str__(self): return self.msg\ntry:\n    raise SecurityError(403, \"Soul Denied\")\nexcept SecurityError as e:\n    print(f\"Error [CODE {e.code}]: {e}\")",
             "type": "parson",
             "question_en": "Arrange the code blocks into a valid try-except block to handle errors. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block sa tamang try-except structure para masalo ang error. Alisin ang distractor.",
             "goal_en": "Store and retrieve an error code attribute on a custom exception instance.",
-            "goal_fil": "Lutasin ang program: Store and retrieve an error code attribute on a custom exception instance.",
-            "hint_en": "Remember to call super().__init__(msg) so the exception message prints cleanly.",
-            "hint_fil": "Tandaan: Remember to call super().__init__(msg) so the exception message prints cleanly."
+            "goal_fil": "Mag-imbak at kumuha ng error code attribute sa custom exception instance.",
+            "hint_en": "Define __str__ or store the message so the exception prints cleanly.",
+            "hint_fil": "Tandaan: I-define ang __str__ para maayos na lumabas ang message ng exception."
         },
         {
-            "id": 175,
+            "id": "hard_er_p7",
             "enemy_id": "exception_reaper",
             "difficulty": "hard",
             "category": "Exception Handling",
@@ -1818,12 +3292,12 @@ const exceptionReaper = {
             "question_en": "Arrange the code blocks with proper conditional branching. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block na may tamang if/else conditions. Alisin ang distractor.",
             "goal_en": "Catch specific exceptions before catching generic Exception to avoid hiding errors.",
-            "goal_fil": "Lutasin ang program: Catch specific exceptions before catching generic Exception to avoid hiding errors.",
+            "goal_fil": "Layunin: Catch specific exceptions before catching generic Exception to avoid hiding errors.",
             "hint_en": "Putting except Exception first catches all exceptions, masking specific handlers.",
             "hint_fil": "Tandaan: Putting except Exception first catches all exceptions, masking specific handlers."
         },
         {
-            "id": 176,
+            "id": "hard_er_p8",
             "enemy_id": "exception_reaper",
             "difficulty": "hard",
             "category": "Exception Handling",
@@ -1857,7 +3331,7 @@ const exceptionReaper = {
             "hint_fil": "Tandaan: Python uses 'raise' to trigger exceptions, not 'throw'."
         },
         {
-            "id": 177,
+            "id": "hard_er_p9",
             "enemy_id": "exception_reaper",
             "difficulty": "hard",
             "category": "Exception Handling",
@@ -1885,12 +3359,12 @@ const exceptionReaper = {
             "question_en": "Arrange the code blocks into a valid try-except block to handle errors. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block sa tamang try-except structure para masalo ang error. Alisin ang distractor.",
             "goal_en": "Chain a low-level error into a high-level game exception using 'raise from'.",
-            "goal_fil": "Lutasin ang program: Chain a low-level error into a high-level game exception using 'raise from'.",
+            "goal_fil": "Layunin: Chain a low-level error into a high-level game exception using 'raise from'.",
             "hint_en": "Exception chaining in Python uses the syntax 'raise NewException from orig_err'.",
             "hint_fil": "Tandaan: Exception chaining in Python uses the syntax 'raise NewException from orig_err'."
         },
         {
-            "id": 178,
+            "id": "hard_er_p10",
             "enemy_id": "exception_reaper",
             "difficulty": "hard",
             "category": "Exception Handling",
@@ -1916,70 +3390,437 @@ const exceptionReaper = {
             "question_en": "Arrange the code blocks into a valid try-except block to handle errors. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block sa tamang try-except structure para masalo ang error. Alisin ang distractor.",
             "goal_en": "Properly handle IndexError for lists and KeyError for dictionaries.",
-            "goal_fil": "Lutasin ang program: Properly handle IndexError for lists and KeyError for dictionaries.",
+            "goal_fil": "Layunin: Properly handle IndexError for lists and KeyError for dictionaries.",
             "hint_en": "Out of bounds list access raises IndexError. Dictionaries raise KeyError.",
             "hint_fil": "Tandaan: Out of bounds list access raises IndexError. Dictionaries raise KeyError."
         },
         {
-            "id": 179,
+            "id": "hard_er_q1",
             "enemy_id": "exception_reaper",
             "difficulty": "hard",
-            "category": "Exception Handling",
-            "error_type": "SyntaxWarning: assertion is always true",
-            "title": "Exception Reaper #11: Assert Statement Validation",
-            "question": "Arrange the code blocks into a valid try-except block to handle errors. Exclude the distractor.",
-            "goal": "Use assert to enforce invariants and catch AssertionError if violated.",
-            "expected_output": "Shield barrier check passed",
+            "category": "Raise Keyword",
+            "error_type": "SyntaxError",
+            "title": "Exception Reaper Quiz #1: Raising Exceptions with Raise",
+            "question": "Select the correct statement to raise a ValueError with message 'Invalid health'.",
+            "goal": "Raise ValueError with message.",
+            "expected_output": "raise ValueError(\"Invalid health\")",
             "lines": [
-                "shield = 100",
-                "assert shield > 0, \"Shield must be positive\"",
-                "print(\"Shield barrier check passed\")"
+                "if hp < 0:",
+                "    raise ValueError(\"Invalid health\")"
             ],
+            "code": "throw new ValueError(\"Invalid health\")",
+            "answer": "raise ValueError(\"Invalid health\")",
             "distractors": [
-                "assert(shield > 0, \"Shield must be positive\")"
+                "throw new ValueError(\"Invalid health\")",
+                "error ValueError(\"Invalid health\")",
+                "raise \"Invalid health\""
             ],
-            "hint": "Review your Python syntax, variable names, and line sequence.",
-            "code": "assert(shield > 0, \"Shield must be positive\")",
-            "answer": "shield = 100\nassert shield > 0, \"Shield must be positive\"\nprint(\"Shield barrier check passed\")",
-            "type": "parson",
-            "question_en": "Arrange the code blocks into a valid try-except block to handle errors. Exclude the distractor.",
-            "question_fil": "I-drag at i-ayos ang mga block sa tamang try-except structure para masalo ang error. Alisin ang distractor.",
-            "goal_en": "Use assert to enforce invariants and catch AssertionError if violated.",
-            "goal_fil": "Lutasin ang program: Use assert to enforce invariants and catch AssertionError if violated.",
-            "hint_en": "Review your Python syntax, variable names, and line sequence.",
-            "hint_fil": "Assert is a statement: assert condition, \"message\". Wrapping in () evaluates as a truthy 2-tuple!"
+            "options": [
+                "raise ValueError(\"Invalid health\")",
+                "throw new ValueError(\"Invalid health\")",
+                "error ValueError(\"Invalid health\")",
+                "raise \"Invalid health\""
+            ],
+            "choices": [
+                "raise ValueError(\"Invalid health\")",
+                "throw new ValueError(\"Invalid health\")",
+                "error ValueError(\"Invalid health\")",
+                "raise \"Invalid health\""
+            ],
+            "hint": "Python uses the 'raise' keyword (not 'throw') to trigger exceptions.",
+            "type": "quiz",
+            "question_en": "Select the correct statement to raise a ValueError with message 'Invalid health'.",
+            "question_fil": "Piliin ang tamang pahayag para magbato ng ValueError gamit ang raise.",
+            "goal_en": "Raise ValueError with message.",
+            "goal_fil": "Magbato ng ValueError gamit ang raise keyword.",
+            "hint_en": "Python uses the 'raise' keyword (not 'throw') to trigger exceptions.",
+            "hint_fil": "'raise' ang keyword sa Python sa pagbato ng error, hindi 'throw'."
         },
         {
-            "id": 180,
+            "id": "hard_er_q2",
             "enemy_id": "exception_reaper",
             "difficulty": "hard",
-            "category": "Exception Handling",
-            "error_type": "IndentationError: unexpected indent",
-            "title": "Exception Reaper #12: Safe Conversion with Fallback",
-            "question": "Arrange the code blocks into a valid try-except block to handle errors. Exclude the distractor.",
-            "goal": "Create a safe integer parser function that returns a default value on error.",
-            "expected_output": "Parsed: 10, Fallback: 0",
+            "category": "Custom Exception Class",
+            "error_type": "TypeError: exceptions must derive from BaseException",
+            "title": "Exception Reaper Quiz #2: Custom Exception Inheritance",
+            "question": "What class must a custom user exception inherit from in Python?",
+            "goal": "Inherit custom exception from Exception.",
+            "expected_output": "class GameError(Exception): pass",
             "lines": [
-                "def safe_int(s, default=0):",
-                "    try: return int(s)",
-                "    except (ValueError, TypeError): return default",
-                "r1 = safe_int(\"10\")",
-                "r2 = safe_int(\"invalid\")",
-                "print(f\"Parsed: {r1}, Fallback: {r2}\")"
+                "class ReaperCurse(Exception):",
+                "    pass",
+                "raise ReaperCurse(\"Curse active!\")"
             ],
+            "code": "class ReaperCurse(object): pass",
+            "answer": "Exception (or another built-in exception class inheriting from BaseException)",
             "distractors": [
-                "    except: return default\n        return int(s)"
+                "object (all standard Python classes)",
+                "Error (standard root class)",
+                "None (exceptions require no parent class)"
             ],
-            "hint": "The risky operation int(s) must be inside the try block before the except block.",
-            "code": "    except: return default\n        return int(s)",
-            "answer": "def safe_int(s, default=0):\n    try: return int(s)\n    except (ValueError, TypeError): return default\nr1 = safe_int(\"10\")\nr2 = safe_int(\"invalid\")\nprint(f\"Parsed: {r1}, Fallback: {r2}\")",
-            "type": "parson",
-            "question_en": "Arrange the code blocks into a valid try-except block to handle errors. Exclude the distractor.",
-            "question_fil": "I-drag at i-ayos ang mga block sa tamang try-except structure para masalo ang error. Alisin ang distractor.",
-            "goal_en": "Create a safe integer parser function that returns a default value on error.",
-            "goal_fil": "Lutasin ang program: Create a safe integer parser function that returns a default value on error.",
-            "hint_en": "The risky operation int(s) must be inside the try block before the except block.",
-            "hint_fil": "Tandaan: The risky operation int(s) must be inside the try block before the except block."
+            "options": [
+                "Exception (or another built-in exception class inheriting from BaseException)",
+                "object (all standard Python classes)",
+                "Error (standard root class)",
+                "None (exceptions require no parent class)"
+            ],
+            "choices": [
+                "Exception (or another built-in exception class inheriting from BaseException)",
+                "object (all standard Python classes)",
+                "Error (standard root class)",
+                "None (exceptions require no parent class)"
+            ],
+            "hint": "Custom exceptions should subclass 'Exception' to participate in standard error-handling hierarchies.",
+            "type": "quiz",
+            "question_en": "What class must a custom user exception inherit from in Python?",
+            "question_fil": "Saang class dapat magmana ang custom user exception sa Python?",
+            "goal_en": "Inherit custom exception from Exception.",
+            "goal_fil": "Dapat magmana sa 'Exception' ang custom error.",
+            "hint_en": "Custom exceptions should subclass 'Exception' to participate in standard error-handling hierarchies.",
+            "hint_fil": "Magmana sa 'Exception' para masalo ng standard try-except structures."
+        },
+        {
+            "id": "hard_er_q3",
+            "enemy_id": "exception_reaper",
+            "difficulty": "hard",
+            "category": "Guaranteed Finally",
+            "error_type": "CleanupExecution",
+            "title": "Exception Reaper Quiz #3: Guaranteed Execution of Finally",
+            "question": "Under what conditions does the code inside a 'finally' block execute?",
+            "goal": "Confirm finally always runs.",
+            "expected_output": "Finally always runs",
+            "lines": [
+                "try: do_task()",
+                "except Exception: handle()",
+                "finally: close_connection()  # Always runs!"
+            ],
+            "code": "finally: close()",
+            "answer": "Always, regardless of whether an exception occurred, was caught, or was re-raised",
+            "distractors": [
+                "Only when an exception was successfully avoided",
+                "Only when an unhandled exception crashes the program",
+                "Only if the try block contains an explicit return statement"
+            ],
+            "options": [
+                "Always, regardless of whether an exception occurred, was caught, or was re-raised",
+                "Only when an exception was successfully avoided",
+                "Only when an unhandled exception crashes the program",
+                "Only if the try block contains an explicit return statement"
+            ],
+            "choices": [
+                "Always, regardless of whether an exception occurred, was caught, or was re-raised",
+                "Only when an exception was successfully avoided",
+                "Only when an unhandled exception crashes the program",
+                "Only if the try block contains an explicit return statement"
+            ],
+            "hint": "'finally' is guaranteed to execute cleanup code before leaving the try-except scope.",
+            "type": "quiz",
+            "question_en": "Under what conditions does the code inside a 'finally' block execute?",
+            "question_fil": "Kailan tumatakbo ang code na nasa loob ng 'finally' block?",
+            "goal_en": "Confirm finally always runs.",
+            "goal_fil": "Alamin na laging tumatakbo ang finally kahit magka-error o wala.",
+            "hint_en": "'finally' is guaranteed to execute cleanup code before leaving the try-except scope.",
+            "hint_fil": "Laging tumatakbo ang 'finally' para sa pagsasara at paglilinis ng resources."
+        },
+        {
+            "id": "hard_er_q4",
+            "enemy_id": "exception_reaper",
+            "difficulty": "hard",
+            "category": "Try Else Block",
+            "error_type": "ControlFlow",
+            "title": "Exception Reaper Quiz #4: The Else Clause in Try-Except",
+            "question": "When does the 'else' block execute in a try-except-else-finally structure?",
+            "goal": "Confirm else runs only when try succeeds without exceptions.",
+            "expected_output": "Runs only when no exception occurs in try",
+            "lines": [
+                "try: val = compute()",
+                "except Error: log()",
+                "else: save_result(val)  # Runs if NO error occurred!",
+                "finally: cleanup()"
+            ],
+            "code": "else: save_result(val)",
+            "answer": "Only when the code in the 'try' block completed successfully without raising any exceptions",
+            "distractors": [
+                "Whenever an exception is caught by an except block",
+                "Only if the except block fails to execute",
+                "Continuously in a loop until an error occurs"
+            ],
+            "options": [
+                "Only when the code in the 'try' block completed successfully without raising any exceptions",
+                "Whenever an exception is caught by an except block",
+                "Only if the except block fails to execute",
+                "Continuously in a loop until an error occurs"
+            ],
+            "choices": [
+                "Only when the code in the 'try' block completed successfully without raising any exceptions",
+                "Whenever an exception is caught by an except block",
+                "Only if the except block fails to execute",
+                "Continuously in a loop until an error occurs"
+            ],
+            "hint": "The 'else' block runs only when the try block executes without errors.",
+            "type": "quiz",
+            "question_en": "When does the 'else' block execute in a try-except-else-finally structure?",
+            "question_fil": "Kailan tumatakbo ang 'else' block sa try-except-else-finally structure?",
+            "goal_en": "Confirm else runs only when try succeeds without exceptions.",
+            "goal_fil": "Tumatakbo lamang ang else kung walang naging error sa try.",
+            "hint_en": "The 'else' block runs only when the try block executes without errors.",
+            "hint_fil": "Tumatakbo lamang ang 'else' kapag matagumpay at walang error ang 'try'."
+        },
+        {
+            "id": "hard_er_q5",
+            "enemy_id": "exception_reaper",
+            "difficulty": "hard",
+            "category": "Bare Raise",
+            "error_type": "RuntimeError: No active exception to reraise",
+            "title": "Exception Reaper Quiz #5: Re-raising Active Exceptions with Bare Raise",
+            "question": "What does writing a bare 'raise' statement inside an except block accomplish?",
+            "goal": "Understand bare raise re-throwing the active exception.",
+            "expected_output": "Re-raises the current exception with traceback",
+            "lines": [
+                "try: risky_op()",
+                "except ValueError:",
+                "    log_error()",
+                "    raise  # Re-raises the active ValueError!"
+            ],
+            "code": "raise",
+            "answer": "It re-raises the current active exception, preserving its original traceback",
+            "distractors": [
+                "It raises a new SystemExit exception",
+                "It clears all active exceptions and returns None",
+                "It restarts the try block from line 1"
+            ],
+            "options": [
+                "It re-raises the current active exception, preserving its original traceback",
+                "It raises a new SystemExit exception",
+                "It clears all active exceptions and returns None",
+                "It restarts the try block from line 1"
+            ],
+            "choices": [
+                "It re-raises the current active exception, preserving its original traceback",
+                "It raises a new SystemExit exception",
+                "It clears all active exceptions and returns None",
+                "It restarts the try block from line 1"
+            ],
+            "hint": "A bare 'raise' allows you to log or inspect an error and then let it propagate up.",
+            "type": "quiz",
+            "question_en": "What does writing a bare 'raise' statement inside an except block accomplish?",
+            "question_fil": "Ano ang ginagawa ng bare 'raise' sa loob ng except block?",
+            "goal_en": "Understand bare raise re-throwing the active exception.",
+            "goal_fil": "Muling ibato ang kasalukuyang error kasama ang orihinal na traceback.",
+            "hint_en": "A bare 'raise' allows you to log or inspect an error and then let it propagate up.",
+            "hint_fil": "Ibinabato muli ng bare 'raise' ang aktibong exception pataas sa caller."
+        },
+        {
+            "id": "hard_er_q6",
+            "enemy_id": "exception_reaper",
+            "difficulty": "hard",
+            "category": "Exception Chaining",
+            "error_type": "ChainingSyntax",
+            "title": "Exception Reaper Quiz #6: Explicit Exception Chaining with From",
+            "question": "Select the syntax to chain a new CustomError while preserving the original cause err.",
+            "goal": "Chain exception using raise CustomError() from err.",
+            "expected_output": "raise CustomError() from err",
+            "lines": [
+                "try: int(\"bad\")",
+                "except ValueError as err:",
+                "    raise DatabaseError(\"Parse failed\") from err"
+            ],
+            "code": "raise DatabaseError(\"Parse failed\", from=err)",
+            "answer": "raise DatabaseError(\"Parse failed\") from err",
+            "distractors": [
+                "raise DatabaseError(\"Parse failed\", from=err)",
+                "raise DatabaseError(\"Parse failed\") with err",
+                "raise DatabaseError(\"Parse failed\") -> err"
+            ],
+            "options": [
+                "raise DatabaseError(\"Parse failed\") from err",
+                "raise DatabaseError(\"Parse failed\", from=err)",
+                "raise DatabaseError(\"Parse failed\") with err",
+                "raise DatabaseError(\"Parse failed\") -> err"
+            ],
+            "choices": [
+                "raise DatabaseError(\"Parse failed\") from err",
+                "raise DatabaseError(\"Parse failed\", from=err)",
+                "raise DatabaseError(\"Parse failed\") with err",
+                "raise DatabaseError(\"Parse failed\") -> err"
+            ],
+            "hint": "Python 3 uses 'raise NewException(...) from original_error' for explicit chaining.",
+            "type": "quiz",
+            "question_en": "Select the syntax to chain a new CustomError while preserving the original cause err.",
+            "question_fil": "Piliin ang tamang syntax para mag-chain ng bagong exception gamit ang 'from err'.",
+            "goal_en": "Chain exception using raise CustomError() from err.",
+            "goal_fil": "I-chain ang exception gamit ang 'from err' syntax.",
+            "hint_en": "Python 3 uses 'raise NewException(...) from original_error' for explicit chaining.",
+            "hint_fil": "Gamitin ang 'raise BagongError() from orihinal_error' sa Python 3."
+        },
+        {
+            "id": "hard_er_q7",
+            "enemy_id": "exception_reaper",
+            "difficulty": "hard",
+            "category": "Custom Exception Attributes",
+            "error_type": "StateInspection",
+            "title": "Exception Reaper Quiz #7: Custom Exception with Error Code Attributes",
+            "question": "How can a custom exception class attach an error code attribute for inspectability in except blocks?",
+            "goal": "Assign self.code in custom exception __init__.",
+            "expected_output": "Store in __init__ on self",
+            "lines": [
+                "class ReaperError(Exception):",
+                "    def __init__(self, msg, code):",
+                "        super().__init__(msg)",
+                "        self.code = code"
+            ],
+            "code": "class ReaperError(Exception): code = 404",
+            "answer": "Define __init__ on the exception class and store self.code = code",
+            "distractors": [
+                "Exceptions cannot store custom attributes",
+                "By setting a global variable before raising",
+                "By embedding code directly into the module docstring"
+            ],
+            "options": [
+                "Define __init__ on the exception class and store self.code = code",
+                "Exceptions cannot store custom attributes",
+                "By setting a global variable before raising",
+                "By embedding code directly into the module docstring"
+            ],
+            "choices": [
+                "Define __init__ on the exception class and store self.code = code",
+                "Exceptions cannot store custom attributes",
+                "By setting a global variable before raising",
+                "By embedding code directly into the module docstring"
+            ],
+            "hint": "Custom exception classes are regular Python classes and can store custom attributes in __init__.",
+            "type": "quiz",
+            "question_en": "How can a custom exception class attach an error code attribute for inspectability in except blocks?",
+            "question_fil": "Paano makakapag-imbak ng custom code attribute ang isang custom exception class?",
+            "goal_en": "Assign self.code in custom exception __init__.",
+            "goal_fil": "Maglagay ng self.code sa __init__ ng custom exception.",
+            "hint_en": "Custom exception classes are regular Python classes and can store custom attributes in __init__.",
+            "hint_fil": "Karaniwang class din ang custom exception kaya puwedeng maglagay ng attributes sa __init__."
+        },
+        {
+            "id": "hard_er_q8",
+            "enemy_id": "exception_reaper",
+            "difficulty": "hard",
+            "category": "Index vs Key Error",
+            "error_type": "ErrorDisambiguation",
+            "title": "Exception Reaper Quiz #8: Distinguishing IndexError from KeyError",
+            "question": "What is the key difference between an IndexError and a KeyError in Python?",
+            "goal": "Distinguish sequence index out of bounds from missing dictionary key.",
+            "expected_output": "IndexError is for sequences; KeyError is for dicts",
+            "lines": [
+                "# lst[10] -> IndexError",
+                "# dct['missing'] -> KeyError"
+            ],
+            "code": "err = IndexError()",
+            "answer": "IndexError occurs on invalid integer sequence indices; KeyError occurs on missing mapping keys",
+            "distractors": [
+                "IndexError only happens in while loops; KeyError only in for loops",
+                "KeyError is raised on empty strings; IndexError on empty lists",
+                "Both exceptions are completely identical aliases for the same class"
+            ],
+            "options": [
+                "IndexError occurs on invalid integer sequence indices; KeyError occurs on missing mapping keys",
+                "IndexError only happens in while loops; KeyError only in for loops",
+                "KeyError is raised on empty strings; IndexError on empty lists",
+                "Both exceptions are completely identical aliases for the same class"
+            ],
+            "choices": [
+                "IndexError occurs on invalid integer sequence indices; KeyError occurs on missing mapping keys",
+                "IndexError only happens in while loops; KeyError only in for loops",
+                "KeyError is raised on empty strings; IndexError on empty lists",
+                "Both exceptions are completely identical aliases for the same class"
+            ],
+            "hint": "IndexError relates to sequence positions (lists/tuples); KeyError relates to mapping keys (dictionaries).",
+            "type": "quiz",
+            "question_en": "What is the key difference between an IndexError and a KeyError in Python?",
+            "question_fil": "Ano ang pagkakaiba ng IndexError sa KeyError sa Python?",
+            "goal_en": "Distinguish sequence index out of bounds from missing dictionary key.",
+            "goal_fil": "Ihiwalay ang IndexError sa sequence mula sa KeyError sa dictionary.",
+            "hint_en": "IndexError relates to sequence positions (lists/tuples); KeyError relates to mapping keys (dictionaries).",
+            "hint_fil": "IndexError sa posisyon ng listahan/tuple; KeyError sa nawawalang susi sa dictionary."
+        },
+        {
+            "id": "hard_er_q9",
+            "enemy_id": "exception_reaper",
+            "difficulty": "hard",
+            "category": "Assert Statements",
+            "error_type": "AssertionError",
+            "title": "Exception Reaper Quiz #9: Raising AssertionError with Assert",
+            "question": "What exception is raised when an assert condition evaluates to False?",
+            "goal": "Identify AssertionError.",
+            "expected_output": "AssertionError",
+            "lines": [
+                "hp = -5",
+                "assert hp >= 0, \"Health must be non-negative!\""
+            ],
+            "code": "assert hp >= 0",
+            "answer": "AssertionError",
+            "distractors": [
+                "ValueError",
+                "ConditionError",
+                "SystemError"
+            ],
+            "options": [
+                "AssertionError",
+                "ValueError",
+                "ConditionError",
+                "SystemError"
+            ],
+            "choices": [
+                "AssertionError",
+                "ValueError",
+                "ConditionError",
+                "SystemError"
+            ],
+            "hint": "The assert statement raises an AssertionError if its condition expression evaluates to False.",
+            "type": "quiz",
+            "question_en": "What exception is raised when an assert condition evaluates to False?",
+            "question_fil": "Anong exception ang ibinabato kapag naging False ang kondisyon sa assert statement?",
+            "goal_en": "Identify AssertionError.",
+            "goal_fil": "Tukuyin ang AssertionError kapag pumalya ang assert statement.",
+            "hint_en": "The assert statement raises an AssertionError if its condition expression evaluates to False.",
+            "hint_fil": "AssertionError ang ibinabato kapag naging False ang kondisyon ng assert."
+        },
+        {
+            "id": "hard_er_q10",
+            "enemy_id": "exception_reaper",
+            "difficulty": "hard",
+            "category": "BaseException Trap",
+            "error_type": "CriticalCatchWarning",
+            "title": "Exception Reaper Quiz #10: Dangers of Catching BaseException",
+            "question": "Why should code catch 'Exception' instead of 'BaseException'?",
+            "goal": "Avoid trapping KeyboardInterrupt and SystemExit.",
+            "expected_output": "BaseException traps KeyboardInterrupt and SystemExit",
+            "lines": [
+                "# try: ... except BaseException: ... <- Traps Ctrl+C!"
+            ],
+            "code": "except BaseException:",
+            "answer": "Catching BaseException intercepts KeyboardInterrupt (Ctrl+C) and SystemExit, making programs unkillable",
+            "distractors": [
+                "BaseException clears all CPU registers",
+                "Python deletes the file containing BaseException",
+                "BaseException only exists in Python 2"
+            ],
+            "options": [
+                "Catching BaseException intercepts KeyboardInterrupt (Ctrl+C) and SystemExit, making programs unkillable",
+                "BaseException clears all CPU registers",
+                "Python deletes the file containing BaseException",
+                "BaseException only exists in Python 2"
+            ],
+            "choices": [
+                "Catching BaseException intercepts KeyboardInterrupt (Ctrl+C) and SystemExit, making programs unkillable",
+                "BaseException clears all CPU registers",
+                "Python deletes the file containing BaseException",
+                "BaseException only exists in Python 2"
+            ],
+            "hint": "KeyboardInterrupt and SystemExit inherit from BaseException, not Exception, specifically so standard catches don't trap them.",
+            "type": "quiz",
+            "question_en": "Why should code catch 'Exception' instead of 'BaseException'?",
+            "question_fil": "Bakit 'Exception' ang dapat saluhin sa halip na 'BaseException'?",
+            "goal_en": "Avoid trapping KeyboardInterrupt and SystemExit.",
+            "goal_fil": "Iwasang masalo ang KeyboardInterrupt at SystemExit gamit ang Exception.",
+            "hint_en": "KeyboardInterrupt and SystemExit inherit from BaseException, not Exception, specifically so standard catches don't trap them.",
+            "hint_fil": "Naiipit ang Ctrl+C at exit commands kapag sinalo ang BaseException."
         }
     ]
 };
@@ -1994,7 +3835,7 @@ const codeTitan = {
     "intro": "I am the Code Titan! The culmination of advanced Python programming! Architecture, design patterns, and defensive programming are your only salvation!",
     "bugs": [
         {
-            "id": 181,
+            "id": "hard_ct_p1",
             "enemy_id": "code_titan",
             "difficulty": "hard",
             "category": "Mastery Challenge",
@@ -2023,12 +3864,12 @@ const codeTitan = {
             "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
             "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
             "goal_en": "Construct a boss entity with inheritance, property getters, and attack validation.",
-            "goal_fil": "Lutasin ang program: Construct a boss entity with inheritance, property getters, and attack validation.",
+            "goal_fil": "Layunin: Construct a boss entity with inheritance, property getters, and attack validation.",
             "hint_en": "Python inheritance syntax is class CodeTitan(Boss): without the extends keyword.",
             "hint_fil": "Tandaan: Python inheritance syntax is class CodeTitan(Boss): without the extends keyword."
         },
         {
-            "id": 182,
+            "id": "hard_ct_p2",
             "enemy_id": "code_titan",
             "difficulty": "hard",
             "category": "Mastery Challenge",
@@ -2052,12 +3893,12 @@ const codeTitan = {
             "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
             "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
             "goal_en": "Extract alive minions using a list comprehension filtering a list of dictionaries.",
-            "goal_fil": "Lutasin ang program: Extract alive minions using a list comprehension filtering a list of dictionaries.",
+            "goal_fil": "Kuhanin ang mga buhay na minion gamit ang list comprehension na nag-fi-filter sa list ng dicts.",
             "hint_en": "minions is a list of dicts: access keys with m['hp'], not dot notation m.hp.",
             "hint_fil": "Tandaan: minions is a list of dicts: access keys with m['hp'], not dot notation m.hp."
         },
         {
-            "id": 183,
+            "id": "hard_ct_p3",
             "enemy_id": "code_titan",
             "difficulty": "hard",
             "category": "Mastery Challenge",
@@ -2087,12 +3928,12 @@ const codeTitan = {
             "question_en": "Arrange the code blocks with proper conditional branching. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block na may tamang if/else conditions. Alisin ang distractor.",
             "goal_en": "Transition boss phases safely with custom exception validation on illegal shifts.",
-            "goal_fil": "Lutasin ang program: Transition boss phases safely with custom exception validation on illegal shifts.",
+            "goal_fil": "Layunin: Transition boss phases safely with custom exception validation on illegal shifts.",
             "hint_en": "Use raise to throw exceptions in Python.",
             "hint_fil": "Tandaan: Use raise to throw exceptions in Python."
         },
         {
-            "id": 184,
+            "id": "hard_ct_p4",
             "enemy_id": "code_titan",
             "difficulty": "hard",
             "category": "Mastery Challenge",
@@ -2117,12 +3958,12 @@ const codeTitan = {
             "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
             "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
             "goal_en": "Simulate recursive armor decay down to a minimum resistance floor.",
-            "goal_fil": "Lutasin ang program: Simulate recursive armor decay down to a minimum resistance floor.",
+            "goal_fil": "Layunin: Simulate recursive armor decay down to a minimum resistance floor.",
             "hint_en": "Decrement hits by 1 in each recursive call to reach the base case hits == 0.",
             "hint_fil": "Tandaan: Decrement hits by 1 in each recursive call to reach the base case hits == 0."
         },
         {
-            "id": 185,
+            "id": "hard_ct_p5",
             "enemy_id": "code_titan",
             "difficulty": "hard",
             "category": "Mastery Challenge",
@@ -2146,12 +3987,12 @@ const codeTitan = {
             "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
             "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
             "goal_en": "Invert the Titan drop-rate mapping using dictionary comprehension.",
-            "goal_fil": "Lutasin ang program: Invert the Titan drop-rate mapping using dictionary comprehension.",
+            "goal_fil": "Layunin: Invert the Titan drop-rate mapping using dictionary comprehension.",
             "hint_en": "Iterating directly on a dictionary yields only keys. Unpack drops.items().",
             "hint_fil": "Tandaan: Iterating directly on a dictionary yields only keys. Unpack drops.items()."
         },
         {
-            "id": 186,
+            "id": "hard_ct_p6",
             "enemy_id": "code_titan",
             "difficulty": "hard",
             "category": "Mastery Challenge",
@@ -2176,12 +4017,12 @@ const codeTitan = {
             "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
             "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
             "goal_en": "Compute weighted combo damage from base and multiplier lists using zip().",
-            "goal_fil": "Lutasin ang program: Compute weighted combo damage from base and multiplier lists using zip().",
+            "goal_fil": "Layunin: Compute weighted combo damage from base and multiplier lists using zip().",
             "hint_en": "Review your Python syntax, variable names, and line sequence.",
             "hint_fil": "Lists cannot be multiplied directly; use zip(attacks, mults) inside a generator."
         },
         {
-            "id": 187,
+            "id": "hard_ct_p7",
             "enemy_id": "code_titan",
             "difficulty": "hard",
             "category": "Mastery Challenge",
@@ -2208,12 +4049,12 @@ const codeTitan = {
             "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
             "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
             "goal_en": "Dispatch abilities polymorphically to raid member instances.",
-            "goal_fil": "Lutasin ang program: Dispatch abilities polymorphically to raid member instances.",
+            "goal_fil": "Layunin: Dispatch abilities polymorphically to raid member instances.",
             "hint_en": "Review your Python syntax, variable names, and line sequence.",
             "hint_fil": "party is a list containing the member; call party[0].cast()."
         },
         {
-            "id": 188,
+            "id": "hard_ct_p8",
             "enemy_id": "code_titan",
             "difficulty": "hard",
             "category": "Mastery Challenge",
@@ -2242,12 +4083,12 @@ const codeTitan = {
             "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
             "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
             "goal_en": "Safely deplete and reset titan mana shields using a finally block.",
-            "goal_fil": "Lutasin ang program: Safely deplete and reset titan mana shields using a finally block.",
+            "goal_fil": "Layunin: Safely deplete and reset titan mana shields using a finally block.",
             "hint_en": "Assignment uses single equals =. Double equals == is comparison.",
             "hint_fil": "Tandaan: Assignment uses single equals =. Double equals == is comparison."
         },
         {
-            "id": 189,
+            "id": "hard_ct_p9",
             "enemy_id": "code_titan",
             "difficulty": "hard",
             "category": "Mastery Challenge",
@@ -2282,7 +4123,7 @@ const codeTitan = {
             "hint_fil": "Properties decorated with @property must not be called with parentheses ()."
         },
         {
-            "id": 190,
+            "id": "hard_ct_p10",
             "enemy_id": "code_titan",
             "difficulty": "hard",
             "category": "Mastery Challenge",
@@ -2311,71 +4152,449 @@ const codeTitan = {
             "hint_fil": "Python allows chained comparisons 0 < t < 50, or use 0 < t and t < 50."
         },
         {
-            "id": 191,
+            "id": "hard_ct_q1",
             "enemy_id": "code_titan",
             "difficulty": "hard",
-            "category": "Mastery Challenge",
-            "error_type": "Logical Error: Returns function object instead of executing it",
-            "title": "Code Titan #11: Titan Stance Machine with Dictionary Dispatch",
-            "question": "Arrange the code blocks to store and retrieve dictionary values. Exclude the distractor.",
-            "goal": "Map stances to damage functions using a dictionary dispatch table.",
-            "expected_output": "Stance Attack: 150",
+            "category": "Synthesis: OOP & Custom Exception",
+            "error_type": "CustomError",
+            "title": "Code Titan Quiz #1: Class Method Raising Custom Domain Exception",
+            "question": "Select the correct pattern for a Titan minion validator raising InvalidMinionError on bad data.",
+            "goal": "Validate input in method and raise custom exception.",
+            "expected_output": "Custom exception raised on validation failure",
             "lines": [
-                "actions = {",
-                "    'berserk': lambda: 150,",
-                "    'defend': lambda: 20",
-                "}",
-                "chosen = 'berserk'",
-                "dmg = actions[chosen]()",
-                "print(\"Stance Attack:\", dmg)"
+                "class InvalidMinionError(Exception): pass",
+                "class TitanFactory:",
+                "    def create(self, hp):",
+                "        if hp <= 0: raise InvalidMinionError(\"HP must be positive\")",
+                "        return {\"hp\": hp}"
             ],
+            "code": "if hp <= 0: return -1",
+            "answer": "if hp <= 0: raise InvalidMinionError(\"HP must be positive\")",
             "distractors": [
-                "dmg = actions[chosen]"
+                "if hp <= 0: throw InvalidMinionError()",
+                "if hp <= 0: return False",
+                "if hp <= 0: assert InvalidMinionError"
             ],
-            "hint": "Review your Python syntax, variable names, and line sequence.",
-            "code": "dmg = actions[chosen]",
-            "answer": "actions = {\n    'berserk': lambda: 150,\n    'defend': lambda: 20\n}\nchosen = 'berserk'\ndmg = actions[chosen]()\nprint(\"Stance Attack:\", dmg)",
-            "type": "parson",
-            "question_en": "Arrange the code blocks to store and retrieve dictionary values. Exclude the distractor.",
-            "question_fil": "I-drag at i-ayos ang mga block para ma-store at makuha ang values sa dictionary. Alisin ang distractor.",
-            "goal_en": "Map stances to damage functions using a dictionary dispatch table.",
-            "goal_fil": "Lutasin ang program: Map stances to damage functions using a dictionary dispatch table.",
-            "hint_en": "Review your Python syntax, variable names, and line sequence.",
-            "hint_fil": "The dictionary stores lambda functions; call the retrieved function with ()."
+            "options": [
+                "if hp <= 0: raise InvalidMinionError(\"HP must be positive\")",
+                "if hp <= 0: throw InvalidMinionError()",
+                "if hp <= 0: return False",
+                "if hp <= 0: assert InvalidMinionError"
+            ],
+            "choices": [
+                "if hp <= 0: raise InvalidMinionError(\"HP must be positive\")",
+                "if hp <= 0: throw InvalidMinionError()",
+                "if hp <= 0: return False",
+                "if hp <= 0: assert InvalidMinionError"
+            ],
+            "hint": "Use 'raise CustomError(message)' to signal domain validation failure.",
+            "type": "quiz",
+            "question_en": "Select the correct pattern for a Titan minion validator raising InvalidMinionError on bad data.",
+            "question_fil": "Piliin ang tamang pattern para sa validator method na nagbabato ng custom exception.",
+            "goal_en": "Validate input in method and raise custom exception.",
+            "goal_fil": "Magbato ng custom exception kapag mali ang datos.",
+            "hint_en": "Use 'raise CustomError(message)' to signal domain validation failure.",
+            "hint_fil": "Gamitin ang 'raise CustomError(message)' para sa validation failure."
         },
         {
-            "id": 192,
+            "id": "hard_ct_q2",
             "enemy_id": "code_titan",
             "difficulty": "hard",
-            "category": "Mastery Challenge",
-            "error_type": "SyntaxError: invalid syntax",
-            "title": "Code Titan #12: Titan Final Checkpoint",
-            "question": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
-            "goal": "Complete Titan boss validation combining inheritance, properties, and error safety.",
-            "expected_output": "Victory: Titan Defeated!",
+            "category": "Synthesis: Recursive Tree in Dict",
+            "error_type": "RecursionError",
+            "title": "Code Titan Quiz #2: Recursive Traversal of Nested Dictionary Tree",
+            "question": "Select the base case when recursively summing values in a nested dictionary tree where leaves have no 'children' key.",
+            "goal": "Handle leaf nodes without 'children' key in tree traversal.",
+            "expected_output": "if 'children' not in node: return node.get('val', 0)",
             "lines": [
-                "class TitanBoss:",
-                "    def __init__(self, hp): self.hp = hp",
-                "    def take_hit(self, dmg):",
-                "        self.hp = max(0, self.hp - dmg)",
-                "        if self.hp == 0: return \"Titan Defeated!\"",
-                "        return \"Titan Standing\"",
-                "t = TitanBoss(50)",
-                "print(\"Victory:\", t.take_hit(50))"
+                "def sum_tree(node):",
+                "    total = node.get('val', 0)",
+                "    for child in node.get('children', []):",
+                "        total += sum_tree(child)",
+                "    return total"
             ],
+            "code": "for child in node['children']:",
+            "answer": "Use node.get('children', []) to safely iterate empty list on leaf nodes",
             "distractors": [
-                "        if self.hp = 0: return \"Titan Defeated!\""
+                "Always wrap dictionary in a while True loop",
+                "Delete node['children'] before recursing",
+                "Catch ZeroDivisionError on each leaf"
             ],
-            "hint": "Comparison in if statement requires double equals ==, not single equals =.",
-            "code": "        if self.hp = 0: return \"Titan Defeated!\"",
-            "answer": "class TitanBoss:\n    def __init__(self, hp): self.hp = hp\n    def take_hit(self, dmg):\n        self.hp = max(0, self.hp - dmg)\n        if self.hp == 0: return \"Titan Defeated!\"\n        return \"Titan Standing\"\nt = TitanBoss(50)\nprint(\"Victory:\", t.take_hit(50))",
-            "type": "parson",
-            "question_en": "Arrange the code blocks in the correct order to solve the challenge. Exclude any buggy distractor block.",
-            "question_fil": "I-drag at i-ayos ang mga code block sa tamang pagkakasunod-sunod. Alisin ang maling distractor block.",
-            "goal_en": "Complete Titan boss validation combining inheritance, properties, and error safety.",
-            "goal_fil": "Lutasin ang program: Complete Titan boss validation combining inheritance, properties, and error safety.",
-            "hint_en": "Comparison in if statement requires double equals ==, not single equals =.",
-            "hint_fil": "Tandaan: Comparison in if statement requires double equals ==, not single equals =."
+            "options": [
+                "Use node.get('children', []) to safely iterate empty list on leaf nodes",
+                "Always wrap dictionary in a while True loop",
+                "Delete node['children'] before recursing",
+                "Catch ZeroDivisionError on each leaf"
+            ],
+            "choices": [
+                "Use node.get('children', []) to safely iterate empty list on leaf nodes",
+                "Always wrap dictionary in a while True loop",
+                "Delete node['children'] before recursing",
+                "Catch ZeroDivisionError on each leaf"
+            ],
+            "hint": "node.get('children', []) yields an empty list when at a leaf, cleanly skipping recursion without KeyError.",
+            "type": "quiz",
+            "question_en": "Select the base case when recursively summing values in a nested dictionary tree where leaves have no 'children' key.",
+            "question_fil": "Piliin ang ligtas na paraan ng recursive traversal sa nested dictionary tree.",
+            "goal_en": "Handle leaf nodes without 'children' key in tree traversal.",
+            "goal_fil": "Gamitin ang node.get('children', []) para iwas KeyError sa leaf nodes.",
+            "hint_en": "node.get('children', []) yields an empty list when at a leaf, cleanly skipping recursion without KeyError.",
+            "hint_fil": "Nagbabalik ng bakanteng listahan ang get('children', []) kapag leaf node na."
+        },
+        {
+            "id": "hard_ct_q3",
+            "enemy_id": "code_titan",
+            "difficulty": "hard",
+            "category": "Synthesis: Inheritance & Finally Cleanup",
+            "error_type": "ResourceLeak",
+            "title": "Code Titan Quiz #3: Guaranteed Subclass Cleanup with Super and Finally",
+            "question": "When overriding a Titan shield method that manages energy locks, how should cleanup be guaranteed?",
+            "goal": "Use try-finally around super() call.",
+            "expected_output": "try-finally guarantees lock release",
+            "lines": [
+                "class ArmoredTitan(Titan):",
+                "    def defend(self):",
+                "        self.acquire_lock()",
+                "        try: return super().defend()",
+                "        finally: self.release_lock()"
+            ],
+            "code": "self.defend(); self.release_lock()",
+            "answer": "Wrap super().defend() inside a try block with lock release in finally",
+            "distractors": [
+                "Disable all exceptions in the parent class",
+                "Execute the method twice in case the first fails",
+                "Pass locks as global variables"
+            ],
+            "options": [
+                "Wrap super().defend() inside a try block with lock release in finally",
+                "Disable all exceptions in the parent class",
+                "Execute the method twice in case the first fails",
+                "Pass locks as global variables"
+            ],
+            "choices": [
+                "Wrap super().defend() inside a try block with lock release in finally",
+                "Disable all exceptions in the parent class",
+                "Execute the method twice in case the first fails",
+                "Pass locks as global variables"
+            ],
+            "hint": "A try-finally construct guarantees that release_lock() executes even if super().defend() raises an exception.",
+            "type": "quiz",
+            "question_en": "When overriding a Titan shield method that manages energy locks, how should cleanup be guaranteed?",
+            "question_fil": "Paano masisiguro ang pag-release ng lock sa subclass method?",
+            "goal_en": "Use try-finally around super() call.",
+            "goal_fil": "Ibalot sa try-finally ang super().defend() para sigurado ang release_lock.",
+            "hint_en": "A try-finally construct guarantees that release_lock() executes even if super().defend() raises an exception.",
+            "hint_fil": "Tinitiyak ng try-finally na tatakbo ang release_lock kahit magka-error."
+        },
+        {
+            "id": "hard_ct_q4",
+            "enemy_id": "code_titan",
+            "difficulty": "hard",
+            "category": "Synthesis: Property Depth Calculation",
+            "error_type": "RecursionDepth",
+            "title": "Code Titan Quiz #4: Dynamic AST Node Depth via Property",
+            "question": "How can an AST node class provide its calculated tree depth as an attribute?",
+            "goal": "Define depth property recursively.",
+            "expected_output": "@property calculating tree depth",
+            "lines": [
+                "class ASTNode:",
+                "    def __init__(self, children=None): self.children = children or []",
+                "    @property",
+                "    def depth(self):",
+                "        if not self.children: return 1",
+                "        return 1 + max(c.depth for c in self.children)"
+            ],
+            "code": "def depth(self): return len(self.children)",
+            "answer": "Define @property def depth(self): calculating 1 + max child depths",
+            "distractors": [
+                "Store depth as a static class variable",
+                "Re-instantiate the entire AST tree on every lookup",
+                "Override __getitem__ to return length"
+            ],
+            "options": [
+                "Define @property def depth(self): calculating 1 + max child depths",
+                "Store depth as a static class variable",
+                "Re-instantiate the entire AST tree on every lookup",
+                "Override __getitem__ to return length"
+            ],
+            "choices": [
+                "Define @property def depth(self): calculating 1 + max child depths",
+                "Store depth as a static class variable",
+                "Re-instantiate the entire AST tree on every lookup",
+                "Override __getitem__ to return length"
+            ],
+            "hint": "A recursive @property dynamically computes the node's maximum height on access.",
+            "type": "quiz",
+            "question_en": "How can an AST node class provide its calculated tree depth as an attribute?",
+            "question_fil": "Paano maibibigay ng AST node ang lalim ng tree bilang attribute gamit ang @property?",
+            "goal_en": "Define depth property recursively.",
+            "goal_fil": "Gumamit ng @property na may recursive calculation ng depth.",
+            "hint_en": "A recursive @property dynamically computes the node's maximum height on access.",
+            "hint_fil": "Dinamikong kinakalkula ng recursive @property ang lalim ng tree."
+        },
+        {
+            "id": "hard_ct_q5",
+            "enemy_id": "code_titan",
+            "difficulty": "hard",
+            "category": "Synthesis: Dictionary Dispatch Pattern",
+            "error_type": "MaintainabilityIssue",
+            "title": "Code Titan Quiz #5: Dictionary Dispatch Table Pattern",
+            "question": "Why is a dictionary dispatch table preferred over a 20-branch if-elif-else ladder in a state machine?",
+            "goal": "Understand dictionary dispatch improving performance and readability.",
+            "expected_output": "O(1) handler lookup and clean extensibility",
+            "lines": [
+                "handlers = {",
+                "    'ATTACK': handle_attack,",
+                "    'DEFEND': handle_defend",
+                "}",
+                "handlers.get(state, default_handler)()"
+            ],
+            "code": "if state == 'ATTACK': ... elif state == 'DEFEND': ...",
+            "answer": "It provides O(1) handler lookup and allows new states to be registered modularly without modifying code blocks",
+            "distractors": [
+                "It automatically compiles Python into machine assembly",
+                "Dictionaries run outside of Python memory space",
+                "It prevents all exceptions from occurring"
+            ],
+            "options": [
+                "It provides O(1) handler lookup and allows new states to be registered modularly without modifying code blocks",
+                "It automatically compiles Python into machine assembly",
+                "Dictionaries run outside of Python memory space",
+                "It prevents all exceptions from occurring"
+            ],
+            "choices": [
+                "It provides O(1) handler lookup and allows new states to be registered modularly without modifying code blocks",
+                "It automatically compiles Python into machine assembly",
+                "Dictionaries run outside of Python memory space",
+                "It prevents all exceptions from occurring"
+            ],
+            "hint": "Dictionary dispatch maps state names to callable function references, avoiding long if-elif chains.",
+            "type": "quiz",
+            "question_en": "Why is a dictionary dispatch table preferred over a 20-branch if-elif-else ladder in a state machine?",
+            "question_fil": "Bakit mas mainam ang dictionary dispatch kaysa mahabang if-elif ladder?",
+            "goal_en": "Understand dictionary dispatch improving performance and readability.",
+            "goal_fil": "O(1) lookup at malinis na modularity ang dulot ng dictionary dispatch.",
+            "hint_en": "Dictionary dispatch maps state names to callable function references, avoiding long if-elif chains.",
+            "hint_fil": "Ibinabalik ng dictionary dispatch ang tamang function agad nang walang mahabang if-elif."
+        },
+        {
+            "id": "hard_ct_q6",
+            "enemy_id": "code_titan",
+            "difficulty": "hard",
+            "category": "Synthesis: Diamond Multiple Inheritance",
+            "error_type": "MROSuperChain",
+            "title": "Code Titan Quiz #6: Diamond Inheritance Super Cooperative Call",
+            "question": "In diamond inheritance class D(B, C): pass where B and C inherit from A, why must B and C call super().__init__()?",
+            "goal": "Understand cooperative multiple inheritance chain via MRO.",
+            "expected_output": "Ensures every class in MRO is initialized once",
+            "lines": [
+                "# Diamond hierarchy: A -> B, C -> D",
+                "class D(B, C): super().__init__()"
+            ],
+            "code": "B.__init__(self); C.__init__(self)",
+            "answer": "It allows super() to traverse the entire Method Resolution Order cooperatively so each ancestor is called once",
+            "distractors": [
+                "It forces Python to delete duplicate methods",
+                "It converts the diamond into a circular linked list",
+                "It compiles the classes into a static C struct"
+            ],
+            "options": [
+                "It allows super() to traverse the entire Method Resolution Order cooperatively so each ancestor is called once",
+                "It forces Python to delete duplicate methods",
+                "It converts the diamond into a circular linked list",
+                "It compiles the classes into a static C struct"
+            ],
+            "choices": [
+                "It allows super() to traverse the entire Method Resolution Order cooperatively so each ancestor is called once",
+                "It forces Python to delete duplicate methods",
+                "It converts the diamond into a circular linked list",
+                "It compiles the classes into a static C struct"
+            ],
+            "hint": "Using super() ensures cooperative multiple inheritance where Python's C3 linearization calls each class once.",
+            "type": "quiz",
+            "question_en": "In diamond inheritance class D(B, C): pass where B and C inherit from A, why must B and C call super().__init__()?",
+            "question_fil": "Sa diamond inheritance, bakit kailangang tumawag ng super().__init__() ang mga intermediate classes?",
+            "goal_en": "Understand cooperative multiple inheritance chain via MRO.",
+            "goal_fil": "Tinitiyak ng super() na matatawag nang minsanan ang bawat ninunong klase ayon sa MRO.",
+            "hint_en": "Using super() ensures cooperative multiple inheritance where Python's C3 linearization calls each class once.",
+            "hint_fil": "Sinusundan ng super() ang buong MRO para walang class na ma-call nang doble o ma-skip."
+        },
+        {
+            "id": "hard_ct_q7",
+            "enemy_id": "code_titan",
+            "difficulty": "hard",
+            "category": "Synthesis: Custom Exception Payload",
+            "error_type": "ExceptionPayloadAccess",
+            "title": "Code Titan Quiz #7: Structured Exception Payload Inspection",
+            "question": "Select the correct pattern to access a dictionary payload attached to a caught custom exception.",
+            "goal": "Access exc.payload in except block.",
+            "expected_output": "exc.payload",
+            "lines": [
+                "class TitanAttackError(Exception):",
+                "    def __init__(self, msg, payload):",
+                "        super().__init__(msg)",
+                "        self.payload = payload",
+                "try: raise TitanAttackError(\"Failed\", {\"dmg\": 99})",
+                "except TitanAttackError as exc:",
+                "    print(exc.payload[\"dmg\"])"
+            ],
+            "code": "except TitanAttackError: print(payload[\"dmg\"])",
+            "answer": "except TitanAttackError as exc: print(exc.payload[\"dmg\"])",
+            "distractors": [
+                "except TitanAttackError: print(payload[\"dmg\"])",
+                "catch (TitanAttackError exc): print(exc.payload)",
+                "except TitanAttackError -> exc: print(exc.payload)"
+            ],
+            "options": [
+                "except TitanAttackError as exc: print(exc.payload[\"dmg\"])",
+                "except TitanAttackError: print(payload[\"dmg\"])",
+                "catch (TitanAttackError exc): print(exc.payload)",
+                "except TitanAttackError -> exc: print(exc.payload)"
+            ],
+            "choices": [
+                "except TitanAttackError as exc: print(exc.payload[\"dmg\"])",
+                "except TitanAttackError: print(payload[\"dmg\"])",
+                "catch (TitanAttackError exc): print(exc.payload)",
+                "except TitanAttackError -> exc: print(exc.payload)"
+            ],
+            "hint": "Bind the caught exception instance to a variable using 'as exc' to access its attributes.",
+            "type": "quiz",
+            "question_en": "Select the correct pattern to access a dictionary payload attached to a caught custom exception.",
+            "question_fil": "Piliin ang tamang pattern para basahin ang payload attribute ng nasalong custom exception.",
+            "goal_en": "Access exc.payload in except block.",
+            "goal_fil": "Gamitin ang 'as exc' para basahin ang exc.payload.",
+            "hint_en": "Bind the caught exception instance to a variable using 'as exc' to access its attributes.",
+            "hint_fil": "I-bind gamit ang 'as exc' para ma-access ang mga properties nito."
+        },
+        {
+            "id": "hard_ct_q8",
+            "enemy_id": "code_titan",
+            "difficulty": "hard",
+            "category": "Synthesis: Exception Fallback in Recursion",
+            "error_type": "RobustRecursion",
+            "title": "Code Titan Quiz #8: Catching Exceptions in Recursive Steps",
+            "question": "How can a recursive tree evaluator prevent a corrupted subnode from crashing the entire traversal?",
+            "goal": "Wrap recursive child call in try-except returning neutral value.",
+            "expected_output": "Catch error in recursive step returning neutral fallback",
+            "lines": [
+                "def eval_node(node):",
+                "    val = node.get('val', 0)",
+                "    for child in node.get('children', []):",
+                "        try: val += eval_node(child)",
+                "        except Exception: val += 0  # Fallback gracefully",
+                "    return val"
+            ],
+            "code": "val += eval_node(child)",
+            "answer": "Wrap the recursive call inside a try-except block, adding a fallback value on failure",
+            "distractors": [
+                "Disable all recursion depth limits globally",
+                "Convert the tree into a flat string",
+                "Delete the corrupted subnode's parent"
+            ],
+            "options": [
+                "Wrap the recursive call inside a try-except block, adding a fallback value on failure",
+                "Disable all recursion depth limits globally",
+                "Convert the tree into a flat string",
+                "Delete the corrupted subnode's parent"
+            ],
+            "choices": [
+                "Wrap the recursive call inside a try-except block, adding a fallback value on failure",
+                "Disable all recursion depth limits globally",
+                "Convert the tree into a flat string",
+                "Delete the corrupted subnode's parent"
+            ],
+            "hint": "Catching exceptions inside the child iteration loop prevents an error in one branch from halting other branches.",
+            "type": "quiz",
+            "question_en": "How can a recursive tree evaluator prevent a corrupted subnode from crashing the entire traversal?",
+            "question_fil": "Paano maiiwasan ang pagbagsak ng buong recursive traversal kapag may sirang subnode?",
+            "goal_en": "Wrap recursive child call in try-except returning neutral value.",
+            "goal_fil": "Ibalot sa try-except ang recursive child call na may fallback.",
+            "hint_en": "Catching exceptions inside the child iteration loop prevents an error in one branch from halting other branches.",
+            "hint_fil": "Saluhing mabuti ang error sa loob ng loop para magpatuloy ang ibang sangay."
+        },
+        {
+            "id": "hard_ct_q9",
+            "enemy_id": "code_titan",
+            "difficulty": "hard",
+            "category": "Synthesis: Abstract Method Enforcement",
+            "error_type": "NotImplementedError",
+            "title": "Code Titan Quiz #9: Raising NotImplementedError in Abstract Base",
+            "question": "Why does a base class method raise NotImplementedError?",
+            "goal": "Enforce that subclasses must override the method.",
+            "expected_output": "Enforces that subclasses must override",
+            "lines": [
+                "class TitanStance:",
+                "    def execute_stance(self):",
+                "        raise NotImplementedError(\"Subclasses must implement execute_stance\")"
+            ],
+            "code": "def execute_stance(self): pass",
+            "answer": "To mandate that derived subclasses must provide their own implementation of the method",
+            "distractors": [
+                "To indicate that the computer's CPU does not support Python",
+                "To prevent the class from being loaded by the import system",
+                "To trigger an automatic garbage collection cycle"
+            ],
+            "options": [
+                "To mandate that derived subclasses must provide their own implementation of the method",
+                "To indicate that the computer's CPU does not support Python",
+                "To prevent the class from being loaded by the import system",
+                "To trigger an automatic garbage collection cycle"
+            ],
+            "choices": [
+                "To mandate that derived subclasses must provide their own implementation of the method",
+                "To indicate that the computer's CPU does not support Python",
+                "To prevent the class from being loaded by the import system",
+                "To trigger an automatic garbage collection cycle"
+            ],
+            "hint": "Raising NotImplementedError alerts developers immediately if a required subclass method is missing.",
+            "type": "quiz",
+            "question_en": "Why does a base class method raise NotImplementedError?",
+            "question_fil": "Bakit nagbabato ng NotImplementedError ang base class method?",
+            "goal_en": "Enforce that subclasses must override the method.",
+            "goal_fil": "Puwersahin ang mga subclass na magbigay ng sariling implementation.",
+            "hint_en": "Raising NotImplementedError alerts developers immediately if a required subclass method is missing.",
+            "hint_fil": "Nagpapaalala ang NotImplementedError kapag nakalimutang i-override ang method sa subclass."
+        },
+        {
+            "id": "hard_ct_q10",
+            "enemy_id": "code_titan",
+            "difficulty": "hard",
+            "category": "Synthesis: Class Decorator Property Validation",
+            "error_type": "AttributeValidation",
+            "title": "Code Titan Quiz #10: Complete Hard Sector Mastery Architecture",
+            "question": "Which combination of Python features enables clean object state management, encapsulation, and error containment?",
+            "goal": "Identify classes, properties, custom exceptions, and try-finally cleanup.",
+            "expected_output": "OOP + Properties + Custom Exceptions + Try-Finally",
+            "lines": [
+                "# Master Titan Architecture: OOP + Properties + Custom Exceptions + Clean Error Boundaries"
+            ],
+            "code": "TitanArchitecture = True",
+            "answer": "Classes with @property getters/setters, custom domain Exceptions, and try-finally resource cleanup",
+            "distractors": [
+                "Global variables with bare except blocks and infinite loops",
+                "Nested while True loops without base cases or termination checks",
+                "Using eval() on all user inputs inside list comprehensions"
+            ],
+            "options": [
+                "Classes with @property getters/setters, custom domain Exceptions, and try-finally resource cleanup",
+                "Global variables with bare except blocks and infinite loops",
+                "Nested while True loops without base cases or termination checks",
+                "Using eval() on all user inputs inside list comprehensions"
+            ],
+            "choices": [
+                "Classes with @property getters/setters, custom domain Exceptions, and try-finally resource cleanup",
+                "Global variables with bare except blocks and infinite loops",
+                "Nested while True loops without base cases or termination checks",
+                "Using eval() on all user inputs inside list comprehensions"
+            ],
+            "hint": "Robust Python systems combine OOP encapsulation, property validation, custom errors, and safe exception cleanup.",
+            "type": "quiz",
+            "question_en": "Which combination of Python features enables clean object state management, encapsulation, and error containment?",
+            "question_fil": "Aling kombinasyon ng mga tampok sa Python ang nagbibigay ng malinis na state management at error containment?",
+            "goal_en": "Identify classes, properties, custom exceptions, and try-finally cleanup.",
+            "goal_fil": "Tukuyin ang OOP, properties, custom exceptions, at try-finally bilang pundasyon ng maayos na arkitektura.",
+            "hint_en": "Robust Python systems combine OOP encapsulation, property validation, custom errors, and safe exception cleanup.",
+            "hint_fil": "Ang malinis na arkitektura ay gumagamit ng OOP, properties, custom exceptions, at maayos na cleanup."
         }
     ]
 };

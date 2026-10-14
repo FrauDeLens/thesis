@@ -1,8 +1,4 @@
-// =========================================================
-// BUGHUNT: NORMAL DIFFICULTY ENEMY QUESTION POOL (data/normal.js)
-// Curated 72 balanced questions (6 Parsons + 6 Quiz per enemy)
-// Bilingual: English (default) & Everyday Conversational Filipino
-// =========================================================
+// NORMAL SECTOR — (6 Enemies, 20 questions each = 120 total)
 
 const listOgre = {
     "id": "list_ogre",
@@ -82,7 +78,7 @@ const listOgre = {
             "goal": "Print length of the list (2).",
             "expected_output": "2",
             "lines": [
-                "party = [\"Frau\", \"Alex\"]",
+                "party = [\"Hero\", \"Alex\"]",
                 "print(len(party))"
             ],
             "distractors": [
@@ -90,7 +86,7 @@ const listOgre = {
             ],
             "hint": "Use len(list) to get the total number of items, not .length.",
             "code": "print(party.length)",
-            "answer": "party = [\"Frau\", \"Alex\"]\nprint(len(party))",
+            "answer": "party = [\"Hero\", \"Alex\"]\nprint(len(party))",
             "type": "parson",
             "question_en": "Arrange the code blocks to define the function and call it. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block para magawa ang function at matawag ito. Alisin ang distractor.",
@@ -107,7 +103,7 @@ const listOgre = {
             "error_type": "AttributeError: 'list' object has no attribute 'remove_last'",
             "title": "List Ogre #4: Pop Method",
             "question": "Arrange the code blocks to process the list correctly. Exclude the distractor.",
-            "goal": "Pop Method.",
+            "goal": "Remove and print the last item from loot using .pop() ('ore').",
             "expected_output": "ore",
             "lines": [
                 "loot = [\"gem\", \"ore\"]",
@@ -123,8 +119,8 @@ const listOgre = {
             "type": "parson",
             "question_en": "Arrange the code blocks to process the list correctly. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block para maayos na maproseso ang list. Alisin ang distractor.",
-            "goal_en": "Pop Method.",
-            "goal_fil": "I-pop ang huling item sa list.",
+            "goal_en": "Remove and print the last item from loot using .pop() ('ore').",
+            "goal_fil": "Tanggalin at i-print ang huling item mula sa loot gamit ang .pop() ('ore').",
             "hint_en": "Use .pop() to remove and return the last item in a list.",
             "hint_fil": "Ang '.pop()' ang nagtatanggal at nagbabalik ng huling elemento sa list."
         },
@@ -165,7 +161,7 @@ const listOgre = {
             "error_type": "SyntaxError: invalid syntax",
             "title": "List Ogre #6: List Slicing",
             "question": "Arrange the code blocks to process the list correctly. Exclude the distractor.",
-            "goal": "List Slicing.",
+            "goal": "Slice the first two colors using slice syntax [0:2] and print them.",
             "expected_output": "['red', 'green']",
             "lines": [
                 "colors = [\"red\", \"green\", \"blue\"]",
@@ -181,10 +177,128 @@ const listOgre = {
             "type": "parson",
             "question_en": "Arrange the code blocks to process the list correctly. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block para maayos na maproseso ang list. Alisin ang distractor.",
-            "goal_en": "List Slicing.",
-            "goal_fil": "Kumuha ng slice ng unang 2 kulay.",
+            "goal_en": "Slice the first two colors using slice syntax [0:2] and print them.",
+            "goal_fil": "Kumuha ng slice ng unang dalawang kulay gamit ang [0:2] at i-print ito.",
             "hint_en": "Make sure the statement ends with a colon (:).",
             "hint_fil": "Colon (:) ang ginagamit sa slice notation sa Python, hindi '..'."
+        },
+        {
+            "id": "norm_lo_p7",
+            "enemy_id": "list_ogre",
+            "difficulty": "normal",
+            "category": "List Mutation",
+            "error_type": "ValueError: list.remove(x): x not in list",
+            "title": "List Ogre #7: Insert and Remove",
+            "question": "Arrange the code blocks to insert 'potion' and remove 'sword'.",
+            "goal": "Insert 'potion' at index 1 in ['sword', 'shield'] and remove 'sword'.",
+            "expected_output": "['potion', 'shield']",
+            "lines": [
+                "items = [\"sword\", \"shield\"]",
+                "items.insert(1, \"potion\")",
+                "items.remove(\"sword\")",
+                "print(items)"
+            ],
+            "distractors": [
+                "items.remove(\"bow\")"
+            ],
+            "hint": "Calling remove() on an item not present in the list raises a ValueError.",
+            "code": "items.remove(\"bow\")",
+            "answer": "items = [\"sword\", \"shield\"]\nitems.insert(1, \"potion\")\nitems.remove(\"sword\")\nprint(items)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to insert 'potion' and remove 'sword'.",
+            "question_fil": "I-ayos ang code blocks para mag-insert ng 'potion' at mag-alis ng 'sword'.",
+            "goal_en": "Insert 'potion' at index 1 in ['sword', 'shield'] and remove 'sword'.",
+            "goal_fil": "Mag-insert ng 'potion' sa index 1 at alisin ang 'sword'.",
+            "hint_en": "Calling remove() on an item not present in the list raises a ValueError.",
+            "hint_fil": "Nagdudulot ng ValueError ang pag-remove ng elementong wala sa listahan."
+        },
+        {
+            "id": "norm_lo_p8",
+            "enemy_id": "list_ogre",
+            "difficulty": "normal",
+            "category": "List Comprehension",
+            "error_type": "SyntaxError: invalid syntax",
+            "title": "List Ogre #8: List Comprehension Squares",
+            "question": "Arrange the code blocks to square list elements using a list comprehension.",
+            "goal": "Compute [x * x for x in nums] for nums=[1, 2, 3] and print [1, 4, 9].",
+            "expected_output": "[1, 4, 9]",
+            "lines": [
+                "nums = [1, 2, 3]",
+                "sq = [x * x for x in nums]",
+                "print(sq)"
+            ],
+            "distractors": [
+                "sq = [for x in nums: x * x]"
+            ],
+            "hint": "List comprehension syntax: [expression for item in iterable].",
+            "code": "sq = [for x in nums: x * x]",
+            "answer": "nums = [1, 2, 3]\nsq = [x * x for x in nums]\nprint(sq)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to square list elements using a list comprehension.",
+            "question_fil": "I-ayos ang code blocks para i-square ang bawat elemento gamit ang list comprehension.",
+            "goal_en": "Compute [x * x for x in nums] for nums=[1, 2, 3] and print [1, 4, 9].",
+            "goal_fil": "I-square ang bawat numero sa [1, 2, 3] gamit ang list comprehension.",
+            "hint_en": "List comprehension syntax: [expression for item in iterable].",
+            "hint_fil": "Ayos ng list comprehension: [expression for item in iterable]."
+        },
+        {
+            "id": "norm_lo_p9",
+            "enemy_id": "list_ogre",
+            "difficulty": "normal",
+            "category": "List Slicing",
+            "error_type": "IndexError: list index out of range",
+            "title": "List Ogre #9: Negative Indexing and Reversal",
+            "question": "Arrange the code blocks to retrieve the last element and reverse the list slice.",
+            "goal": "Get last element 'd' with [-1] and reverse first 2 elements of letters[::-1].",
+            "expected_output": "Last: d FirstTwoRev: ['d', 'c']",
+            "lines": [
+                "letters = ['a', 'b', 'c', 'd']",
+                "rev = letters[::-1]",
+                "print(f\"Last: {letters[-1]} FirstTwoRev: {rev[:2]}\")"
+            ],
+            "distractors": [
+                "print(letters[4])"
+            ],
+            "hint": "Negative index [-1] accesses the last element safely without calculating length.",
+            "code": "print(letters[4])",
+            "answer": "letters = ['a', 'b', 'c', 'd']\nrev = letters[::-1]\nprint(f\"Last: {letters[-1]} FirstTwoRev: {rev[:2]}\")",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to retrieve the last element and reverse the list slice.",
+            "question_fil": "I-ayos ang code blocks para kunin ang huling elemento at baligtarin ang slice.",
+            "goal_en": "Get last element 'd' with [-1] and reverse first 2 elements of letters[::-1].",
+            "goal_fil": "Kunin ang dulo gamit ang [-1] at baligtarin ang unang dalawang elemento.",
+            "hint_en": "Negative index [-1] accesses the last element safely without calculating length.",
+            "hint_fil": "Ang [-1] ay tumutukoy sa huling elemento ng listahan."
+        },
+        {
+            "id": "norm_lo_p10",
+            "enemy_id": "list_ogre",
+            "difficulty": "normal",
+            "category": "List Extension",
+            "error_type": "TypeError: 'int' object is not iterable",
+            "title": "List Ogre #10: List Extend vs Append",
+            "question": "Arrange the code blocks to flatten list concatenation using extend().",
+            "goal": "Extend [1, 2] with [3, 4] so final list length is 4.",
+            "expected_output": "Extended length: 4",
+            "lines": [
+                "a = [1, 2]",
+                "b = [3, 4]",
+                "a.extend(b)",
+                "print(\"Extended length:\", len(a))"
+            ],
+            "distractors": [
+                "a.extend(3)"
+            ],
+            "hint": "extend() expects an iterable collection (like a list), not a single integer.",
+            "code": "a.extend(3)",
+            "answer": "a = [1, 2]\nb = [3, 4]\na.extend(b)\nprint(\"Extended length:\", len(a))",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to flatten list concatenation using extend().",
+            "question_fil": "I-ayos ang code blocks para pagsamahin ang mga listahan gamit ang extend().",
+            "goal_en": "Extend [1, 2] with [3, 4] so final list length is 4.",
+            "goal_fil": "Dagdagan ang [1, 2] ng mga elemento ng [3, 4] para maging haba ay 4.",
+            "hint_en": "extend() expects an iterable collection (like a list), not a single integer.",
+            "hint_fil": "Kailangan ng iterable tulad ng list sa extend(), hindi isang integer."
         },
         {
             "id": "norm_lo_q1",
@@ -438,9 +552,179 @@ const listOgre = {
             "goal_fil": "Kumuha ng slice ng unang 2 items.",
             "hint_en": "Make sure the statement ends with a colon (:).",
             "hint_fil": "Gumamit ng colon (:) para sa slice range: [start:end]."
+        },
+        {
+            "id": "norm_lo_q7",
+            "enemy_id": "list_ogre",
+            "difficulty": "normal",
+            "category": "Index Boundaries",
+            "error_type": "IndexError: list index out of range",
+            "title": "List Ogre Quiz #7: Zero-Based Index Bounds",
+            "question": "Why does items[len(items)] raise an IndexError in Python?",
+            "goal": "Identify that valid indices range from 0 to len-1.",
+            "expected_output": "Index out of range",
+            "lines": [
+                "items = [\"a\", \"b\", \"c\"]",
+                "# items[3] raises IndexError!"
+            ],
+            "code": "last = items[len(items)]",
+            "answer": "Lists are 0-indexed, so the last valid index is len(items) - 1",
+            "distractors": [
+                "Lists can only store two items maximum",
+                "len() returns a string instead of an integer",
+                "Python requires negative indices for all lookups"
+            ],
+            "options": [
+                "Lists are 0-indexed, so the last valid index is len(items) - 1",
+                "Lists can only store two items maximum",
+                "len() returns a string instead of an integer",
+                "Python requires negative indices for all lookups"
+            ],
+            "choices": [
+                "Lists are 0-indexed, so the last valid index is len(items) - 1",
+                "Lists can only store two items maximum",
+                "len() returns a string instead of an integer",
+                "Python requires negative indices for all lookups"
+            ],
+            "hint": "Because indices start at 0, a list of length 3 has valid indices 0, 1, and 2.",
+            "type": "quiz",
+            "question_en": "Why does items[len(items)] raise an IndexError in Python?",
+            "question_fil": "Bakit nagdudulot ng IndexError ang items[len(items)] sa Python?",
+            "goal_en": "Identify that valid indices range from 0 to len-1.",
+            "goal_fil": "Maunawaan ang 0-based indexing ng list.",
+            "hint_en": "Because indices start at 0, a list of length 3 has valid indices 0, 1, and 2.",
+            "hint_fil": "Nagsisimula sa 0 ang index, kaya ang dulo ay len - 1."
+        },
+        {
+            "id": "norm_lo_q8",
+            "enemy_id": "list_ogre",
+            "difficulty": "normal",
+            "category": "Append vs Extend",
+            "error_type": "SemanticDifference",
+            "title": "List Ogre Quiz #8: Difference Between Append and Extend",
+            "question": "What is the result of [1, 2].append([3, 4]) versus [1, 2].extend([3, 4])?",
+            "goal": "Distinguish nested list appending from element extension.",
+            "expected_output": "append nests; extend flattens",
+            "lines": [
+                "a = [1, 2]; a.append([3, 4])  # [1, 2, [3, 4]]",
+                "b = [1, 2]; b.extend([3, 4])  # [1, 2, 3, 4]"
+            ],
+            "code": "a.append([3, 4])",
+            "answer": "append adds the list as a single nested element; extend adds each element individually",
+            "distractors": [
+                "append removes duplicates; extend allows duplicates",
+                "extend converts elements into strings",
+                "Both methods produce identical results"
+            ],
+            "options": [
+                "append adds the list as a single nested element; extend adds each element individually",
+                "append removes duplicates; extend allows duplicates",
+                "extend converts elements into strings",
+                "Both methods produce identical results"
+            ],
+            "choices": [
+                "append adds the list as a single nested element; extend adds each element individually",
+                "append removes duplicates; extend allows duplicates",
+                "extend converts elements into strings",
+                "Both methods produce identical results"
+            ],
+            "hint": "append adds its argument as one object; extend iterates over its argument adding each item.",
+            "type": "quiz",
+            "question_en": "What is the result of [1, 2].append([3, 4]) versus [1, 2].extend([3, 4])?",
+            "question_fil": "Ano ang pagkakaiba ng append([3, 4]) sa extend([3, 4])?",
+            "goal_en": "Distinguish nested list appending from element extension.",
+            "goal_fil": "Ihiwalay ang nested append sa flat extend.",
+            "hint_en": "append adds its argument as one object; extend iterates over its argument adding each item.",
+            "hint_fil": "Isang nested element ang append, habang paisa-isa ang dagdag sa extend."
+        },
+        {
+            "id": "norm_lo_q9",
+            "enemy_id": "list_ogre",
+            "difficulty": "normal",
+            "category": "Slice Step Syntax",
+            "error_type": "SliceError",
+            "title": "List Ogre Quiz #9: Slicing with Step Parameter",
+            "question": "What does the slice nums[::2] return for nums = [0, 1, 2, 3, 4]?",
+            "goal": "Determine slice output with step 2.",
+            "expected_output": "[0, 2, 4]",
+            "lines": [
+                "nums = [0, 1, 2, 3, 4]",
+                "print(nums[::2])"
+            ],
+            "code": "nums[::2]",
+            "answer": "[0, 2, 4]",
+            "distractors": [
+                "[1, 3]",
+                "[0, 1]",
+                "[2, 4]"
+            ],
+            "options": [
+                "[0, 2, 4]",
+                "[1, 3]",
+                "[0, 1]",
+                "[2, 4]"
+            ],
+            "choices": [
+                "[0, 2, 4]",
+                "[1, 3]",
+                "[0, 1]",
+                "[2, 4]"
+            ],
+            "hint": "The step value 2 selects every second element starting from index 0.",
+            "type": "quiz",
+            "question_en": "What does the slice nums[::2] return for nums = [0, 1, 2, 3, 4]?",
+            "question_fil": "Ano ang ibinabalik ng slice na nums[::2] para sa [0, 1, 2, 3, 4]?",
+            "goal_en": "Determine slice output with step 2.",
+            "goal_fil": "Tukuyin ang resulta ng slice na may step 2.",
+            "hint_en": "The step value 2 selects every second element starting from index 0.",
+            "hint_fil": "Kinukuha ng step 2 ang bawat pangalawang elemento mula index 0."
+        },
+        {
+            "id": "norm_lo_q10",
+            "enemy_id": "list_ogre",
+            "difficulty": "normal",
+            "category": "Safe List Removal",
+            "error_type": "ValueError: list.remove(x): x not in list",
+            "title": "List Ogre Quiz #10: Guarding List Removal with Membership Check",
+            "question": "Select the correct way to safely remove 'potion' only if it exists in inventory.",
+            "goal": "Check membership before calling remove to prevent ValueError.",
+            "expected_output": "Safe removal",
+            "lines": [
+                "inv = [\"sword\"]",
+                "if \"potion\" in inv: inv.remove(\"potion\")",
+                "print(inv)"
+            ],
+            "code": "inv.remove(\"potion\")",
+            "answer": "if \"potion\" in inv: inv.remove(\"potion\")",
+            "distractors": [
+                "inv.remove(\"potion\")",
+                "inv.remove_if_exists(\"potion\")",
+                "delete inv[\"potion\"]"
+            ],
+            "options": [
+                "if \"potion\" in inv: inv.remove(\"potion\")",
+                "inv.remove(\"potion\")",
+                "inv.remove_if_exists(\"potion\")",
+                "delete inv[\"potion\"]"
+            ],
+            "choices": [
+                "if \"potion\" in inv: inv.remove(\"potion\")",
+                "inv.remove(\"potion\")",
+                "inv.remove_if_exists(\"potion\")",
+                "delete inv[\"potion\"]"
+            ],
+            "hint": "Check 'if item in list:' before calling list.remove(item) to avoid crashes.",
+            "type": "quiz",
+            "question_en": "Select the correct way to safely remove 'potion' only if it exists in inventory.",
+            "question_fil": "Piliin ang tamang paraan para ligtas na alisin ang 'potion' kung ito ay nasa listahan.",
+            "goal_en": "Check membership before calling remove to prevent ValueError.",
+            "goal_fil": "Suriin muna gamit ang 'in' bago mag-remove.",
+            "hint_en": "Check 'if item in list:' before calling list.remove(item) to avoid crashes.",
+            "hint_fil": "Gamitin ang 'if item in list:' bago mag-remove para iwas crash."
         }
     ]
 };
+
 const dictWizard = {
     "id": "dict_wizard",
     "name": "Dict Wizard",
@@ -459,9 +743,9 @@ const dictWizard = {
             "title": "Dict Wizard #1: Access Dict Key",
             "question": "Arrange the code blocks to store and retrieve dictionary values. Exclude the distractor.",
             "goal": "Access Dict Key.",
-            "expected_output": "Frau",
+            "expected_output": "Hero",
             "lines": [
-                "player = {\"name\": \"Frau\", \"level\": 5}",
+                "player = {\"name\": \"Hero\", \"level\": 5}",
                 "print(player[\"name\"])"
             ],
             "distractors": [
@@ -469,12 +753,12 @@ const dictWizard = {
             ],
             "hint": "Review your Python syntax, variable names, and line sequence.",
             "code": "print(player.name)",
-            "answer": "player = {\"name\": \"Frau\", \"level\": 5}\nprint(player[\"name\"])",
+            "answer": "player = {\"name\": \"Hero\", \"level\": 5}\nprint(player[\"name\"])",
             "type": "parson",
             "question_en": "Arrange the code blocks to store and retrieve dictionary values. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block para ma-store at makuha ang values sa dictionary. Alisin ang distractor.",
             "goal_en": "Access Dict Key.",
-            "goal_fil": "I-print ang pangalan ng player na 'Frau'.",
+            "goal_fil": "I-print ang pangalan ng player na 'Hero'.",
             "hint_en": "Review your Python syntax, variable names, and line sequence.",
             "hint_fil": "Gumamit ng bracket notation player['name'] para ma-access ang key."
         },
@@ -622,6 +906,124 @@ const dictWizard = {
             "goal_fil": "I-print ang 'ok' kung naroroon ang key.",
             "hint_en": "Review your Python syntax, variable names, and line sequence.",
             "hint_fil": "Gamitin ang 'key in dict' syntax sa Python."
+        },
+        {
+            "id": "norm_dw_p7",
+            "enemy_id": "dict_wizard",
+            "difficulty": "normal",
+            "category": "Default Lookup",
+            "error_type": "KeyError: 'mp'",
+            "title": "Dict Wizard #7: Safe Key Lookup with Get Default",
+            "question": "Arrange the code blocks to safely retrieve 'mp' with a default value of 50.",
+            "goal": "Retrieve stats['hp'] (100) and stats.get('mp', 50) and print 'HP: 100, MP: 50'.",
+            "expected_output": "HP: 100, MP: 50",
+            "lines": [
+                "stats = {\"hp\": 100}",
+                "mp = stats.get(\"mp\", 50)",
+                "print(f\"HP: {stats['hp']}, MP: {mp}\")"
+            ],
+            "distractors": [
+                "mp = stats[\"mp\"]"
+            ],
+            "hint": "dict.get(key, default) avoids KeyError by returning the default value if key is absent.",
+            "code": "mp = stats[\"mp\"]",
+            "answer": "stats = {\"hp\": 100}\nmp = stats.get(\"mp\", 50)\nprint(f\"HP: {stats['hp']}, MP: {mp}\")",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to safely retrieve 'mp' with a default value of 50.",
+            "question_fil": "I-ayos ang code blocks para kumuha ng dictionary value gamit ang get default.",
+            "goal_en": "Retrieve stats['hp'] (100) and stats.get('mp', 50) and print 'HP: 100, MP: 50'.",
+            "goal_fil": "Kunin ang stats['hp'] at stats.get('mp', 50) at i-print ang mga ito.",
+            "hint_en": "dict.get(key, default) avoids KeyError by returning the default value if key is absent.",
+            "hint_fil": "Iwas KeyError ang dict.get(key, default) kapag wala ang susi."
+        },
+        {
+            "id": "norm_dw_p8",
+            "enemy_id": "dict_wizard",
+            "difficulty": "normal",
+            "category": "Dictionary Items",
+            "error_type": "ValueError: too many values to unpack",
+            "title": "Dict Wizard #8: Iterating Over Dictionary Items",
+            "question": "Arrange the code blocks to sum potion counts using dictionary.items().",
+            "goal": "Sum counts in {'potion': 3, 'elixir': 1} and print 'Total potions: 4'.",
+            "expected_output": "Total potions: 4",
+            "lines": [
+                "inventory = {\"potion\": 3, \"elixir\": 1}",
+                "total = 0",
+                "for item, count in inventory.items():",
+                "    total += count",
+                "print(\"Total potions:\", total)"
+            ],
+            "distractors": [
+                "for item, count in inventory:"
+            ],
+            "hint": "Iterating directly over a dictionary only yields keys; use .items() for key-value pairs.",
+            "code": "for item, count in inventory:",
+            "answer": "inventory = {\"potion\": 3, \"elixir\": 1}\ntotal = 0\nfor item, count in inventory.items():\n    total += count\nprint(\"Total potions:\", total)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to sum potion counts using dictionary.items().",
+            "question_fil": "I-ayos ang code blocks para bilangin ang mga potion gamit ang .items().",
+            "goal_en": "Sum counts in {'potion': 3, 'elixir': 1} and print 'Total potions: 4'.",
+            "goal_fil": "Pagsamahin ang bilang ng mga gamot gamit ang inventory.items().",
+            "hint_en": "Iterating directly over a dictionary only yields keys; use .items() for key-value pairs.",
+            "hint_fil": "Kailangan ang .items() para makuha pareho ang key at value sa loop."
+        },
+        {
+            "id": "norm_dw_p9",
+            "enemy_id": "dict_wizard",
+            "difficulty": "normal",
+            "category": "Dict Comprehension",
+            "error_type": "SyntaxError: invalid syntax",
+            "title": "Dict Wizard #9: Dictionary Comprehension",
+            "question": "Arrange the code blocks to map names to their lengths using dict comprehension.",
+            "goal": "Create lengths dictionary for ['Alice', 'Bob'] and print length of 'Alice' (5).",
+            "expected_output": "Alice length: 5",
+            "lines": [
+                "names = [\"Alice\", \"Bob\"]",
+                "lengths = {name: len(name) for name in names}",
+                "print(\"Alice length:\", lengths[\"Alice\"])"
+            ],
+            "distractors": [
+                "lengths = {name = len(name) for name in names}"
+            ],
+            "hint": "Dictionary comprehension key-value pairs are separated by colon (:).",
+            "code": "lengths = {name = len(name) for name in names}",
+            "answer": "names = [\"Alice\", \"Bob\"]\nlengths = {name: len(name) for name in names}\nprint(\"Alice length:\", lengths[\"Alice\"])",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to map names to their lengths using dict comprehension.",
+            "question_fil": "I-ayos ang code blocks para gumawa ng dictionary gamit ang comprehension.",
+            "goal_en": "Create lengths dictionary for ['Alice', 'Bob'] and print length of 'Alice' (5).",
+            "goal_fil": "Gumawa ng dictionary ng haba ng pangalan at i-print ang kay Alice.",
+            "hint_en": "Dictionary comprehension key-value pairs are separated by colon (:).",
+            "hint_fil": "Paghiwalayin ang key at value sa comprehension gamit ang colon (:)."
+        },
+        {
+            "id": "norm_dw_p10",
+            "enemy_id": "dict_wizard",
+            "difficulty": "normal",
+            "category": "Dict Pop",
+            "error_type": "KeyError: 'poisoned'",
+            "title": "Dict Wizard #10: Removing Keys with Pop",
+            "question": "Arrange the code blocks to cure poisoning by popping the key from hero dict.",
+            "goal": "Remove 'poisoned' from hero and print remaining keys ['name'].",
+            "expected_output": "Hero keys: ['name']",
+            "lines": [
+                "hero = {\"name\": \"Hero\", \"poisoned\": True}",
+                "hero.pop(\"poisoned\")",
+                "print(\"Hero keys:\", list(hero.keys()))"
+            ],
+            "distractors": [
+                "hero.pop(\"cursed\")"
+            ],
+            "hint": "Popping a non-existent key without a default raises a KeyError.",
+            "code": "hero.pop(\"cursed\")",
+            "answer": "hero = {\"name\": \"Hero\", \"poisoned\": True}\nhero.pop(\"poisoned\")\nprint(\"Hero keys:\", list(hero.keys()))",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to cure poisoning by popping the key from hero dict.",
+            "question_fil": "I-ayos ang code blocks para alisin ang 'poisoned' key gamit ang pop().",
+            "goal_en": "Remove 'poisoned' from hero and print remaining keys ['name'].",
+            "goal_fil": "Alisin ang 'poisoned' sa hero dictionary at i-print ang natitirang keys.",
+            "hint_en": "Popping a non-existent key without a default raises a KeyError.",
+            "hint_fil": "Nagdudulot ng KeyError ang pag-pop ng susi na wala sa dictionary."
         },
         {
             "id": "norm_dw_q1",
@@ -876,9 +1278,180 @@ const dictWizard = {
             "goal_fil": "Suriin ang 'hp' key sa data.",
             "hint_en": "Review your Python syntax, variable names, and line sequence.",
             "hint_fil": "Inalis na ang has_key() sa Python 3; gamitin ang 'key in dict'."
+        },
+        {
+            "id": "norm_dw_q7",
+            "enemy_id": "dict_wizard",
+            "difficulty": "normal",
+            "category": "Missing Keys",
+            "error_type": "KeyError",
+            "title": "Dict Wizard Quiz #7: KeyError Prevention",
+            "question": "Which method safely retrieves a value from a dictionary without raising KeyError?",
+            "goal": "Identify dict.get() as safe lookup.",
+            "expected_output": "dict.get()",
+            "lines": [
+                "data = {\"level\": 1}",
+                "rank = data.get(\"rank\", \"Novice\")",
+                "print(rank)"
+            ],
+            "code": "data[\"rank\"]",
+            "answer": "dict.get(key, default)",
+            "distractors": [
+                "dict.find(key)",
+                "dict.lookup(key)",
+                "dict.search(key)"
+            ],
+            "options": [
+                "dict.get(key, default)",
+                "dict.find(key)",
+                "dict.lookup(key)",
+                "dict.search(key)"
+            ],
+            "choices": [
+                "dict.get(key, default)",
+                "dict.find(key)",
+                "dict.lookup(key)",
+                "dict.search(key)"
+            ],
+            "hint": "dict.get() returns the fallback default value when the key is not found.",
+            "type": "quiz",
+            "question_en": "Which method safely retrieves a value from a dictionary without raising KeyError?",
+            "question_fil": "Aling method ang ligtas na kumukuha ng value sa dictionary nang walang KeyError?",
+            "goal_en": "Identify dict.get() as safe lookup.",
+            "goal_fil": "Tukuyin ang dict.get() bilang ligtas na lookup.",
+            "hint_en": "dict.get() returns the fallback default value when the key is not found.",
+            "hint_fil": "Ibinabalik ng dict.get() ang default value kapag wala ang susi."
+        },
+        {
+            "id": "norm_dw_q8",
+            "enemy_id": "dict_wizard",
+            "difficulty": "normal",
+            "category": "Key Lookup Syntax",
+            "error_type": "TypeError: 'dict' object is not callable",
+            "title": "Dict Wizard Quiz #8: Square Brackets for Key Access",
+            "question": "Select the correct syntax to access the value associated with key 'hp'.",
+            "goal": "Access dictionary key using square brackets [].",
+            "expected_output": "100",
+            "lines": [
+                "player = {\"hp\": 100}",
+                "print(player[\"hp\"])"
+            ],
+            "code": "print(player(\"hp\"))",
+            "answer": "player[\"hp\"]",
+            "distractors": [
+                "player(\"hp\")",
+                "player->hp",
+                "player.key(\"hp\")"
+            ],
+            "options": [
+                "player[\"hp\"]",
+                "player(\"hp\")",
+                "player->hp",
+                "player.key(\"hp\")"
+            ],
+            "choices": [
+                "player[\"hp\"]",
+                "player(\"hp\")",
+                "player->hp",
+                "player.key(\"hp\")"
+            ],
+            "hint": "Dictionary indexing uses square brackets [], not function call parentheses ().",
+            "type": "quiz",
+            "question_en": "Select the correct syntax to access the value associated with key 'hp'.",
+            "question_fil": "Piliin ang tamang syntax sa pag-access ng key sa dictionary gamit ang square brackets [].",
+            "goal_en": "Access dictionary key using square brackets [].",
+            "goal_fil": "Kunin ang key sa dictionary gamit ang [].",
+            "hint_en": "Dictionary indexing uses square brackets [], not function call parentheses ().",
+            "hint_fil": "Square brackets [] ang gamit sa dictionary, hindi panaklong ()."
+        },
+        {
+            "id": "norm_dw_q9",
+            "enemy_id": "dict_wizard",
+            "difficulty": "normal",
+            "category": "Dictionary Update",
+            "error_type": "SemanticError",
+            "title": "Dict Wizard Quiz #9: Merging Dictionaries with Update",
+            "question": "Select the statement that merges new_stats into base_stats in place.",
+            "goal": "Update base_stats with new_stats.",
+            "expected_output": "base_stats updated",
+            "lines": [
+                "base_stats = {\"hp\": 100}",
+                "new_stats = {\"mana\": 50}",
+                "base_stats.update(new_stats)"
+            ],
+            "code": "base_stats.merge(new_stats)",
+            "answer": "base_stats.update(new_stats)",
+            "distractors": [
+                "base_stats.merge(new_stats)",
+                "base_stats.append(new_stats)",
+                "base_stats.add(new_stats)"
+            ],
+            "options": [
+                "base_stats.update(new_stats)",
+                "base_stats.merge(new_stats)",
+                "base_stats.append(new_stats)",
+                "base_stats.add(new_stats)"
+            ],
+            "choices": [
+                "base_stats.update(new_stats)",
+                "base_stats.merge(new_stats)",
+                "base_stats.append(new_stats)",
+                "base_stats.add(new_stats)"
+            ],
+            "hint": "Use dict.update(other_dict) to copy keys and values into an existing dictionary.",
+            "type": "quiz",
+            "question_en": "Select the statement that merges new_stats into base_stats in place.",
+            "question_fil": "Piliin ang statement na nagsasama ng bagong dictionary gamit ang update().",
+            "goal_en": "Update base_stats with new_stats.",
+            "goal_fil": "I-update ang base_stats gamit ang bagong values.",
+            "hint_en": "Use dict.update(other_dict) to copy keys and values into an existing dictionary.",
+            "hint_fil": "Gamitin ang dict.update() para idagdag ang laman ng ibang dictionary."
+        },
+        {
+            "id": "norm_dw_q10",
+            "enemy_id": "dict_wizard",
+            "difficulty": "normal",
+            "category": "Dictionary Iteration",
+            "error_type": "ValueError: not enough values to unpack",
+            "title": "Dict Wizard Quiz #10: Iterating Keys vs Items",
+            "question": "What does iterating directly over 'for x in hero_dict:' yield by default?",
+            "goal": "Identify that dict iteration yields keys.",
+            "expected_output": "Dictionary keys",
+            "lines": [
+                "hero_dict = {\"name\": \"Hero\", \"hp\": 100}",
+                "for k in hero_dict: print(k)"
+            ],
+            "code": "for k, v in hero_dict:",
+            "answer": "Only the keys of the dictionary",
+            "distractors": [
+                "Both keys and values as pairs",
+                "Only the values of the dictionary",
+                "The memory addresses of the dictionary items"
+            ],
+            "options": [
+                "Only the keys of the dictionary",
+                "Both keys and values as pairs",
+                "Only the values of the dictionary",
+                "The memory addresses of the dictionary items"
+            ],
+            "choices": [
+                "Only the keys of the dictionary",
+                "Both keys and values as pairs",
+                "Only the values of the dictionary",
+                "The memory addresses of the dictionary items"
+            ],
+            "hint": "By default, iterating over a dictionary iterates over its keys; use .items() for pairs.",
+            "type": "quiz",
+            "question_en": "What does iterating directly over 'for x in hero_dict:' yield by default?",
+            "question_fil": "Ano ang ibinabalik sa bawat ikot kapag nag-loop direkta sa dictionary?",
+            "goal_en": "Identify that dict iteration yields keys.",
+            "goal_fil": "Alamin na mga susi (keys) lamang ang lumalabas sa default loop.",
+            "hint_en": "By default, iterating over a dictionary iterates over its keys; use .items() for pairs.",
+            "hint_fil": "Mga keys lamang ang lumalabas; gamitin ang .items() kung kailangan pati values."
         }
     ]
 };
+
 const recursionWolf = {
     "id": "recursion_wolf",
     "name": "Recursion Wolf",
@@ -1076,6 +1649,129 @@ const recursionWolf = {
             "goal_fil": "I-print ang [3, 2, 1].",
             "hint_en": "Review your Python syntax, variable names, and line sequence.",
             "hint_fil": "Ipasa ang n - 1 sa count_list() call."
+        },
+        {
+            "id": "norm_rw_p7",
+            "enemy_id": "recursion_wolf",
+            "difficulty": "normal",
+            "category": "Recursive List",
+            "error_type": "RecursionError: maximum recursion depth exceeded",
+            "title": "Recursion Wolf #7: Recursive Countdown List",
+            "question": "Arrange the code blocks to build a countdown list recursively down to 1.",
+            "goal": "Build [3, 2, 1] using recursive countdown(3) and print the result list.",
+            "expected_output": "[3, 2, 1]",
+            "lines": [
+                "def countdown(n):",
+                "    if n <= 0: return []",
+                "    return [n] + countdown(n - 1)",
+                "print(countdown(3))"
+            ],
+            "distractors": [
+                "    return [n] + countdown(n)"
+            ],
+            "hint": "Recursive step must decrement n to reach the base case n <= 0.",
+            "code": "    return [n] + countdown(n)",
+            "answer": "def countdown(n):\n    if n <= 0: return []\n    return [n] + countdown(n - 1)\nprint(countdown(3))",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to build a countdown list recursively down to 1.",
+            "question_fil": "I-ayos ang code blocks para bumuo ng countdown list gamit ang recursion.",
+            "goal_en": "Build [3, 2, 1] using recursive countdown(3) and print the result list.",
+            "goal_fil": "Bumuo ng [3, 2, 1] gamit ang recursive countdown function.",
+            "hint_en": "Recursive step must decrement n to reach the base case n <= 0.",
+            "hint_fil": "Dapat bawasan ang n sa recursive step para maabot ang base case."
+        },
+        {
+            "id": "norm_rw_p8",
+            "enemy_id": "recursion_wolf",
+            "difficulty": "normal",
+            "category": "Recursion",
+            "error_type": "RecursionError: maximum recursion depth exceeded",
+            "title": "Recursion Wolf #8: Recursive Sum to N",
+            "question": "Arrange the code blocks to sum integers from 1 up to N using simple recursion.",
+            "goal": "Calculate and print 'Sum 1..4: 10' recursively.",
+            "expected_output": "Sum 1..4: 10",
+            "lines": [
+                "def sum_range(n):",
+                "    if n <= 1:",
+                "        return n",
+                "    return n + sum_range(n - 1)",
+                "print(\"Sum 1..4:\", sum_range(4))"
+            ],
+            "distractors": [
+                "return n + sum_range(n)"
+            ],
+            "hint": "The recursive call must decrement n (n - 1) toward the base case.",
+            "code": "return n + sum_range(n)",
+            "answer": "def sum_range(n):\n    if n <= 1:\n        return n\n    return n + sum_range(n - 1)\nprint(\"Sum 1..4:\", sum_range(4))",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to sum integers from 1 up to N using simple recursion.",
+            "question_fil": "I-ayos ang code blocks para pagsamahin ang mga numero mula 1 hanggang N gamit ang simpleng recursion.",
+            "goal_en": "Calculate and print 'Sum 1..4: 10' recursively.",
+            "goal_fil": "Kalkulahin at i-print ang 'Sum 1..4: 10' gamit ang recursion.",
+            "hint_en": "The recursive call must decrement n (n - 1) toward the base case.",
+            "hint_fil": "Dapat binabawasan ang n (n - 1) sa bawat recursive call patungo sa base case."
+        },
+        {
+            "id": "norm_rw_p9",
+            "enemy_id": "recursion_wolf",
+            "difficulty": "normal",
+            "category": "Recursion",
+            "error_type": "RecursionError: maximum recursion depth exceeded",
+            "title": "Recursion Wolf #9: Recursive Countdown String",
+            "question": "Arrange the code blocks to build a countdown string recursively.",
+            "goal": "Build and print 'Countdown: 3 2 1 Go!'.",
+            "expected_output": "Countdown: 3 2 1 Go!",
+            "lines": [
+                "def count_down(n):",
+                "    if n == 0:",
+                "        return \"Go!\"",
+                "    return str(n) + \" \" + count_down(n - 1)",
+                "print(\"Countdown:\", count_down(3))"
+            ],
+            "distractors": [
+                "return str(n) + \" \" + count_down(n)"
+            ],
+            "hint": "Each step must step closer to 0 (n - 1).",
+            "code": "return str(n) + \" \" + count_down(n)",
+            "answer": "def count_down(n):\n    if n == 0:\n        return \"Go!\"\n    return str(n) + \" \" + count_down(n - 1)\nprint(\"Countdown:\", count_down(3))",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to build a countdown string recursively.",
+            "question_fil": "I-ayos ang code blocks para gumawa ng countdown string gamit ang recursion.",
+            "goal_en": "Build and print 'Countdown: 3 2 1 Go!'.",
+            "goal_fil": "Buuin at i-print ang 'Countdown: 3 2 1 Go!'.",
+            "hint_en": "Each step must step closer to 0 (n - 1).",
+            "hint_fil": "Bawat hakbang ay dapat papalapit sa 0 (n - 1)."
+        },
+        {
+            "id": "norm_rw_p10",
+            "enemy_id": "recursion_wolf",
+            "difficulty": "normal",
+            "category": "Recursive String",
+            "error_type": "IndexError: string index out of range",
+            "title": "Recursion Wolf #10: Recursive Palindrome Check",
+            "question": "Arrange the code blocks to verify if a word is a palindrome recursively.",
+            "goal": "Recursively test if 'radar' is palindrome and print True.",
+            "expected_output": "True",
+            "lines": [
+                "def is_palindrome(s):",
+                "    if len(s) <= 1: return True",
+                "    if s[0] != s[-1]: return False",
+                "    return is_palindrome(s[1:-1])",
+                "print(is_palindrome(\"radar\"))"
+            ],
+            "distractors": [
+                "    if s[0] == s[-1]: return False"
+            ],
+            "hint": "A palindrome requires first and last letters to match; if they mismatch, return False.",
+            "code": "    if s[0] == s[-1]: return False",
+            "answer": "def is_palindrome(s):\n    if len(s) <= 1: return True\n    if s[0] != s[-1]: return False\n    return is_palindrome(s[1:-1])\nprint(is_palindrome(\"radar\"))",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to verify if a word is a palindrome recursively.",
+            "question_fil": "I-ayos ang code blocks para suriin kung palindrome ang salita gamit ang recursion.",
+            "goal_en": "Recursively test if 'radar' is palindrome and print True.",
+            "goal_fil": "Suriin kung ang 'radar' ay palindrome (resulta: True).",
+            "hint_en": "A palindrome requires first and last letters to match; if they mismatch, return False.",
+            "hint_fil": "Dapat magkatugma ang una at huling titik sa palindrome."
         },
         {
             "id": "norm_rw_q1",
@@ -1334,9 +2030,180 @@ const recursionWolf = {
             "goal_fil": "Tawagin ang sum_n(n - 1).",
             "hint_en": "Review your Python syntax, variable names, and line sequence.",
             "hint_fil": "Pababang n - 1 ang kailangan para marating ang base case na n <= 0."
+        },
+        {
+            "id": "norm_rw_q7",
+            "enemy_id": "recursion_wolf",
+            "difficulty": "normal",
+            "category": "Base Case",
+            "error_type": "RecursionError",
+            "title": "Recursion Wolf Quiz #7: Missing Base Case Consequences",
+            "question": "What error occurs when a recursive function fails to hit a base case?",
+            "goal": "Identify RecursionError caused by stack overflow.",
+            "expected_output": "RecursionError: maximum recursion depth exceeded",
+            "lines": [
+                "def infinite(n): return infinite(n + 1)",
+                "# infinite(1) crashes!"
+            ],
+            "code": "def inf(n): return inf(n)",
+            "answer": "RecursionError: maximum recursion depth exceeded",
+            "distractors": [
+                "TypeError: unsupported recursion type",
+                "ValueError: invalid stack size",
+                "ZeroDivisionError: stack empty"
+            ],
+            "options": [
+                "RecursionError: maximum recursion depth exceeded",
+                "TypeError: unsupported recursion type",
+                "ValueError: invalid stack size",
+                "ZeroDivisionError: stack empty"
+            ],
+            "choices": [
+                "RecursionError: maximum recursion depth exceeded",
+                "TypeError: unsupported recursion type",
+                "ValueError: invalid stack size",
+                "ZeroDivisionError: stack empty"
+            ],
+            "hint": "Python raises a RecursionError when function calls exceed the maximum call stack limit.",
+            "type": "quiz",
+            "question_en": "What error occurs when a recursive function fails to hit a base case?",
+            "question_fil": "Anong error ang lumalabas kapag walang base case ang recursive function?",
+            "goal_en": "Identify RecursionError caused by stack overflow.",
+            "goal_fil": "Tukuyin ang RecursionError sa walang-katapusang tawag.",
+            "hint_en": "Python raises a RecursionError when function calls exceed the maximum call stack limit.",
+            "hint_fil": "RecursionError ang ibinabato ng Python kapag napuno ang call stack."
+        },
+        {
+            "id": "norm_rw_q8",
+            "enemy_id": "recursion_wolf",
+            "difficulty": "normal",
+            "category": "Return in Recursion",
+            "error_type": "LogicError: returns None",
+            "title": "Recursion Wolf Quiz #8: Forgetting Return on Recursive Call",
+            "question": "Why does a recursive function return None if 'return' is omitted on the recursive call?",
+            "goal": "Understand that recursive results must be returned up the call stack.",
+            "expected_output": "None returned without return",
+            "lines": [
+                "def sum_to(n):",
+                "    if n == 1: return 1",
+                "    sum_to(n - 1)  # Forgot return!",
+                "# Result becomes None"
+            ],
+            "code": "sum_to(n - 1)",
+            "answer": "The inner recursive call's value is discarded instead of passed back up the call stack",
+            "distractors": [
+                "Python automatically prints discarded values to the console",
+                "Omitted returns convert integers to float 0.0",
+                "The function restarts from n = 0"
+            ],
+            "options": [
+                "The inner recursive call's value is discarded instead of passed back up the call stack",
+                "Python automatically prints discarded values to the console",
+                "Omitted returns convert integers to float 0.0",
+                "The function restarts from n = 0"
+            ],
+            "choices": [
+                "The inner recursive call's value is discarded instead of passed back up the call stack",
+                "Python automatically prints discarded values to the console",
+                "Omitted returns convert integers to float 0.0",
+                "The function restarts from n = 0"
+            ],
+            "hint": "Every branch of a recursive function that calculates a result must use 'return'.",
+            "type": "quiz",
+            "question_en": "Why does a recursive function return None if 'return' is omitted on the recursive call?",
+            "question_fil": "Bakit nagbabalik ng None ang recursive function kapag nakalimutan ang 'return'?",
+            "goal_en": "Understand that recursive results must be returned up the call stack.",
+            "goal_fil": "Maunawaan na kailangang i-return ang recursive call pabalik sa stack.",
+            "hint_en": "Every branch of a recursive function that calculates a result must use 'return'.",
+            "hint_fil": "Kailangan ang 'return' sa bawat recursive step para hindi mawala ang resulta."
+        },
+        {
+            "id": "norm_rw_q9",
+            "enemy_id": "recursion_wolf",
+            "difficulty": "normal",
+            "category": "Factorial Base Case",
+            "error_type": "OffByOneError",
+            "title": "Recursion Wolf Quiz #9: Factorial Base Case Value",
+            "question": "What is the proper base case return value for factorial(0)?",
+            "goal": "Identify that 0! = 1.",
+            "expected_output": "1",
+            "lines": [
+                "def fact(n):",
+                "    if n <= 1: return 1",
+                "    return n * fact(n - 1)"
+            ],
+            "code": "if n <= 1: return 0",
+            "answer": "1 (since 0! and 1! both equal 1)",
+            "distractors": [
+                "0 (multiplying by zero stops recursion)",
+                "-1 (indicates termination)",
+                "None (no multiplication needed)"
+            ],
+            "options": [
+                "1 (since 0! and 1! both equal 1)",
+                "0 (multiplying by zero stops recursion)",
+                "-1 (indicates termination)",
+                "None (no multiplication needed)"
+            ],
+            "choices": [
+                "1 (since 0! and 1! both equal 1)",
+                "0 (multiplying by zero stops recursion)",
+                "-1 (indicates termination)",
+                "None (no multiplication needed)"
+            ],
+            "hint": "Returning 0 would cause the entire multiplicative product to become 0.",
+            "type": "quiz",
+            "question_en": "What is the proper base case return value for factorial(0)?",
+            "question_fil": "Ano ang tamang return value para sa base case ng factorial(0)?",
+            "goal_en": "Identify that 0! = 1.",
+            "goal_fil": "Alamin na 1 ang base case ng factorial(0).",
+            "hint_en": "Returning 0 would cause the entire multiplicative product to become 0.",
+            "hint_fil": "Kung 0 ang ibabalik, magiging 0 ang buong multiplication."
+        },
+        {
+            "id": "norm_rw_q10",
+            "enemy_id": "recursion_wolf",
+            "difficulty": "normal",
+            "category": "Call Stack Execution",
+            "error_type": "ConceptualUnderstanding",
+            "title": "Recursion Wolf Quiz #10: Call Stack Order",
+            "question": "In what order are pending recursive function frames resolved once the base case is reached?",
+            "goal": "Identify LIFO (Last-In, First-Out) call stack resolution.",
+            "expected_output": "LIFO (Last-In, First-Out)",
+            "lines": [
+                "# Call stack unwinds from newest call to oldest"
+            ],
+            "code": "stack = []",
+            "answer": "Last-In, First-Out (LIFO) - the most recent call returns first",
+            "distractors": [
+                "First-In, First-Out (FIFO) - the initial call returns first",
+                "Random order depending on system memory",
+                "All frames resolve simultaneously in parallel"
+            ],
+            "options": [
+                "Last-In, First-Out (LIFO) - the most recent call returns first",
+                "First-In, First-Out (FIFO) - the initial call returns first",
+                "Random order depending on system memory",
+                "All frames resolve simultaneously in parallel"
+            ],
+            "choices": [
+                "Last-In, First-Out (LIFO) - the most recent call returns first",
+                "First-In, First-Out (FIFO) - the initial call returns first",
+                "Random order depending on system memory",
+                "All frames resolve simultaneously in parallel"
+            ],
+            "hint": "The call stack operates as a stack data structure: Last-In, First-Out (LIFO).",
+            "type": "quiz",
+            "question_en": "In what order are pending recursive function frames resolved once the base case is reached?",
+            "question_fil": "Sa anong pagkakasunod-sunod nalulutas ang mga recursive frames kapag naabot ang base case?",
+            "goal_en": "Identify LIFO (Last-In, First-Out) call stack resolution.",
+            "goal_fil": "Maunawaan ang LIFO sa pag-unwind ng call stack.",
+            "hint_en": "The call stack operates as a stack data structure: Last-In, First-Out (LIFO).",
+            "hint_fil": "LIFO (Last-In, First-Out) ang pagbabalik ng call stack."
         }
     ]
 };
+
 const classMage = {
     "id": "class_mage",
     "name": "Class Mage",
@@ -1416,7 +2283,7 @@ const classMage = {
             "error_type": "TypeError: inc() takes 0 positional arguments but 1 was given",
             "title": "Class Mage #3: Counter Class",
             "question": "Arrange the code blocks to define the class and instantiate the object. Exclude the distractor.",
-            "goal": "Counter Class.",
+            "goal": "Instantiate Counter class, call inc() to increase val, and print it (1).",
             "expected_output": "1",
             "lines": [
                 "class Counter:",
@@ -1435,8 +2302,8 @@ const classMage = {
             "type": "parson",
             "question_en": "Arrange the code blocks to define the class and instantiate the object. Exclude the distractor.",
             "question_fil": "I-drag at i-ayos ang mga block para magawa ang class at object. Alisin ang distractor.",
-            "goal_en": "Counter Class.",
-            "goal_fil": "I-increment ang counter at i-print ang 1.",
+            "goal_en": "Instantiate Counter class, call inc() to increase val, and print it (1).",
+            "goal_fil": "Gumawa ng Counter object, tawagin ang inc() para dagdagan ang val, at i-print ito (1).",
             "hint_en": "Always include 'self' as the first parameter of an instance method.",
             "hint_fil": "Kailangan ng 'self' sa def inc(self) para ma-access ang self.val."
         },
@@ -1532,6 +2399,141 @@ const classMage = {
             "goal_fil": "I-print ang title ng libro na 'Py101'.",
             "hint_en": "Review your Python syntax, variable names, and line sequence.",
             "hint_fil": "Gumamit ng single '=' para sa attribute assignment sa loob ng __init__."
+        },
+        {
+            "id": "norm_cm_p7",
+            "enemy_id": "class_mage",
+            "difficulty": "normal",
+            "category": "Instance Method",
+            "error_type": "TypeError: take_hit() takes 1 positional argument but 2 were given",
+            "title": "Class Mage #7: Method Modifying Instance State",
+            "question": "Arrange the code blocks to define Hero take_hit method reducing hp.",
+            "goal": "Initialize Hero with hp=100, call take_hit(20), and print 'Remaining HP: 80'.",
+            "expected_output": "Remaining HP: 80",
+            "lines": [
+                "class Hero:",
+                "    def __init__(self, hp):",
+                "        self.hp = hp",
+                "    def take_hit(self, dmg):",
+                "        self.hp -= dmg",
+                "h = Hero(100)",
+                "h.take_hit(20)",
+                "print(\"Remaining HP:\", h.hp)"
+            ],
+            "distractors": [
+                "    def take_hit(dmg):"
+            ],
+            "hint": "Every instance method must take 'self' as its first parameter.",
+            "code": "    def take_hit(dmg):",
+            "answer": "class Hero:\n    def __init__(self, hp):\n        self.hp = hp\n    def take_hit(self, dmg):\n        self.hp -= dmg\nh = Hero(100)\nh.take_hit(20)\nprint(\"Remaining HP:\", h.hp)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to define Hero take_hit method reducing hp.",
+            "question_fil": "I-ayos ang code blocks para magbawas ng hp sa instance method.",
+            "goal_en": "Initialize Hero with hp=100, call take_hit(20), and print 'Remaining HP: 80'.",
+            "goal_fil": "Bawasan ang hp ng Hero gamit ang take_hit method (resulta: 80).",
+            "hint_en": "Every instance method must take 'self' as its first parameter.",
+            "hint_fil": "Kailangan laging may 'self' bilang unang parameter sa instance method."
+        },
+        {
+            "id": "norm_cm_p8",
+            "enemy_id": "class_mage",
+            "difficulty": "normal",
+            "category": "Dunder Str",
+            "error_type": "TypeError: __str__ returned non-string",
+            "title": "Class Mage #8: Custom String Representation with __str__",
+            "question": "Arrange the code blocks to define a Spell class returning its formatted name on str().",
+            "goal": "Define Spell with __str__ returning 'Spell(Fireball)' and print str(s).",
+            "expected_output": "Spell(Fireball)",
+            "lines": [
+                "class Spell:",
+                "    def __init__(self, name):",
+                "        self.name = name",
+                "    def __str__(self):",
+                "        return f\"Spell({self.name})\"",
+                "s = Spell(\"Fireball\")",
+                "print(str(s))"
+            ],
+            "distractors": [
+                "    def __str__(self): print(self.name)"
+            ],
+            "hint": "__str__ must return a string value, not print directly.",
+            "code": "    def __str__(self): print(self.name)",
+            "answer": "class Spell:\n    def __init__(self, name):\n        self.name = name\n    def __str__(self):\n        return f\"Spell({self.name})\"\ns = Spell(\"Fireball\")\nprint(str(s))",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to define a Spell class returning its formatted name on str().",
+            "question_fil": "I-ayos ang code blocks para sa __str__ method ng Spell class.",
+            "goal_en": "Define Spell with __str__ returning 'Spell(Fireball)' and print str(s).",
+            "goal_fil": "Gumawa ng Spell class na may __str__ na nagbabalik ng 'Spell(Fireball)'.",
+            "hint_en": "__str__ must return a string value, not print directly.",
+            "hint_fil": "Dapat magbalik ng string ang __str__, hindi mag-print."
+        },
+        {
+            "id": "norm_cm_p9",
+            "enemy_id": "class_mage",
+            "difficulty": "normal",
+            "category": "Independent State",
+            "error_type": "AttributeError: 'Counter' object has no attribute 'count'",
+            "title": "Class Mage #9: Multiple Independent Instances",
+            "question": "Arrange the code blocks to increment two distinct Counter instances independently.",
+            "goal": "Create c1, c2 counters, increment c1 twice and c2 once, printing 'c1: 2, c2: 1'.",
+            "expected_output": "c1: 2, c2: 1",
+            "lines": [
+                "class Counter:",
+                "    def __init__(self):",
+                "        self.count = 0",
+                "    def inc(self):",
+                "        self.count += 1",
+                "c1, c2 = Counter(), Counter()",
+                "c1.inc(); c1.inc(); c2.inc()",
+                "print(f\"c1: {c1.count}, c2: {c2.count}\")"
+            ],
+            "distractors": [
+                "c1 = Counter; c2 = Counter"
+            ],
+            "hint": "Instantiate classes with parentheses: Counter().",
+            "code": "c1 = Counter; c2 = Counter",
+            "answer": "class Counter:\n    def __init__(self):\n        self.count = 0\n    def inc(self):\n        self.count += 1\nc1, c2 = Counter(), Counter()\nc1.inc(); c1.inc(); c2.inc()\nprint(f\"c1: {c1.count}, c2: {c2.count}\")",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to increment two distinct Counter instances independently.",
+            "question_fil": "I-ayos ang code blocks para sa dalawang magkahiwalay na Counter objects.",
+            "goal_en": "Create c1, c2 counters, increment c1 twice and c2 once, printing 'c1: 2, c2: 1'.",
+            "goal_fil": "Mag-increment sa dalawang magkaibang Counter (resulta: c1=2, c2=1).",
+            "hint_en": "Instantiate classes with parentheses: Counter().",
+            "hint_fil": "Gumamit ng panaklong sa pag-instantiate ng class: Counter()."
+        },
+        {
+            "id": "norm_cm_p10",
+            "enemy_id": "class_mage",
+            "difficulty": "normal",
+            "category": "Object Passing",
+            "error_type": "AttributeError: 'int' object has no attribute 'score'",
+            "title": "Class Mage #10: Passing Object to Function",
+            "question": "Arrange the code blocks to award points to a Player object via a helper function.",
+            "goal": "Define Player(score), award(p, 25), and print 'New Score: 75' for p starting with 50.",
+            "expected_output": "New Score: 75",
+            "lines": [
+                "class Player:",
+                "    def __init__(self, score):",
+                "        self.score = score",
+                "def award(p, pts):",
+                "    p.score += pts",
+                "p = Player(50)",
+                "award(p, 25)",
+                "print(\"New Score:\", p.score)"
+            ],
+            "distractors": [
+                "award(p.score, 25)"
+            ],
+            "hint": "Pass the Player object 'p' directly so the function can mutate its attribute.",
+            "code": "award(p.score, 25)",
+            "answer": "class Player:\n    def __init__(self, score):\n        self.score = score\ndef award(p, pts):\n    p.score += pts\np = Player(50)\naward(p, 25)\nprint(\"New Score:\", p.score)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to award points to a Player object via a helper function.",
+            "question_fil": "I-ayos ang code blocks para magpasa ng object sa function at baguhin ang score nito.",
+            "goal_en": "Define Player(score), award(p, 25), and print 'New Score: 75' for p starting with 50.",
+            "goal_fil": "Magdagdag ng 25 puntos sa Player object na may 50 (resulta: 75).",
+            "hint_en": "Pass the Player object 'p' directly so the function can mutate its attribute.",
+            "hint_fil": "Ipasa ang mismong object na 'p' sa function."
         },
         {
             "id": "norm_cm_q1",
@@ -1789,9 +2791,185 @@ const classMage = {
             "goal_fil": "Tawagin ang Hero constructor na may 50 hp.",
             "hint_en": "Always include 'self' as the first parameter of an instance method.",
             "hint_fil": "Awtomatikong ibinibigay ng Python ang self sa instance creation."
+        },
+        {
+            "id": "norm_cm_q7",
+            "enemy_id": "class_mage",
+            "difficulty": "normal",
+            "category": "Self Parameter",
+            "error_type": "TypeError: method() takes 0 positional arguments but 1 was given",
+            "title": "Class Mage Quiz #7: Missing Self in Method Header",
+            "question": "Why does Python automatically pass an argument when calling an instance method?",
+            "goal": "Understand that Python passes the instance itself as the first argument (self).",
+            "expected_output": "Instance passed as self",
+            "lines": [
+                "class Hero:",
+                "    def attack(self): return \"Strike!\"",
+                "h = Hero()",
+                "print(h.attack())"
+            ],
+            "code": "def attack():",
+            "answer": "Python automatically passes the object instance as the first argument 'self'",
+            "distractors": [
+                "Methods always require a hidden security token",
+                "Classes only support static functions by default",
+                "The method was not imported from the math module"
+            ],
+            "options": [
+                "Python automatically passes the object instance as the first argument 'self'",
+                "Methods always require a hidden security token",
+                "Classes only support static functions by default",
+                "The method was not imported from the math module"
+            ],
+            "choices": [
+                "Python automatically passes the object instance as the first argument 'self'",
+                "Methods always require a hidden security token",
+                "Classes only support static functions by default",
+                "The method was not imported from the math module"
+            ],
+            "hint": "When calling obj.method(), Python converts it internally to Class.method(obj).",
+            "type": "quiz",
+            "question_en": "Why does Python automatically pass an argument when calling an instance method?",
+            "question_fil": "Bakit awtomatikong nagpapasa ang Python ng argumento sa instance method?",
+            "goal_en": "Understand that Python passes the instance itself as the first argument (self).",
+            "goal_fil": "Maunawaan na ang 'self' ay ang mismong instance ng object.",
+            "hint_en": "When calling obj.method(), Python converts it internally to Class.method(obj).",
+            "hint_fil": "Awtomatikong ipinapasa ng Python ang object bilang 'self'."
+        },
+        {
+            "id": "norm_cm_q8",
+            "enemy_id": "class_mage",
+            "difficulty": "normal",
+            "category": "Attribute Access",
+            "error_type": "NameError: name 'hp' is not defined",
+            "title": "Class Mage Quiz #8: Accessing Instance Attributes with Self",
+            "question": "Select the correct line inside a method to read instance attribute hp.",
+            "goal": "Read instance attribute using self.hp.",
+            "expected_output": "100",
+            "lines": [
+                "class Mage:",
+                "    def __init__(self): self.hp = 100",
+                "    def get_hp(self):",
+                "        return self.hp"
+            ],
+            "code": "return hp",
+            "answer": "return self.hp",
+            "distractors": [
+                "return hp",
+                "return this.hp",
+                "return Mage.hp"
+            ],
+            "options": [
+                "return self.hp",
+                "return hp",
+                "return this.hp",
+                "return Mage.hp"
+            ],
+            "choices": [
+                "return self.hp",
+                "return hp",
+                "return this.hp",
+                "return Mage.hp"
+            ],
+            "hint": "Instance variables must always be accessed with the prefix 'self.' in method bodies.",
+            "type": "quiz",
+            "question_en": "Select the correct line inside a method to read instance attribute hp.",
+            "question_fil": "Piliin ang tamang linya sa loob ng method para basahin ang instance attribute na hp.",
+            "goal_en": "Read instance attribute using self.hp.",
+            "goal_fil": "Basahin ang attribute gamit ang self.hp.",
+            "hint_en": "Instance variables must always be accessed with the prefix 'self.' in method bodies.",
+            "hint_fil": "Laging gamitin ang 'self.' prefix kapag kumukuha ng instance variable."
+        },
+        {
+            "id": "norm_cm_q9",
+            "enemy_id": "class_mage",
+            "difficulty": "normal",
+            "category": "Instantiation",
+            "error_type": "TypeError: 'type' object is not subscriptable",
+            "title": "Class Mage Quiz #9: Object Instantiation Syntax",
+            "question": "Select the correct statement to create a new instance of Hero with 100 hp.",
+            "goal": "Instantiate Hero(100).",
+            "expected_output": "Hero created",
+            "lines": [
+                "class Hero:",
+                "    def __init__(self, hp): self.hp = hp",
+                "player = Hero(100)"
+            ],
+            "code": "player = new Hero(100)",
+            "answer": "player = Hero(100)",
+            "distractors": [
+                "player = new Hero(100)",
+                "player = Hero.create(100)",
+                "player = Hero[100]"
+            ],
+            "options": [
+                "player = Hero(100)",
+                "player = new Hero(100)",
+                "player = Hero.create(100)",
+                "player = Hero[100]"
+            ],
+            "choices": [
+                "player = Hero(100)",
+                "player = new Hero(100)",
+                "player = Hero.create(100)",
+                "player = Hero[100]"
+            ],
+            "hint": "Python does not have a 'new' keyword. Just call the class name like a function: Hero(100).",
+            "type": "quiz",
+            "question_en": "Select the correct statement to create a new instance of Hero with 100 hp.",
+            "question_fil": "Piliin ang tamang statement para gumawa ng bagong instance ng Hero.",
+            "goal_en": "Instantiate Hero(100).",
+            "goal_fil": "Gumawa ng Hero(100) nang walang 'new' keyword.",
+            "hint_en": "Python does not have a 'new' keyword. Just call the class name like a function: Hero(100).",
+            "hint_fil": "Walang 'new' sa Python; tawagin lang ang Hero(100)."
+        },
+        {
+            "id": "norm_cm_q10",
+            "enemy_id": "class_mage",
+            "difficulty": "normal",
+            "category": "Class vs Instance Variable",
+            "error_type": "LogicError: shared state mutates unexpectedly",
+            "title": "Class Mage Quiz #10: Class Variable vs Instance Variable",
+            "question": "Why does declaring inventory = [] directly inside class body cause all players to share the same inventory?",
+            "goal": "Distinguish shared class variables from per-instance variables in __init__.",
+            "expected_output": "Class variable is shared",
+            "lines": [
+                "class Player:",
+                "    # inventory = []  <- Shared by all!",
+                "    def __init__(self):",
+                "        self.inventory = []  # Unique to each instance"
+            ],
+            "code": "class Player: inventory = []",
+            "answer": "Variables defined at class level are shared across all instances of that class",
+            "distractors": [
+                "Lists in Python can never be assigned inside functions",
+                "The memory manager merges all variables with the same name",
+                "Class variables are read-only and cannot be modified"
+            ],
+            "options": [
+                "Variables defined at class level are shared across all instances of that class",
+                "Lists in Python can never be assigned inside functions",
+                "The memory manager merges all variables with the same name",
+                "Class variables are read-only and cannot be modified"
+            ],
+            "choices": [
+                "Variables defined at class level are shared across all instances of that class",
+                "Lists in Python can never be assigned inside functions",
+                "The memory manager merges all variables with the same name",
+                "Class variables are read-only and cannot be modified"
+            ],
+            "hint": "To give each object its own independent list, assign self.inventory = [] inside __init__.",
+            "type": "quiz",
+            "question_en": "Why does declaring inventory = [] directly inside class body cause all players to share the same inventory?",
+            "question_fil": "Bakit naibabahagi sa lahat ng object ang variable kapag inilagay direkta sa class body?",
+            "goal_en": "Distinguish shared class variables from per-instance variables in __init__.",
+            "goal_fil": "Ihiwalay ang class variable (shared) sa instance variable sa __init__.",
+            "hint_en": "To give each object its own independent list, assign self.inventory = [] inside __init__.",
+            "hint_fil": "Ilagay sa loob ng __init__ gamit ang self.inventory para maging sarili ng bawat object."
         }
     ]
 };
+
 const exceptionKnight = {
     "id": "exception_knight",
     "name": "Exception Knight",
@@ -1987,6 +3165,140 @@ const exceptionKnight = {
             "hint_fil": "Ang 'else:' sa try block ay tumatakbo kapag walang exception na nangyari."
         },
         {
+            "id": "norm_ek_p7",
+            "enemy_id": "exception_knight",
+            "difficulty": "normal",
+            "category": "ValueError Handling",
+            "error_type": "ValueError: invalid literal for int()",
+            "title": "Exception Knight #7: Catching ValueError on String Cast",
+            "question": "Arrange the code blocks to catch ValueError when parsing invalid string 'abc'.",
+            "goal": "Safely parse raw input, set val = -1 on ValueError, and print 'Parsed: -1'.",
+            "expected_output": "Parsed: -1",
+            "lines": [
+                "raw = \"abc\"",
+                "val = 0",
+                "try:",
+                "    val = int(raw)",
+                "except ValueError:",
+                "    val = -1",
+                "print(\"Parsed:\", val)"
+            ],
+            "distractors": [
+                "except TypeError:"
+            ],
+            "hint": "Converting non-numeric strings to integer with int() raises a ValueError, not TypeError.",
+            "code": "except TypeError:",
+            "answer": "raw = \"abc\"\nval = 0\ntry:\n    val = int(raw)\nexcept ValueError:\n    val = -1\nprint(\"Parsed:\", val)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to catch ValueError when parsing invalid string 'abc'.",
+            "question_fil": "I-ayos ang code blocks para saluhin ang ValueError kapag hindi numero ang string.",
+            "goal_en": "Safely parse raw input, set val = -1 on ValueError, and print 'Parsed: -1'.",
+            "goal_fil": "Saluhin ang ValueError sa pag-convert ng 'abc' at i-print ang -1.",
+            "hint_en": "Converting non-numeric strings to integer with int() raises a ValueError, not TypeError.",
+            "hint_fil": "ValueError ang lumalabas sa int(\"abc\"), hindi TypeError."
+        },
+        {
+            "id": "norm_ek_p8",
+            "enemy_id": "exception_knight",
+            "difficulty": "normal",
+            "category": "IndexError Handling",
+            "error_type": "IndexError: list index out of range",
+            "title": "Exception Knight #8: Catching List IndexError",
+            "question": "Arrange the code blocks to safely handle out-of-bounds list lookup.",
+            "goal": "Attempt lookup items[5] on [10, 20], catch IndexError setting res = -99, and print -99.",
+            "expected_output": "Safe lookup: -99",
+            "lines": [
+                "items = [10, 20]",
+                "res = 0",
+                "try:",
+                "    res = items[5]",
+                "except IndexError:",
+                "    res = -99",
+                "print(\"Safe lookup:\", res)"
+            ],
+            "distractors": [
+                "except KeyError:"
+            ],
+            "hint": "Looking up an out-of-bounds index in a list raises an IndexError.",
+            "code": "except KeyError:",
+            "answer": "items = [10, 20]\nres = 0\ntry:\n    res = items[5]\nexcept IndexError:\n    res = -99\nprint(\"Safe lookup:\", res)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to safely handle out-of-bounds list lookup.",
+            "question_fil": "I-ayos ang code blocks para saluhin ang IndexError sa listahan.",
+            "goal_en": "Attempt lookup items[5] on [10, 20], catch IndexError setting res = -99, and print -99.",
+            "goal_fil": "Subukang i-access ang items[5] at saluhin ang IndexError (resulta: -99).",
+            "hint_en": "Looking up an out-of-bounds index in a list raises an IndexError.",
+            "hint_fil": "IndexError ang lumalabas kapag lampas sa haba ng listahan."
+        },
+        {
+            "id": "norm_ek_p9",
+            "enemy_id": "exception_knight",
+            "difficulty": "normal",
+            "category": "KeyError Handling",
+            "error_type": "KeyError: 'role'",
+            "title": "Exception Knight #9: Catching Dictionary KeyError",
+            "question": "Arrange the code blocks to catch missing key in dictionary lookup gracefully.",
+            "goal": "Look up user['role'], catch KeyError leaving role = 'Guest', and print 'User Role: Guest'.",
+            "expected_output": "User Role: Guest",
+            "lines": [
+                "user = {\"name\": \"Player\"}",
+                "role = \"Guest\"",
+                "try:",
+                "    role = user[\"role\"]",
+                "except KeyError:",
+                "    pass",
+                "print(\"User Role:\", role)"
+            ],
+            "distractors": [
+                "except IndexError:"
+            ],
+            "hint": "Accessing a missing key in a dictionary raises a KeyError.",
+            "code": "except IndexError:",
+            "answer": "user = {\"name\": \"Player\"}\nrole = \"Guest\"\ntry:\n    role = user[\"role\"]\nexcept KeyError:\n    pass\nprint(\"User Role:\", role)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to catch missing key in dictionary lookup gracefully.",
+            "question_fil": "I-ayos ang code blocks para saluhin ang KeyError sa nawawalang key.",
+            "goal_en": "Look up user['role'], catch KeyError leaving role = 'Guest', and print 'User Role: Guest'.",
+            "goal_fil": "Saluhin ang KeyError kapag wala ang 'role' at panatilihing 'Guest'.",
+            "hint_en": "Accessing a missing key in a dictionary raises a KeyError.",
+            "hint_fil": "KeyError ang lumalabas kapag wala ang susi sa dictionary."
+        },
+        {
+            "id": "norm_ek_p10",
+            "enemy_id": "exception_knight",
+            "difficulty": "normal",
+            "category": "Multiple Exceptions",
+            "error_type": "ZeroDivisionError: division by zero",
+            "title": "Exception Knight #10: Multiple Except Branches",
+            "question": "Arrange the code blocks to route ZeroDivisionError through specific except block.",
+            "goal": "Divide 10 by int('0'), catch ZeroDivisionError setting status = 'Zero Error', and print.",
+            "expected_output": "Status: Zero Error",
+            "lines": [
+                "val = \"0\"",
+                "status = \"\"",
+                "try:",
+                "    num = 10 / int(val)",
+                "except ValueError:",
+                "    status = \"Invalid Input\"",
+                "except ZeroDivisionError:",
+                "    status = \"Zero Error\"",
+                "print(\"Status:\", status)"
+            ],
+            "distractors": [
+                "catch (Exception e):"
+            ],
+            "hint": "Python uses 'except' keywords for catching exceptions, not 'catch'.",
+            "code": "catch (Exception e):",
+            "answer": "val = \"0\"\nstatus = \"\"\ntry:\n    num = 10 / int(val)\nexcept ValueError:\n    status = \"Invalid Input\"\nexcept ZeroDivisionError:\n    status = \"Zero Error\"\nprint(\"Status:\", status)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to route ZeroDivisionError through specific except block.",
+            "question_fil": "I-ayos ang code blocks para saluhin ang ZeroDivisionError sa tamang sangay.",
+            "goal_en": "Divide 10 by int('0'), catch ZeroDivisionError setting status = 'Zero Error', and print.",
+            "goal_fil": "Hatiin ang 10 sa 0 at saluhin ang ZeroDivisionError (resulta: 'Zero Error').",
+            "hint_en": "Python uses 'except' keywords for catching exceptions, not 'catch'.",
+            "hint_fil": "'except' ang keyword sa Python, hindi 'catch'."
+        },
+        {
             "id": "norm_ek_q1",
             "enemy_id": "exception_knight",
             "difficulty": "normal",
@@ -2083,10 +3395,13 @@ const exceptionKnight = {
             "title": "Exception Knight Quiz #3: Try Block Syntax",
             "question": "Choose the correct exception handling syntax to catch the error.",
             "goal": "Try Block Syntax.",
-            "expected_output": "try:",
+            "expected_output": "1",
             "lines": [
                 "try:",
-                "    x = 1"
+                "    x = 1",
+                "except Exception:",
+                "    x = 0",
+                "print(x)"
             ],
             "code": "try {",
             "answer": "try:",
@@ -2125,9 +3440,12 @@ const exceptionKnight = {
             "title": "Exception Knight Quiz #4: Raise Exception",
             "question": "Choose the correct exception handling syntax to catch the error.",
             "goal": "Mag-raise of ValueError.",
-            "expected_output": "raise ValueError('Invalid')",
+            "expected_output": "Caught",
             "lines": [
-                "raise ValueError(\"Invalid\")"
+                "try:",
+                "    raise ValueError(\"Invalid\")",
+                "except ValueError:",
+                "    print(\"Caught\")"
             ],
             "code": "raise \"Invalid\"",
             "answer": "raise ValueError(\"Invalid\")",
@@ -2244,9 +3562,181 @@ const exceptionKnight = {
             "goal_fil": "i-catch ang pangkalahatang Exception.",
             "hint_en": "In Python, use 'except' to catch exceptions, not 'catch'.",
             "hint_fil": "Gamitin ang 'except Exception as e:' syntax."
+        },
+        {
+            "id": "norm_ek_q7",
+            "enemy_id": "exception_knight",
+            "difficulty": "normal",
+            "category": "Bare Except",
+            "error_type": "CodeQualityIssue",
+            "title": "Exception Knight Quiz #7: Avoiding Bare Except",
+            "question": "Why is using a bare 'except:' without specifying an exception type considered bad practice?",
+            "goal": "Explain why catching specific exceptions is preferred over bare except.",
+            "expected_output": "Catch specific exceptions",
+            "lines": [
+                "# try: ... except: ... <- Bad practice!"
+            ],
+            "code": "except:",
+            "answer": "It catches and hides unexpected errors like KeyboardInterrupt and SystemExit",
+            "distractors": [
+                "It slows down Python by clearing all memory",
+                "Bare except causes an immediate syntax error",
+                "It only works with numbers, not strings"
+            ],
+            "options": [
+                "It catches and hides unexpected errors like KeyboardInterrupt and SystemExit",
+                "It slows down Python by clearing all memory",
+                "Bare except causes an immediate syntax error",
+                "It only works with numbers, not strings"
+            ],
+            "choices": [
+                "It catches and hides unexpected errors like KeyboardInterrupt and SystemExit",
+                "It slows down Python by clearing all memory",
+                "Bare except causes an immediate syntax error",
+                "It only works with numbers, not strings"
+            ],
+            "hint": "Always catch specific exceptions like 'except ValueError:' so system interrupts can still function.",
+            "type": "quiz",
+            "question_en": "Why is using a bare 'except:' without specifying an exception type considered bad practice?",
+            "question_fil": "Bakit hindi inirerekomenda ang paggamit ng bare 'except:' nang walang tinutukoy na error?",
+            "goal_en": "Explain why catching specific exceptions is preferred over bare except.",
+            "goal_fil": "Ipaliwanag kung bakit mas mainam ang specific exceptions kaysa bare except.",
+            "hint_en": "Always catch specific exceptions like 'except ValueError:' so system interrupts can still function.",
+            "hint_fil": "Laging tukuyin ang partikular na error tulad ng ValueError."
+        },
+        {
+            "id": "norm_ek_q8",
+            "enemy_id": "exception_knight",
+            "difficulty": "normal",
+            "category": "Multiple Exceptions Tuple",
+            "error_type": "SyntaxError: invalid syntax",
+            "title": "Exception Knight Quiz #8: Catching Multiple Exception Types",
+            "question": "Select the correct syntax to catch both ValueError and TypeError in a single except block.",
+            "goal": "Use tuple syntax for multiple exceptions.",
+            "expected_output": "except (ValueError, TypeError):",
+            "lines": [
+                "try:",
+                "    x = int(\"abc\")",
+                "except (ValueError, TypeError):",
+                "    print(\"Handled\")"
+            ],
+            "code": "except ValueError or TypeError:",
+            "answer": "except (ValueError, TypeError):",
+            "distractors": [
+                "except ValueError or TypeError:",
+                "except ValueError, TypeError:",
+                "except [ValueError, TypeError]:"
+            ],
+            "options": [
+                "except (ValueError, TypeError):",
+                "except ValueError or TypeError:",
+                "except ValueError, TypeError:",
+                "except [ValueError, TypeError]:"
+            ],
+            "choices": [
+                "except (ValueError, TypeError):",
+                "except ValueError or TypeError:",
+                "except ValueError, TypeError:",
+                "except [ValueError, TypeError]:"
+            ],
+            "hint": "Wrap multiple exception classes inside parentheses as a tuple: except (A, B):.",
+            "type": "quiz",
+            "question_en": "Select the correct syntax to catch both ValueError and TypeError in a single except block.",
+            "question_fil": "Piliin ang tamang syntax para saluhin ang ValueError at TypeError sa iisang except block.",
+            "goal_en": "Use tuple syntax for multiple exceptions.",
+            "goal_fil": "Gamitin ang panaklong para sa tuple ng mga exception.",
+            "hint_en": "Wrap multiple exception classes inside parentheses as a tuple: except (A, B):.",
+            "hint_fil": "Ibalot sa panaklong ang mga exception: except (A, B):."
+        },
+        {
+            "id": "norm_ek_q9",
+            "enemy_id": "exception_knight",
+            "difficulty": "normal",
+            "category": "Exception Hierarchy",
+            "error_type": "LogicError: unreachable except block",
+            "title": "Exception Knight Quiz #9: Except Order and Specificity",
+            "question": "Why must more specific exceptions (like ZeroDivisionError) be placed BEFORE general exceptions (like Exception)?",
+            "goal": "Understand that Python matches except blocks sequentially from top to bottom.",
+            "expected_output": "Matches top-to-bottom",
+            "lines": [
+                "try: ...",
+                "except ZeroDivisionError: ...",
+                "except Exception: ..."
+            ],
+            "code": "except Exception: ... except ZeroDivisionError: ...",
+            "answer": "Python matches the first matching block; a general Exception block placed first shadows specific blocks",
+            "distractors": [
+                "Specific exceptions take more CPU time if placed first",
+                "General exceptions only catch errors occurring in while loops",
+                "Python raises a syntax error if specific exceptions come first"
+            ],
+            "options": [
+                "Python matches the first matching block; a general Exception block placed first shadows specific blocks",
+                "Specific exceptions take more CPU time if placed first",
+                "General exceptions only catch errors occurring in while loops",
+                "Python raises a syntax error if specific exceptions come first"
+            ],
+            "choices": [
+                "Python matches the first matching block; a general Exception block placed first shadows specific blocks",
+                "Specific exceptions take more CPU time if placed first",
+                "General exceptions only catch errors occurring in while loops",
+                "Python raises a syntax error if specific exceptions come first"
+            ],
+            "hint": "Place specific exceptions first so they are tested before broader parent classes.",
+            "type": "quiz",
+            "question_en": "Why must more specific exceptions (like ZeroDivisionError) be placed BEFORE general exceptions (like Exception)?",
+            "question_fil": "Bakit kailangang mauna ang specific exceptions bago ang pangkalahatang Exception?",
+            "goal_en": "Understand that Python matches except blocks sequentially from top to bottom.",
+            "goal_fil": "Maunawaan na itaas-pababang sinusuri ang mga except block.",
+            "hint_en": "Place specific exceptions first so they are tested before broader parent classes.",
+            "hint_fil": "Unahin ang partikular na exception para hindi ito matakpan ng pangkalahatan."
+        },
+        {
+            "id": "norm_ek_q10",
+            "enemy_id": "exception_knight",
+            "difficulty": "normal",
+            "category": "Flow After Exception",
+            "error_type": "ProgramFlow",
+            "title": "Exception Knight Quiz #10: Program Flow After Handling",
+            "question": "What happens to program execution after an exception is caught and handled inside an except block?",
+            "goal": "Confirm that program execution continues normally after handled exceptions.",
+            "expected_output": "Program continues normally",
+            "lines": [
+                "try: x = 10 / 0",
+                "except ZeroDivisionError: print(\"Caught!\")",
+                "print(\"Continuing...\")"
+            ],
+            "code": "print(\"Continuing...\")",
+            "answer": "Execution continues with the next statement following the try-except structure",
+            "distractors": [
+                "The program terminates immediately with an error code",
+                "The code inside the try block restarts from the beginning",
+                "All previous variables are reset to None"
+            ],
+            "options": [
+                "Execution continues with the next statement following the try-except structure",
+                "The program terminates immediately with an error code",
+                "The code inside the try block restarts from the beginning",
+                "All previous variables are reset to None"
+            ],
+            "choices": [
+                "Execution continues with the next statement following the try-except structure",
+                "The program terminates immediately with an error code",
+                "The code inside the try block restarts from the beginning",
+                "All previous variables are reset to None"
+            ],
+            "hint": "Handling an exception prevents the program from crashing, allowing subsequent code to run.",
+            "type": "quiz",
+            "question_en": "What happens to program execution after an exception is caught and handled inside an except block?",
+            "question_fil": "Ano ang nangyayari sa pagpapatakbo ng code pagkatapos masalo ang exception?",
+            "goal_en": "Confirm that program execution continues normally after handled exceptions.",
+            "goal_fil": "Kumpirmahin na tuloy-tuloy ang programa pagkatapos ng handled exception.",
+            "hint_en": "Handling an exception prevents the program from crashing, allowing subsequent code to run.",
+            "hint_fil": "Nagpapatuloy ang code sa susunod na linya kapag nasalo ang error."
         }
     ]
 };
+
 const normalTitan = {
     "id": "normal_titan",
     "name": "Normal Titan",
@@ -2441,6 +3931,138 @@ const normalTitan = {
             "hint_fil": "Dapat laging may 'self' bilang unang parameter: def add(self, x):"
         },
         {
+            "id": "norm_nt_p7",
+            "enemy_id": "normal_titan",
+            "difficulty": "normal",
+            "category": "Synthesis: OOP & List Mutation",
+            "error_type": "IndexError: pop from empty list",
+            "title": "Normal Titan #7: Safe Stack Pop in Inventory Class",
+            "question": "Arrange the code blocks to define an Inventory class with a safe pop method.",
+            "goal": "Define Inventory.safe_pop() returning None when empty, and print 'Popped: None'.",
+            "expected_output": "Popped: None",
+            "lines": [
+                "class Inventory:",
+                "    def __init__(self):",
+                "        self.items = []",
+                "    def safe_pop(self):",
+                "        return self.items.pop() if self.items else None",
+                "inv = Inventory()",
+                "print(\"Popped:\", inv.safe_pop())"
+            ],
+            "distractors": [
+                "        return self.items.pop()"
+            ],
+            "hint": "Calling pop() on an empty list raises an IndexError without a conditional check.",
+            "code": "        return self.items.pop()",
+            "answer": "class Inventory:\n    def __init__(self):\n        self.items = []\n    def safe_pop(self):\n        return self.items.pop() if self.items else None\ninv = Inventory()\nprint(\"Popped:\", inv.safe_pop())",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to define an Inventory class with a safe pop method.",
+            "question_fil": "I-ayos ang code blocks para sa Inventory class na may ligtas na pop method.",
+            "goal_en": "Define Inventory.safe_pop() returning None when empty, and print 'Popped: None'.",
+            "goal_fil": "Gumawa ng Inventory.safe_pop() na nagbabalik ng None kapag walang laman ang list.",
+            "hint_en": "Calling pop() on an empty list raises an IndexError without a conditional check.",
+            "hint_fil": "Nagdudulot ng IndexError ang pop() sa bakanteng listahan kung walang check."
+        },
+        {
+            "id": "norm_nt_p8",
+            "enemy_id": "normal_titan",
+            "difficulty": "normal",
+            "category": "OOP & Lists",
+            "error_type": "AttributeError: 'Hero' object has no attribute 'health'",
+            "title": "Normal Titan #8: Team Max Stat",
+            "question": "Arrange the code blocks to create heroes and find the highest HP.",
+            "goal": "Define Hero class, store a team in a list, and print 'Max HP: 120'.",
+            "expected_output": "Max HP: 120",
+            "lines": [
+                "class Hero:",
+                "    def __init__(self, name, hp):",
+                "        self.name = name",
+                "        self.hp = hp",
+                "party = [Hero(\"Mage\", 60), Hero(\"Warrior\", 120)]",
+                "strongest = max(h.hp for h in party)",
+                "print(\"Max HP:\", strongest)"
+            ],
+            "distractors": [
+                "strongest = max(h.health for h in party)"
+            ],
+            "hint": "Access the exact attribute name defined in __init__ ('self.hp').",
+            "code": "strongest = max(h.health for h in party)",
+            "answer": "class Hero:\n    def __init__(self, name, hp):\n        self.name = name\n        self.hp = hp\nparty = [Hero(\"Mage\", 60), Hero(\"Warrior\", 120)]\nstrongest = max(h.hp for h in party)\nprint(\"Max HP:\", strongest)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to create heroes and find the highest HP.",
+            "question_fil": "I-ayos ang code blocks para gumawa ng heroes at hanapin ang pinakamataas na HP.",
+            "goal_en": "Define Hero class, store a team in a list, and print 'Max HP: 120'.",
+            "goal_fil": "Gumawa ng Hero class, maglagay ng team sa list, at i-print ang 'Max HP: 120'.",
+            "hint_en": "Access the exact attribute name defined in __init__ ('self.hp').",
+            "hint_fil": "Gamitin ang eksaktong attribute name na itinakda sa __init__ ('self.hp')."
+        },
+        {
+            "id": "norm_nt_p9",
+            "enemy_id": "normal_titan",
+            "difficulty": "normal",
+            "category": "Synthesis: Class & Exception Handling",
+            "error_type": "KeyError: 'score'",
+            "title": "Normal Titan #9: Safe Integer Parsing in Dict Wrapper Class",
+            "question": "Arrange the code blocks to define a SafeDict class catching KeyError and ValueError.",
+            "goal": "Parse integer from dict wrapper for key 'score' ('150') and print 'Score: 150'.",
+            "expected_output": "Score: 150",
+            "lines": [
+                "class SafeDict:",
+                "    def __init__(self, data):",
+                "        self.data = data",
+                "    def get_int(self, k):",
+                "        try: return int(self.data[k])",
+                "        except (KeyError, ValueError): return 0",
+                "sd = SafeDict({\"score\": \"150\"})",
+                "print(\"Score:\", sd.get_int(\"score\"))"
+            ],
+            "distractors": [
+                "        except KeyError, ValueError: return 0"
+            ],
+            "hint": "Multiple exception types in an except clause must be grouped in parentheses: (KeyError, ValueError).",
+            "code": "        except KeyError, ValueError: return 0",
+            "answer": "class SafeDict:\n    def __init__(self, data):\n        self.data = data\n    def get_int(self, k):\n        try: return int(self.data[k])\n        except (KeyError, ValueError): return 0\nsd = SafeDict({\"score\": \"150\"})\nprint(\"Score:\", sd.get_int(\"score\"))",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to define a SafeDict class catching KeyError and ValueError.",
+            "question_fil": "I-ayos ang code blocks para sa SafeDict class na sumasalo ng exceptions.",
+            "goal_en": "Parse integer from dict wrapper for key 'score' ('150') and print 'Score: 150'.",
+            "goal_fil": "Kumuha ng integer mula sa SafeDict para sa 'score' (resulta: 150).",
+            "hint_en": "Multiple exception types in an except clause must be grouped in parentheses: (KeyError, ValueError).",
+            "hint_fil": "Ibalot sa panaklong ang magkakasamang exceptions: (KeyError, ValueError)."
+        },
+        {
+            "id": "norm_nt_p10",
+            "enemy_id": "normal_titan",
+            "difficulty": "normal",
+            "category": "Synthesis: List Comprehension & Class Objects",
+            "error_type": "AttributeError: 'int' object has no attribute 'hp'",
+            "title": "Normal Titan #10: Filtering Class Instances in List Comprehension",
+            "question": "Arrange the code blocks to filter Minion instances with hp >= 10 into a list of hp values.",
+            "goal": "Filter army of Minion(10), Minion(25), Minion(5) to get high HP values [10, 25].",
+            "expected_output": "High HP: [10, 25]",
+            "lines": [
+                "class Minion:",
+                "    def __init__(self, hp):",
+                "        self.hp = hp",
+                "army = [Minion(10), Minion(25), Minion(5)]",
+                "high_hp = [m.hp for m in army if m.hp >= 10]",
+                "print(\"High HP:\", high_hp)"
+            ],
+            "distractors": [
+                "high_hp = [m.hp for m in army: if m.hp >= 10]"
+            ],
+            "hint": "Do not place colons inside list comprehension expressions.",
+            "code": "high_hp = [m.hp for m in army: if m.hp >= 10]",
+            "answer": "class Minion:\n    def __init__(self, hp):\n        self.hp = hp\narmy = [Minion(10), Minion(25), Minion(5)]\nhigh_hp = [m.hp for m in army if m.hp >= 10]\nprint(\"High HP:\", high_hp)",
+            "type": "parson",
+            "question_en": "Arrange the code blocks to filter Minion instances with hp >= 10 into a list of hp values.",
+            "question_fil": "I-ayos ang code blocks para i-filter ang mga Minion objects gamit ang list comprehension.",
+            "goal_en": "Filter army of Minion(10), Minion(25), Minion(5) to get high HP values [10, 25].",
+            "goal_fil": "I-filter ang mga minion na may hp >= 10 (resulta: [10, 25]).",
+            "hint_en": "Do not place colons inside list comprehension expressions.",
+            "hint_fil": "Huwag maglagay ng colon sa loob ng list comprehension."
+        },
+        {
             "id": "norm_nt_q1",
             "enemy_id": "normal_titan",
             "difficulty": "normal",
@@ -2533,12 +4155,15 @@ const normalTitan = {
             "title": "Normal Titan Quiz #3: Exception Catching",
             "question": "Choose the correct exception handling syntax to catch the error.",
             "goal": "Catch the division by zero.",
-            "expected_output": "except ZeroDivisionError:",
+            "expected_output": "0",
             "lines": [
+                "a = 10",
+                "b = 0",
                 "try:",
                 "    res = a / b",
                 "except ZeroDivisionError:",
-                "    res = 0"
+                "    res = 0",
+                "print(res)"
             ],
             "code": "except ZeroDivision:",
             "answer": "except ZeroDivisionError:",
@@ -2697,6 +4322,179 @@ const normalTitan = {
             "goal_fil": "Subukang i-parse ang input sa int.",
             "hint_en": "In Python, use 'except' to catch exceptions, not 'catch'.",
             "hint_fil": "Dapat laging may 'try:' sa itaas ng code bago ang 'except:'."
+        },
+        {
+            "id": "norm_nt_q7",
+            "enemy_id": "normal_titan",
+            "difficulty": "normal",
+            "category": "Synthesis: OOP & Dict Error",
+            "error_type": "KeyError",
+            "title": "Normal Titan Quiz #7: Nested Dict Attribute Access",
+            "question": "Select the safe statement to retrieve user['settings']['volume'] with fallback default 50.",
+            "goal": "Safely access nested dictionary key.",
+            "expected_output": "50",
+            "lines": [
+                "user = {\"settings\": {}}",
+                "vol = user.get(\"settings\", {}).get(\"volume\", 50)",
+                "print(vol)"
+            ],
+            "code": "vol = user[\"settings\"][\"volume\"]",
+            "answer": "user.get(\"settings\", {}).get(\"volume\", 50)",
+            "distractors": [
+                "user[\"settings\"][\"volume\"]",
+                "user.get_nested(\"settings.volume\", 50)",
+                "user.settings.volume or 50"
+            ],
+            "options": [
+                "user.get(\"settings\", {}).get(\"volume\", 50)",
+                "user[\"settings\"][\"volume\"]",
+                "user.get_nested(\"settings.volume\", 50)",
+                "user.settings.volume or 50"
+            ],
+            "choices": [
+                "user.get(\"settings\", {}).get(\"volume\", 50)",
+                "user[\"settings\"][\"volume\"]",
+                "user.get_nested(\"settings.volume\", 50)",
+                "user.settings.volume or 50"
+            ],
+            "hint": "Chain .get() calls with fallback dictionaries to safely navigate nested structures.",
+            "type": "quiz",
+            "question_en": "Select the safe statement to retrieve user['settings']['volume'] with fallback default 50.",
+            "question_fil": "Piliin ang ligtas na paraan ng pagkuha ng nested dictionary key gamit ang .get().",
+            "goal_en": "Safely access nested dictionary key.",
+            "goal_fil": "Ligtas na kunin ang nested dictionary value.",
+            "hint_en": "Chain .get() calls with fallback dictionaries to safely navigate nested structures.",
+            "hint_fil": "Pagkabitin ang .get() calls para ligtas sa nested dictionary."
+        },
+        {
+            "id": "norm_nt_q8",
+            "enemy_id": "normal_titan",
+            "difficulty": "normal",
+            "category": "Synthesis: Dict Mutation During Iteration",
+            "error_type": "RuntimeError: dictionary changed size during iteration",
+            "title": "Normal Titan Quiz #8: Mutating Dict While Iterating",
+            "question": "Why does deleting keys from a dictionary while looping over it directly raise a RuntimeError?",
+            "goal": "Explain why dictionaries cannot change size during direct iteration.",
+            "expected_output": "RuntimeError during iteration",
+            "lines": [
+                "d = {\"a\": 1, \"b\": 2}",
+                "# for k in d: del d[k] <- Crashes!"
+            ],
+            "code": "for k in d: del d[k]",
+            "answer": "Python prohibits altering the dictionary's size while iterating directly over it",
+            "distractors": [
+                "Dictionaries automatically lock all keys after 1 iteration",
+                "Keys can only be deleted inside a while True loop",
+                "The delete operator only works on lists"
+            ],
+            "options": [
+                "Python prohibits altering the dictionary's size while iterating directly over it",
+                "Dictionaries automatically lock all keys after 1 iteration",
+                "Keys can only be deleted inside a while True loop",
+                "The delete operator only works on lists"
+            ],
+            "choices": [
+                "Python prohibits altering the dictionary's size while iterating directly over it",
+                "Dictionaries automatically lock all keys after 1 iteration",
+                "Keys can only be deleted inside a while True loop",
+                "The delete operator only works on lists"
+            ],
+            "hint": "Iterate over list(d.keys()) if you need to delete entries during iteration.",
+            "type": "quiz",
+            "question_en": "Why does deleting keys from a dictionary while looping over it directly raise a RuntimeError?",
+            "question_fil": "Bakit nagdudulot ng RuntimeError ang pagbura ng susi sa dictionary habang naglo-loop dito?",
+            "goal_en": "Explain why dictionaries cannot change size during direct iteration.",
+            "goal_fil": "Ipaliwanag na bawal baguhin ang laki ng dictionary habang naglo-loop dito.",
+            "hint_en": "Iterate over list(d.keys()) if you need to delete entries during iteration.",
+            "hint_fil": "Mag-loop sa list(d.keys()) kung kailangang magbura habang naglo-loop."
+        },
+        {
+            "id": "norm_nt_q9",
+            "enemy_id": "normal_titan",
+            "difficulty": "normal",
+            "category": "Synthesis: Exception Handling in Class Method",
+            "error_type": "ZeroDivisionError",
+            "title": "Normal Titan Quiz #9: Defensive Class Method Division",
+            "question": "Select the correct method definition that computes self.val / factor safely, returning 0 on ZeroDivisionError.",
+            "goal": "Catch ZeroDivisionError in method and return fallback 0.",
+            "expected_output": "Safe division method",
+            "lines": [
+                "class Number:",
+                "    def __init__(self, val): self.val = val",
+                "    def safe_div(self, factor):",
+                "        try: return self.val / factor",
+                "        except ZeroDivisionError: return 0"
+            ],
+            "code": "def safe_div(self, factor): return self.val / factor",
+            "answer": "try: return self.val / factor except ZeroDivisionError: return 0",
+            "distractors": [
+                "return self.val / factor if factor != 0 else 1",
+                "catch: return self.val / factor",
+                "return self.val / factor or None"
+            ],
+            "options": [
+                "try: return self.val / factor except ZeroDivisionError: return 0",
+                "return self.val / factor if factor != 0 else 1",
+                "catch: return self.val / factor",
+                "return self.val / factor or None"
+            ],
+            "choices": [
+                "try: return self.val / factor except ZeroDivisionError: return 0",
+                "return self.val / factor if factor != 0 else 1",
+                "catch: return self.val / factor",
+                "return self.val / factor or None"
+            ],
+            "hint": "Catch ZeroDivisionError inside a try-except block to return 0 when dividing by zero.",
+            "type": "quiz",
+            "question_en": "Select the correct method definition that computes self.val / factor safely, returning 0 on ZeroDivisionError.",
+            "question_fil": "Piliin ang tamang method definition na naghahati nang ligtas at nagbabalik ng 0 sa ZeroDivisionError.",
+            "goal_en": "Catch ZeroDivisionError in method and return fallback 0.",
+            "goal_fil": "Saluhin ang ZeroDivisionError at magbalik ng 0.",
+            "hint_en": "Catch ZeroDivisionError inside a try-except block to return 0 when dividing by zero.",
+            "hint_fil": "Gumamit ng try-except para saluhin ang ZeroDivisionError at magbalik ng 0."
+        },
+        {
+            "id": "norm_nt_q10",
+            "enemy_id": "normal_titan",
+            "difficulty": "normal",
+            "category": "Dictionaries",
+            "error_type": "KeyError: 'level'",
+            "title": "Normal Titan Quiz #10: Safe Dictionary Default",
+            "question": "Which method safely retrieves a dictionary value or returns a default if the key is missing?",
+            "goal": "Safely read 'level' from player dictionary or return default 1.",
+            "expected_output": "1",
+            "lines": [
+                "player = {\"name\": \"Knight\"}",
+                "lvl = player.get(\"level\", 1)",
+                "print(lvl)"
+            ],
+            "code": "lvl = player[\"level\"]",
+            "answer": "player.get(\"level\", 1)",
+            "distractors": [
+                "player[\"level\"]",
+                "player.find(\"level\", 1)",
+                "player.read(\"level\", 1)"
+            ],
+            "options": [
+                "player.get(\"level\", 1)",
+                "player[\"level\"]",
+                "player.find(\"level\", 1)",
+                "player.read(\"level\", 1)"
+            ],
+            "choices": [
+                "player.get(\"level\", 1)",
+                "player[\"level\"]",
+                "player.find(\"level\", 1)",
+                "player.read(\"level\", 1)"
+            ],
+            "hint": "The .get(key, default) method avoids KeyError when the key does not exist.",
+            "type": "quiz",
+            "question_en": "Which method safely retrieves a dictionary value or returns a default if the key is missing?",
+            "question_fil": "Aling method ang ligtas na kumukuha ng value mula sa dictionary o nagbabalik ng default kung wala ang key?",
+            "goal_en": "Safely read 'level' from player dictionary or return default 1.",
+            "goal_fil": "Ligtas na basahin ang 'level' mula sa player dictionary o ibalik ang default 1.",
+            "hint_en": "The .get(key, default) method avoids KeyError when the key does not exist.",
+            "hint_fil": "Iniiwasan ng .get(key, default) ang KeyError kapag wala ang hinahanap na key."
         }
     ]
 };

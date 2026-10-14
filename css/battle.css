@@ -74,8 +74,8 @@
 #battle-back-button {
     justify-self: start;
     background: rgba(26, 18, 44, 0.92);
-    border: 1px solid #7c3aed;
-    color: #e9d5ff;
+    border: 1px solid var(--theme-primary, #7c3aed);
+    color: var(--theme-text-sub, #e9d5ff);
     font-family: 'Inter', sans-serif;
     font-size: clamp(12.5px, 1.1vmin + 2px, 15px);
     font-weight: 700;
@@ -90,10 +90,10 @@
 }
 
 #battle-back-button:hover {
-    background: #7c3aed;
+    background: var(--theme-primary, #7c3aed);
     color: #ffffff;
     transform: translateX(-3px);
-    box-shadow: 0 0 16px rgba(124, 58, 237, 0.6);
+    box-shadow: 0 0 16px var(--theme-glow, rgba(124, 58, 237, 0.6));
 }
 
 /* Centered Unified Status Pill Cluster (Difficulty | Enemy # | Timer) */
@@ -174,8 +174,8 @@
 
 #battle-guide-button {
     background: rgba(26, 18, 44, 0.92);
-    border: 1px solid #a855f7;
-    color: #f3e8ff;
+    border: 1px solid var(--theme-primary, #a855f7);
+    color: var(--theme-text-title, #f3e8ff);
     font-family: 'Inter', sans-serif;
     font-size: clamp(12.5px, 1.1vmin + 2px, 15px);
     font-weight: 700;
@@ -696,8 +696,8 @@
 
 #challenge-box.is-expanded,
 .minimal-mission-box.is-expanded {
-    border-color: #a855f7 !important;
-    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.85), 0 0 25px rgba(168, 85, 247, 0.35) !important;
+    border-color: var(--theme-primary, #a855f7) !important;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.85), 0 0 25px var(--theme-glow, rgba(168, 85, 247, 0.35)) !important;
 }
 
 .mission-directive-header {
@@ -1111,8 +1111,8 @@
 /* RPG Dialogue Directive Card */
 .rpg-dialogue-card {
     background: linear-gradient(135deg, rgba(36, 24, 68, 0.9), rgba(20, 14, 42, 0.95));
-    border: 1px solid rgba(168, 85, 247, 0.45);
-    border-left: 4px solid #a855f7;
+    border: 1px solid var(--theme-border, rgba(168, 85, 247, 0.45));
+    border-left: 4px solid var(--theme-primary, #a855f7);
     border-radius: 10px;
     padding: clamp(8px, 1vh, 12px) clamp(10px, 1.2vw, 14px);
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
@@ -1199,7 +1199,7 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #7c3aed;
+    background: var(--theme-primary, #7c3aed);
     color: #ffffff;
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
@@ -1561,8 +1561,8 @@
 
 .parsons-reset-btn {
     background: rgba(38, 24, 62, 0.9);
-    border: 1px solid #7c3aed;
-    color: #e9d5ff;
+    border: 1px solid var(--theme-primary, #7c3aed);
+    color: var(--theme-text-sub, #e9d5ff);
     font-family: 'Inter', sans-serif;
     font-size: 11px;
     font-weight: 700;
@@ -1573,9 +1573,9 @@
 }
 
 .parsons-reset-btn:hover {
-    background: #7c3aed;
+    background: var(--theme-primary, #7c3aed);
     color: #ffffff;
-    box-shadow: 0 0 10px rgba(124, 58, 237, 0.6);
+    box-shadow: 0 0 10px var(--theme-glow, rgba(124, 58, 237, 0.6));
 }
 
 .parsons-blocks-list {
@@ -1618,14 +1618,14 @@
 }
 
 .parsons-block-item:hover {
-    border-color: #a855f7;
+    border-color: var(--theme-primary, #a855f7);
     background: rgba(36, 24, 68, 0.95);
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
 }
 
 .parsons-block-item.is-dragging {
     opacity: 0.45;
-    border-color: #a855f7;
+    border-color: var(--theme-primary, #a855f7);
     background: #1e1438;
 }
 
@@ -1639,6 +1639,46 @@
     color: #fca5a5;
     text-decoration: line-through;
     opacity: 0.75;
+}
+
+.parsons-block-item.is-clue-target {
+    border: 2px solid #fbbf24 !important;
+    background: linear-gradient(90deg, rgba(251, 191, 36, 0.22) 0%, rgba(36, 24, 68, 0.98) 100%) !important;
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.55), inset 0 0 10px rgba(251, 191, 36, 0.25) !important;
+    animation: clueBlockPulse 1.4s ease-in-out infinite alternate !important;
+    z-index: 5;
+}
+
+@keyframes clueBlockPulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 12px rgba(251, 191, 36, 0.4);
+    }
+    100% {
+        transform: scale(1.02);
+        box-shadow: 0 0 26px rgba(251, 191, 36, 0.85), 0 0 6px #fbbf24;
+    }
+}
+
+.clue-step-pill {
+    background: #fbbf24 !important;
+    color: #0f172a !important;
+    font-weight: 800 !important;
+    padding: 2px 7px !important;
+    border-radius: 4px !important;
+    box-shadow: 0 2px 8px rgba(251, 191, 36, 0.6) !important;
+    border: none !important;
+}
+
+.memory-card.is-clue-pair {
+    border: 2px solid #fbbf24 !important;
+    box-shadow: 0 0 22px rgba(251, 191, 36, 0.75) !important;
+    animation: clueCardPulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes clueCardPulse {
+    0% { box-shadow: 0 0 10px rgba(251, 191, 36, 0.4); }
+    100% { box-shadow: 0 0 24px rgba(251, 191, 36, 0.9); }
 }
 
 .block-drag-handle {
@@ -1756,7 +1796,7 @@
 #submit-button {
     width: 100% !important;
     height: clamp(34px, 3.8vh, 42px) !important;
-    background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%) !important;
+    background: var(--theme-btn-gradient, linear-gradient(135deg, #a855f7 0%, #7c3aed 100%)) !important;
     border: 1.5px solid #c084fc !important;
     border-radius: 8px !important;
     color: #ffffff !important;
@@ -1807,7 +1847,7 @@
 
 .powerup-action-btn {
     background: rgba(35, 24, 60, 0.85);
-    border: 1px solid #7c3aed;
+    border: 1px solid var(--theme-primary, #7c3aed);
     border-radius: 6px;
     color: #e9d5ff;
     font-family: 'Inter', sans-serif;
@@ -1844,9 +1884,9 @@
     font-weight: 700;
     padding: 4px 10px;
     border-radius: 12px;
-    background: rgba(168, 85, 247, 0.2);
-    border: 1px solid #a855f7;
-    color: #e9d5ff;
+    background: var(--theme-glow-soft, rgba(168, 85, 247, 0.2));
+    border: 1px solid var(--theme-primary, #a855f7);
+    color: var(--theme-text-sub, #e9d5ff);
 }
 
 .powerup-quota-pill.free-quota {
@@ -2109,6 +2149,7 @@ body.in-battle #global-access-bar,
 #game-container:has(#codex-screen:not([style*="display: none"])) #global-access-bar,
 #game-container:has(#shop-screen:not([style*="display: none"])) #global-access-bar,
 #game-container:has(#about-screen:not([style*="display: none"])) #global-access-bar,
+#game-container:has(#compiler-screen:not([style*="display: none"])) #global-access-bar,
 #game-container:has(#admin-screen:not([style*="display: none"])) #global-access-bar {
     display: none !important;
 }
@@ -2121,7 +2162,7 @@ body.in-battle #global-access-bar,
 
 #dialogue-text {
     scrollbar-width: thin;
-    scrollbar-color: #7c3aed rgba(10, 5, 20, 0.4);
+    scrollbar-color: var(--theme-scrollbar, #7c3aed) rgba(10, 5, 20, 0.4);
 }
 
 #dialogue-text::-webkit-scrollbar {
@@ -2503,7 +2544,7 @@ body.in-battle #global-access-bar,
 /* Face Up (Revealed) */
 .memory-card-back {
     background: linear-gradient(135deg, rgba(40, 26, 75, 0.95), rgba(22, 14, 45, 0.95));
-    border: 1.5px solid #a855f7;
+    border: 1.5px solid var(--theme-primary, #a855f7);
     color: #ffffff;
     transform: rotateY(180deg);
     line-height: 1.25;
@@ -2642,7 +2683,7 @@ body.in-battle #global-access-bar,
 }
 
 .spotbug-line-item:hover {
-    border-color: #a855f7;
+    border-color: var(--theme-primary, #a855f7);
     background: rgba(38, 24, 72, 0.95);
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
 }

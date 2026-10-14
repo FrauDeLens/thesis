@@ -1,5 +1,22 @@
 
 // =========================================================
+// PLAYER COMBATANT PROFILE & IDENTITY HOOKS
+// =========================================================
+
+function getPlayerCombatantName() {
+    if (typeof currentUser !== "undefined" && currentUser) {
+        return (currentUser.full_name || currentUser.username || "PLAYER").trim();
+    }
+    const saved = localStorage.getItem("full_name") || localStorage.getItem("username");
+    if (saved && saved.trim()) return saved.trim();
+    const globalProfName = document.getElementById("global-profile-name");
+    if (globalProfName && globalProfName.textContent && globalProfName.textContent.trim() !== "Profile") {
+        return globalProfName.textContent.trim();
+    }
+    return "PLAYER";
+}
+
+// =========================================================
 // TACTICAL PEDAGOGY & CODE DIAGNOSIS INTEL SYSTEM
 // Introduces what the code is, what it should do, why it broke,
 // and provides instant tactical feedback on wrong fixes.
@@ -125,7 +142,7 @@ function displayCodeIntroduction(bugData, enemy) {
 
     if (!bugData) {
         const lang = (typeof getLanguage === "function") ? getLanguage() : "en";
-        dialogueText.textContent = lang === "fil" ? "May lumabas na kalabang bug! Ano ang gagawin ni Frau?" : "A wild bug appeared! What will Frau do?";
+        dialogueText.textContent = lang === "fil" ? "May lumabas na kalabang bug! Ano ang gagawin mo?" : `A wild bug appeared! What will ${getPlayerCombatantName()} do?`;
         return;
     }
 
@@ -149,7 +166,7 @@ function displayCodeIntroduction(bugData, enemy) {
 
     const speakerLabel = document.querySelector("#pokemon-dialogue-pane .speaker-label");
     if (speakerLabel) {
-        speakerLabel.textContent = isFil ? "FRAU // COMBAT LOG" : "FRAU // COMBAT LOG";
+        speakerLabel.textContent = `${getPlayerCombatantName().toUpperCase()} // COMBAT LOG`;
     }
 
     // Populate the central RPG Mission Box
@@ -480,7 +497,7 @@ function handleQuestionTimeout() {
         updateHearts();
         const msg = isFil
             ? "⏱️ Naubos ang oras! Inatake ka ng kalaban! (-1 HP)"
-            : "⏱️ Time expired! Enemy attacked Frau! (-1 HP)";
+            : `⏱️ Time expired! Enemy attacked ${getPlayerCombatantName()}! (-1 HP)`;
         if (typeof showGameToast === "function") showGameToast(msg, "error");
     }
 
@@ -619,7 +636,7 @@ function usePowerup(type) {
 
     if (type === "shield") {
         isShieldActive = true;
-        if (dialogueText) dialogueText.textContent = "🛡️ Code Barrier Active!" + costNotice + " The next wrong fix won't cost Frau a heart.";
+        if (dialogueText) dialogueText.textContent = `🛡️ Code Barrier Active!${costNotice} The next wrong fix won't cost ${getPlayerCombatantName()} a heart.`;
         if (typeof showGameToast === "function") showGameToast("🛡️ Code Shield Active!" + costNotice, "success");
     } else if (type === "scan") {
         const lang = (typeof getLanguage === "function") ? getLanguage() : "en";
@@ -728,27 +745,102 @@ function usePowerup(type) {
             }
         }
     } else if (type === "hint") {
+        const lang = (typeof getLanguage === "function") ? getLanguage() : "en";
+        const isFil = (lang === "fil");
         const currentBugData = (currentEnemy && currentEnemy.bugs) ? currentEnemy.bugs[currentBug] : null;
         const bugType = currentBugData ? (currentBugData.type || "parson") : "parson";
-        if (currentBugData && currentBugData.hint) {
-            if (dialogueText) dialogueText.textContent = `💡 TACTICAL CLUE${costNotice}: ` + currentBugData.hint;
-            if (typeof showGameToast === "function") showGameToast(`💡 Tactical Clue!${costNotice}`, "success");
+
+        if (bugType === "memory") {
+            // Memory Match: Highlight one matching pair with gold glow
+            const unmatchedCard = currentMemoryCards.find(c => !c.isMatched);
+            if (unmatchedCard) {
+                const partnerCard = currentMemoryCards.find(c => c.pairId === unmatchedCard.pairId && c.id !== unmatchedCard.id);
+                if (partnerCard) {
+                    unmatchedCard.isCluePair = true;
+                    partnerCard.isCluePair = true;
+                    renderMemoryWorkspace();
+                    const msg = isFil
+                        ? `💡 TACTICAL CLUE${costNotice}: Tingnan ang umiilaw na pares: <code>${escapeHtml(unmatchedCard.text)}</code> ↔ <code>${escapeHtml(partnerCard.text)}</code>!`
+                        : `💡 TACTICAL CLUE${costNotice}: Look at the glowing matching pair: <code>${escapeHtml(unmatchedCard.text)}</code> ↔ <code>${escapeHtml(partnerCard.text)}</code>!`;
+                    if (dialogueText) dialogueText.innerHTML = msg;
+                    if (typeof showGameToast === "function") showGameToast(`💡 Matching Pair Highlighted!${costNotice}`, "success");
+                    setTimeout(() => {
+                        unmatchedCard.isCluePair = false;
+                        partnerCard.isCluePair = false;
+                        renderMemoryWorkspace();
+                    }, 6000);
+                }
+            } else {
+                const msg = isFil ? `💡 Clue${costNotice}: Naitugma na ang lahat ng cards!` : `💡 Clue${costNotice}: All cards are already matched!`;
+                if (dialogueText) dialogueText.textContent = msg;
+                if (typeof showGameToast === "function") showGameToast(msg, "info");
+            }
         } else if (typeof isBattleQuizModeActive === "function" && isBattleQuizModeActive() && currentQuizData) {
-            const clue = "💡 Look closely at the broken snippet in broken_code.py to find the required patch.";
-            if (dialogueText) dialogueText.textContent = clue + costNotice;
-            if (typeof showGameToast === "function") showGameToast(clue + costNotice, "info");
-        } else if (bugType === "spotBug" && currentBugData && currentBugData.explanation) {
-            if (dialogueText) dialogueText.textContent = `💡 TACTICAL CLUE${costNotice}: ` + currentBugData.explanation;
-            if (typeof showGameToast === "function") showGameToast(`💡 Tactical Clue!${costNotice}`, "success");
-        } else if (bugType === "memory") {
-            const clue = "💡 Match Python syntax statements with their intended actions or outputs.";
-            if (dialogueText) dialogueText.textContent = clue + costNotice;
-            if (typeof showGameToast === "function") showGameToast(clue + costNotice, "info");
+            // Quiz / Bug Hunt: Provide direct educational explanation & highlight broken line
+            let hintMsg = (currentBugData && (isFil ? (currentBugData.hint_fil || currentBugData.hint) : (currentBugData.hint_en || currentBugData.hint))) || "";
+            if (!hintMsg) {
+                hintMsg = isFil ? "Suriin ang mga parameter at syntax sa broken_code.py." : "Inspect function arguments and syntax in broken_code.py.";
+            }
+            const msg = `💡 TACTICAL CLUE${costNotice}: ` + hintMsg;
+            if (dialogueText) dialogueText.innerHTML = msg;
+            if (typeof showGameToast === "function") showGameToast(`💡 Clue: ${hintMsg}${costNotice}`, "success");
+        } else if (bugType === "spotBug") {
+            // Spot the Bug: Tell what kind of syntax error is on the line
+            const cat = currentBugData ? (currentBugData.category || "Syntax Error") : "Syntax Error";
+            const exp = currentBugData ? (currentBugData.explanation || "") : "";
+            const lineNum = (typeof correctSpotBugLineIndex === "number") ? correctSpotBugLineIndex + 1 : 1;
+            const msg = isFil
+                ? `💡 TACTICAL CLUE${costNotice}: Ang bug ay may kinalaman sa <strong>${cat}</strong> sa bandang Line ${lineNum}! ${exp}`
+                : `💡 TACTICAL CLUE${costNotice}: The error involves <strong>${cat}</strong> around Line ${lineNum}! ${exp}`;
+            if (dialogueText) dialogueText.innerHTML = msg;
+            if (typeof showGameToast === "function") showGameToast(`💡 Clue: ${cat} on Line ${lineNum}!${costNotice}`, "success");
         } else {
+            // Parsons Puzzle: Mechanically pinpoint the NEXT step and highlight its block!
             const solLines = getBugSolutionLines(currentBugData);
-            const clue = (solLines.length > 0) ? "Start with: " + solLines[0] : "Check Python syntax and block sequence!";
-            if (dialogueText) dialogueText.textContent = `💡 ${clue}${costNotice}`;
-            if (typeof showGameToast === "function") showGameToast(`💡 Clue Revealed!${costNotice}`, "success");
+            let nextStep = 0;
+            const activeBlocks = currentParsonsBlocks.filter(b => !b.excluded);
+
+            for (let i = 0; i < solLines.length; i++) {
+                if (i >= activeBlocks.length || activeBlocks[i].text.trimEnd() !== solLines[i].trimEnd()) {
+                    nextStep = i;
+                    break;
+                }
+            }
+
+            const expectedLine = solLines[nextStep];
+            if (expectedLine !== undefined) {
+                // Clear previous clue targets
+                currentParsonsBlocks.forEach(b => { b.isClueTarget = false; });
+
+                // Find the matching block in currentParsonsBlocks
+                let targetBlock = currentParsonsBlocks.find(b => !b.excluded && b.text.trimEnd() === expectedLine.trimEnd());
+                if (!targetBlock) {
+                    targetBlock = currentParsonsBlocks.find(b => b.text.trimEnd() === expectedLine.trimEnd());
+                    if (targetBlock) targetBlock.excluded = false;
+                }
+
+                if (targetBlock) {
+                    targetBlock.isClueTarget = true;
+                    targetBlock.targetStepNum = nextStep + 1;
+                    renderParsonsWorkspace();
+
+                    const blockEl = document.querySelector(`.parsons-block-item[data-index="${currentParsonsBlocks.indexOf(targetBlock)}"]`);
+                    if (blockEl) {
+                        blockEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                    }
+
+                    const cleanCode = escapeHtml(expectedLine.trim());
+                    const msg = isFil
+                        ? `💡 TACTICAL CLUE${costNotice}: Hakbang #${nextStep + 1}: Ilagay ang block na <code>${cleanCode}</code> sa posisyon #${nextStep + 1}!`
+                        : `💡 TACTICAL CLUE${costNotice}: Step #${nextStep + 1}: Position block <code>${cleanCode}</code> into step #${nextStep + 1}!`;
+                    if (dialogueText) dialogueText.innerHTML = msg;
+                    if (typeof showGameToast === "function") showGameToast(`💡 Step #${nextStep + 1} Target Highlighted!${costNotice}`, "success");
+                }
+            } else {
+                const msg = isFil ? `💡 Clue${costNotice}: Tama na ang pagkakasunod-sunod ng mga linya! I-click ang FIX CODE!` : `💡 Clue${costNotice}: All blocks are in correct order! Click FIX CODE!`;
+                if (dialogueText) dialogueText.textContent = msg;
+                if (typeof showGameToast === "function") showGameToast(msg, "info");
+            }
         }
         openCombatLog();
     }
@@ -769,8 +861,7 @@ async function loadEnemyQuestions(enemy) {
         const data = await api(
             "questions.php?enemy_id=" +
             encodeURIComponent(enemy.id) +
-            "&count=" +
-            enemy.hearts
+            "&count=0"
         );
 
         if (data.questions && data.questions.length) {
@@ -941,13 +1032,19 @@ function renderParsonsWorkspace() {
     let activeStep = 1;
     currentParsonsBlocks.forEach(function (block, idx) {
         const item = document.createElement("div");
-        item.className = "parsons-block-item" + (block.excluded ? " is-distractor-excluded" : "");
+        const isClueTarget = Boolean(block.isClueTarget);
+        item.className = "parsons-block-item" + 
+            (block.excluded ? " is-distractor-excluded" : "") + 
+            (isClueTarget ? " is-clue-target" : "");
         item.setAttribute("data-index", idx);
         item.setAttribute("draggable", block.excluded ? "false" : "true");
 
         let stepLabel = "";
         if (block.excluded) {
             stepLabel = '<span class="block-distractor-badge">EXCLUDED</span>';
+        } else if (isClueTarget) {
+            stepLabel = `<span class="block-step-num clue-step-pill">💡 TARGET #${block.targetStepNum || activeStep}</span>`;
+            activeStep++;
         } else {
             stepLabel = '<span class="block-step-num">#' + String(activeStep).padStart(2, "0") + '</span>';
             activeStep++;
@@ -995,6 +1092,7 @@ function attachParsonsDragListeners(itemEl, index) {
         const toIndex = index;
 
         if (!isNaN(fromIndex) && fromIndex !== toIndex && fromIndex >= 0 && fromIndex < currentParsonsBlocks.length) {
+            currentParsonsBlocks.forEach(b => { b.isClueTarget = false; });
             const moved = currentParsonsBlocks.splice(fromIndex, 1)[0];
             currentParsonsBlocks.splice(toIndex, 0, moved);
             renderParsonsWorkspace();
@@ -1005,6 +1103,7 @@ function attachParsonsDragListeners(itemEl, index) {
 function moveParsonsBlock(index, direction) {
     const target = index + direction;
     if (target < 0 || target >= currentParsonsBlocks.length) return;
+    currentParsonsBlocks.forEach(b => { b.isClueTarget = false; });
     const temp = currentParsonsBlocks[index];
     currentParsonsBlocks[index] = currentParsonsBlocks[target];
     currentParsonsBlocks[target] = temp;
@@ -1354,7 +1453,7 @@ function renderMemoryWorkspace() {
     gridEl.innerHTML = "";
     currentMemoryCards.forEach(function (card, idx) {
         const cardEl = document.createElement("div");
-        cardEl.className = "memory-card" + (card.isFlipped ? " is-flipped" : "") + (card.isMatched ? " is-matched" : "");
+        cardEl.className = "memory-card" + (card.isFlipped ? " is-flipped" : "") + (card.isMatched ? " is-matched" : "") + (card.isCluePair ? " is-clue-pair" : "");
         cardEl.setAttribute("data-index", idx);
         cardEl.setAttribute("role", "button");
         cardEl.setAttribute("tabindex", "0");
@@ -2225,12 +2324,14 @@ async function startGame(enemyList) {
     showScreen(document.getElementById("battle-screen"));
 
     const enemyName = document.getElementById("enemy-name");
+    const playerCombatantName = document.getElementById("player-combatant-name") || document.querySelector(".player-card .pokemon-combatant-name");
     const playerSprite = document.getElementById("player-sprite");
     const enemySprite = document.getElementById("enemy-sprite");
     const dialogueText = document.getElementById("dialogue-text");
     const answerInput = document.getElementById("answer-input");
 
     if (enemyName) enemyName.textContent = currentEnemy.name;
+    if (playerCombatantName) playerCombatantName.textContent = getPlayerCombatantName().toUpperCase();
     if (playerSprite) {
         playerSprite.src = "css/Sprites/user/idle.png";
         playerSprite.setAttribute("draggable", "false");
@@ -2276,7 +2377,7 @@ function damagePlayer() {
     if (isShieldActive) {
         isShieldActive = false;
         const dialogueText = document.getElementById("dialogue-text");
-        if (dialogueText) dialogueText.textContent = "🛡️ Code Barrier absorbed the damage! Frau lost 0 hearts.";
+        if (dialogueText) dialogueText.textContent = `🛡️ Code Barrier absorbed the damage! ${getPlayerCombatantName()} lost 0 hearts.`;
         if (typeof showGameToast === "function") showGameToast("🛡️ Code Shield Absorbed Damage!", "success");
         updatePowerupButtons();
         return;
@@ -2371,36 +2472,36 @@ function resetCurrentDifficulty() {
 
 const STEAM_TROPHIES = [
     // Easy
-    { id: "Slime Syntax Core", name: "Syntax Slayer", diff: "easy", enemy: "Syntax Slime", desc: "Master basic Python syntax: fix missing quotes, colons, and open parentheses.", icon: "🧪" },
-    { id: "Goblin Variable Gem", name: "Name Restorer", diff: "easy", enemy: "Variable Goblin", desc: "Retrieve stolen variable names and fix capitalization & typos.", icon: "💎" },
-    { id: "Endless Loop Rune", name: "Loop Breaker", diff: "easy", enemy: "Loop Lurker", desc: "Escape infinite loops with valid range() bounds and moving counters.", icon: "🔄" },
-    { id: "Fairy Function Charm", name: "Function Master", diff: "easy", enemy: "Function Fairy", desc: "Properly declare def functions with valid headers, arguments, and return statements.", icon: "✨" },
-    { id: "Imp Module Fragment", name: "Module Summoner", diff: "easy", enemy: "Import Imp", desc: "Import math and random modules cleanly without ghost functions.", icon: "📜" },
-    { id: "Dragon Beginner Trophy", name: "Dragon Conqueror", diff: "easy", enemy: "Beginner Dragon", desc: "Conquer the Easy Boss and prove mastery of fundamental Python debugging!", icon: "🐉" },
+    { id: "Slime Syntax Core", enemyTrophy: "Slime Syntax Core", name: "Syntax Slayer", diff: "easy", enemy: "Syntax Slime", desc: "Master basic Python syntax: fix missing quotes, colons, and open parentheses.", icon: "🧪" },
+    { id: "Goblin Variable Gem", enemyTrophy: "Goblin Variable Gem", name: "Name Restorer", diff: "easy", enemy: "Variable Goblin", desc: "Retrieve stolen variable names and fix capitalization & typos.", icon: "💎" },
+    { id: "Endless Loop Rune", enemyTrophy: "Lurker Loop Ring", name: "Loop Breaker", diff: "easy", enemy: "Loop Lurker", desc: "Escape infinite loops with valid range() bounds and moving counters.", icon: "🔄" },
+    { id: "Fairy Function Charm", enemyTrophy: "Fairy Function Wand", name: "Function Master", diff: "easy", enemy: "Function Fairy", desc: "Properly declare def functions with valid headers, arguments, and return statements.", icon: "✨" },
+    { id: "Imp Module Fragment", enemyTrophy: "Imp Module Token", name: "Module Summoner", diff: "easy", enemy: "Import Imp", desc: "Import math and random modules cleanly without ghost functions.", icon: "📜" },
+    { id: "Dragon Beginner Trophy", enemyTrophy: "Dragon Crown of Basics", name: "Dragon Conqueror", diff: "easy", enemy: "Beginner Dragon", desc: "Conquer the Easy Boss and prove mastery of fundamental Python debugging!", icon: "🐉" },
 
     // Normal
-    { id: "Ogre List Crystal", name: "Array Alchemist", diff: "normal", enemy: "List Ogre", desc: "Master 0-indexed lists, append methods, and boundary bounds.", icon: "📦" },
-    { id: "Wizard Dict Tome", name: "Dictionary Sage", diff: "normal", enemy: "Dict Wizard", desc: "Access dictionary keys correctly with brackets and handle missing keys.", icon: "📖" },
-    { id: "Wolf Recursion Fang", name: "Recursion Tamer", diff: "normal", enemy: "Recursion Wolf", desc: "Supply base cases and decrement arguments to avoid recursion crashes.", icon: "🐺" },
-    { id: "Mage Class Scroll", name: "Object Architect", diff: "normal", enemy: "Class Mage", desc: "Harness classes, object instances, and the self parameter.", icon: "🧙‍♂️" },
-    { id: "Knight Error Shield", name: "Crash Guardian", diff: "normal", enemy: "Exception Knight", desc: "Protect fragile code with try-except blocks and catch specific errors.", icon: "🛡️" },
-    { id: "Normal Champion Trophy", name: "Titan Crusher", diff: "normal", enemy: "Normal Titan", desc: "Defeat Normal Titan and master data structures and object blueprints!", icon: "🏆" },
+    { id: "Ogre List Crystal", enemyTrophy: "Ogre List Club", name: "Array Alchemist", diff: "normal", enemy: "List Ogre", desc: "Master 0-indexed lists, append methods, and boundary bounds.", icon: "📦" },
+    { id: "Wizard Dict Tome", enemyTrophy: "Wizard Key Tome", name: "Dictionary Sage", diff: "normal", enemy: "Dict Wizard", desc: "Access dictionary keys correctly with brackets and handle missing keys.", icon: "📖" },
+    { id: "Wolf Recursion Fang", enemyTrophy: "Wolf Recursion Fang", name: "Recursion Tamer", diff: "normal", enemy: "Recursion Wolf", desc: "Supply base cases and decrement arguments to avoid recursion crashes.", icon: "🐺" },
+    { id: "Mage Class Scroll", enemyTrophy: "Mage Object Orb", name: "Object Architect", diff: "normal", enemy: "Class Mage", desc: "Harness classes, object instances, and the self parameter.", icon: "🧙‍♂️" },
+    { id: "Knight Error Shield", enemyTrophy: "Knight Shield of Try", name: "Crash Guardian", diff: "normal", enemy: "Exception Knight", desc: "Protect fragile code with try-except blocks and catch specific errors.", icon: "🛡️" },
+    { id: "Normal Champion Trophy", enemyTrophy: "Titan Core of Normalcy", name: "Titan Crusher", diff: "normal", enemy: "Normal Titan", desc: "Defeat Normal Titan and master data structures and object blueprints!", icon: "🏆" },
 
     // Hard
-    { id: "Recursive Sigil", name: "Deep Call Master", diff: "hard", enemy: "Recursion Phantom", desc: "Resolve deep recursive call frames and state accumulation traps.", icon: "🔮" },
-    { id: "Ancient Dictionary", name: "Dict Archaeologist", diff: "hard", enemy: "Dictionary Golem", desc: "Manipulate nested mappings, .items() iterators, and key removals.", icon: "🏺" },
-    { id: "Knight's Blueprint", name: "Constructor Virtuoso", diff: "hard", enemy: "Class Knight", desc: "Build flawless __init__ constructors and robust class methods.", icon: "⚔️" },
-    { id: "Dragon Bloodline", name: "Inheritance Heir", diff: "hard", enemy: "Inheritance Dragon", desc: "Execute super() calls and subclass polymorphism cleanly.", icon: "👑" },
-    { id: "Error Scythe", name: "Reaper of Bugs", diff: "hard", enemy: "Exception Reaper", desc: "Pinpoint IndexError, KeyError, and custom exceptions.", icon: "💀" },
-    { id: "Hard Champion Trophy", name: "Hardcore Champion", diff: "hard", enemy: "Code Titan", desc: "Crush Code Titan and conquer complex multi-step Python architecture!", icon: "🥇" },
+    { id: "Recursive Sigil", enemyTrophy: "Phantom Call Stack", name: "Deep Call Master", diff: "hard", enemy: "Recursion Phantom", desc: "Resolve deep recursive call frames and state accumulation traps.", icon: "🔮" },
+    { id: "Ancient Dictionary", enemyTrophy: "Golem Hash Stone", name: "Dict Archaeologist", diff: "hard", enemy: "Dictionary Golem", desc: "Manipulate nested mappings, .items() iterators, and key removals.", icon: "🏺" },
+    { id: "Knight's Blueprint", enemyTrophy: "Knight Armor of Encapsulation", name: "Constructor Virtuoso", diff: "hard", enemy: "Class Knight", desc: "Build flawless __init__ constructors and robust class methods.", icon: "⚔️" },
+    { id: "Dragon Bloodline", enemyTrophy: "Dragon Scale of Super", name: "Inheritance Heir", diff: "hard", enemy: "Inheritance Dragon", desc: "Execute super() calls and subclass polymorphism cleanly.", icon: "👑" },
+    { id: "Error Scythe", enemyTrophy: "Reaper Scythe of Raise", name: "Reaper of Bugs", diff: "hard", enemy: "Exception Reaper", desc: "Pinpoint IndexError, KeyError, and custom exceptions.", icon: "💀" },
+    { id: "Hard Champion Trophy", enemyTrophy: "Titan Monolith of Mastery", name: "Hardcore Champion", diff: "hard", enemy: "Code Titan", desc: "Crush Code Titan and conquer complex multi-step Python architecture!", icon: "🥇" },
 
     // Hell
-    { id: "Memory Fragment", name: "Memory Purifier", diff: "hell", enemy: "Memory Demon", desc: "Prevent None attribute errors and manage mutable references.", icon: "🧠" },
-    { id: "Algorithm Core", name: "Algorithm Sovereign", diff: "hell", enemy: "Algorithm Wraith", desc: "Repair binary searches, sorting passes, and algorithmic pointers.", icon: "⚡" },
-    { id: "Thread Core", name: "Concurrency Lord", diff: "hell", enemy: "Concurrency Beast", desc: "Synchronize async coroutines, threads, and await pipelines safely.", icon: "🕸️" },
-    { id: "Security Fang", name: "Cyber Sentinel", diff: "hell", enemy: "Security Hydra", desc: "Eliminate eval injection vulnerabilities and sanitize input.", icon: "🔒" },
-    { id: "Artificial Mind", name: "Machine Whisperer", diff: "hell", enemy: "AI Overlord", desc: "Debug machine learning model objects, shapes, and inference loops.", icon: "🤖" },
-    { id: "Hell Champion Trophy", name: "Grandmaster Debugger", diff: "hell", enemy: "The Final Compiler", desc: "Complete all Hell challenges and claim the ultimate BugHunt mastery!", icon: "🌌" }
+    { id: "Memory Fragment", enemyTrophy: "Demon Mutability Horn", name: "Memory Purifier", diff: "hell", enemy: "Memory Demon", desc: "Prevent None attribute errors and manage mutable references.", icon: "🧠" },
+    { id: "Algorithm Core", enemyTrophy: "Wraith Big-O Cloak", name: "Algorithm Sovereign", diff: "hell", enemy: "Algorithm Wraith", desc: "Repair binary searches, sorting passes, and algorithmic pointers.", icon: "⚡" },
+    { id: "Thread Core", enemyTrophy: "Beast Mutex Collar", name: "Concurrency Lord", diff: "hell", enemy: "Concurrency Beast", desc: "Synchronize async coroutines, threads, and await pipelines safely.", icon: "🕸️" },
+    { id: "Security Fang", enemyTrophy: "Hydra Hash Fang", name: "Cyber Sentinel", diff: "hell", enemy: "Security Hydra", desc: "Eliminate eval injection vulnerabilities and sanitize input.", icon: "🔒" },
+    { id: "Artificial Mind", enemyTrophy: "Overlord Neural Core", name: "Machine Whisperer", diff: "hell", enemy: "AI Overlord", desc: "Debug machine learning model objects, shapes, and inference loops.", icon: "🤖" },
+    { id: "Hell Champion Trophy", enemyTrophy: "Ultimate Crown of BugHunt", name: "Grandmaster Debugger", diff: "hell", enemy: "The Final Compiler", desc: "Complete all Hell challenges and claim the ultimate BugHunt mastery!", icon: "🌌" }
 ];
 
 let currentTrophyFilter = "all";
@@ -2408,6 +2509,14 @@ let currentTrophyFilter = "all";
 function filterTrophies(filter) {
     currentTrophyFilter = filter;
     updateTrophyCollection();
+}
+
+function isTrophyUnlockedHelper(trophyDef, unlockedSet) {
+    if (!trophyDef || !unlockedSet) return false;
+    return unlockedSet.has(trophyDef.id) ||
+        (trophyDef.enemyTrophy && unlockedSet.has(trophyDef.enemyTrophy)) ||
+        unlockedSet.has((trophyDef.id || "").toLowerCase()) ||
+        (trophyDef.enemyTrophy && unlockedSet.has((trophyDef.enemyTrophy || "").toLowerCase()));
 }
 
 function updateTrophyCollection() {
@@ -2444,7 +2553,12 @@ function updateTrophyCollection() {
     ["easy", "normal", "hard", "hell"].forEach(diff => {
         const tInfo = tierData[diff];
         const unlockedSet = new Set(tInfo.unlocked);
-        const validUnlocked = tInfo.trophies.filter(t => unlockedSet.has(t.id)).length;
+        // Also add lowercase versions to set for resilient matching
+        tInfo.unlocked.forEach(u => {
+            if (typeof u === "string") unlockedSet.add(u.toLowerCase());
+        });
+
+        const validUnlocked = tInfo.trophies.filter(t => isTrophyUnlockedHelper(t, unlockedSet)).length;
         tInfo.unlockedCount = validUnlocked;
         tInfo.pct = Math.round((validUnlocked / tInfo.trophies.length) * 100);
         totalUnlockedCount += validUnlocked;
@@ -2463,6 +2577,9 @@ function updateTrophyCollection() {
         const labelEl = document.getElementById(`${diff}-progress-label`);
         const tInfo = tierData[diff];
         const unlockedSet = new Set(tInfo.unlocked);
+        tInfo.unlocked.forEach(u => {
+            if (typeof u === "string") unlockedSet.add(u.toLowerCase());
+        });
 
         // Update dedicated progress bar & percentage label (100% true to game data)
         if (barEl) barEl.style.width = tInfo.pct + "%";
@@ -2485,7 +2602,7 @@ function updateTrophyCollection() {
 
         // Filter cards inside this tier
         const cardsToRender = tInfo.trophies.filter(item => {
-            const isUnlocked = unlockedSet.has(item.id);
+            const isUnlocked = isTrophyUnlockedHelper(item, unlockedSet);
             if (currentTrophyFilter === "unlocked") return isUnlocked;
             if (currentTrophyFilter === "locked") return !isUnlocked;
             return true;
@@ -2605,7 +2722,7 @@ async function handleAnswerSubmission() {
         openCombatLog();
         const speakerLabel = document.querySelector("#pokemon-dialogue-pane .speaker-label");
         if (speakerLabel) {
-            speakerLabel.textContent = isFil ? "FRAU // COMBAT SUCCESS" : "FRAU // COMBAT SUCCESS";
+            speakerLabel.textContent = `${getPlayerCombatantName().toUpperCase()} // COMBAT SUCCESS`;
         }
         updateHearts();
         if (answerInput) answerInput.value = "";
@@ -2660,7 +2777,7 @@ async function handleAnswerSubmission() {
                     : ("You received: " + currentEnemy.trophy);
             }
         } else {
-            currentBug++;
+            currentBug = (currentBug + 1) % (currentEnemy.bugs.length || 1);
             setTimeout(function () {
                 if (playerSprite) playerSprite.src = "css/Sprites/user/idle.png";
                 loadBug();
@@ -2675,7 +2792,7 @@ async function handleAnswerSubmission() {
 
         let damageNote = isFil
             ? "Hindi gumana ang patch. Inatake ka ng kalaban! (-1 HP)"
-            : "Execution failed! The enemy struck Frau! (-1 HP)";
+            : `Execution failed! The enemy struck ${getPlayerCombatantName()}! (-1 HP)`;
 
         if (isShieldActive) {
             damageNote = isFil
@@ -2712,7 +2829,7 @@ async function handleAnswerSubmission() {
 
         const speakerLabel = document.querySelector("#pokemon-dialogue-pane .speaker-label");
         if (speakerLabel) {
-            speakerLabel.textContent = isFil ? "FRAU // COMBAT ALERT" : "FRAU // COMBAT ALERT";
+            speakerLabel.textContent = `${getPlayerCombatantName().toUpperCase()} // COMBAT ALERT`;
         }
 
         stopQuestionTimer();
@@ -2955,12 +3072,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const answerInp = document.getElementById("answer-input");
             const enemyName = document.getElementById("enemy-name");
+            const playerCombatantName = document.getElementById("player-combatant-name") || document.querySelector(".player-card .pokemon-combatant-name");
             const enemySprite = document.getElementById("enemy-sprite");
             const playerSprite = document.getElementById("player-sprite");
             const dialogueText = document.getElementById("dialogue-text");
 
             if (answerInp) answerInp.value = "";
             if (enemyName) enemyName.textContent = currentEnemy.name;
+            if (playerCombatantName) playerCombatantName.textContent = getPlayerCombatantName().toUpperCase();
 
             if (enemySprite) {
                 const diffName = (typeof getCurrentDifficultyName === "function" ? getCurrentDifficultyName() : "easy");
@@ -2981,7 +3100,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             if (playerSprite) playerSprite.src = "css/Sprites/user/idle.png";
-            if (dialogueText) dialogueText.textContent = "Frau: A wild enemy appeared!";
+            if (dialogueText) dialogueText.textContent = `${getPlayerCombatantName()}: A wild enemy appeared!`;
 
             showScreen(document.getElementById("battle-screen"));
             showEnemyIntro(currentEnemy);

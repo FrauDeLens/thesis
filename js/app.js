@@ -18,9 +18,15 @@ const victoryScreen = document.getElementById("victory-screen");
 const defeatScreen = document.getElementById("defeat-screen");
 const adminScreen = document.getElementById("admin-screen");
 const codexScreen = document.getElementById("codex-screen");
+const leaderboardScreen = document.getElementById("leaderboard-screen");
+const compilerScreen = document.getElementById("compiler-screen");
 
 // Primary Shared Buttons & Elements
 const startButton = document.getElementById("start-button");
+const leaderboardButton = document.getElementById("leaderboard-button");
+const leaderboardBackButton = document.getElementById("leaderboard-back-button");
+const compilerButton = document.getElementById("compiler-button");
+const compilerBackButton = document.getElementById("compiler-back-button");
 const codexButton = document.getElementById("codex-button");
 const codexBackButton = document.getElementById("codex-back-button");
 const difficultyBackButton = document.getElementById("difficulty-back-button");
@@ -57,16 +63,26 @@ function showScreen(screen) {
     if (defeatScreen) defeatScreen.style.display = "none";
     if (adminScreen) adminScreen.style.display = "none";
     if (codexScreen) codexScreen.style.display = "none";
+    if (leaderboardScreen) leaderboardScreen.style.display = "none";
+    if (compilerScreen) compilerScreen.style.display = "none";
 
-    if (screen === codexScreen || screen === loginScreen || screen === registerScreen || screen === titleScreen) {
+    if (screen === codexScreen || screen === loginScreen || screen === registerScreen || screen === titleScreen || screen === compilerScreen) {
         screen.style.display = "flex";
     } else {
         screen.style.display = "block";
     }
 
-    // Toggle Global Accessibility Bar visibility: ONLY show on Main Menu! Hide on Title, Login, Register, Battle, etc.
+    if (screen === leaderboardScreen && window.BugHuntLeaderboard && typeof window.BugHuntLeaderboard.loadData === "function") {
+        window.BugHuntLeaderboard.loadData();
+    }
+
+    if (screen === compilerScreen && window.BugHuntCompiler && typeof window.BugHuntCompiler.open === "function") {
+        window.BugHuntCompiler.open();
+    }
+
+    // Toggle Global Accessibility Bar visibility: show on Main Menu & Leaderboard! Hide on Title, Login, Register, Battle, etc.
     const globalAccessBar = document.getElementById("global-access-bar");
-    const showAccessBar = (screen === mainMenu);
+    const showAccessBar = (screen === mainMenu || screen === leaderboardScreen);
     if (globalAccessBar) {
         globalAccessBar.style.display = showAccessBar ? "flex" : "none";
     }
@@ -168,6 +184,32 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // Leaderboard Navigation
+    if (leaderboardButton) {
+        leaderboardButton.addEventListener("click", function () {
+            showScreen(leaderboardScreen);
+        });
+    }
+
+    if (leaderboardBackButton) {
+        leaderboardBackButton.addEventListener("click", function () {
+            showScreen(mainMenu);
+        });
+    }
+
+    // Online Python Compiler Navigation
+    if (compilerButton) {
+        compilerButton.addEventListener("click", function () {
+            showScreen(compilerScreen);
+        });
+    }
+
+    if (compilerBackButton) {
+        compilerBackButton.addEventListener("click", function () {
+            showScreen(mainMenu);
+        });
+    }
+
     // Trophy Collection Navigation
     if (collectionButton) {
         collectionButton.addEventListener("click", function () {
@@ -209,6 +251,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const logMsg = document.getElementById("login-message");
             const welMsg = document.getElementById("welcome-message");
             const profName = document.getElementById("global-profile-name");
+            const playerCardName = document.getElementById("player-combatant-name");
             if (userInp) userInp.value = "";
             if (passInp) passInp.value = "";
             if (teacherUser) teacherUser.value = "";
@@ -216,6 +259,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (logMsg) logMsg.textContent = "";
             if (welMsg) welMsg.textContent = "Welcome!";
             if (profName) profName.textContent = "Profile";
+            if (playerCardName) playerCardName.textContent = "PLAYER";
             if (typeof switchLoginRole === "function") switchLoginRole("student");
         });
     }
@@ -224,11 +268,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // ACCESSIBILITY & DISPLAY CONTROLS
     // =========================================================
     const gameContainer = document.getElementById("game-container");
-    const toggleCbBtn = document.getElementById("toggle-colorblind-btn");
-    const cbText = document.getElementById("colorblind-btn-text");
-
-    const toggleThemeBtn = document.getElementById("toggle-theme-btn");
-    const themeText = document.getElementById("theme-btn-text");
 
     function applyAccessibilitySettings() {
         const isColorblind = localStorage.getItem("bughunt_colorblind") === "true";
@@ -243,62 +282,6 @@ document.addEventListener("DOMContentLoaded", function () {
             document.body.classList.toggle("colorblind-mode", isColorblind);
             document.body.classList.toggle("high-contrast-mode", isHighContrast);
         }
-
-        if (cbText) {
-            cbText.textContent = isColorblind ? "Color Blind: ON" : "Color Blind: OFF";
-        }
-        if (toggleCbBtn) {
-            toggleCbBtn.classList.toggle("active", isColorblind);
-            toggleCbBtn.title = isColorblind
-                ? "Color Blind Palette Active (Wong High-Legibility) - Click to toggle"
-                : "Toggle Color Blind Friendly Palette";
-        }
-
-        if (themeText) {
-            themeText.textContent = isHighContrast ? "Dark: High Contrast" : "Dark: Balanced";
-        }
-        if (toggleThemeBtn) {
-            toggleThemeBtn.classList.toggle("active", isHighContrast);
-            const icon = toggleThemeBtn.querySelector(".access-icon");
-            if (icon) icon.textContent = isHighContrast ? "☀️" : "🌙";
-            toggleThemeBtn.title = isHighContrast
-                ? "High Contrast Mode Active (Pitch Black OLED + Crisp Neon/White) - Click to toggle"
-                : "Toggle High-Contrast Dark Mode";
-        }
-    }
-
-    if (toggleCbBtn) {
-        toggleCbBtn.addEventListener("click", function () {
-            const current = localStorage.getItem("bughunt_colorblind") === "true";
-            const next = !current;
-            localStorage.setItem("bughunt_colorblind", next.toString());
-            applyAccessibilitySettings();
-            if (typeof showGameToast === "function") {
-                showGameToast(
-                    next
-                        ? "👁️ Color Blind Mode: Wong Palette Activated (High Legibility)"
-                        : "👁️ Color Blind Mode: Standard Palette Restored",
-                    "info"
-                );
-            }
-        });
-    }
-
-    if (toggleThemeBtn) {
-        toggleThemeBtn.addEventListener("click", function () {
-            const current = localStorage.getItem("bughunt_high_contrast") === "true";
-            const next = !current;
-            localStorage.setItem("bughunt_high_contrast", next.toString());
-            applyAccessibilitySettings();
-            if (typeof showGameToast === "function") {
-                showGameToast(
-                    next
-                        ? "☀️ Theme: High Contrast Active (Pitch Black & Crisp White)"
-                        : "🌙 Theme: Balanced Dark Active (Atmospheric Cyber Glow)",
-                    "info"
-                );
-            }
-        });
     }
 
     applyAccessibilitySettings();

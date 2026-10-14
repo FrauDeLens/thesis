@@ -34,12 +34,24 @@ const BUGHUNT_TRANSLATIONS = {
         welcome_default: "Welcome!",
         true_points_label: "True Points: {points}",
         menu_start_game: "Start Game",
+        menu_leaderboard: "Leaderboard",
+        menu_python_compiler: "Online Compiler",
         menu_python_codex: "Python Codex",
         menu_shop: "SHOP",
         menu_collection: "Trophy Collection",
         menu_about: "About",
         menu_profile: "User Profile",
         menu_logout: "Log Out",
+
+        // Leaderboard
+        lb_title: "HALL OF FAME",
+        lb_subtitle: "Top Student Hunters Ranked by True Points & Python Trophies",
+        lb_back_btn: "Back to Menu",
+        lb_refresh: "Refresh Standings",
+        lb_filter_all: "⭐ True Points",
+        lb_filter_trophies: "🏆 Trophies",
+        lb_filter_sector: "💀 Highest Sector",
+        lb_search_ph: "Search student or hunter name...",
 
         // Difficulty Selection
         diff_screen_title: "Select Difficulty",
@@ -105,8 +117,8 @@ const BUGHUNT_TRANSLATIONS = {
         hud_enemy_stage_counter: "ENEMY {current} OF {total}",
 
         // Combat Dialogues & Messages
-        dialogue_hit_enemy: "Frau: Nice fix! {enemy} took damage!",
-        dialogue_wrong_answer: "Frau: That didn't work. The bug is still there!",
+        dialogue_hit_enemy: "Nice fix! {enemy} took damage!",
+        dialogue_wrong_answer: "That didn't work. The bug is still there!",
         dialogue_enemy_defeated: "{enemy} has been defeated!",
         victory_title: "VICTORY!",
         victory_message: "Great job! {enemy} has been defeated!",
@@ -245,12 +257,24 @@ const BUGHUNT_TRANSLATIONS = {
         welcome_default: "Maligayang pagdating!",
         true_points_label: "Tunay na Puntos: {points}",
         menu_start_game: "Simulan ang Laro",
+        menu_leaderboard: "Talaan ng Ranggo",
+        menu_python_compiler: "Online Compiler",
         menu_python_codex: "Python Codex",
         menu_shop: "Tindahan",
         menu_collection: "Koleksyon ng Tropeo",
         menu_about: "Tungkol sa Laro",
         menu_profile: "Profile ng User",
         menu_logout: "Mag-logout",
+
+        // Leaderboard
+        lb_title: "TALAAN NG MGA DANGAL",
+        lb_subtitle: "Nangungunang mga Estudyante Ayon sa Tunay na Puntos at Tropeo",
+        lb_back_btn: "Bumalik sa Menu",
+        lb_refresh: "I-refresh ang Ranggo",
+        lb_filter_all: "⭐ Tunay na Puntos",
+        lb_filter_trophies: "🏆 Mga Tropeo",
+        lb_filter_sector: "💀 Pinakamataas na Antas",
+        lb_search_ph: "Maghanap ng pangalan o username...",
 
         // Difficulty Selection
         diff_screen_title: "Pumili ng Hirap",
@@ -316,8 +340,8 @@ const BUGHUNT_TRANSLATIONS = {
         hud_enemy_stage_counter: "KALABAN {current} SA {total}",
 
         // Combat Dialogues & Messages
-        dialogue_hit_enemy: "Frau: Tama ang ayos mo! Nabawasan ng buhay si {enemy}!",
-        dialogue_wrong_answer: "Frau: Hindi gumana ang ayos mo. Buhay pa ang bug!",
+        dialogue_hit_enemy: "Tama ang ayos mo! Nabawasan ng buhay si {enemy}!",
+        dialogue_wrong_answer: "Hindi gumana ang ayos mo. Buhay pa ang bug!",
         dialogue_enemy_defeated: "Natalo mo na si {enemy}!",
         victory_title: "TAGUMPAY!",
         victory_message: "Magaling! Natalo mo na si {enemy}!",
@@ -529,6 +553,11 @@ function applyTranslations() {
     // Update Difficulty introduction if open
     if (typeof selectedDifficulty !== "undefined" && selectedDifficulty && typeof showDifficultyIntroduction === "function") {
         showDifficultyIntroduction(selectedDifficulty);
+    }
+
+    // Refresh theme picker labels
+    if (window.BugHuntTheme && typeof window.BugHuntTheme.refreshLabels === "function") {
+        window.BugHuntTheme.refreshLabels();
     }
 }
 

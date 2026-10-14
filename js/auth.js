@@ -58,6 +58,11 @@ async function api(path, method, body) {
 function applyLoggedInUser(user, serverProgress) {
     currentUser = user;
     localStorage.setItem("username", user.username);
+    if (user.full_name) {
+        localStorage.setItem("full_name", user.full_name);
+    } else {
+        localStorage.setItem("full_name", user.username);
+    }
 
     if (serverProgress) {
         progress = serverProgress;
@@ -96,6 +101,10 @@ function applyLoggedInUser(user, serverProgress) {
     const globalProfName = document.getElementById("global-profile-name");
     if (globalProfName) {
         globalProfName.textContent = displayName;
+    }
+    const playerCardName = document.getElementById("player-combatant-name") || document.querySelector(".player-card .pokemon-combatant-name");
+    if (playerCardName) {
+        playerCardName.textContent = displayName.toUpperCase();
     }
 
     if (typeof updatePoints === "function") {
@@ -986,6 +995,7 @@ async function handleSaveProfileSubmit() {
             }
         }
         localStorage.setItem("username", newUsername);
+        localStorage.setItem("full_name", newFullName);
 
         // Update UI displays
         const welcomeMsg = document.getElementById("welcome-message");
@@ -999,6 +1009,10 @@ async function handleSaveProfileSubmit() {
         const globalProfName = document.getElementById("global-profile-name");
         if (globalProfName) {
             globalProfName.textContent = newFullName;
+        }
+        const playerCardName = document.getElementById("player-combatant-name") || document.querySelector(".player-card .pokemon-combatant-name");
+        if (playerCardName) {
+            playerCardName.textContent = newFullName.toUpperCase();
         }
 
         if (typeof showGameToast === "function") {
