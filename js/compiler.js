@@ -2,6 +2,7 @@
 // BUGHUNT: ONLINE PYTHON COMPILER & SANDBOX CONTROLLER (js/compiler.js)
 // In-browser client-side Python execution engine powered by Skulpt
 // Synchronized with Python Codex topics, starter code, and bug debugging
+// Includes interactive input() handling, syntax error jump, and tactical intel
 // =========================================================
 
 (function () {
@@ -9,6 +10,12 @@
     let selectedTopicId = null;
     let searchQuery = "";
     let isExecuting = false;
+
+    // Active pending input() resolver
+    let pendingInputResolve = null;
+
+    // Current error highlighted line
+    let currentErrorLine = null;
 
     // DOM Elements Cache
     let compilerScreen = null;
@@ -21,12 +28,16 @@
     let execTimeEl = null;
     let charCountEl = null;
     let activeTopicNameEl = null;
+    let copyOutputBtn = null;
     let diffTabs = [];
+
+    // Designated stdout container inside terminal
+    let stdoutContainerEl = null;
 
     // Helper: Localize topic based on active language (en or fil)
     function getLocalizedTopic(topic) {
         if (!topic) return topic;
-        const lang = (typeof getLanguage === "function") ? getLanguage() : "en";
+        const lang = (typeof currentLanguage !== "undefined") ? currentLanguage : "en";
         const loc = topic[lang] || topic["en"] || {};
         return Object.assign({}, topic, loc, {
             category: loc.category || topic.category || "Foundations"
@@ -44,63 +55,159 @@
             .replace(/'/g, "&#039;");
     }
 
-    // Helper: Tactical BugHunt Debugging Intel mapping
-    function getTacticalDebugHint(errorStr) {
-        const err = errorStr.toLowerCase();
+    // Helper: Parse Python Error into structured details
+    function parsePythonError(err, sourceCode) {
+        const raw = err ? err.toString() : "Unknown execution error";
+        let errorType = "PythonError";
+        let message = raw;
+        let lineNum = null;
+
+        if (err && err.traceback && err.traceback.length > 0) {
+            lineNum = err.traceback[0].lineno;
+        }
+
+        // Try extracting standard error type prefix
+        const typeMatch = raw.match(/^([A-Za-z0-9_]+Error|[A-Za-z0-9_]+Exception):\s*(.*)$/);
+        if (typeMatch) {
+            errorType = typeMatch[1];
+            message = typeMatch[2];
+        }
+
+        // Extract line number from message if not in traceback
+        const lineMatch = raw.match(/(?:on line|line)\s+(\d+)/i);
+        if (lineMatch && !lineNum) {
+            lineNum = parseInt(lineMatch[1], 10);
+        }
+
+        // Clean out noisy internal Skulpt artifacts
+        message = message
+            .replace(/\s*on line \d+/gi, "")
+            .replace(/\s*in <stdin>(?:\.py)?/gi, "")
+            .trim();
+
+        if (!message) message = raw;
+
+        // Extract preview of offending source line
+        let codeSnippet = "";
+        if (lineNum && sourceCode) {
+            const lines = sourceCode.split("\n");
+            if (lines[lineNum - 1] !== undefined) {
+                codeSnippet = `Line ${lineNum}: ${lines[lineNum - 1].trimEnd()}`;
+            }
+        }
+
+        return {
+            errorType,
+            message,
+            lineNum,
+            codeSnippet,
+            raw
+        };
+    }
+
+    // Helper: Tactical BugHunt Debugging Intel mapping (Bilingual EN/FIL)
+    function getTacticalDebugHint(errorStr, errorType) {
+        const isFil = (typeof currentLanguage !== "undefined" && currentLanguage === "fil");
+        const err = (errorStr + " " + (errorType || "")).toLowerCase();
+
         if (err.includes("syntaxerror")) {
             return {
-                title: "🔍 SyntaxError Detected",
-                tip: "Check for missing colons ':' at the end of if/for/while/def lines, unclosed quotes (\", '), or unbalanced parentheses ()."
+                title: isFil ? "🔍 Natagpuang SyntaxError" : "🔍 SyntaxError Detected",
+                tip: isFil
+                    ? "Suriin kung may kulang na colon ':' sa dulo ng if/elif/else/for/while/def, hindi saradong panipi (\", '), o hindi magkatugmang panaklong ()."
+                    : "Check for missing colons ':' at the end of if/elif/else/for/while/def headers, unclosed quotes (\", '), or unbalanced parentheses ()."
             };
         } else if (err.includes("indentationerror")) {
             return {
-                title: "📏 IndentationError Detected",
-                tip: "Python requires consistent indentation (standard 4 spaces) for statements inside headers like if, else, for, while, and def."
+                title: isFil ? "📏 Natagpuang IndentationError" : "📏 IndentationError Detected",
+                tip: isFil
+                    ? "Mahigpit ang Python sa indentation. Tiyaking may pantay-pantay na 4 na espasyo (spaces) ang mga linyang nasa loob ng if, for, while, def, at class."
+                    : "Python enforces strict indentation. Use consistent 4-space indentation for statements inside headers like if, else, for, while, and def."
             };
         } else if (err.includes("nameerror")) {
             return {
-                title: "🏷️ NameError Detected",
-                tip: "A variable or function name was used before being declared or defined. Check your spelling and remember Python is case-sensitive!"
+                title: isFil ? "🏷️ Natagpuang NameError" : "🏷️ NameError Detected",
+                tip: isFil
+                    ? "Ginamit ang isang variable o function name nang hindi pa naitatalaga o na-declare. Tandaan na case-sensitive ang Python (magkaiba ang 'Hp' at 'hp')."
+                    : "A variable or function was referenced before being assigned. Check spelling and remember Python names are strictly case-sensitive."
             };
         } else if (err.includes("typeerror")) {
             return {
-                title: "🧩 TypeError Detected",
-                tip: "An operation was performed on incompatible data types (e.g. adding text str to a number int). Use str() or int() to convert types."
+                title: isFil ? "🧩 Natagpuang TypeError" : "🧩 TypeError Detected",
+                tip: isFil
+                    ? "Nagsagawa ng operasyon sa magkaibang uri ng data na hindi pwedeng pagsamahin (hal. pagdagdag ng text 'str' sa numero 'int'). Gamitin ang str() o int() pampalit."
+                    : "An operation was performed on incompatible data types (e.g. concatenating text str with number int). Use str() or int() for explicit type casting."
             };
         } else if (err.includes("zerodivisionerror")) {
             return {
-                title: "⚡ ZeroDivisionError Detected",
-                tip: "Division or modulo by zero (x / 0 or x % 0) is mathematically undefined in Python. Check your divisor logic before dividing."
+                title: isFil ? "⚡ Natagpuang ZeroDivisionError" : "⚡ ZeroDivisionError Detected",
+                tip: isFil
+                    ? "Bawal mag-divide o modulo sa zero (x / 0 o x % 0). Tiyaking hindi zero ang iyong divisor bago magsagawa ng division."
+                    : "Division or modulo by zero (x / 0 or x % 0) is mathematically undefined in Python. Check your divisor logic before dividing."
             };
         } else if (err.includes("indexerror")) {
             return {
-                title: "🎯 IndexError Detected",
-                tip: "Attempted to access a list index that is out of range. Remember list indexes in Python start at 0 and end at len(list) - 1."
+                title: isFil ? "🎯 Natagpuang IndexError" : "🎯 IndexError Detected",
+                tip: isFil
+                    ? "Sumobra ang hinahanap na index sa haba ng listahan. Nagsisimula sa index 0 ang mga listahan sa Python at nagtatapos sa len(list) - 1."
+                    : "Attempted to access a list index out of range. In Python, sequence indices start at 0 and end at len(list) - 1."
             };
         } else if (err.includes("keyerror")) {
             return {
-                title: "🔑 KeyError Detected",
-                tip: "The dictionary key you tried to access does not exist. Use dict.get(key, default) or verify the key with 'if key in dict:'."
+                title: isFil ? "🔑 Natagpuang KeyError" : "🔑 KeyError Detected",
+                tip: isFil
+                    ? "Wala sa dictionary ang hinahanap na key. Gamitin ang dict.get(key, default) para sa ligtas na pagkuha ng value."
+                    : "The dictionary key does not exist. Use dict.get(key, default) or verify existence with 'if key in my_dict:'."
             };
         } else if (err.includes("valueerror")) {
             return {
-                title: "⚖️ ValueError Detected",
-                tip: "The function received an argument with the right type but inappropriate value (e.g. int('hello')). Check the input format."
+                title: isFil ? "⚖️ Natagpuang ValueError" : "⚖️ ValueError Detected",
+                tip: isFil
+                    ? "Natanggap ng function ang tamang data type pero maling halaga (hal. int('salita')). Suriin ang nilalaman ng data bago i-convert."
+                    : "The function received an argument with the right type but inappropriate value (e.g. int('hello')). Validate the input string format."
+            };
+        } else if (err.includes("attributeerror")) {
+            return {
+                title: isFil ? "⚙️ Natagpuang AttributeError" : "⚙️ AttributeError Detected",
+                tip: isFil
+                    ? "Tinawag ang isang method o attribute na wala sa uri ng object na ito (hal. pagtawag ng .append() sa integer o dict)."
+                    : "Attempted to access an attribute or method that does not exist on this object type (e.g. calling .append() on an int or dict)."
             };
         } else if (err.includes("recursionerror")) {
             return {
-                title: "🌀 RecursionError Detected",
-                tip: "A function called itself without hitting a valid base case, causing stack overflow. Ensure your recursive condition eventually terminates."
+                title: isFil ? "🌀 Natagpuang RecursionError" : "🌀 RecursionError Detected",
+                tip: isFil
+                    ? "Tumawag ang function sa sarili nito nang walang base case na humihinto, nagdulot ng stack overflow. Tiyaking may kondisyon na magtatapos sa recursion."
+                    : "A function called itself without hitting a valid terminating base case, causing call stack overflow. Verify your recursive exit condition."
             };
-        } else if (err.includes("timelimiterror") || err.includes("run time limit") || err.includes("time limit")) {
+        } else if (err.includes("timelimiterror") || err.includes("time limit") || err.includes("run time limit")) {
             return {
-                title: "⏳ TimeLimitError Detected (Infinite Loop Protection)",
-                tip: "Your Python code exceeded the execution time limit (3000ms). Check for infinite while loops, missing loop counter increments, or missing break conditions."
+                title: isFil ? "⏳ TimeLimitError (Proteksyon sa Infinite Loop)" : "⏳ TimeLimitError (Infinite Loop Protection)",
+                tip: isFil
+                    ? "Lumampas ang programa sa 3000ms na limit ng oras. Suriin kung may infinite while loop na walang pagbaba ng counter o walang 'break'."
+                    : "Your code exceeded the execution time limit (3000ms). Check for infinite while loops, missing counter increments, or missing break conditions."
+            };
+        } else if (err.includes("modulenotfounderror") || err.includes("import") || err.includes("file not found")) {
+            return {
+                title: isFil ? "📦 Natagpuang ImportError" : "📦 Module / ImportError",
+                tip: isFil
+                    ? "Hindi kasama sa built-in browser Skulpt library ang module na ito. Ang mga available na modules ay kinabibilangan ng: math, random, copy, time, string."
+                    : "This module is not bundled in BugHunt's browser Python sandbox. Standard modules supported include: math, random, copy, time, string, etc."
+            };
+        } else if (err.includes("notimplementederror")) {
+            return {
+                title: isFil ? "🚧 Hindi Pa Suportado (NotImplementedError)" : "🚧 NotImplementedError",
+                tip: isFil
+                    ? "Ang partikular na feature o module na ito ay hindi pa kasama sa Skulpt browser runtime. Subukang gamitin ang purong Python katumbas."
+                    : "This feature or library is not implemented in the Skulpt browser engine. Try using native pure Python equivalents without external imports."
             };
         }
+
         return {
-            title: "💡 Debugging Intel",
-            tip: "Inspect the line number mentioned above and compare your syntax with the Topic's Blueprint in the left drawer."
+            title: isFil ? "💡 Debugging Intel" : "💡 Tactical Debugging Intel",
+            tip: isFil
+                ? "Suriin ang line number sa itaas at ihambing ang iyong syntax sa Topic Blueprint sa kaliwang drawer."
+                : "Inspect the line number mentioned above and compare your syntax with the Topic's Blueprint in the left drawer."
         };
     }
 
@@ -116,6 +223,7 @@
         execTimeEl = document.getElementById("compiler-exec-time");
         charCountEl = document.getElementById("compiler-char-count");
         activeTopicNameEl = document.getElementById("compiler-active-topic-name");
+        copyOutputBtn = document.getElementById("compiler-copy-output-btn");
         diffTabs = Array.from(document.querySelectorAll(".compiler-tab"));
 
         if (!compilerScreen) return;
@@ -152,7 +260,8 @@
         if (clearCodeBtn) {
             clearCodeBtn.addEventListener("click", () => {
                 if (textareaEl) {
-                    textareaEl.value = "# BugHunt Python Sandbox\n# Write your custom code here:\n\nprint(\"Hello, BugHunter!\")\n";
+                    textareaEl.value = "# BugHunt Python Sandbox\n# Write or test your Python code here:\n\nname = input(\"Enter your name: \")\nprint(f\"Hello {name}, welcome to BugHunt!\")\n";
+                    clearErrorHighlight();
                     updateLineNumbers();
                     textareaEl.focus();
                 }
@@ -162,6 +271,10 @@
         const clearOutputBtn = document.getElementById("compiler-clear-output-btn");
         if (clearOutputBtn) {
             clearOutputBtn.addEventListener("click", () => clearTerminal());
+        }
+
+        if (copyOutputBtn) {
+            copyOutputBtn.addEventListener("click", () => copyTerminalOutput());
         }
 
         const loadBlueprintBtn = document.getElementById("compiler-load-blueprint-btn");
@@ -177,6 +290,7 @@
         // Code Editor Smart Keyboard Handlers
         if (textareaEl) {
             textareaEl.addEventListener("input", () => {
+                clearErrorHighlight();
                 updateLineNumbers();
             });
 
@@ -187,6 +301,17 @@
             });
 
             textareaEl.addEventListener("keydown", handleEditorKeydown);
+        }
+
+        // Line number click to jump cursor
+        if (lineNumbersEl) {
+            lineNumbersEl.addEventListener("click", (e) => {
+                const target = e.target.closest(".compiler-line-num");
+                if (target) {
+                    const line = parseInt(target.getAttribute("data-line"), 10);
+                    if (line) jumpToLine(line);
+                }
+            });
         }
 
         // Initialize with default Easy topics
@@ -277,6 +402,7 @@
             : (loc.codeExample || "# No sample code available");
 
         textareaEl.value = code.trim() + "\n";
+        clearErrorHighlight();
         updateLineNumbers();
 
         if (activeTopicNameEl) {
@@ -307,6 +433,51 @@
         }
     }
 
+    // Clear Error Line Highlights
+    function clearErrorHighlight() {
+        currentErrorLine = null;
+        if (lineNumbersEl) {
+            lineNumbersEl.querySelectorAll(".compiler-line-num.line-error").forEach(el => {
+                el.classList.remove("line-error");
+            });
+        }
+    }
+
+    // Highlight Offending Line
+    function highlightErrorLine(lineNum) {
+        if (!lineNum || !lineNumbersEl) return;
+        currentErrorLine = lineNum;
+        const target = lineNumbersEl.querySelector(`.compiler-line-num[data-line="${lineNum}"]`);
+        if (target) {
+            target.classList.add("line-error");
+        }
+    }
+
+    // Jump Cursor to Offending Line in Textarea
+    function jumpToLine(lineNum) {
+        if (!textareaEl || !lineNum) return;
+        const lines = textareaEl.value.split("\n");
+        if (lineNum > lines.length) lineNum = lines.length;
+
+        let charPos = 0;
+        for (let i = 0; i < lineNum - 1; i++) {
+            charPos += lines[i].length + 1; // +1 for newline
+        }
+
+        const lineLen = lines[lineNum - 1] ? lines[lineNum - 1].length : 0;
+        textareaEl.focus();
+        textareaEl.setSelectionRange(charPos, charPos + lineLen);
+
+        // Scroll editor into view
+        const lineHeight = 22;
+        textareaEl.scrollTop = Math.max(0, (lineNum - 3) * lineHeight);
+        if (lineNumbersEl) {
+            lineNumbersEl.scrollTop = textareaEl.scrollTop;
+        }
+
+        highlightErrorLine(lineNum);
+    }
+
     // Update Line Numbers & Character Counter
     function updateLineNumbers() {
         if (!textareaEl || !lineNumbersEl) return;
@@ -315,7 +486,8 @@
 
         let numHtml = "";
         for (let i = 1; i <= count; i++) {
-            numHtml += i + "<br>";
+            const isErr = (currentErrorLine === i);
+            numHtml += `<div class="compiler-line-num ${isErr ? "line-error" : ""}" data-line="${i}">${i}</div>`;
         }
         lineNumbersEl.innerHTML = numHtml;
 
@@ -340,7 +512,7 @@
             const end = textareaEl.selectionEnd;
 
             if (e.shiftKey) {
-                // Outdent
+                // Outdent 4 spaces
                 const before = textareaEl.value.substring(0, start);
                 const lineStart = before.lastIndexOf("\n") + 1;
                 const currentLine = textareaEl.value.substring(lineStart, start);
@@ -355,6 +527,7 @@
                 textareaEl.value = textareaEl.value.substring(0, start) + "    " + textareaEl.value.substring(end);
                 textareaEl.selectionStart = textareaEl.selectionEnd = start + 4;
             }
+            clearErrorHighlight();
             updateLineNumbers();
             return;
         }
@@ -376,6 +549,7 @@
                 e.preventDefault();
                 textareaEl.value = textareaEl.value.substring(0, start) + "\n" + indent + textareaEl.value.substring(start);
                 textareaEl.selectionStart = textareaEl.selectionEnd = start + 1 + indent.length;
+                clearErrorHighlight();
                 updateLineNumbers();
             }
         }
@@ -384,9 +558,40 @@
     // Clear Terminal Console
     function clearTerminal() {
         if (!terminalOutputEl) return;
+
+        // Cancel any pending input prompt safely
+        if (pendingInputResolve) {
+            const resolver = pendingInputResolve;
+            pendingInputResolve = null;
+            resolver("");
+        }
+
+        clearErrorHighlight();
         terminalOutputEl.innerHTML = `<span style="color: #64748b;">// Console cleared. Press [▶ Run Code] to execute.</span>\n`;
-        setTerminalStatus("idle", "READY");
+        setTerminalStatus("idle", "TERMINAL READY");
         if (execTimeEl) execTimeEl.textContent = "";
+    }
+
+    // Copy Console Output to Clipboard
+    function copyTerminalOutput() {
+        if (!terminalOutputEl) return;
+        const text = terminalOutputEl.innerText || terminalOutputEl.textContent || "";
+        if (!text.trim()) {
+            if (typeof showGameToast === "function") {
+                showGameToast("Console is empty.", "info");
+            }
+            return;
+        }
+
+        navigator.clipboard.writeText(text).then(() => {
+            if (typeof showGameToast === "function") {
+                showGameToast("Console output copied to clipboard! 📋", "success");
+            }
+        }).catch(() => {
+            if (typeof showGameToast === "function") {
+                showGameToast("Unable to copy to clipboard.", "warning");
+            }
+        });
     }
 
     // Set Terminal Status Dot and Label
@@ -399,9 +604,88 @@
         }
     }
 
+    // Handle interactive in-terminal input() from Python code
+    function handleTerminalInput(promptText) {
+        return new Promise((resolve) => {
+            pendingInputResolve = resolve;
+            setTerminalStatus("waiting", "⌨️ WAITING FOR INPUT...");
+
+            // If terminal isn't available, fallback to prompt
+            if (!terminalOutputEl) {
+                const res = window.prompt(promptText || "Python Input:") || "";
+                pendingInputResolve = null;
+                resolve(res);
+                return;
+            }
+
+            // Create inline interactive input container
+            const inputRow = document.createElement("div");
+            inputRow.className = "compiler-term-input-row";
+            inputRow.id = "compiler-term-active-input-row";
+
+            const safePrompt = escapeHtml(promptText || "");
+            inputRow.innerHTML = `
+                ${safePrompt ? `<span class="term-msg-prompt">${safePrompt}</span>` : ""}
+                <span class="compiler-term-input-prefix">▶</span>
+                <input type="text" id="compiler-term-active-input" class="compiler-term-input-field" placeholder="Type input here and press Enter..." autocomplete="off" spellcheck="false" />
+                <button type="button" id="compiler-term-active-submit" class="compiler-term-input-btn" title="Submit Input (Enter)">↵ Send</button>
+            `;
+
+            terminalOutputEl.appendChild(inputRow);
+            terminalOutputEl.scrollTop = terminalOutputEl.scrollHeight;
+
+            const inputField = inputRow.querySelector("#compiler-term-active-input");
+            const submitBtn = inputRow.querySelector("#compiler-term-active-submit");
+
+            function submitValue() {
+                if (!pendingInputResolve) return;
+                const value = inputField ? inputField.value : "";
+                pendingInputResolve = null;
+
+                // Replace input row with styled echo of user's answer
+                inputRow.className = "compiler-term-input-echo";
+                inputRow.removeAttribute("id");
+                inputRow.innerHTML = `${safePrompt ? `<span class="term-msg-prompt">${safePrompt}</span> ` : ""}<span class="term-msg-user-input">${escapeHtml(value)}</span>\n`;
+
+                setTerminalStatus("running", "RUNNING...");
+                terminalOutputEl.scrollTop = terminalOutputEl.scrollHeight;
+
+                resolve(value);
+            }
+
+            if (inputField) {
+                // Focus input field with slight delay to ensure render
+                setTimeout(() => {
+                    inputField.focus();
+                }, 10);
+
+                inputField.addEventListener("keydown", (e) => {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        submitValue();
+                    }
+                });
+            }
+
+            if (submitBtn) {
+                submitBtn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    submitValue();
+                });
+            }
+        });
+    }
+
     // Run Python Code using Skulpt Engine
     function runCode() {
         if (!textareaEl || isExecuting) return;
+
+        // Cancel previous pending input if any
+        if (pendingInputResolve) {
+            const resolver = pendingInputResolve;
+            pendingInputResolve = null;
+            resolver("");
+        }
 
         const code = textareaEl.value;
         if (!code.trim()) {
@@ -418,27 +702,38 @@
         }
 
         isExecuting = true;
+        clearErrorHighlight();
         setTerminalStatus("running", "RUNNING...");
         terminalOutputEl.innerHTML = "";
+
+        // Create clean stdout container
+        stdoutContainerEl = document.createElement("span");
+        stdoutContainerEl.className = "term-msg-stdout";
+        terminalOutputEl.appendChild(stdoutContainerEl);
 
         const startTime = performance.now();
         let stdoutBuffer = "";
 
-        // Configure Skulpt with execution timeout to prevent tab freezing
+        // Configure Skulpt with execution timeout and interactive inputfun
         Sk.execLimit = 3000;
         Sk.configure({
             output: function (text) {
                 stdoutBuffer += text;
-                // Real-time stream to console
-                terminalOutputEl.textContent = stdoutBuffer;
+                if (stdoutContainerEl) {
+                    stdoutContainerEl.textContent = stdoutBuffer;
+                } else {
+                    terminalOutputEl.appendChild(document.createTextNode(text));
+                }
                 terminalOutputEl.scrollTop = terminalOutputEl.scrollHeight;
             },
             read: function (file) {
                 if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][file] === undefined) {
-                    throw "File not found: '" + file + "'";
+                    throw "ModuleNotFoundError: No module named '" + file.replace(/^src\/lib\//, "").replace(/\.(py|js)$/, "") + "'";
                 }
                 return Sk.builtinFiles["files"][file];
             },
+            inputfun: handleTerminalInput,
+            inputfunTakesPrompt: true,
             __future__: Sk.python3,
             execLimit: 3000
         });
@@ -451,18 +746,22 @@
         execPromise.then(() => {
             const elapsed = Math.round(performance.now() - startTime);
             isExecuting = false;
+            pendingInputResolve = null;
             setTerminalStatus("idle", "SUCCESS");
 
             if (execTimeEl) {
                 execTimeEl.textContent = `⏱️ ${elapsed}ms`;
             }
 
-            // If stdout ended with no newline, add it
-            let finalHtml = escapeHtml(stdoutBuffer);
-            if (!finalHtml.endsWith("\n")) finalHtml += "\n";
+            // Remove any leftover active input row
+            const lingeringInput = document.getElementById("compiler-term-active-input-row");
+            if (lingeringInput) lingeringInput.remove();
 
-            terminalOutputEl.innerHTML = `<span class="term-msg-stdout">${finalHtml}</span>` +
-                `<span class="term-msg-success">✔ [Program finished in ${elapsed}ms with exit code 0]</span>\n`;
+            // Add program finished banner
+            const successBadge = document.createElement("div");
+            successBadge.className = "term-msg-success";
+            successBadge.innerHTML = `✔ [Program finished in ${elapsed}ms with exit code 0]`;
+            terminalOutputEl.appendChild(successBadge);
             terminalOutputEl.scrollTop = terminalOutputEl.scrollHeight;
 
             if (typeof showGameToast === "function") {
@@ -471,30 +770,67 @@
         }).catch((err) => {
             const elapsed = Math.round(performance.now() - startTime);
             isExecuting = false;
+            pendingInputResolve = null;
             setTerminalStatus("error", "ERROR");
 
             if (execTimeEl) {
                 execTimeEl.textContent = `⏱️ ${elapsed}ms`;
             }
 
-            const errorStr = err.toString();
-            const debugIntel = getTacticalDebugHint(errorStr);
+            // Remove any pending input prompt
+            const lingeringInput = document.getElementById("compiler-term-active-input-row");
+            if (lingeringInput) lingeringInput.remove();
 
-            let stdoutSection = stdoutBuffer ? `<span class="term-msg-stdout">${escapeHtml(stdoutBuffer)}</span>\n` : "";
+            // Parse error into structured details
+            const parsed = parsePythonError(err, textareaEl.value);
+            const debugIntel = getTacticalDebugHint(parsed.raw, parsed.errorType);
 
-            terminalOutputEl.innerHTML = stdoutSection +
-                `<div class="term-msg-error">` +
-                `<strong>❌ Python Execution Traceback:</strong><br>${escapeHtml(errorStr)}` +
-                `</div>` +
-                `<div class="term-debug-hint-box">` +
-                `<div class="term-debug-hint-title">${debugIntel.title}</div>` +
-                `<div>${debugIntel.tip}</div>` +
-                `</div>\n`;
+            // Highlight line in gutter
+            if (parsed.lineNum) {
+                highlightErrorLine(parsed.lineNum);
+            }
+
+            // Create formatted error card
+            const errCard = document.createElement("div");
+            errCard.className = "term-msg-error";
+            errCard.innerHTML = `
+                <div class="term-error-header">
+                    <span class="term-error-badge">❌ ${escapeHtml(parsed.errorType)}</span>
+                    ${parsed.lineNum ? `<button type="button" class="term-jump-btn" data-line="${parsed.lineNum}" title="Click to highlight and jump to line in editor">📍 Line ${parsed.lineNum} [Jump]</button>` : ""}
+                </div>
+                <div class="term-error-message">${escapeHtml(parsed.message)}</div>
+                ${parsed.codeSnippet ? `<div class="term-code-snippet">${escapeHtml(parsed.codeSnippet)}</div>` : ""}
+            `;
+
+            // Create tactical debug hint card
+            const hintCard = document.createElement("div");
+            hintCard.className = "term-debug-hint-box";
+            hintCard.innerHTML = `
+                <div class="term-debug-hint-title">${debugIntel.title}</div>
+                <div class="term-debug-hint-tip">${debugIntel.tip}</div>
+            `;
+
+            // Failure exit badge
+            const exitFailBadge = document.createElement("div");
+            exitFailBadge.className = "term-msg-fail";
+            exitFailBadge.innerHTML = `✖ [Program terminated with ${escapeHtml(parsed.errorType)}${parsed.lineNum ? ` on line ${parsed.lineNum}` : ""}]`;
+
+            terminalOutputEl.appendChild(errCard);
+            terminalOutputEl.appendChild(hintCard);
+            terminalOutputEl.appendChild(exitFailBadge);
+
+            // Wire up Jump button
+            const jumpBtn = errCard.querySelector(".term-jump-btn");
+            if (jumpBtn) {
+                jumpBtn.addEventListener("click", () => {
+                    jumpToLine(parsed.lineNum);
+                });
+            }
 
             terminalOutputEl.scrollTop = terminalOutputEl.scrollHeight;
 
             if (typeof showGameToast === "function") {
-                showGameToast("Python error encountered! Check terminal traceback.", "warning");
+                showGameToast(`Python ${parsed.errorType} encountered!`, "warning");
             }
         });
     }
@@ -517,7 +853,9 @@
         open: openCompilerScreen,
         run: runCode,
         clearTerminal: clearTerminal,
-        setDifficulty: setDifficulty
+        copyOutput: copyTerminalOutput,
+        setDifficulty: setDifficulty,
+        jumpToLine: jumpToLine
     };
 
     if (document.readyState === "loading") {
