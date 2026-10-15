@@ -1,16 +1,40 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Users collection: users can read and write their own document; teachers can read student documents
-    match /users/{userId} {
-      allow read: if true;
-      allow write: if true;
+
+    function isStudentRole() {
+      return request.resource.data.role == 'student';
     }
 
-    // Questions collection: anyone can read questions, teachers can create/edit/delete
+    function roleUnchanged() {
+      return !('role' in request.resource.data) || request.resource.data.role == resource.data.role;
+    }
+
+    function isNotReservedAdmin(id) {
+      return id != 'admin' && id != 'admin1' && id != 'admin2' && id != 'teacher';
+    }
+
+    // Users collection: student registration, updates, and teacher management
+    match /users/{userId} {
+      // Allow reading user profiles for authentication, leaderboard, and student rosters
+      allow read: if true;
+
+      // Registration: New accounts can only be created with role 'student' and cannot use reserved names
+      allow create: if isStudentRole() && isNotReservedAdmin(userId);
+
+      // Updates: Role cannot be escalated from student to teacher
+      allow update: if roleUnchanged() || resource.data.role == 'teacher';
+
+      // Deletions: Administrative accounts can NEVER be deleted
+      allow delete: if isNotReservedAdmin(userId) && resource.data.role != 'teacher';
+    }
+
+    // Questions collection: Read-only for gameplay; mutations require valid schema
     match /questions/{questionId} {
       allow read: if true;
-      allow write: if true;
+      allow create, update: if request.resource.data.keys().hasAll(['title', 'difficulty', 'enemy_id']);
+      allow delete: if true;
     }
   }
 }
+

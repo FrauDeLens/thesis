@@ -92,6 +92,11 @@
                 title: "🌀 RecursionError Detected",
                 tip: "A function called itself without hitting a valid base case, causing stack overflow. Ensure your recursive condition eventually terminates."
             };
+        } else if (err.includes("timelimiterror") || err.includes("run time limit") || err.includes("time limit")) {
+            return {
+                title: "⏳ TimeLimitError Detected (Infinite Loop Protection)",
+                tip: "Your Python code exceeded the execution time limit (3000ms). Check for infinite while loops, missing loop counter increments, or missing break conditions."
+            };
         }
         return {
             title: "💡 Debugging Intel",
@@ -419,7 +424,8 @@
         const startTime = performance.now();
         let stdoutBuffer = "";
 
-        // Configure Skulpt
+        // Configure Skulpt with execution timeout to prevent tab freezing
+        Sk.execLimit = 3000;
         Sk.configure({
             output: function (text) {
                 stdoutBuffer += text;
@@ -433,7 +439,8 @@
                 }
                 return Sk.builtinFiles["files"][file];
             },
-            __future__: Sk.python3
+            __future__: Sk.python3,
+            execLimit: 3000
         });
 
         // Async execution promise

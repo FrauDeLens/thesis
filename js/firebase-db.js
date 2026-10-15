@@ -132,6 +132,11 @@ async function executeFirebaseApi(path, method, body) {
             if (!/^[A-Za-z0-9_]{3,24}$/.test(username)) {
                 throw new Error("Username must be 3-24 letters, numbers, or underscores.");
             }
+            const docId = username.toLowerCase();
+            const RESERVED_USERNAMES = ["admin", "admin1", "admin2", "teacher", "root", "system", "administrator"];
+            if (RESERVED_USERNAMES.includes(docId)) {
+                throw new Error("This username is reserved and cannot be registered.");
+            }
             if (password.length < 6) {
                 throw new Error("Password must be at least 6 characters.");
             }
@@ -145,20 +150,20 @@ async function executeFirebaseApi(path, method, body) {
                 throw new Error("Please provide a valid security answer (at least 2 characters).");
             }
 
-            const docId = username.toLowerCase();
             const existing = await db.collection("users").doc(docId).get();
             if (existing.exists) {
                 throw new Error("Username already exists.");
             }
 
             const hashed = await firebaseHashPassword(password);
+            const hashedAnswer = await firebaseHashPassword(securityAnswer.toLowerCase().trim());
             const now = new Date().toISOString();
             const newUser = {
                 username: username,
                 password_hash: hashed,
                 full_name: fullName,
                 security_question: securityQuestion,
-                security_answer: securityAnswer.toLowerCase(),
+                security_answer: hashedAnswer,
                 role: "student",
                 progress: getFirebaseDefaultProgress(),
                 last_seen: now,
@@ -217,13 +222,16 @@ async function executeFirebaseApi(path, method, body) {
 
             const userData = snap.data();
             const storedAnswer = (userData.security_answer || "").toLowerCase().trim();
-            if (!storedAnswer || storedAnswer !== answer) {
+            const hashedInputAnswer = await firebaseHashPassword(answer);
+            const isAnswerMatch = (storedAnswer === answer) || (storedAnswer === hashedInputAnswer);
+            if (!storedAnswer || !isAnswerMatch) {
                 throw new Error("Incorrect security answer. Please check your answer.");
             }
 
             const hashed = await firebaseHashPassword(newPassword);
             await userRef.update({
                 password_hash: hashed,
+                security_answer: hashedInputAnswer, // automatically migrate legacy plaintext answers to secure SHA-256
                 updated_at: new Date().toISOString()
             });
 
@@ -363,14 +371,18 @@ async function executeFirebaseApi(path, method, body) {
                     if (secA.length < 2) {
                         throw new Error("Security answer must be at least 2 characters.");
                     }
-                    updatePayload.security_answer = secA.toLowerCase();
+                    updatePayload.security_answer = await firebaseHashPassword(secA.toLowerCase().trim());
                 } else if (!userData.security_answer) {
                     throw new Error("Please provide a security answer.");
                 }
             }
 
             const newDocId = newUsername.toLowerCase();
+            const RESERVED_USERNAMES = ["admin", "admin1", "admin2", "teacher", "root", "system", "administrator"];
             if (newDocId !== oldDocId) {
+                if (RESERVED_USERNAMES.includes(newDocId)) {
+                    throw new Error("This username is reserved.");
+                }
                 // Changing username: ensure new username is not already taken
                 const existing = await db.collection("users").doc(newDocId).get();
                 if (existing.exists) {
@@ -419,128 +431,18 @@ async function executeFirebaseApi(path, method, body) {
             }
 
             const docId = username.toLowerCase();
-            const cleanPass = (password || "").trim().toLowerCase();
-            const isAdminOrTeacher = (
-                docId === "admin" || 
-                docId === "teacher" || 
-                docId === "admin1" || 
-                docId === "admin2"
-            );
-            const isMasterPass = (
-                cleanPass === "trimexccs" ||
-                cleanPass === "trimexcss" ||
-                cleanPass === "bughunt2026" ||
-                cleanPass === "admin123" ||
-                cleanPass === "teacher123" ||
-                cleanPass === "123456" ||
-                (docId === "admin" && (cleanPass === "admin" || cleanPass === "trimexccs")) ||
-                (docId === "teacher" && (cleanPass === "teacher" || cleanPass === "trimexccs")) ||
-                (docId === "admin1" && (cleanPass === "admin1" || cleanPass === "admin" || cleanPass === "trimexccs")) ||
-                (docId === "admin2" && (cleanPass === "admin2" || cleanPass === "admin" || cleanPass === "trimexccs"))
-            );
-
-            // INSTANT MASTER BYPASS: Never wait or fail for admin/trimexccs credentials
-            if (isAdminOrTeacher && isMasterPass) {
-                const now = new Date().toISOString();
-                const defaultFullName = docId === "admin2" ? "Administrator 2" : (docId === "admin1" ? "Administrator 1" : (docId === "admin" ? "BugHunt Admin" : "BugHunt Teacher"));
-                const adminDoc = {
-                    id: docId,
-                    username: docId,
-                    full_name: defaultFullName,
-                    role: "teacher"
-                };
-                localStorage.setItem("username", adminDoc.username);
-
-                // Asynchronously sync with Firestore in background so network latency never blocks login
-                if (db) {
-                    (async () => {
-                        try {
-                            const hash = await firebaseHashPassword("trimexccs");
-                            await db.collection("users").doc(docId).set({
-                                username: docId,
-                                password_hash: hash,
-                                full_name: adminDoc.full_name,
-                                role: "teacher",
-                                progress: getFirebaseDefaultProgress(),
-                                last_seen: now
-                            }, { merge: true });
-                        } catch (syncErr) {
-                            console.warn("Background admin Firestore sync notice:", syncErr);
-                        }
-                    })();
-                }
-
-                return {
-                    ok: true,
-                    user: adminDoc,
-                    progress: getFirebaseDefaultProgress()
-                };
-            }
-
             const userRef = db.collection("users").doc(docId);
             const snap = await userRef.get();
 
-            const isDemoStudent = (docId === "student");
-            const isStudentPass = (
-                password === "student123" ||
-                password === "student" ||
-                password === "1234"
-            );
-
             if (!snap.exists) {
-                // If demo credentials and doc not found yet, create on-the-fly
-                if (isAdminOrTeacher && isMasterPass) {
-                    const now = new Date().toISOString();
-                    const adminDoc = {
-                        username: docId,
-                        password_hash: await firebaseHashPassword(password),
-                        full_name: docId === "admin2" ? "Administrator 2" : (docId === "admin1" ? "Administrator 1" : (docId === "admin" ? "BugHunt Admin" : "BugHunt Teacher")),
-                        role: "teacher",
-                        progress: getFirebaseDefaultProgress(),
-                        last_seen: now,
-                        created_at: now
-                    };
-                    await userRef.set(adminDoc);
-                    localStorage.setItem("username", adminDoc.username);
-                    return { ok: true, user: adminDoc, progress: adminDoc.progress };
-                }
-                if (isDemoStudent && isStudentPass) {
-                    const now = new Date().toISOString();
-                    const studentDoc = {
-                        username: "student",
-                        password_hash: await firebaseHashPassword(password),
-                        full_name: "Demo Student",
-                        role: "student",
-                        progress: getFirebaseDefaultProgress(),
-                        last_seen: now,
-                        created_at: now
-                    };
-                    await userRef.set(studentDoc);
-                    localStorage.setItem("username", "student");
-                    return { ok: true, user: studentDoc, progress: studentDoc.progress };
-                }
                 throw new Error("Invalid username or password.");
             }
 
             const userData = snap.data();
             const inputHash = await firebaseHashPassword(password);
-            let valid = (userData.password_hash === inputHash) ||
+            const valid = (userData.password_hash === inputHash) ||
                           (userData.password === password) ||
                           (userData.password_hash === password);
-
-            // Master fallback for admin / teacher (always permit trimexccs/admin123)
-            if (isAdminOrTeacher && (isMasterPass || cleanPass === "trimexccs")) {
-                valid = true;
-                userData.role = "teacher";
-                userRef.update({ password_hash: inputHash, role: "teacher" }).catch(console.warn);
-            }
-
-            // Demo fallback for student
-            if (!valid && isDemoStudent && isStudentPass) {
-                valid = true;
-                userData.role = "student";
-                userRef.update({ password_hash: inputHash, role: "student" }).catch(console.warn);
-            }
 
             if (!valid) {
                 throw new Error("Invalid username or password.");
@@ -551,13 +453,15 @@ async function executeFirebaseApi(path, method, body) {
 
             localStorage.setItem("username", userData.username);
 
+            const isAdminDoc = (docId === "admin" || docId === "teacher" || docId === "admin1" || docId === "admin2");
+
             return {
                 ok: true,
                 user: {
                     id: snap.id,
                     username: userData.username,
                     full_name: userData.full_name || userData.username,
-                    role: (userData.role === "admin" || isAdminOrTeacher) ? "teacher" : (userData.role || "student"),
+                    role: (userData.role === "admin" || isAdminDoc) ? "teacher" : (userData.role || "student"),
                     security_question: userData.security_question || ""
                 },
                 progress: userData.progress || getFirebaseDefaultProgress()
@@ -581,13 +485,43 @@ async function executeFirebaseApi(path, method, body) {
 
         if (method === "POST") {
             const newProgress = body && body.progress;
-            if (newProgress) {
+            if (newProgress && typeof newProgress === "object") {
+                const cleanProgress = {
+                    truePoints: Math.max(0, Math.min(100000, parseInt(newProgress.truePoints, 10) || 0)),
+                    unlocks: {
+                        easy: true,
+                        normal: Boolean(newProgress.unlocks && newProgress.unlocks.normal),
+                        hard: Boolean(newProgress.unlocks && newProgress.unlocks.hard),
+                        hell: Boolean(newProgress.unlocks && newProgress.unlocks.hell)
+                    },
+                    shop: {
+                        maxHp: Math.max(5, Math.min(10, parseInt(newProgress.shop && newProgress.shop.maxHp, 10) || 5)),
+                        freeHints: Math.max(0, Math.min(50, parseInt(newProgress.shop && newProgress.shop.freeHints, 10) || 0))
+                    },
+                    easy: {
+                        hearts: Math.max(0, Math.min(10, parseInt(newProgress.easy && newProgress.easy.hearts, 10) || 5)),
+                        trophies: Array.isArray(newProgress.easy && newProgress.easy.trophies) ? newProgress.easy.trophies.slice(0, 20) : []
+                    },
+                    normal: {
+                        hearts: Math.max(0, Math.min(10, parseInt(newProgress.normal && newProgress.normal.hearts, 10) || 5)),
+                        trophies: Array.isArray(newProgress.normal && newProgress.normal.trophies) ? newProgress.normal.trophies.slice(0, 20) : []
+                    },
+                    hard: {
+                        hearts: Math.max(0, Math.min(10, parseInt(newProgress.hard && newProgress.hard.hearts, 10) || 5)),
+                        trophies: Array.isArray(newProgress.hard && newProgress.hard.trophies) ? newProgress.hard.trophies.slice(0, 20) : []
+                    },
+                    hell: {
+                        hearts: Math.max(0, Math.min(10, parseInt(newProgress.hell && newProgress.hell.hearts, 10) || 5)),
+                        trophies: Array.isArray(newProgress.hell && newProgress.hell.trophies) ? newProgress.hell.trophies.slice(0, 20) : []
+                    }
+                };
                 await userRef.set({
-                    progress: newProgress,
+                    progress: cleanProgress,
                     last_seen: new Date().toISOString()
                 }, { merge: true });
+                return { ok: true, progress: cleanProgress };
             }
-            return { ok: true, progress: newProgress };
+            return { ok: true, progress: getFirebaseDefaultProgress() };
         }
 
         // GET progress
