@@ -697,3 +697,75 @@
     }
 }
 
+/* =========================================================
+   LEADERBOARD AVATARS (PIXEL-ART ITEM AVATARS)
+========================================================= */
+.lb-hero-avatar-letter {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.lb-hero-avatar-img {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+}
+
+.podium-avatar-wrap {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 4px 0 10px 0;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s ease;
+}
+.podium-card:hover .podium-avatar-wrap {
+    transform: scale(1.08);
+}
+.podium-first .podium-avatar-wrap {
+    width: 70px;
+    height: 70px;
+    border-color: #f59e0b;
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+}
+.podium-second .podium-avatar-wrap {
+    border-color: #94a3b8;
+    box-shadow: 0 0 16px rgba(148, 163, 184, 0.3);
+}
+.podium-third .podium-avatar-wrap {
+    border-color: #d97706;
+    box-shadow: 0 0 16px rgba(217, 119, 6, 0.3);
+}
+.podium-avatar-img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+}
+.podium-first .podium-avatar-img {
+    width: 58px;
+    height: 58px;
+}
+
+.lb-hunter-avatar {
+    overflow: hidden;
+}
+.lb-hunter-avatar-img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.5));
+}
+
+

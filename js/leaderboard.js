@@ -183,6 +183,7 @@
                                 id: doc.id,
                                 username: data.username || doc.id,
                                 full_name: data.full_name || data.username || doc.id,
+                                avatar: data.avatar || "item_disk",
                                 last_seen: data.last_seen || null,
                                 created_at: data.created_at || null,
                                 truePoints: Number(prog.truePoints || 0),
@@ -228,9 +229,14 @@
                 const finalTrophies = isMe ? Math.max(curTrophies, remoteTrophies) : remoteTrophies;
                 const finalSector = isMe ? (getSectorOrder(curSector) >= getSectorOrder(remoteSector) ? curSector : remoteSector) : remoteSector;
 
+                const userAvatar = isMe 
+                    ? ((currentUser && currentUser.avatar) || s.avatar || "item_disk")
+                    : (s.avatar || "item_disk");
+
                 processedStudents.push({
                     username: s.username || s.id,
                     full_name: s.full_name || s.username || s.id,
+                    avatar: userAvatar,
                     truePoints: finalTP,
                     trophiesCount: finalTrophies,
                     highestSector: finalSector,
@@ -245,6 +251,7 @@
                 processedStudents.push({
                     username: curUsername,
                     full_name: curFullName,
+                    avatar: (currentUser && currentUser.avatar) || "item_disk",
                     truePoints: curTP,
                     trophiesCount: curTrophies,
                     highestSector: curSector,
@@ -311,7 +318,8 @@
         const heroSector = document.getElementById("lb-hero-sector");
 
         if (heroAvatar) {
-            heroAvatar.textContent = (curUserItem.full_name || curUserItem.username || "S").charAt(0).toUpperCase();
+            const userAvatarId = curUserItem.avatar || (currentUser && currentUser.avatar) || "item_disk";
+            heroAvatar.innerHTML = `<img id="lb-hero-avatar-img" class="lb-hero-avatar-img" src="assets/avatars/${userAvatarId}.png" alt="Avatar">`;
         }
         if (heroRankChip) heroRankChip.textContent = `RANK #${curUserItem.rank}`;
         if (heroName) heroName.textContent = curUserItem.full_name;
@@ -336,14 +344,17 @@
             const p1Name = document.getElementById("p1-name");
             const p1Handle = document.getElementById("p1-handle");
             const p1Score = document.getElementById("p1-score");
+            const p1Avatar = document.getElementById("p1-avatar");
 
             const p2Name = document.getElementById("p2-name");
             const p2Handle = document.getElementById("p2-handle");
             const p2Score = document.getElementById("p2-score");
+            const p2Avatar = document.getElementById("p2-avatar");
 
             const p3Name = document.getElementById("p3-name");
             const p3Handle = document.getElementById("p3-handle");
             const p3Score = document.getElementById("p3-score");
+            const p3Avatar = document.getElementById("p3-avatar");
 
             const top1 = sorted[0];
             const top2 = sorted[1];
@@ -363,6 +374,7 @@
                 if (p1Name) p1Name.textContent = top1.full_name;
                 if (p1Handle) p1Handle.textContent = `@${top1.username}${top1.isCurrentUser ? ' (YOU)' : ''}`;
                 if (p1Score) p1Score.textContent = `⭐ ${top1.truePoints.toLocaleString()} TP • 🏆 ${top1.trophiesCount}/24`;
+                if (p1Avatar) p1Avatar.src = `assets/avatars/${top1.avatar || 'item_disk'}.png`;
             } else if (sorted.length === 2) {
                 podiumWrap.style.display = "grid";
                 podiumWrap.classList.remove("single-contender");
@@ -375,10 +387,12 @@
                 if (p1Name) p1Name.textContent = top1.full_name;
                 if (p1Handle) p1Handle.textContent = `@${top1.username}${top1.isCurrentUser ? ' (YOU)' : ''}`;
                 if (p1Score) p1Score.textContent = `⭐ ${top1.truePoints.toLocaleString()} TP • 🏆 ${top1.trophiesCount}/24`;
+                if (p1Avatar) p1Avatar.src = `assets/avatars/${top1.avatar || 'item_disk'}.png`;
 
                 if (p2Name) p2Name.textContent = top2.full_name;
                 if (p2Handle) p2Handle.textContent = `@${top2.username}${top2.isCurrentUser ? ' (YOU)' : ''}`;
                 if (p2Score) p2Score.textContent = `⭐ ${top2.truePoints.toLocaleString()} TP • 🏆 ${top2.trophiesCount}/24`;
+                if (p2Avatar) p2Avatar.src = `assets/avatars/${top2.avatar || 'item_disk'}.png`;
             } else {
                 // 3 or more contenders
                 podiumWrap.style.display = "grid";
@@ -391,14 +405,17 @@
                 if (p1Name) p1Name.textContent = top1.full_name;
                 if (p1Handle) p1Handle.textContent = `@${top1.username}${top1.isCurrentUser ? ' (YOU)' : ''}`;
                 if (p1Score) p1Score.textContent = `⭐ ${top1.truePoints.toLocaleString()} TP • 🏆 ${top1.trophiesCount}/24`;
+                if (p1Avatar) p1Avatar.src = `assets/avatars/${top1.avatar || 'item_disk'}.png`;
 
                 if (p2Name) p2Name.textContent = top2.full_name;
                 if (p2Handle) p2Handle.textContent = `@${top2.username}${top2.isCurrentUser ? ' (YOU)' : ''}`;
                 if (p2Score) p2Score.textContent = `⭐ ${top2.truePoints.toLocaleString()} TP • 🏆 ${top2.trophiesCount}/24`;
+                if (p2Avatar) p2Avatar.src = `assets/avatars/${top2.avatar || 'item_disk'}.png`;
 
                 if (p3Name) p3Name.textContent = top3.full_name;
                 if (p3Handle) p3Handle.textContent = `@${top3.username}${top3.isCurrentUser ? ' (YOU)' : ''}`;
                 if (p3Score) p3Score.textContent = `⭐ ${top3.truePoints.toLocaleString()} TP • 🏆 ${top3.trophiesCount}/24`;
+                if (p3Avatar) p3Avatar.src = `assets/avatars/${top3.avatar || 'item_disk'}.png`;
             }
         }
 
@@ -440,14 +457,16 @@
                     else if (item.rank === 2) rankDisplay = `<span class="lb-rank-2">🥈 #2</span>`;
                     else if (item.rank === 3) rankDisplay = `<span class="lb-rank-3">🥉 #3</span>`;
 
-                    const initial = (item.full_name || item.username || "?").charAt(0).toUpperCase();
+                    const avId = item.avatar || "item_disk";
 
                     return `
                         <tr class="lb-row ${item.isCurrentUser ? 'current-user-row' : ''}">
                             <td class="lb-rank-cell">${rankDisplay}</td>
                             <td>
                                 <div class="lb-hunter-cell">
-                                    <div class="lb-hunter-avatar">${initial}</div>
+                                    <div class="lb-hunter-avatar">
+                                        <img src="assets/avatars/${avId}.png" alt="Avatar" class="lb-hunter-avatar-img">
+                                    </div>
                                     <div class="lb-hunter-details">
                                         <div class="lb-hunter-name">
                                             <span>${item.full_name}</span>

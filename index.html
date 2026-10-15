@@ -16,18 +16,18 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/base.css?v=115">
-    <link rel="stylesheet" href="css/auth.css?v=115">
-    <link rel="stylesheet" href="css/menu.css?v=115">
-    <link rel="stylesheet" href="css/difficulty.css?v=115">
-    <link rel="stylesheet" href="css/battle.css?v=115">
-    <link rel="stylesheet" href="css/battle-end-screens.css?v=115">
-    <link rel="stylesheet" href="css/enemy-showcase.css?v=115">
-    <link rel="stylesheet" href="css/study.css?v=115">
-    <link rel="stylesheet" href="css/admin.css?v=115">
-    <link rel="stylesheet" href="css/themes.css?v=115">
-    <link rel="stylesheet" href="css/leaderboard.css?v=115">
-    <link rel="stylesheet" href="css/compiler.css?v=115">
+    <link rel="stylesheet" href="css/base.css?v=116">
+    <link rel="stylesheet" href="css/auth.css?v=116">
+    <link rel="stylesheet" href="css/menu.css?v=116">
+    <link rel="stylesheet" href="css/difficulty.css?v=116">
+    <link rel="stylesheet" href="css/battle.css?v=116">
+    <link rel="stylesheet" href="css/battle-end-screens.css?v=116">
+    <link rel="stylesheet" href="css/enemy-showcase.css?v=116">
+    <link rel="stylesheet" href="css/study.css?v=116">
+    <link rel="stylesheet" href="css/admin.css?v=116">
+    <link rel="stylesheet" href="css/themes.css?v=116">
+    <link rel="stylesheet" href="css/leaderboard.css?v=116">
+    <link rel="stylesheet" href="css/compiler.css?v=116">
 
 </head>
 
@@ -50,7 +50,7 @@
             <div class="access-tools-right">
                 <button id="global-profile-btn" class="access-pill-btn profile-pill" type="button"
                     title="User Profile & Account Settings">
-                    <span class="access-icon">👤</span>
+                    <img id="global-profile-avatar" class="global-user-avatar" src="assets/avatars/item_disk.png" alt="Avatar">
                     <span id="global-profile-name">Profile</span>
                 </button>
                 <button id="global-tutorial-btn" class="access-pill-btn tutorial-pill" type="button"
@@ -182,6 +182,12 @@
             </div>
 
             <input id="register-security-answer" type="text" placeholder="Security Answer" autocomplete="off">
+
+            <div class="register-avatar-container">
+                <label class="register-avatar-label">Select Starting Item Avatar</label>
+                <div id="register-avatar-picker-grid" class="avatar-picker-grid"></div>
+                <input type="hidden" id="register-selected-avatar" value="item_disk">
+            </div>
 
             <p class="register-policy-hint">
                 Password must be at least <strong>6 characters</strong>. Your security question will be used if you
@@ -776,7 +782,9 @@
             <!-- Current User Hero Status Banner -->
             <div class="lb-player-hero-card">
                 <div class="lb-player-avatar-box">
-                    <span id="lb-hero-avatar-letter">👤</span>
+                    <div id="lb-hero-avatar-letter" class="lb-hero-avatar-letter">
+                        <img id="lb-hero-avatar-img" class="lb-hero-avatar-img" src="assets/avatars/item_disk.png" alt="Hero Avatar">
+                    </div>
                     <span id="lb-hero-rank-chip" class="lb-player-rank-chip">RANK #--</span>
                 </div>
                 <div class="lb-player-info">
@@ -805,6 +813,9 @@
                 <!-- 2nd Place -->
                 <div class="podium-card podium-second">
                     <div class="podium-crown">🥈</div>
+                    <div class="podium-avatar-wrap">
+                        <img id="p2-avatar" class="podium-avatar-img" src="assets/avatars/item_disk.png" alt="Rank #2 Avatar">
+                    </div>
                     <span class="podium-rank-badge">RANK #2</span>
                     <h4 id="p2-name" class="podium-name">Player 2</h4>
                     <span id="p2-handle" class="podium-handle">@hunter2</span>
@@ -813,6 +824,9 @@
                 <!-- 1st Place (Champion) -->
                 <div class="podium-card podium-first">
                     <div class="podium-crown">👑</div>
+                    <div class="podium-avatar-wrap">
+                        <img id="p1-avatar" class="podium-avatar-img" src="assets/avatars/item_disk.png" alt="Champion Avatar">
+                    </div>
                     <span class="podium-rank-badge">CHAMPION #1</span>
                     <h4 id="p1-name" class="podium-name">Player 1</h4>
                     <span id="p1-handle" class="podium-handle">@champion</span>
@@ -821,6 +835,9 @@
                 <!-- 3rd Place -->
                 <div class="podium-card podium-third">
                     <div class="podium-crown">🥉</div>
+                    <div class="podium-avatar-wrap">
+                        <img id="p3-avatar" class="podium-avatar-img" src="assets/avatars/item_disk.png" alt="Rank #3 Avatar">
+                    </div>
                     <span class="podium-rank-badge">RANK #3</span>
                     <h4 id="p3-name" class="podium-name">Player 3</h4>
                     <span id="p3-handle" class="podium-handle">@hunter3</span>
@@ -2805,7 +2822,7 @@
                 <div class="profile-card-header">
                     <div class="profile-header-left">
                         <div class="profile-avatar-circle">
-                            <span class="profile-avatar-icon">P</span>
+                            <img id="profile-modal-avatar-preview" class="profile-modal-avatar-img" src="assets/avatars/item_disk.png" alt="Avatar Preview">
                         </div>
                         <div class="profile-header-meta">
                             <div class="profile-title-row">
@@ -2865,6 +2882,15 @@
                                 <span class="profile-input-hint">3-24 letters, numbers, or underscores. Used to log into
                                     BugHunt.</span>
                             </div>
+                        </div>
+
+                        <!-- SECTION: ITEM AVATAR -->
+                        <div class="profile-section-divider">
+                            <span class="section-tag">DEBUG ITEM AVATAR</span>
+                        </div>
+                        <div class="profile-avatar-picker-section">
+                            <div id="profile-avatar-picker-grid" class="avatar-picker-grid"></div>
+                            <input type="hidden" id="profile-selected-avatar" value="item_disk">
                         </div>
 
                         <!-- SECTION 2: PASSWORD (OPTIONAL) -->
@@ -2975,39 +3001,39 @@
     <!-- ==========================
      LOCALIZATION & I18N SYSTEM
 ========================== -->
-    <script src="js/i18n.js?v=115"></script>
-    <script src="data/easy.js?v=115"></script>
-    <script src="data/normal.js?v=115"></script>
-    <script src="data/hard.js?v=115"></script>
-    <script src="data/hell.js?v=115"></script>
-    <script src="data/enemyGuides.js?v=115"></script>
-    <script src="data/pythonLessons.js?v=115"></script>
+    <script src="js/i18n.js?v=116"></script>
+    <script src="data/easy.js?v=116"></script>
+    <script src="data/normal.js?v=116"></script>
+    <script src="data/hard.js?v=116"></script>
+    <script src="data/hell.js?v=116"></script>
+    <script src="data/enemyGuides.js?v=116"></script>
+    <script src="data/pythonLessons.js?v=116"></script>
 
     <!-- ==========================
      FIREBASE CLOUD DATABASE
 ========================= -->
     <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
-    <script src="js/firebase-config.js?v=115"></script>
-    <script src="js/firebase-db.js?v=115"></script>
+    <script src="js/firebase-config.js?v=116"></script>
+    <script src="js/firebase-db.js?v=116"></script>
 
     <!-- ==========================
      MODULAR JAVASCRIPT SYSTEM
 ========================= -->
-    <script src="js/auth.js?v=115"></script>
-    <script src="js/save.js?v=115"></script>
-    <script src="js/points.js?v=115"></script>
-    <script src="js/difficulty.js?v=115"></script>
-    <script src="js/enemyShowcase.js?v=115"></script>
-    <script src="js/game.js?v=115"></script>
-    <script src="js/study.js?v=115"></script>
-    <script src="js/admin.js?v=115"></script>
-    <script src="js/theme.js?v=115"></script>
-    <script src="js/leaderboard.js?v=115"></script>
-    <script src="js/skulpt.min.js?v=115"></script>
-    <script src="js/skulpt-stdlib.js?v=115"></script>
-    <script src="js/compiler.js?v=115"></script>
-    <script src="js/app.js?v=115"></script>
+    <script src="js/auth.js?v=116"></script>
+    <script src="js/save.js?v=116"></script>
+    <script src="js/points.js?v=116"></script>
+    <script src="js/difficulty.js?v=116"></script>
+    <script src="js/enemyShowcase.js?v=116"></script>
+    <script src="js/game.js?v=116"></script>
+    <script src="js/study.js?v=116"></script>
+    <script src="js/admin.js?v=116"></script>
+    <script src="js/theme.js?v=116"></script>
+    <script src="js/leaderboard.js?v=116"></script>
+    <script src="js/skulpt.min.js?v=116"></script>
+    <script src="js/skulpt-stdlib.js?v=116"></script>
+    <script src="js/compiler.js?v=116"></script>
+    <script src="js/app.js?v=116"></script>
 
 
 </body>

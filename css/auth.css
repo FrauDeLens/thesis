@@ -132,8 +132,8 @@
 }
 
 /* Form Inputs */
-#login-screen input,
-#register-screen input {
+#login-screen input:not([type="hidden"]),
+#register-screen input:not([type="hidden"]) {
     position: relative;
     z-index: 5;
     display: block;

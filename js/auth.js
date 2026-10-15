@@ -4,6 +4,54 @@
 
 let currentUser = null;
 
+const BUGHUNT_AVATARS = [
+    { id: "item_disk", name: "Cyber Disk", title: "Cyber Floppy Disk" },
+    { id: "item_potion", name: "Health Potion", title: "Debug Health Potion" },
+    { id: "item_scanner", name: "Scanner Lens", title: "Bug Scanner Lens" },
+    { id: "item_crystal", name: "Syntax Crystal", title: "Syntax Crystal" },
+    { id: "item_chip", name: "Microchip", title: "CPU Microchip" },
+    { id: "item_shield", name: "Firewall Shield", title: "Firewall Shield" },
+    { id: "item_blade", name: "Laser Blade", title: "Debug Laser Blade" },
+    { id: "item_trophy", name: "Bug Trophy", title: "Golden Bug Trophy" }
+];
+
+function renderAvatarPicker(containerId, hiddenInputId, selectedId, previewImgId) {
+    const container = document.getElementById(containerId);
+    const hiddenInput = document.getElementById(hiddenInputId);
+    if (!container || !hiddenInput) return;
+
+    let currentVal = selectedId || hiddenInput.value || "item_disk";
+    hiddenInput.value = currentVal;
+
+    if (previewImgId) {
+        const previewEl = document.getElementById(previewImgId);
+        if (previewEl) previewEl.src = `assets/avatars/${currentVal}.png`;
+    }
+
+    container.innerHTML = BUGHUNT_AVATARS.map(avatar => {
+        const isSelected = avatar.id === currentVal;
+        return `
+            <div class="avatar-pick-card ${isSelected ? 'selected' : ''}" data-avatar-id="${avatar.id}" title="${avatar.title}">
+                <img src="assets/avatars/${avatar.id}.png" alt="${avatar.name}" class="avatar-pick-img">
+                <span class="avatar-pick-label">${avatar.name}</span>
+            </div>
+        `;
+    }).join("");
+
+    container.querySelectorAll(".avatar-pick-card").forEach(card => {
+        card.addEventListener("click", function() {
+            const chosenId = this.getAttribute("data-avatar-id");
+            hiddenInput.value = chosenId;
+            container.querySelectorAll(".avatar-pick-card").forEach(c => c.classList.remove("selected"));
+            this.classList.add("selected");
+            if (previewImgId) {
+                const previewEl = document.getElementById(previewImgId);
+                if (previewEl) previewEl.src = `assets/avatars/${chosenId}.png`;
+            }
+        });
+    });
+}
+
 function getApiBase() {
     if (window.BUGHUNT_API_URL) {
         return window.BUGHUNT_API_URL.replace(/\/+$/, '') + '/';
@@ -101,6 +149,10 @@ function applyLoggedInUser(user, serverProgress) {
     const globalProfName = document.getElementById("global-profile-name");
     if (globalProfName) {
         globalProfName.textContent = displayName;
+    }
+    const globalProfAvatar = document.getElementById("global-profile-avatar");
+    if (globalProfAvatar) {
+        globalProfAvatar.src = "assets/avatars/" + (user.avatar || "item_disk") + ".png";
     }
     const playerCardName = document.getElementById("player-combatant-name") || document.querySelector(".player-card .pokemon-combatant-name");
     if (playerCardName) {
@@ -362,6 +414,7 @@ async function handleRegisterSubmit() {
     const regFullnameInp = document.getElementById("register-fullname");
     const regSecQSelect = document.getElementById("register-security-question");
     const regSecAnsInp = document.getElementById("register-security-answer");
+    const regAvatarInp = document.getElementById("register-selected-avatar");
     const regMsg = document.getElementById("register-message");
 
     const username = regUsernameInp ? regUsernameInp.value.trim() : "";
@@ -370,6 +423,7 @@ async function handleRegisterSubmit() {
     const fullName = regFullnameInp ? regFullnameInp.value.trim() : "";
     const securityQuestion = regSecQSelect ? regSecQSelect.value : "";
     const securityAnswer = regSecAnsInp ? regSecAnsInp.value.trim() : "";
+    const avatar = regAvatarInp ? regAvatarInp.value : "item_disk";
 
     if (!username || !password || !confirmPassword) {
         if (regMsg) regMsg.textContent = "Please fill in all required fields.";
@@ -399,6 +453,7 @@ async function handleRegisterSubmit() {
             password: password,
             confirm: confirmPassword,
             full_name: fullName,
+            avatar: avatar,
             security_question: securityQuestion,
             security_answer: securityAnswer
         });
@@ -633,6 +688,7 @@ function initAuth() {
             if (typeof showScreen === "function") {
                 showScreen(document.getElementById("register-screen"));
             }
+            renderAvatarPicker("register-avatar-picker-grid", "register-selected-avatar", "item_disk");
         });
     }
 
@@ -891,6 +947,9 @@ function openUserProfileModal() {
             : "Enter recovery answer";
     }
 
+    const curAvatar = current.avatar || "item_disk";
+    renderAvatarPicker("profile-avatar-picker-grid", "profile-selected-avatar", curAvatar, "profile-modal-avatar-preview");
+
     const saveBtn = document.getElementById("profile-save-btn");
     if (saveBtn) saveBtn.disabled = false;
 
@@ -912,6 +971,7 @@ async function handleSaveProfileSubmit() {
     const confirmPassInp = document.getElementById("profile-confirm-password");
     const secQSelect = document.getElementById("profile-security-question");
     const secAInp = document.getElementById("profile-security-answer");
+    const avatarInp = document.getElementById("profile-selected-avatar");
 
     const newFullName = fullnameInp ? fullnameInp.value.trim() : "";
     const newUsername = usernameInp ? usernameInp.value.trim() : "";
@@ -919,6 +979,7 @@ async function handleSaveProfileSubmit() {
     const confirm = confirmPassInp ? confirmPassInp.value : "";
     const secQuestion = secQSelect ? secQSelect.value.trim() : "";
     const secAnswer = secAInp ? secAInp.value.trim() : "";
+    const chosenAvatar = avatarInp ? avatarInp.value : (currentUser && currentUser.avatar ? currentUser.avatar : "item_disk");
 
     function showStatus(text, isError) {
         if (!statusMsg) return;
@@ -969,7 +1030,8 @@ async function handleSaveProfileSubmit() {
         const payload = {
             action: "update_profile",
             full_name: newFullName,
-            username: newUsername
+            username: newUsername,
+            avatar: chosenAvatar
         };
         if (newPassword) {
             payload.new_password = newPassword;
@@ -990,6 +1052,7 @@ async function handleSaveProfileSubmit() {
         if (currentUser) {
             currentUser.full_name = newFullName;
             currentUser.username = newUsername;
+            currentUser.avatar = chosenAvatar;
             if (secQuestion) {
                 currentUser.security_question = secQuestion;
             }
@@ -1009,6 +1072,14 @@ async function handleSaveProfileSubmit() {
         const globalProfName = document.getElementById("global-profile-name");
         if (globalProfName) {
             globalProfName.textContent = newFullName;
+        }
+        const globalProfAvatar = document.getElementById("global-profile-avatar");
+        if (globalProfAvatar) {
+            globalProfAvatar.src = "assets/avatars/" + chosenAvatar + ".png";
+        }
+        const profilePreviewImg = document.getElementById("profile-modal-avatar-preview");
+        if (profilePreviewImg) {
+            profilePreviewImg.src = "assets/avatars/" + chosenAvatar + ".png";
         }
         const playerCardName = document.getElementById("player-combatant-name") || document.querySelector(".player-card .pokemon-combatant-name");
         if (playerCardName) {

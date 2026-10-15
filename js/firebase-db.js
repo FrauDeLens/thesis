@@ -89,7 +89,8 @@ async function executeFirebaseApi(path, method, body) {
                         username: userData.username || docId,
                         full_name: userData.full_name || (isRoleAdmin ? (docId === "admin2" ? "Administrator 2" : "Administrator 1") : userData.username),
                         role: isRoleAdmin ? "teacher" : (userData.role || "student"),
-                        security_question: userData.security_question || ""
+                        security_question: userData.security_question || "",
+                        avatar: userData.avatar || (isRoleAdmin ? "item_chip" : "item_disk")
                     },
                     progress: userData.progress || getFirebaseDefaultProgress()
                 };
@@ -102,7 +103,8 @@ async function executeFirebaseApi(path, method, body) {
                         id: docId,
                         username: docId,
                         full_name: docId === "admin2" ? "Administrator 2" : (docId === "admin1" ? "Administrator 1" : (docId === "admin" ? "BugHunt Admin" : "BugHunt Teacher")),
-                        role: "teacher"
+                        role: "teacher",
+                        avatar: "item_chip"
                     },
                     progress: getFirebaseDefaultProgress()
                 };
@@ -158,10 +160,13 @@ async function executeFirebaseApi(path, method, body) {
             const hashed = await firebaseHashPassword(password);
             const hashedAnswer = await firebaseHashPassword(securityAnswer.toLowerCase().trim());
             const now = new Date().toISOString();
+            const validAvatars = ["item_disk", "item_potion", "item_scanner", "item_crystal", "item_chip", "item_shield", "item_blade", "item_trophy"];
+            const selectedAvatar = (body.avatar && validAvatars.includes(body.avatar)) ? body.avatar : "item_disk";
             const newUser = {
                 username: username,
                 password_hash: hashed,
                 full_name: fullName,
+                avatar: selectedAvatar,
                 security_question: securityQuestion,
                 security_answer: hashedAnswer,
                 role: "student",
@@ -347,8 +352,12 @@ async function executeFirebaseApi(path, method, body) {
                 throw new Error("Username must be 3-24 letters, numbers, or underscores.");
             }
 
+            const validAvatars = ["item_disk", "item_potion", "item_scanner", "item_crystal", "item_chip", "item_shield", "item_blade", "item_trophy"];
+            const newAvatar = (body.avatar && validAvatars.includes(body.avatar)) ? body.avatar : (userData.avatar || "item_disk");
+
             const updatePayload = {
                 full_name: newFullName,
+                avatar: newAvatar,
                 updated_at: new Date().toISOString()
             };
 
@@ -401,6 +410,7 @@ async function executeFirebaseApi(path, method, body) {
                         id: newDocId,
                         username: newUsername,
                         full_name: newFullName,
+                        avatar: newAvatar,
                         role: userData.role || "student",
                         security_question: updatedUser.security_question || ""
                     }
@@ -414,6 +424,7 @@ async function executeFirebaseApi(path, method, body) {
                         id: oldDocId,
                         username: userData.username,
                         full_name: newFullName,
+                        avatar: newAvatar,
                         role: userData.role || "student",
                         security_question: updatePayload.security_question || userData.security_question || ""
                     }
@@ -462,7 +473,8 @@ async function executeFirebaseApi(path, method, body) {
                     username: userData.username,
                     full_name: userData.full_name || userData.username,
                     role: (userData.role === "admin" || isAdminDoc) ? "teacher" : (userData.role || "student"),
-                    security_question: userData.security_question || ""
+                    security_question: userData.security_question || "",
+                    avatar: userData.avatar || (isAdminDoc ? "item_chip" : "item_disk")
                 },
                 progress: userData.progress || getFirebaseDefaultProgress()
             };
@@ -780,6 +792,7 @@ async function executeFirebaseApi(path, method, body) {
                     id: doc.id,
                     username: data.username || doc.id,
                     full_name: data.full_name || data.username || doc.id,
+                    avatar: data.avatar || "item_disk",
                     last_seen: data.last_seen || null,
                     created_at: data.created_at || null,
                     truePoints: Number(prog.truePoints || 0),
