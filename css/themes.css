@@ -349,8 +349,7 @@ body[data-theme="synthwave"] ::-webkit-scrollbar-thumb:hover {
     background-position: center !important;
 }
 
-[data-theme="emerald"] #main-menu::before,
-[data-theme="emerald"] #about-screen::before {
+[data-theme="emerald"] #main-menu::before {
     display: none !important;
 }
 
@@ -453,8 +452,7 @@ body[data-theme="synthwave"] ::-webkit-scrollbar-thumb:hover {
     background-position: center !important;
 }
 
-[data-theme="cyan"] #main-menu::before,
-[data-theme="cyan"] #about-screen::before {
+[data-theme="cyan"] #main-menu::before {
     display: none !important;
 }
 
@@ -564,8 +562,7 @@ body[data-theme="synthwave"] ::-webkit-scrollbar-thumb:hover {
     background-position: center !important;
 }
 
-[data-theme="crimson"] #main-menu::before,
-[data-theme="crimson"] #about-screen::before {
+[data-theme="crimson"] #main-menu::before {
     display: none !important;
 }
 
@@ -668,8 +665,7 @@ body[data-theme="synthwave"] ::-webkit-scrollbar-thumb:hover {
     background-position: center !important;
 }
 
-[data-theme="amber"] #main-menu::before,
-[data-theme="amber"] #about-screen::before {
+[data-theme="amber"] #main-menu::before {
     display: none !important;
 }
 
@@ -772,8 +768,7 @@ body[data-theme="synthwave"] ::-webkit-scrollbar-thumb:hover {
     background-position: center !important;
 }
 
-[data-theme="synthwave"] #main-menu::before,
-[data-theme="synthwave"] #about-screen::before {
+[data-theme="synthwave"] #main-menu::before {
     display: none !important;
 }
 
@@ -1452,97 +1447,68 @@ body:not([data-theme="violet"]) .steam-achieve-target {
 
 /* =========================================================
    N. ABOUT SCREEN THEMATIC POLISH
+   Unified System Archive theme styling across all 6 themes
 ========================================================= */
 
-body:not([data-theme="violet"]) #about-screen::before {
-    display: none !important;
+#about-screen::before {
+    display: block !important;
+    background: radial-gradient(circle at 50% 15%, var(--theme-glow), transparent 60%) !important;
 }
 
-body:not([data-theme="violet"]) #about-screen .about-back-nav-btn,
-body:not([data-theme="violet"]) #about-back-button {
-    background: var(--theme-card-bg-subtle) !important;
-    border: 1.5px solid var(--theme-border) !important;
-    color: var(--theme-text-title) !important;
+.about-card-container {
+    background: var(--theme-card-bg) !important;
+    border-color: var(--theme-border) !important;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.85), 0 0 32px var(--theme-glow-soft) !important;
 }
 
-body:not([data-theme="violet"]) #about-screen .about-back-nav-btn:hover,
-body:not([data-theme="violet"]) #about-back-button:hover {
+.about-icon-badge {
     background: var(--theme-btn-gradient) !important;
     border-color: var(--theme-accent) !important;
-    color: #ffffff !important;
-    box-shadow: 0 0 16px var(--theme-glow) !important;
+    box-shadow: 0 0 24px var(--theme-glow) !important;
 }
 
-body:not([data-theme="violet"]) .about-card-container {
-    background: var(--theme-card-bg) !important;
-    border: 1.5px solid var(--theme-border) !important;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 30px var(--theme-glow-soft) !important;
-}
-
-body:not([data-theme="violet"]) .about-icon-badge {
-    background: var(--theme-btn-gradient) !important;
-    border: 1.5px solid var(--theme-accent) !important;
-    box-shadow: 0 0 22px var(--theme-glow) !important;
-}
-
-body:not([data-theme="violet"]) .about-card-header h2 {
+.archive-system-title {
     color: var(--theme-text-title) !important;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85), 0 0 8px var(--theme-glow-soft) !important;
+    text-shadow: 0 0 16px var(--theme-glow), 2px 2px 0 rgba(0, 0, 0, 0.9) !important;
 }
 
-body:not([data-theme="violet"]) .about-subtitle {
-    color: var(--theme-text-sub) !important;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9) !important;
-}
-
-body:not([data-theme="violet"]) .about-description-box {
-    background: var(--theme-card-bg-subtle) !important;
-    border: 1px solid var(--theme-border-subtle) !important;
-}
-
-body:not([data-theme="violet"]) .about-main-text {
-    color: var(--theme-text-title) !important;
-}
-
-body:not([data-theme="violet"]) .about-secondary-text {
-    color: var(--theme-text-sub) !important;
-}
-
-body:not([data-theme="violet"]) .about-pillar-card {
-    background: var(--theme-card-bg-subtle) !important;
-    border: 1px solid var(--theme-border-subtle) !important;
-}
-
-body:not([data-theme="violet"]) .about-pillar-card:hover {
-    background: var(--theme-card-bg) !important;
-    border-color: var(--theme-accent) !important;
-    box-shadow: 0 8px 25px var(--theme-glow-soft) !important;
-    transform: translateY(-3px);
-}
-
-body:not([data-theme="violet"]) .about-pillar-card .pillar-icon {
-    filter: drop-shadow(0 0 10px var(--theme-glow)) !important;
-}
-
-body:not([data-theme="violet"]) .about-pillar-card .pillar-title {
-    color: var(--theme-text-title) !important;
-}
-
-body:not([data-theme="violet"]) .about-pillar-card .pillar-desc {
-    color: var(--theme-text-sub) !important;
-}
-
-body:not([data-theme="violet"]) .about-credits-card {
-    background: var(--theme-card-bg-subtle) !important;
-    border: 1px dashed var(--theme-border) !important;
-}
-
-body:not([data-theme="violet"]) .credit-label {
+.about-subtitle {
     color: var(--theme-accent) !important;
 }
 
-body:not([data-theme="violet"]) .credit-val {
-    color: var(--theme-text-title) !important;
+.archive-divider-label {
+    color: var(--theme-accent) !important;
+}
+
+.about-module-card,
+.about-reference-panel,
+.archive-dossier-card {
+    background: var(--theme-card-bg-subtle) !important;
+    border-color: var(--theme-border) !important;
+}
+
+.about-module-card:hover,
+.about-reference-panel:hover {
+    border-color: var(--theme-accent) !important;
+    box-shadow: 0 8px 26px var(--theme-glow-soft) !important;
+}
+
+.dossier-header-tag,
+.dossier-spec-label,
+.module-type-tag {
+    color: var(--theme-accent) !important;
+}
+
+.developer-role-badge,
+.adviser-role-badge {
+    background: rgba(var(--theme-primary-rgb), 0.22) !important;
+    color: var(--theme-text-highlight) !important;
+    border-color: var(--theme-border-subtle) !important;
+}
+
+.archive-footer-terminal-line,
+.terminal-cursor {
+    color: var(--theme-accent) !important;
 }
 
 /* =========================================================

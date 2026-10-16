@@ -169,10 +169,10 @@ const BUGHUNT_TRANSLATIONS = {
         collection_back_btn: "Back",
 
         // About Screen
-        about_title: "About BugHunt",
-        about_desc_1: "BugHunt is an educational debugging game designed to help students master Python.",
-        about_desc_2: "By spotting and fixing real bugs across different difficulty tiers, players build practical problem-solving confidence.",
-        about_back_btn: "Back",
+        about_title: "BUGHUNT",
+        about_tagline: "INTERACTIVE PYTHON LEARNING PLATFORM",
+        about_desc_1: "A game-based learning tool that challenges students to solve Python programming problems through interactive puzzles and quizzes.",
+        about_back_btn: "Back to Menu",
 
         // Python Codex Screen
         codex_title: "PYTHON CODEX",
@@ -410,10 +410,10 @@ const BUGHUNT_TRANSLATIONS = {
         collection_back_btn: "Bumalik",
 
         // About Screen
-        about_title: "Tungkol sa BugHunt",
-        about_desc_1: "Ang BugHunt ay isang educational game para matulungan ang mga estudyante sa pag-aayos ng Python code.",
-        about_desc_2: "Sa pamamagitan ng pagtukoy at pagwawasto ng mga totoong bug, natututo ang manlalaro nang may kumpiyansa.",
-        about_back_btn: "Bumalik",
+        about_title: "BUGHUNT",
+        about_tagline: "INTERACTIVE PYTHON LEARNING PLATFORM",
+        about_desc_1: "Isang game-based learning tool na humahamon sa mga mag-aaral na lutasin ang mga problema sa Python programming gamit ang mga interaktibong puzzle at quiz.",
+        about_back_btn: "Bumalik sa Menu",
 
         // Python Codex Screen
         codex_title: "PYTHON CODEX",

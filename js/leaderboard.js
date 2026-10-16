@@ -282,8 +282,6 @@
         const sorted = [...list];
         if (activeFilter === "trophies") {
             sorted.sort((a, b) => b.trophiesCount - a.trophiesCount || b.truePoints - a.truePoints);
-        } else if (activeFilter === "sector") {
-            sorted.sort((a, b) => getSectorOrder(b.highestSector) - getSectorOrder(a.highestSector) || b.truePoints - a.truePoints);
         } else {
             // Default: True Points
             sorted.sort((a, b) => b.truePoints - a.truePoints || b.trophiesCount - a.trophiesCount);
@@ -476,13 +474,12 @@
                                     </div>
                                 </div>
                             </td>
-                            <td>${getSectorBadgeHtml(item.highestSector)}</td>
-                            <td style="font-family: 'JetBrains Mono', monospace; font-weight: 700;">
-                                ${item.trophiesCount} / 24 Trophies
+                            <td style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #34d399;">
+                                🏆 ${item.trophiesCount} / 24 Trophies
                             </td>
                             <td>
                                 <span class="lb-score-pill">
-                                    ${item.truePoints.toLocaleString()} TP
+                                    ◆ ${item.truePoints.toLocaleString()} TP
                                 </span>
                             </td>
                             <td style="color: #94a3b8; font-size: 13px;">${item.lastSeen}</td>
