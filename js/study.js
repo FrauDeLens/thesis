@@ -191,7 +191,7 @@
         if (filtered.length === 0) {
             codexTopicList.innerHTML = `
                 <div class="codex-no-results-box">
-                    <span class="no-results-icon">🔍</span>
+                    <span class="no-results-icon">✦</span>
                     <p>${lang === "fil" ? `Walang nahanap na paksa para sa "${escapeHtml(searchQuery)}".` : `No topics found for "${escapeHtml(searchQuery)}".`}</p>
                     <button id="codex-clear-filter-btn" class="codex-clear-filter-btn" type="button">
                         ${lang === "fil" ? "I-clear ang Search" : "Clear Search"}
@@ -210,7 +210,7 @@
             if (codexContentArea) {
                 codexContentArea.innerHTML = `
                     <div class="codex-empty-placeholder">
-                        <span class="placeholder-icon">📂</span>
+                        <span class="placeholder-icon">✦</span>
                         <h2 class="placeholder-title">${lang === "fil" ? "Walang Nahanap na Paksa" : "No Topics Found"}</h2>
                         <p class="placeholder-desc">${lang === "fil" ? "Subukang maghanap ng ibang salita sa search box sa itaas." : "Try searching for a different keyword or clear your search query above."}</p>
                     </div>
@@ -245,7 +245,7 @@
                         <span class="topic-card-category">${escapeHtml(topic.category || currentDifficulty.toUpperCase())}</span>
                     </div>
                     <div class="topic-card-title">${escapeHtml(topic.title)}</div>
-                    ${topic.enemyName ? `<div class="topic-card-enemy">👾 ${escapeHtml(topic.enemyName)}</div>` : ""}
+                    ${topic.enemyName ? `<div class="topic-card-enemy">${escapeHtml(topic.enemyName)}</div>` : ""}
                 </div>
                 <div class="topic-active-indicator">▶</div>
             `;
@@ -314,7 +314,7 @@
                     <div class="code-block-header">
                         <span class="code-lang-tag">python • runnable example</span>
                         <button class="codex-copy-code-btn" type="button" data-copy="${escapeHtml(topic.codeExample)}">
-                            📋 Copy Code
+                            Copy Code
                         </button>
                     </div>
                     <pre class="lesson-code-pre"><code>${escapeHtml(topic.codeExample)}</code></pre>
@@ -334,7 +334,7 @@
                     <div class="code-block-header">
                         <span class="code-lang-tag">python syntax template</span>
                         <button class="codex-copy-code-btn" type="button" data-copy="${escapeHtml(topic.syntaxBlueprint)}">
-                            📋 Copy Template
+                            Copy Template
                         </button>
                     </div>
                     <pre class="lesson-code-pre blueprint-pre"><code>${escapeHtml(topic.syntaxBlueprint)}</code></pre>
@@ -346,13 +346,13 @@
             <!-- Hero Banner -->
             <div class="lesson-hero-banner">
                 <div class="hero-sprite-frame">
-                    ${topic.sprite ? `<img src="${topic.sprite}" alt="${escapeHtml(topic.enemyName || 'Enemy')}" onerror="this.onerror=null; this.src='css/Sprites/Easy/beginnerDragon.png';">` : '👾'}
+                    ${topic.sprite ? `<img src="${topic.sprite}" alt="${escapeHtml(topic.enemyName || 'Enemy')}" onerror="this.onerror=null; this.src='css/Sprites/Easy/beginnerDragon.png';">` : '◈'}
                 </div>
                 <div class="lesson-hero-details">
                     <div class="lesson-hero-tags">
                         <span class="lesson-badge badge-${currentDifficulty}">${currentDifficulty.toUpperCase()}</span>
                         <span class="lesson-badge badge-category">${escapeHtml(topic.category)}</span>
-                        ${topic.enemyName ? `<span class="lesson-badge badge-enemy">👾 ${escapeHtml(topic.enemyName)}</span>` : ""}
+                        ${topic.enemyName ? `<span class="lesson-badge badge-enemy">${escapeHtml(topic.enemyName)}</span>` : ""}
                     </div>
                     <h2 class="lesson-hero-title">${escapeHtml(topic.title)}</h2>
                     <p class="lesson-hero-summary">${escapeHtml(topic.summary || "")}</p>
@@ -556,14 +556,14 @@
                             <span class="chip-val" id="codex-mem-timer">${mins}:${secs}</span>
                         </div>
                         <button id="codex-mem-reset-btn" class="codex-mem-reset-btn" type="button" title="Shuffle & Restart">
-                            🔄 ${lang === "fil" ? "Ulitin" : "Reset"}
+                            ${lang === "fil" ? "Ulitin" : "Reset"}
                         </button>
                     </div>
                 </div>
 
                 <!-- Helpful Instructions Banner -->
                 <div class="codex-mem-tip-banner">
-                    <span class="tip-icon">💡</span>
+                    <span class="tip-icon">TIP:</span>
                     <span class="tip-text">${instructionText}</span>
                 </div>
 
@@ -613,7 +613,7 @@
                     <div class="codex-mem-card-inner">
                         <!-- Back: Cyber rune cover (Face Down) -->
                         <div class="codex-mem-card-back">
-                            <div class="codex-mem-rune">👾</div>
+                            <div class="codex-mem-rune">◈</div>
                             <span class="codex-mem-brand">BUGHUNT</span>
                         </div>
                         <!-- Front: Content (Face Up) -->
@@ -709,7 +709,7 @@
         const mins = String(Math.floor(memoryGameState.timerSeconds / 60)).padStart(2, '0');
         const secs = String(memoryGameState.timerSeconds % 60).padStart(2, '0');
 
-        const victoryTitle = lang === "fil" ? "🎉 TAGUMPAY! NALIGPIT ANG LAHAT NG CARDS!" : "🎉 VICTORY! ALL CONCEPTS MATCHED!";
+        const victoryTitle = lang === "fil" ? "TAGUMPAY! NALIGPIT ANG LAHAT NG CARDS!" : "VICTORY! ALL CONCEPTS MATCHED!";
         const victorySub = lang === "fil"
             ? `Nakamit mo ang tagumpay sa ${memoryGameState.moves} tira sa loob ng ${mins}:${secs}!`
             : `Mastered the ${currentDifficulty.toUpperCase()} deck in ${memoryGameState.moves} moves and ${mins}:${secs}!`;
@@ -718,7 +718,7 @@
         overlay.className = "memory-victory-modal-backdrop";
         overlay.innerHTML = `
             <div class="memory-victory-card">
-                <div class="victory-trophy-anim">🏆</div>
+                <div class="victory-trophy-anim">✦</div>
                 <h2 class="victory-title">${victoryTitle}</h2>
                 <p class="victory-sub">${victorySub}</p>
                 <div class="victory-stats-row">
@@ -727,8 +727,8 @@
                     <div class="vic-stat"><span>Difficulty:</span> <strong>${currentDifficulty.toUpperCase()}</strong></div>
                 </div>
                 <div class="victory-actions">
-                    <button id="vic-replay-btn" class="vic-btn vic-replay" type="button">🔄 ${lang === "fil" ? "Maglaro Muli" : "Play Again"}</button>
-                    <button id="vic-lessons-btn" class="vic-btn vic-lessons" type="button">📖 ${lang === "fil" ? "Bumalik sa mga Aralin" : "Review Lessons"}</button>
+                    <button id="vic-replay-btn" class="vic-btn vic-replay" type="button">${lang === "fil" ? "Maglaro Muli" : "Play Again"}</button>
+                    <button id="vic-lessons-btn" class="vic-btn vic-lessons" type="button">${lang === "fil" ? "Bumalik sa mga Aralin" : "Review Lessons"}</button>
                 </div>
             </div>
         `;

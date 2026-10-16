@@ -245,7 +245,7 @@
     min-width: 105px;
 }
 .lb-stat-label {
-    font-size: 11px;
+    font-size: 12.5px;
     font-weight: 700;
     color: #94a3b8;
     text-transform: uppercase;
@@ -253,7 +253,7 @@
 }
 .lb-stat-val {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 800;
     color: #ffffff;
     margin-top: 4px;
@@ -439,7 +439,7 @@
     background: transparent;
     border: none;
     color: #94a3b8;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 700;
     padding: 8px 18px;
     border-radius: 10px;
@@ -468,7 +468,7 @@
     border-radius: 14px;
     padding: 11px 16px 11px 40px;
     color: #ffffff;
-    font-size: 13.5px;
+    font-size: 14.5px;
     box-sizing: border-box;
     transition: all 0.2s ease;
     backdrop-filter: blur(8px);
@@ -515,7 +515,7 @@
 
 .lb-table th {
     padding: 16px 20px;
-    font-size: 12px;
+    font-size: 13.5px;
     font-weight: 700;
     color: #94a3b8;
     text-transform: uppercase;
@@ -524,7 +524,7 @@
 
 .lb-table td {
     padding: 16px 20px;
-    font-size: 14px;
+    font-size: 15.5px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.04);
     vertical-align: middle;
 }
@@ -543,7 +543,7 @@
 /* Rank Number / Medal */
 .lb-rank-cell {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 800;
     white-space: nowrap;
 }
@@ -582,6 +582,7 @@
     gap: 2px;
 }
 .lb-hunter-name {
+    font-size: 15.5px;
     font-weight: 700;
     color: #ffffff;
     display: flex;
@@ -591,7 +592,7 @@
 .lb-you-tag {
     background: var(--theme-accent);
     color: #05020c;
-    font-size: 10px;
+    font-size: 10.5px;
     font-weight: 800;
     padding: 2px 7px;
     border-radius: 6px;
@@ -599,7 +600,7 @@
 }
 .lb-hunter-username {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
+    font-size: 13px;
     color: #94a3b8;
 }
 
@@ -646,7 +647,7 @@
     padding: 5px 14px;
     border-radius: 20px;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 800;
 }
 

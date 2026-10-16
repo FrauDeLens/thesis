@@ -160,8 +160,8 @@ function displayCodeIntroduction(bugData, enemy) {
             : `A wild <strong>${enemyName}</strong> appeared! Read the mission directive above, inspect <code>broken_code.py</code>, and select the correct patch (Option A - D) to strike!`;
     } else {
         dialogueText.innerHTML = isFil
-            ? `Pumasok sa arena si <strong>${enemyName}</strong>! Sundin ang mission directive: i-exclude ang sirang linya (<code style="color:#f87171;">❌</code>) at i-drag ang tamang blocks para umatake!`
-            : `A wild <strong>${enemyName}</strong> appeared! Follow the mission directive: exclude the corrupted line with <code style="color:#f87171;">❌</code>, then drag and order the valid blocks to strike!`;
+            ? `Pumasok sa arena si <strong>${enemyName}</strong>! Sundin ang mission directive: i-exclude ang sirang linya (<code style="color:#f87171;">[X]</code>) at i-drag ang tamang blocks para umatake!`
+            : `A wild <strong>${enemyName}</strong> appeared! Follow the mission directive: exclude the corrupted line with <code style="color:#f87171;">[X]</code>, then drag and order the valid blocks to strike!`;
     }
 
     const speakerLabel = document.querySelector("#pokemon-dialogue-pane .speaker-label");
@@ -227,8 +227,8 @@ function openCodeIntelModal(bugData, enemy) {
             <div class="intel-threat-banner mb-3 p-3 rounded" style="background: rgba(30, 20, 56, 0.9); border: 1px solid #00d2ff;">
                 <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
                     <div>
-                        <span class="badge bg-primary fs-6 me-2">👾 ${escapeHtml(enemyName)}</span>
-                        <span class="badge bg-warning text-dark fs-6">⚡ ${escapeHtml(cat.toUpperCase())}</span>
+                        <span class="badge bg-primary fs-6 me-2">${escapeHtml(enemyName)}</span>
+                        <span class="badge bg-warning text-dark fs-6">${escapeHtml(cat.toUpperCase())}</span>
                     </div>
                     <span class="text-info fw-bold font-monospace">TIER: ${escapeHtml(getCurrentDifficultyName().toUpperCase())}</span>
                 </div>
@@ -236,24 +236,24 @@ function openCodeIntelModal(bugData, enemy) {
 
             <div class="intel-card-grid mb-3">
                 <div class="intel-data-card">
-                    <span class="intel-card-title">📌 ${isFil ? "ANO ANG GINAGAWA NG CODE (CONTEXT)" : "CODE CONTEXT & PURPOSE"}</span>
+                    <span class="intel-card-title">${isFil ? "ANO ANG GINAGAWA NG CODE (CONTEXT)" : "CODE CONTEXT & PURPOSE"}</span>
                     <p class="intel-card-text">${escapeHtml(intel.whatItIs)}</p>
                 </div>
 
                 <div class="intel-data-card goal-card">
-                    <span class="intel-card-title">🎯 ${isFil ? "INAASAHANG LAYUNIN (EXPECTED GOAL)" : "EXPECTED FUNCTION GOAL"}</span>
+                    <span class="intel-card-title">${isFil ? "INAASAHANG LAYUNIN (EXPECTED GOAL)" : "EXPECTED FUNCTION GOAL"}</span>
                     <p class="intel-card-text">${escapeHtml(intel.whatItShouldDo)}</p>
                 </div>
 
                 <div class="intel-data-card defect-card">
-                    <span class="intel-card-title">⚠️ ${isFil ? "BAKIT NASIRA (DEFECT ANALYSIS)" : "DEFECT & ROOT CAUSE ANALYSIS"}</span>
+                    <span class="intel-card-title">${isFil ? "BAKIT NASIRA (DEFECT ANALYSIS)" : "DEFECT & ROOT CAUSE ANALYSIS"}</span>
                     <p class="intel-card-text">${escapeHtml(intel.whyItBroke)}</p>
                 </div>
             </div>
 
             <div class="intel-strategy-box p-3 rounded" style="background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.4);">
                 <div class="d-flex align-items-center gap-2 mb-2">
-                    <span class="fs-5">💡</span>
+                    <span class="fs-5">TIP:</span>
                     <strong class="text-light">${isFil ? "TACTICAL DEBUGGING ADVICE" : "TACTICAL DEBUGGING ADVICE"}</strong>
                 </div>
                 <p class="mb-0 text-light small">${isFil 
@@ -489,7 +489,7 @@ function handleQuestionTimeout() {
         isShieldActive = false;
         updatePowerupButtons();
         const msg = isFil
-            ? "🛡️ Naubos ang oras! Inatake ka ng kalaban ngunit sinalag ng Shield ang pinsala!"
+            ? "Naubos ang oras! Inatake ka ng kalaban ngunit sinalag ng Shield ang pinsala!"
             : "🛡️ Time expired! Enemy attacked, but your Shield absorbed the damage!";
         if (typeof showGameToast === "function") showGameToast(msg, "info");
     } else {
@@ -611,7 +611,7 @@ function usePowerup(type) {
             const lang = (typeof getLanguage === "function") ? getLanguage() : "en";
             const isFil = (lang === "fil");
             const msg = isFil
-                ? `⚠️ Kulang ang True Points! Kailangan ng ${POWERUP_TP_COST} TP para sa power-up (Mayroon ka lang: ${currentPoints} TP).`
+                ? `Kulang ang True Points! Kailangan ng ${POWERUP_TP_COST} TP para sa power-up (Mayroon ka lang: ${currentPoints} TP).`
                 : `⚠️ Not enough True Points! Power-ups cost ${POWERUP_TP_COST} TP (You have: ${currentPoints} TP).`;
             if (typeof showGameToast === "function") showGameToast(msg, "warn");
             const dialogueText = document.getElementById("dialogue-text");
@@ -636,7 +636,7 @@ function usePowerup(type) {
 
     if (type === "shield") {
         isShieldActive = true;
-        if (dialogueText) dialogueText.textContent = `🛡️ Code Barrier Active!${costNotice} The next wrong fix won't cost ${getPlayerCombatantName()} a heart.`;
+        if (dialogueText) dialogueText.textContent = `Code Barrier Active!${costNotice} The next wrong fix won't cost ${getPlayerCombatantName()} a heart.`;
         if (typeof showGameToast === "function") showGameToast("🛡️ Code Shield Active!" + costNotice, "success");
     } else if (type === "scan") {
         const lang = (typeof getLanguage === "function") ? getLanguage() : "en";
@@ -2057,7 +2057,6 @@ function loadBug() {
     closeCombatLog();
     collapseMissionDetails();
     const bugCode = document.getElementById("bug-code");
-    const hintBtn = document.getElementById("hint-button");
     const challengeBox = document.getElementById("challenge-box");
     const catBadge = document.getElementById("bug-category-badge");
 
@@ -2262,6 +2261,7 @@ function loadBug() {
     preventCopy(bugCode);
     preventCopy(challengeBox);
 
+    const hintBtn = document.getElementById("powerup-hint-btn") || document.getElementById("hint-button");
     if (hintBtn) {
         hintBtn.disabled = !hasTriedCurrentEnemy;
     }
@@ -2277,6 +2277,7 @@ function loadBug() {
 async function startGame(enemyList) {
     battleLocked = false;
     difficultyPoints = 0;
+    if (typeof resetRewardProtocol === "function") resetRewardProtocol();
     freeHintsRemaining = (progress.shop && progress.shop.freeHints) ? progress.shop.freeHints : 0;
     playerHearts = ((progress.shop && progress.shop.maxHp) ? progress.shop.maxHp : 5) + temporaryHp;
     hasTriedCurrentEnemy = false;
@@ -2285,10 +2286,10 @@ async function startGame(enemyList) {
     battlePowerupsLeft = getDifficultyPowerupQuota(enemyList);
     isShieldActive = false;
 
-    const hintBtn = document.getElementById("hint-button");
-    if (hintBtn) hintBtn.disabled = true;
-
     currentDifficulty = enemyList;
+    currentEnemyIndex = 0;
+    currentEnemy = currentDifficulty[currentEnemyIndex] || (enemyList && enemyList[0]) || null;
+    canAdvance = true;
 
     const battleScreen = document.getElementById("battle-screen");
     if (battleScreen) {
@@ -2432,6 +2433,7 @@ function spawnEndParticles(containerId, isVictory) {
 function playerDefeated() {
     stopQuestionTimer();
     const defeatedDifficulty = getCurrentDifficultyName();
+    const lostUnbankedTP = Math.max(0, difficultyPoints);
     resetCurrentDifficulty();
 
     currentEnemyIndex = 0;
@@ -2444,9 +2446,14 @@ function playerDefeated() {
     if (defeatMessage) {
         const lang = typeof getLanguage === "function" ? getLanguage() : "en";
         const diffDisplay = defeatedDifficulty ? defeatedDifficulty.toUpperCase() : "SECTOR";
-        defeatMessage.textContent = lang === "fil"
+        const tpNotice = lostUnbankedTP > 0
+            ? (lang === "fil"
+                ? `\n⚠️ Nawala ang ${lostUnbankedTP} Unbanked TP (Ligtas ang Banked Wallet: ${progress.truePoints || 0} TP).`
+                : `\n⚠️ Lost ${lostUnbankedTP} Unbanked TP (Your Banked Wallet is safe: ${progress.truePoints || 0} TP).`)
+            : "";
+        defeatMessage.textContent = (lang === "fil"
             ? "Naubos ang iyong mga puso.\nMagsisimula muli sa unang kalaban ng " + diffDisplay + " difficulty."
-            : "You lost all hearts.\nRestarting from the first enemy of " + diffDisplay + " difficulty.";
+            : "You lost all hearts.\nRestarting from the first enemy of " + diffDisplay + " difficulty.") + tpNotice;
     }
 
     showScreen(document.getElementById("defeat-screen"));
@@ -2467,41 +2474,42 @@ function resetCurrentDifficulty() {
     playerHearts = (progress.shop && progress.shop.maxHp) ? progress.shop.maxHp : 5;
     currentEnemyIndex = 0;
     currentBug = 0;
+    if (typeof resetRewardProtocol === "function") resetRewardProtocol();
     persistProgress();
 }
 
 const STEAM_TROPHIES = [
     // Easy
-    { id: "Slime Syntax Core", enemyTrophy: "Slime Syntax Core", name: "Syntax Slayer", diff: "easy", enemy: "Syntax Slime", desc: "Master basic Python syntax: fix missing quotes, colons, and open parentheses.", icon: "🧪" },
-    { id: "Goblin Variable Gem", enemyTrophy: "Goblin Variable Gem", name: "Name Restorer", diff: "easy", enemy: "Variable Goblin", desc: "Retrieve stolen variable names and fix capitalization & typos.", icon: "💎" },
-    { id: "Endless Loop Rune", enemyTrophy: "Lurker Loop Ring", name: "Loop Breaker", diff: "easy", enemy: "Loop Lurker", desc: "Escape infinite loops with valid range() bounds and moving counters.", icon: "🔄" },
-    { id: "Fairy Function Charm", enemyTrophy: "Fairy Function Wand", name: "Function Master", diff: "easy", enemy: "Function Fairy", desc: "Properly declare def functions with valid headers, arguments, and return statements.", icon: "✨" },
-    { id: "Imp Module Fragment", enemyTrophy: "Imp Module Token", name: "Module Summoner", diff: "easy", enemy: "Import Imp", desc: "Import math and random modules cleanly without ghost functions.", icon: "📜" },
-    { id: "Dragon Beginner Trophy", enemyTrophy: "Dragon Crown of Basics", name: "Dragon Conqueror", diff: "easy", enemy: "Beginner Dragon", desc: "Conquer the Easy Boss and prove mastery of fundamental Python debugging!", icon: "🐉" },
+    { id: "Slime Syntax Core", enemyTrophy: "Slime Syntax Core", name: "Syntax Slayer", diff: "easy", enemy: "Syntax Slime", desc: "Master basic Python syntax: fix missing quotes, colons, and open parentheses.", icon: "◈" },
+    { id: "Goblin Variable Gem", enemyTrophy: "Goblin Variable Gem", name: "Name Restorer", diff: "easy", enemy: "Variable Goblin", desc: "Retrieve stolen variable names and fix capitalization & typos.", icon: "◆" },
+    { id: "Endless Loop Rune", enemyTrophy: "Lurker Loop Ring", name: "Loop Breaker", diff: "easy", enemy: "Loop Lurker", desc: "Escape infinite loops with valid range() bounds and moving counters.", icon: "↻" },
+    { id: "Fairy Function Charm", enemyTrophy: "Fairy Function Wand", name: "Function Master", diff: "easy", enemy: "Function Fairy", desc: "Properly declare def functions with valid headers, arguments, and return statements.", icon: "✦" },
+    { id: "Imp Module Fragment", enemyTrophy: "Imp Module Token", name: "Module Summoner", diff: "easy", enemy: "Import Imp", desc: "Import math and random modules cleanly without ghost functions.", icon: "▤" },
+    { id: "Dragon Beginner Trophy", enemyTrophy: "Dragon Crown of Basics", name: "Dragon Conqueror", diff: "easy", enemy: "Beginner Dragon", desc: "Conquer the Easy Boss and prove mastery of fundamental Python debugging!", icon: "★" },
 
     // Normal
-    { id: "Ogre List Crystal", enemyTrophy: "Ogre List Club", name: "Array Alchemist", diff: "normal", enemy: "List Ogre", desc: "Master 0-indexed lists, append methods, and boundary bounds.", icon: "📦" },
-    { id: "Wizard Dict Tome", enemyTrophy: "Wizard Key Tome", name: "Dictionary Sage", diff: "normal", enemy: "Dict Wizard", desc: "Access dictionary keys correctly with brackets and handle missing keys.", icon: "📖" },
-    { id: "Wolf Recursion Fang", enemyTrophy: "Wolf Recursion Fang", name: "Recursion Tamer", diff: "normal", enemy: "Recursion Wolf", desc: "Supply base cases and decrement arguments to avoid recursion crashes.", icon: "🐺" },
-    { id: "Mage Class Scroll", enemyTrophy: "Mage Object Orb", name: "Object Architect", diff: "normal", enemy: "Class Mage", desc: "Harness classes, object instances, and the self parameter.", icon: "🧙‍♂️" },
-    { id: "Knight Error Shield", enemyTrophy: "Knight Shield of Try", name: "Crash Guardian", diff: "normal", enemy: "Exception Knight", desc: "Protect fragile code with try-except blocks and catch specific errors.", icon: "🛡️" },
-    { id: "Normal Champion Trophy", enemyTrophy: "Titan Core of Normalcy", name: "Titan Crusher", diff: "normal", enemy: "Normal Titan", desc: "Defeat Normal Titan and master data structures and object blueprints!", icon: "🏆" },
+    { id: "Ogre List Crystal", enemyTrophy: "Ogre List Club", name: "Array Alchemist", diff: "normal", enemy: "List Ogre", desc: "Master 0-indexed lists, append methods, and boundary bounds.", icon: "⬡" },
+    { id: "Wizard Dict Tome", enemyTrophy: "Wizard Key Tome", name: "Dictionary Sage", diff: "normal", enemy: "Dict Wizard", desc: "Access dictionary keys correctly with brackets and handle missing keys.", icon: "⬢" },
+    { id: "Wolf Recursion Fang", enemyTrophy: "Wolf Recursion Fang", name: "Recursion Tamer", diff: "normal", enemy: "Recursion Wolf", desc: "Supply base cases and decrement arguments to avoid recursion crashes.", icon: "❖" },
+    { id: "Mage Class Scroll", enemyTrophy: "Mage Object Orb", name: "Object Architect", diff: "normal", enemy: "Class Mage", desc: "Harness classes, object instances, and the self parameter.", icon: "✵" },
+    { id: "Knight Error Shield", enemyTrophy: "Knight Shield of Try", name: "Crash Guardian", diff: "normal", enemy: "Exception Knight", desc: "Protect fragile code with try-except blocks and catch specific errors.", icon: "⛊" },
+    { id: "Normal Champion Trophy", enemyTrophy: "Titan Core of Normalcy", name: "Titan Crusher", diff: "normal", enemy: "Normal Titan", desc: "Defeat Normal Titan and master data structures and object blueprints!", icon: "★" },
 
     // Hard
-    { id: "Recursive Sigil", enemyTrophy: "Phantom Call Stack", name: "Deep Call Master", diff: "hard", enemy: "Recursion Phantom", desc: "Resolve deep recursive call frames and state accumulation traps.", icon: "🔮" },
-    { id: "Ancient Dictionary", enemyTrophy: "Golem Hash Stone", name: "Dict Archaeologist", diff: "hard", enemy: "Dictionary Golem", desc: "Manipulate nested mappings, .items() iterators, and key removals.", icon: "🏺" },
-    { id: "Knight's Blueprint", enemyTrophy: "Knight Armor of Encapsulation", name: "Constructor Virtuoso", diff: "hard", enemy: "Class Knight", desc: "Build flawless __init__ constructors and robust class methods.", icon: "⚔️" },
-    { id: "Dragon Bloodline", enemyTrophy: "Dragon Scale of Super", name: "Inheritance Heir", diff: "hard", enemy: "Inheritance Dragon", desc: "Execute super() calls and subclass polymorphism cleanly.", icon: "👑" },
-    { id: "Error Scythe", enemyTrophy: "Reaper Scythe of Raise", name: "Reaper of Bugs", diff: "hard", enemy: "Exception Reaper", desc: "Pinpoint IndexError, KeyError, and custom exceptions.", icon: "💀" },
-    { id: "Hard Champion Trophy", enemyTrophy: "Titan Monolith of Mastery", name: "Hardcore Champion", diff: "hard", enemy: "Code Titan", desc: "Crush Code Titan and conquer complex multi-step Python architecture!", icon: "🥇" },
+    { id: "Recursive Sigil", enemyTrophy: "Phantom Call Stack", name: "Deep Call Master", diff: "hard", enemy: "Recursion Phantom", desc: "Resolve deep recursive call frames and state accumulation traps.", icon: "⌖" },
+    { id: "Ancient Dictionary", enemyTrophy: "Golem Hash Stone", name: "Dict Archaeologist", diff: "hard", enemy: "Dictionary Golem", desc: "Manipulate nested mappings, .items() iterators, and key removals.", icon: "⬟" },
+    { id: "Knight's Blueprint", enemyTrophy: "Knight Armor of Encapsulation", name: "Constructor Virtuoso", diff: "hard", enemy: "Class Knight", desc: "Build flawless __init__ constructors and robust class methods.", icon: "⚔" },
+    { id: "Dragon Bloodline", enemyTrophy: "Dragon Scale of Super", name: "Inheritance Heir", diff: "hard", enemy: "Inheritance Dragon", desc: "Execute super() calls and subclass polymorphism cleanly.", icon: "▲" },
+    { id: "Error Scythe", enemyTrophy: "Reaper Scythe of Raise", name: "Reaper of Bugs", diff: "hard", enemy: "Exception Reaper", desc: "Pinpoint IndexError, KeyError, and custom exceptions.", icon: "☠" },
+    { id: "Hard Champion Trophy", enemyTrophy: "Titan Monolith of Mastery", name: "Hardcore Champion", diff: "hard", enemy: "Code Titan", desc: "Crush Code Titan and conquer complex multi-step Python architecture!", icon: "★" },
 
     // Hell
-    { id: "Memory Fragment", enemyTrophy: "Demon Mutability Horn", name: "Memory Purifier", diff: "hell", enemy: "Memory Demon", desc: "Prevent None attribute errors and manage mutable references.", icon: "🧠" },
+    { id: "Memory Fragment", enemyTrophy: "Demon Mutability Horn", name: "Memory Purifier", diff: "hell", enemy: "Memory Demon", desc: "Prevent None attribute errors and manage mutable references.", icon: "⯎" },
     { id: "Algorithm Core", enemyTrophy: "Wraith Big-O Cloak", name: "Algorithm Sovereign", diff: "hell", enemy: "Algorithm Wraith", desc: "Repair binary searches, sorting passes, and algorithmic pointers.", icon: "⚡" },
-    { id: "Thread Core", enemyTrophy: "Beast Mutex Collar", name: "Concurrency Lord", diff: "hell", enemy: "Concurrency Beast", desc: "Synchronize async coroutines, threads, and await pipelines safely.", icon: "🕸️" },
-    { id: "Security Fang", enemyTrophy: "Hydra Hash Fang", name: "Cyber Sentinel", diff: "hell", enemy: "Security Hydra", desc: "Eliminate eval injection vulnerabilities and sanitize input.", icon: "🔒" },
-    { id: "Artificial Mind", enemyTrophy: "Overlord Neural Core", name: "Machine Whisperer", diff: "hell", enemy: "AI Overlord", desc: "Debug machine learning model objects, shapes, and inference loops.", icon: "🤖" },
-    { id: "Hell Champion Trophy", enemyTrophy: "Ultimate Crown of BugHunt", name: "Grandmaster Debugger", diff: "hell", enemy: "The Final Compiler", desc: "Complete all Hell challenges and claim the ultimate BugHunt mastery!", icon: "🌌" }
+    { id: "Thread Core", enemyTrophy: "Beast Mutex Collar", name: "Concurrency Lord", diff: "hell", enemy: "Concurrency Beast", desc: "Synchronize async coroutines, threads, and await pipelines safely.", icon: "⌗" },
+    { id: "Security Fang", enemyTrophy: "Hydra Hash Fang", name: "Cyber Sentinel", diff: "hell", enemy: "Security Hydra", desc: "Eliminate eval injection vulnerabilities and sanitize input.", icon: "⛨" },
+    { id: "Artificial Mind", enemyTrophy: "Overlord Neural Core", name: "Machine Whisperer", diff: "hell", enemy: "AI Overlord", desc: "Debug machine learning model objects, shapes, and inference loops.", icon: "⚙" },
+    { id: "Hell Champion Trophy", enemyTrophy: "Ultimate Crown of BugHunt", name: "Grandmaster Debugger", diff: "hell", enemy: "The Final Compiler", desc: "Complete all Hell challenges and claim the ultimate BugHunt mastery!", icon: "★" }
 ];
 
 let currentTrophyFilter = "all";
@@ -2641,7 +2649,7 @@ function updateTrophyCollection() {
                     </div>
                 </div>
                 <div class="steam-achieve-status-badge ${isUnlocked ? 'badge-unlocked' : 'badge-locked'}">
-                    <span class="badge-status-icon">${isUnlocked ? "🏆" : "🔒"}</span>
+                    <span class="badge-status-icon">${isUnlocked ? "★" : "⚿"}</span>
                     <div class="badge-text-col">
                         <span class="badge-status-title">${isUnlocked ? "UNLOCKED" : "LOCKED"}</span>
                         <span class="badge-status-pct">${isUnlocked ? "100%" : "0%"}</span>
@@ -2661,13 +2669,11 @@ async function handleAnswerSubmission() {
     const enemySprite = document.getElementById("enemy-sprite");
     const battleScreen = document.getElementById("battle-screen");
     const dialogueText = document.getElementById("dialogue-text");
-    const hintButton = document.getElementById("hint-button");
     const victoryPointsMessage = document.getElementById("victory-points-message");
     const victoryMessage = document.getElementById("victory-message");
     const trophyMessage = document.getElementById("trophy-message");
 
     hasTriedCurrentEnemy = true;
-    if (hintButton) hintButton.disabled = false;
     updateHintCostDisplay();
 
     const currentBugData = (currentEnemy && currentEnemy.bugs && currentEnemy.bugs[currentBug]) ? currentEnemy.bugs[currentBug] : null;
@@ -2711,7 +2717,7 @@ async function handleAnswerSubmission() {
             dialogueText.innerHTML = `
                 <div class="combat-feedback-wrapper correct">
                     <div class="feedback-badge-row">
-                        <span class="feedback-badge-correct">✅ ${correctHeader}</span>
+                        <span class="feedback-badge-correct">◈ ${correctHeader}</span>
                     </div>
                     <p class="feedback-note">${isFil 
                         ? ("Matagumpay mong nalutas ang hamon! Nabawasan ng 1 HP si <strong>" + escapeHtml(currentEnemy.name) + "</strong>.") 
@@ -2742,13 +2748,19 @@ async function handleAnswerSubmission() {
                     : (currentEnemy.name + " was defeated!");
             }
 
-            difficultyPoints += enemyPointValue;
+            // Escalating enemy bounty based on currentEnemyIndex
+            const earnedEnemyPoints = (typeof getDifficultyPointValue === "function")
+                ? getDifficultyPointValue(currentEnemyIndex)
+                : 5;
+
+            difficultyPoints += earnedEnemyPoints;
             updatePoints();
 
             if (victoryPointsMessage) {
+                const lang = typeof getLanguage === "function" ? getLanguage() : "en";
                 victoryPointsMessage.textContent = typeof t === "function"
-                    ? t("victory_points", { enemyPts: enemyPointValue, diffPts: difficultyPoints })
-                    : ("Points earned from enemy: " + enemyPointValue + " | Difficulty Points: " + difficultyPoints);
+                    ? t("victory_points", { enemyPts: earnedEnemyPoints, diffPts: difficultyPoints })
+                    : ("Points earned from enemy: " + earnedEnemyPoints + " | Difficulty Points: " + difficultyPoints);
             }
 
             const currentProg = getCurrentProgress();
@@ -2760,6 +2772,11 @@ async function handleAnswerSubmission() {
             showScreen(document.getElementById("victory-screen"));
             spawnEndParticles("victory-particles", true);
             if (answerInput) answerInput.value = "";
+
+            const isFinalEnemy = (currentEnemyIndex >= currentDifficulty.length - 1);
+            if (typeof setupPostBattleRewards === "function") {
+                setupPostBattleRewards(isFinalEnemy);
+            }
 
             canAdvance = false;
             setTimeout(function () {
@@ -2811,12 +2828,11 @@ async function handleAnswerSubmission() {
             dialogueText.innerHTML = `
                 <div class="combat-feedback-wrapper wrong">
                     <div class="feedback-badge-row">
-                        <span class="feedback-badge-wrong">❌ ${wrongHeader}</span>
-                        <span class="feedback-badge-next" style="font-size: 0.72rem; color: #fbbf24; font-weight: 600;">🔄 ${nextNotice}</span>
+                        <span class="feedback-badge-wrong">[!] ${wrongHeader}</span>
+                        <span class="feedback-badge-next" style="font-size: 0.72rem; color: #fbbf24; font-weight: 600;">${nextNotice}</span>
                     </div>
                     <p class="feedback-note">${damageNote}</p>
                     <div class="feedback-hint-box">
-                        <span class="hint-lamp">⚠️</span>
                         <div class="hint-content">
                             <span class="hint-title">${isFil ? "DIAGNOSTIC FEEDBACK" : "DIAGNOSTIC FEEDBACK"}:</span>
                             <p class="hint-body">${validation.message}</p>
@@ -2944,6 +2960,11 @@ document.addEventListener("DOMContentLoaded", function () {
     if (battleBackBtn) {
         battleBackBtn.addEventListener("click", function () {
             stopQuestionTimer();
+            // Abandoning sector run forfeits unbanked TP
+            difficultyPoints = 0;
+            if (typeof resetRewardProtocol === "function") resetRewardProtocol();
+            updatePoints();
+
             selectedDifficulty = null;
             const diffProceedBtn = document.getElementById("difficulty-proceed-button");
             const diffIntroPanel = document.getElementById("difficulty-intro-panel");
@@ -3000,15 +3021,43 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (nextEnemyBtn) {
+        let isAdvancingNextEnemy = false;
         nextEnemyBtn.addEventListener("click", async function () {
-            if (!canAdvance) return;
+            if (isAdvancingNextEnemy) return;
+            isAdvancingNextEnemy = true;
+            setTimeout(() => { isAdvancingNextEnemy = false; }, 350);
 
-            if (nextEnemyBtn.textContent === "Return to Menu") {
+            // Handle return to main menu after difficulty cleared
+            if (nextEnemyBtn.dataset.action === "menu" || 
+                nextEnemyBtn.textContent.includes("Menu") || 
+                nextEnemyBtn.textContent.includes("Bumalik")) {
+                nextEnemyBtn.dataset.action = "";
+                battleLocked = false;
+                canAdvance = true;
+                updatePoints();
+                nextEnemyBtn.textContent = typeof t === "function" ? t("victory_next_btn") : "Next Enemy";
                 showScreen(document.getElementById("main-menu"));
                 return;
             }
 
+            // Auto-resolve reward protocol if player hasn't manually selected one yet
+            const isFinalEnemy = (currentEnemyIndex >= currentDifficulty.length - 1);
+            if (!isFinalEnemy && typeof getSelectedRewardProtocol === "function" && !getSelectedRewardProtocol()) {
+                if (typeof handleSelectRewardProtocol === "function") {
+                    const totalMaxHp = (progress.shop && progress.shop.maxHp ? progress.shop.maxHp : 5) + (temporaryHp || 0);
+                    if (playerHearts < totalMaxHp) {
+                        handleSelectRewardProtocol("heal");
+                    } else if (difficultyPoints > 0) {
+                        handleSelectRewardProtocol("bank");
+                    } else {
+                        handleSelectRewardProtocol("hint");
+                    }
+                }
+            }
+
             canAdvance = false;
+            setTimeout(() => { canAdvance = true; }, 300);
+
             battleLocked = false;
             currentEnemyIndex++;
 
@@ -3022,45 +3071,48 @@ document.addEventListener("DOMContentLoaded", function () {
                 hintCount = 0;
                 temporaryHp = 0;
                 freeHintsRemaining = 0;
+                if (typeof resetRewardProtocol === "function") resetRewardProtocol();
                 persistProgress();
                 updatePoints();
 
+                const lang = (typeof getLanguage === "function") ? getLanguage() : "en";
+                const isFil = (lang === "fil");
+
                 if (currentDifficulty === easyEnemies) {
-                    if (victoryMessage) victoryMessage.textContent = "Easy Difficulty Cleared!";
-                    if (trophyMessage) trophyMessage.textContent = "Normal Difficulty Unlocked!";
+                    if (victoryMessage) victoryMessage.textContent = isFil ? "Nalampasan ang Easy Difficulty!" : "Easy Difficulty Cleared!";
+                    if (trophyMessage) trophyMessage.textContent = isFil ? "Nabuksan ang Normal Difficulty!" : "Normal Difficulty Unlocked!";
                     progress.unlocks.normal = true;
                     persistProgress();
                 } else if (currentDifficulty === normalEnemies) {
-                    if (victoryMessage) victoryMessage.textContent = "Normal Difficulty Cleared!";
-                    if (trophyMessage) trophyMessage.textContent = "Hard Difficulty Unlocked!";
+                    if (victoryMessage) victoryMessage.textContent = isFil ? "Nalampasan ang Normal Difficulty!" : "Normal Difficulty Cleared!";
+                    if (trophyMessage) trophyMessage.textContent = isFil ? "Nabuksan ang Hard Difficulty!" : "Hard Difficulty Unlocked!";
                     progress.unlocks.hard = true;
                     persistProgress();
                 } else if (currentDifficulty === hardEnemies) {
-                    if (victoryMessage) victoryMessage.textContent = "Hard Difficulty Cleared!";
-                    if (trophyMessage) trophyMessage.textContent = "Hell Difficulty Unlocked!";
+                    if (victoryMessage) victoryMessage.textContent = isFil ? "Nalampasan ang Hard Difficulty!" : "Hard Difficulty Cleared!";
+                    if (trophyMessage) trophyMessage.textContent = isFil ? "Nabuksan ang Hell Difficulty!" : "Hell Difficulty Unlocked!";
                     progress.unlocks.hell = true;
                     persistProgress();
                 } else if (currentDifficulty === hellEnemies) {
-                    if (victoryMessage) victoryMessage.textContent = "Congratulations!";
-                    if (trophyMessage) trophyMessage.textContent = "You have completed BugHunt!";
+                    if (victoryMessage) victoryMessage.textContent = isFil ? "Maligayang Bati!" : "Congratulations!";
+                    if (trophyMessage) trophyMessage.textContent = isFil ? "Natapos mo ang lahat ng antas sa BugHunt!" : "You have completed BugHunt!";
                 }
 
-                nextEnemyBtn.textContent = "Return to Menu";
-                nextEnemyBtn.onclick = function () {
-                    battleLocked = false;
-                    updatePoints();
-                    showScreen(document.getElementById("main-menu"));
-                };
+                nextEnemyBtn.dataset.action = "menu";
+                nextEnemyBtn.textContent = isFil ? "Bumalik sa Menu" : "Return to Menu";
+                canAdvance = true; // Ensure button click to return to menu is active!
                 return;
+            }
+
+            // Intermediate enemy advance: reset reward protocol selection for next fight
+            if (typeof resetRewardProtocol === "function") {
+                resetRewardProtocol();
             }
 
             currentEnemy = currentDifficulty[currentEnemyIndex];
             currentBug = 0;
             currentHearts = currentEnemy.hearts;
             hasTriedCurrentEnemy = false;
-
-            const hintBtn = document.getElementById("hint-button");
-            if (hintBtn) hintBtn.disabled = true;
 
             enemyPointValue = getDifficultyPointValue();
             await loadEnemyQuestions(currentEnemy);

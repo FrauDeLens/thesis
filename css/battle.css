@@ -77,9 +77,9 @@
     border: 1px solid var(--theme-primary, #7c3aed);
     color: var(--theme-text-sub, #e9d5ff);
     font-family: 'Inter', sans-serif;
-    font-size: clamp(12.5px, 1.1vmin + 2px, 15px);
+    font-size: clamp(14px, 1.3vmin + 2px, 16.5px);
     font-weight: 700;
-    padding: clamp(6px, 0.8vh, 10px) clamp(12px, 1.2vw, 20px);
+    padding: clamp(7px, 1vh, 11px) clamp(14px, 1.4vw, 22px);
     border-radius: 10px;
     cursor: pointer;
     display: flex;
@@ -114,7 +114,7 @@
 
 .battle-diff-pill {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 800;
     letter-spacing: 0.8px;
     color: #facc15;
@@ -134,7 +134,7 @@
 
 .battle-counter-text {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12.5px;
+    font-size: 14px;
     font-weight: 700;
     color: #f3e8ff;
     letter-spacing: 0.6px;
@@ -148,7 +148,7 @@
     padding: 0 !important;
     margin: 0 !important;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 13.5px;
+    font-size: 15.5px;
     font-weight: 800;
     color: #67e8f9;
     display: inline-flex;
@@ -177,9 +177,9 @@
     border: 1px solid var(--theme-primary, #a855f7);
     color: var(--theme-text-title, #f3e8ff);
     font-family: 'Inter', sans-serif;
-    font-size: clamp(12.5px, 1.1vmin + 2px, 15px);
+    font-size: clamp(14px, 1.3vmin + 2px, 16.5px);
     font-weight: 700;
-    padding: clamp(6px, 0.8vh, 10px) clamp(12px, 1.2vw, 20px);
+    padding: clamp(7px, 1vh, 11px) clamp(14px, 1.4vw, 22px);
     border-radius: 10px;
     cursor: pointer;
     display: flex;
@@ -320,7 +320,7 @@
 /* Combat Log Toggle Button on Player Card */
 .combat-log-pill-btn {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 12.5px;
     font-weight: 700;
     padding: 3px 8px;
     border-radius: 14px;
@@ -474,7 +474,7 @@
 
 .pokemon-topic-tag {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 700;
     padding: 4px 10px;
     border-radius: 20px;
@@ -492,7 +492,7 @@
 
 .pokemon-shield-pill {
     font-family: 'Inter', sans-serif;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 700;
     padding: 4px 10px;
     border-radius: 20px;
@@ -511,7 +511,7 @@
 #true-points-display {
     position: static !important;
     font-family: 'JetBrains Mono', monospace !important;
-    font-size: 12px !important;
+    font-size: 14px !important;
     font-weight: 700 !important;
     padding: 4px 10px !important;
     border-radius: 20px !important;
@@ -718,7 +718,7 @@
 
 .mission-challenge-title {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(13.5px, 1.1vmin + 2px, 15.5px);
+    font-size: clamp(15px, 1.25vmin + 2px, 17.5px);
     font-weight: 700;
     color: #ffffff;
     margin: 0;
@@ -729,13 +729,13 @@
 
 .mission-details-toggle-btn {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 700;
     color: #e9d5ff;
     background: rgba(139, 92, 246, 0.18);
     border: 1px solid rgba(168, 85, 247, 0.45);
     border-radius: 6px;
-    padding: 4px 9px;
+    padding: 4px 10px;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -755,10 +755,10 @@
     background: rgba(14, 10, 32, 0.78);
     border: 1px solid rgba(139, 92, 246, 0.35);
     border-radius: 8px;
-    padding: 7px 11px;
+    padding: 9px 13px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 7px;
     margin-top: 4px;
     transition: all 0.2s ease;
 }
@@ -771,15 +771,15 @@
 .mission-question-row {
     display: flex;
     align-items: flex-start;
-    gap: 8px;
+    gap: 9px;
     width: 100%;
 }
 
 .mission-badge-pill {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
+    font-size: 13px;
     font-weight: 800;
-    padding: 2px 6px;
+    padding: 2.5px 7px;
     border-radius: 4px;
     letter-spacing: 0.5px;
     flex-shrink: 0;
@@ -803,10 +803,10 @@
 
 .mission-question-text {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(12.5px, 1.05vmin + 1px, 14px);
+    font-size: clamp(14px, 1.2vmin + 2px, 16.5px);
     font-weight: 600;
     color: #ffffff;
-    line-height: 1.4;
+    line-height: 1.45;
     margin: 0;
     word-break: break-word;
 }
@@ -814,10 +814,10 @@
 .mission-goal-output-row {
     display: flex;
     align-items: center;
-    gap: 14px;
-    font-size: 12px;
+    gap: 16px;
+    font-size: 13.5px;
     flex-wrap: wrap;
-    padding-top: 4px;
+    padding-top: 6px;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -825,35 +825,35 @@
 .mission-inline-output {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 7px;
     min-width: 0;
 }
 
 .mission-inline-label {
     font-weight: 700;
     color: #cbd5e1;
-    font-size: 11.5px;
+    font-size: 13px;
     white-space: nowrap;
 }
 
 .mission-inline-value {
     color: #a7f3d0;
     font-weight: 600;
-    font-size: 12px;
+    font-size: 13.5px;
 }
 
 .mission-minimal-output-row {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 13px;
+    font-size: 13.5px;
     padding: 2px 0 0 0;
 }
 
 .minimal-output-label {
     font-weight: 600;
     color: #bae6fd;
-    font-size: 12.5px;
+    font-size: 13.5px;
     white-space: nowrap;
 }
 
@@ -863,7 +863,7 @@
     background: transparent !important;
     border: none !important;
     font-family: 'JetBrains Mono', monospace !important;
-    font-size: 12.5px !important;
+    font-size: 14px !important;
     font-weight: 600 !important;
     color: #38bdf8 !important;
     white-space: pre-wrap !important;
@@ -902,7 +902,7 @@
 
 .quiz-question-callout .callout-label {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 9.5px;
+    font-size: 12px;
     font-weight: 800;
     color: #38bdf8;
     letter-spacing: 0.5px;
@@ -912,7 +912,7 @@
 
 .quiz-question-callout .callout-text {
     font-family: 'Inter', sans-serif;
-    font-size: 11.5px;
+    font-size: 13.5px;
     font-weight: 600;
     color: #ffffff;
     line-height: 1.25;
@@ -989,7 +989,7 @@
 
 .terminal-category-badge {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 12.5px;
     font-weight: 700;
     padding: 3px 10px;
     border-radius: 12px;
@@ -1022,7 +1022,7 @@
 
 .terminal-protect-badge {
     font-family: 'Inter', sans-serif;
-    font-size: 11px;
+    font-size: 12.5px;
     font-weight: 700;
     padding: 3px 10px;
     border-radius: 12px;
@@ -1042,8 +1042,8 @@
 #bug-code {
     margin: 0 !important;
     font-family: 'JetBrains Mono', 'Courier New', monospace !important;
-    font-size: 18px !important;
-    line-height: 1.65 !important;
+    font-size: clamp(17.5px, 1.2vw + 3px, 20.5px) !important;
+    line-height: 1.7 !important;
     color: #8be9fd !important;
     white-space: pre-wrap !important;
     word-break: break-word !important;
@@ -1078,7 +1078,7 @@
     border: 1px solid #00d2ff;
     color: #a5f3fc;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11.5px;
+    font-size: 13px;
     font-weight: 700;
     padding: 3px 10px;
     border-radius: 8px;
@@ -1129,7 +1129,7 @@
 
 .rpg-speaker-badge {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10.5px;
+    font-size: 12px;
     font-weight: 800;
     letter-spacing: 0.6px;
     color: #c084fc;
@@ -1202,7 +1202,7 @@
     background: var(--theme-primary, #7c3aed);
     color: #ffffff;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 800;
     display: flex;
     align-items: center;
@@ -1236,14 +1236,14 @@
 
 .step-title {
     font-family: 'Inter', sans-serif;
-    font-size: 12.5px;
+    font-size: 14px;
     font-weight: 700;
     color: #e9d5ff;
 }
 
 .step-sub {
     font-family: 'Inter', sans-serif;
-    font-size: 12px;
+    font-size: 13.5px;
     line-height: 1.35;
     color: #cbd5e1;
 }
@@ -1275,7 +1275,7 @@
     gap: 6px;
     margin-bottom: 6px;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
+    font-size: 13.5px;
     font-weight: 700;
     color: #6ee7b7;
     letter-spacing: 0.6px;
@@ -1284,17 +1284,17 @@
 .rpg-expected-output-pre {
     margin: 0;
     font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(13px, 1.2vmin + 2px, 15px);
-    line-height: 1.45;
+    font-size: clamp(14.5px, 1.1vmin + 3px, 17px);
+    line-height: 1.55;
     color: #4ade80;
     background: rgba(0, 0, 0, 0.7);
     border: 1px solid rgba(74, 222, 128, 0.25);
     border-radius: 6px;
-    padding: 8px 12px;
+    padding: 10px 14px;
     white-space: pre-wrap;
     word-break: break-all;
     overflow-y: auto;
-    max-height: 90px;
+    max-height: 110px;
 }
 
 /* Backward compatibility legacy styles */
@@ -1345,7 +1345,7 @@
 
 .intel-modal-sub {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
+    font-size: 13.5px;
     color: #00d2ff;
     font-weight: 600;
 }
@@ -1369,7 +1369,7 @@
 
 .intel-modal-tip {
     font-family: 'Inter', sans-serif;
-    font-size: 12.5px;
+    font-size: 14px;
     color: #cbd5e1;
 }
 
@@ -1418,7 +1418,7 @@
 
 .intel-card-title {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
+    font-size: 13.5px;
     font-weight: 800;
     letter-spacing: 0.5px;
     color: #c084fc;
@@ -1544,7 +1544,7 @@
 
 .parsons-deck-badge {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 700;
     color: #c084fc;
     background: rgba(124, 58, 237, 0.25);
@@ -1555,7 +1555,7 @@
 }
 
 .parsons-deck-tip {
-    font-size: 12px;
+    font-size: 13.5px;
     color: #a78bfa;
 }
 
@@ -1564,9 +1564,9 @@
     border: 1px solid var(--theme-primary, #7c3aed);
     color: var(--theme-text-sub, #e9d5ff);
     font-family: 'Inter', sans-serif;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 700;
-    padding: 4px 12px;
+    padding: 5px 14px;
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.2s;
@@ -1683,7 +1683,7 @@
 
 .block-drag-handle {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
+    font-size: 14.5px;
     font-weight: 700;
     color: #8b5cf6;
     cursor: grab;
@@ -1695,24 +1695,24 @@
 
 .block-step-num {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 700;
     color: #a78bfa;
     background: rgba(124, 58, 237, 0.18);
     border: 1px solid rgba(124, 58, 237, 0.35);
-    padding: 2px 6px;
+    padding: 2.5px 7px;
     border-radius: 4px;
     flex-shrink: 0;
 }
 
 .block-distractor-badge {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10.5px;
+    font-size: 13px;
     font-weight: 700;
     color: #fca5a5;
     background: rgba(239, 68, 68, 0.2);
     border: 1px solid rgba(239, 68, 68, 0.5);
-    padding: 2px 6px;
+    padding: 2.5px 7px;
     border-radius: 4px;
     flex-shrink: 0;
 }
@@ -1720,8 +1720,8 @@
 .block-code-text {
     flex: 1;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 14.5px;
-    line-height: 1.45;
+    font-size: clamp(16.5px, 1.1vw + 3px, 18.5px);
+    line-height: 1.55;
     color: #f3e8ff;
     white-space: pre;
     overflow-x: auto;
@@ -1731,7 +1731,7 @@
 .indent-guide-dash {
     color: rgba(167, 139, 250, 0.45);
     font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
+    font-size: 14.5px;
     letter-spacing: -1px;
     user-select: none;
     margin-right: 4px;
@@ -1772,7 +1772,7 @@
     color: #86efac;
     background: rgba(20, 50, 30, 0.8);
     font-family: 'Inter', sans-serif;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
     padding: 4px 10px;
     border-radius: 6px;
@@ -1840,7 +1840,7 @@
 
 .powerups-deck-label {
     font-family: 'Inter', sans-serif;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 700;
     color: #a78bfa;
 }
@@ -1848,12 +1848,12 @@
 .powerup-action-btn {
     background: rgba(35, 24, 60, 0.85);
     border: 1px solid var(--theme-primary, #7c3aed);
-    border-radius: 6px;
+    border-radius: 8px;
     color: #e9d5ff;
     font-family: 'Inter', sans-serif;
-    font-size: 11.5px;
+    font-size: 13.5px;
     font-weight: 600;
-    padding: 4px 10px;
+    padding: 6px 14px;
     cursor: pointer;
     transition: all 0.2s;
     display: flex;
@@ -1880,7 +1880,7 @@
 
 .powerup-quota-pill {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
     padding: 4px 10px;
     border-radius: 12px;
@@ -1946,7 +1946,7 @@
 
 .combat-hint-cost {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
+    font-size: 13.5px;
     color: #a395be;
 }
 
@@ -2206,7 +2206,7 @@ body.in-battle #global-access-bar,
 
 .intel-badge {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 12.5px;
     font-weight: 700;
     padding: 3px 8px;
     border-radius: 6px;
@@ -2234,7 +2234,7 @@ body.in-battle #global-access-bar,
 
 .intel-subtag {
     font-family: 'Inter', sans-serif;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     color: #cbd5e1;
 }
@@ -2256,7 +2256,7 @@ body.in-battle #global-access-bar,
 
 .intel-label {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 12.5px;
     font-weight: 700;
     color: #c084fc;
     background: rgba(139, 92, 246, 0.16);
@@ -2307,7 +2307,7 @@ body.in-battle #global-access-bar,
 
 .feedback-badge-wrong {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
+    font-size: 13.5px;
     font-weight: 800;
     letter-spacing: 0.5px;
     color: #fecdd3;
@@ -2320,7 +2320,7 @@ body.in-battle #global-access-bar,
 
 .feedback-badge-correct {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
+    font-size: 13.5px;
     font-weight: 800;
     letter-spacing: 0.5px;
     color: #bbf7d0;
@@ -2333,7 +2333,7 @@ body.in-battle #global-access-bar,
 
 .feedback-badge-info {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
+    font-size: 13.5px;
     font-weight: 800;
     letter-spacing: 0.5px;
     color: #bae6fd;
@@ -2378,7 +2378,7 @@ body.in-battle #global-access-bar,
 
 .feedback-hint-box .hint-title {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 12.5px;
     font-weight: 800;
     color: #fbbf24;
     letter-spacing: 0.5px;
@@ -2393,7 +2393,7 @@ body.in-battle #global-access-bar,
 
 .feedback-recap-toggle {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 12.5px;
     color: #c084fc;
     cursor: pointer;
     text-decoration: underline;
@@ -2434,7 +2434,7 @@ body.in-battle #global-access-bar,
 
 .memory-deck-badge {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 12.5px;
     font-weight: 700;
     color: #38bdf8;
     background: rgba(56, 189, 248, 0.2);
@@ -2445,7 +2445,7 @@ body.in-battle #global-access-bar,
 }
 
 .memory-deck-tip {
-    font-size: 12px;
+    font-size: 13.5px;
     color: #bae6fd;
 }
 
@@ -2457,7 +2457,7 @@ body.in-battle #global-access-bar,
 
 .memory-progress-pill {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 12.5px;
     font-weight: 700;
     color: #10b981;
     background: rgba(16, 185, 129, 0.2);
@@ -2521,7 +2521,7 @@ body.in-battle #global-access-bar,
     padding: 6px 8px;
     box-sizing: border-box;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
+    font-size: 13.5px;
 }
 
 /* Face Down */
@@ -2606,7 +2606,7 @@ body.in-battle #global-access-bar,
 
 .spotbug-deck-badge {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 12.5px;
     font-weight: 700;
     color: #f43f5e;
     background: rgba(244, 63, 94, 0.2);
@@ -2617,7 +2617,7 @@ body.in-battle #global-access-bar,
 }
 
 .spotbug-deck-tip {
-    font-size: 12px;
+    font-size: 13.5px;
     color: #fecdd3;
 }
 
@@ -2628,7 +2628,7 @@ body.in-battle #global-access-bar,
 
 .spotbug-target-pill {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 12.5px;
     font-weight: 700;
     color: #fca5a5;
     background: rgba(239, 68, 68, 0.18);
@@ -2697,7 +2697,7 @@ body.in-battle #global-access-bar,
 
 .spotbug-line-no {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 12.5px;
     font-weight: 700;
     color: #a78bfa;
     background: rgba(0, 0, 0, 0.5);
@@ -2769,15 +2769,15 @@ body.in-battle #global-access-bar,
         max-height: 90px;
     }
     .quiz-code-pre {
-        max-height: 52px;
-        font-size: 11px;
+        max-height: 75px;
+        font-size: 14.5px;
     }
     .quiz-option-card {
-        padding: 3px 6px;
-        min-height: 28px;
+        padding: 4px 8px;
+        min-height: 32px;
     }
     .option-code-snippet {
-        font-size: 11px;
+        font-size: 14px;
     }
 }
 
@@ -2828,7 +2828,7 @@ body.in-battle #global-access-bar,
     background: linear-gradient(135deg, #ec4899, #8b5cf6);
     color: #ffffff;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 800;
     padding: 2px 6px;
     border-radius: 5px;
@@ -2837,7 +2837,7 @@ body.in-battle #global-access-bar,
 }
 
 .quiz-deck-tip {
-    font-size: 11px;
+    font-size: 13.5px;
     color: #94a3b8;
     font-family: 'Inter', sans-serif;
 }
@@ -2847,7 +2847,7 @@ body.in-battle #global-access-bar,
     align-items: center;
     gap: 5px;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
+    font-size: 12px;
 }
 
 .indicator-label {
@@ -2911,14 +2911,14 @@ body.in-battle #global-access-bar,
 
 .code-filename {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
+    font-size: 12px;
     color: #94a3b8;
     margin-left: 2px;
 }
 
 .code-error-tag {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
+    font-size: 12px;
     font-weight: 800;
     color: #fca5a5;
     background: rgba(239, 68, 68, 0.2);
@@ -2929,15 +2929,15 @@ body.in-battle #global-access-bar,
 
 .quiz-code-pre {
     margin: 0;
-    padding: 5px 10px;
+    padding: 8px 12px;
     font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(11px, 0.85vw + 2px, 12px);
-    line-height: 1.35;
-    color: #f87171;
+    font-size: clamp(14.5px, 1vw + 2px, 17px);
+    line-height: 1.55;
+    color: #fca5a5;
     overflow-y: auto;
     overflow-x: auto;
     background: transparent;
-    max-height: clamp(50px, 8vh, 75px);
+    max-height: clamp(80px, 12vh, 120px);
     white-space: pre-wrap;
     word-break: break-word;
 }
@@ -3007,7 +3007,7 @@ body.in-battle #global-access-bar,
     border: 1px solid rgba(148, 163, 184, 0.4);
     color: #e2e8f0;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 800;
     transition: all 0.15s;
     flex-shrink: 0;
@@ -3034,8 +3034,8 @@ body.in-battle #global-access-bar,
 .option-code-snippet {
     margin: 0;
     font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(11px, 0.85vw + 1px, 12px);
-    line-height: 1.25;
+    font-size: clamp(14px, 0.95vw + 2px, 16px);
+    line-height: 1.45;
     color: #e2e8f0;
     white-space: pre-wrap;
     word-break: break-word;

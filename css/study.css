@@ -89,7 +89,7 @@
     height: 38px;
     padding: 0 16px;
     font-family: 'Press Start 2P', monospace;
-    font-size: 10px;
+    font-size: 14px;
     color: var(--theme-text-title, #e5b3ff);
     background: var(--theme-btn-deck-bg, linear-gradient(135deg, rgba(32, 20, 52, 0.95), rgba(16, 10, 30, 0.98)));
     border: 1.5px solid var(--theme-border, #74368e);
@@ -242,7 +242,7 @@
     border: 1px solid #4a1961;
     border-radius: 8px;
     font-family: 'Press Start 2P', monospace;
-    font-size: 10px;
+    font-size: 13.5px;
     color: #bfa4ce;
     cursor: pointer;
     transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
@@ -354,7 +354,7 @@
     background: var(--theme-card-bg-subtle, rgba(12, 5, 22, 0.85));
     border-bottom: 1px solid var(--theme-border-subtle, rgba(168, 85, 247, 0.25));
     font-family: 'Press Start 2P', monospace;
-    font-size: 9.5px;
+    font-size: 13px;
     color: var(--theme-text-title, #e5b3ff);
     box-sizing: border-box;
 }
@@ -412,7 +412,7 @@
 .mem-toggle-title {
     display: block;
     font-family: 'Press Start 2P', monospace;
-    font-size: 10px;
+    font-size: 13.5px;
     color: #f5e8ff;
     letter-spacing: 0.4px;
 }
@@ -429,7 +429,7 @@
 
 .mem-toggle-badge {
     font-family: 'Press Start 2P', monospace;
-    font-size: 8.5px;
+    font-size: 12px;
     padding: 4px 7px;
     background: rgba(56, 239, 125, 0.15);
     color: #38ef7d;
@@ -489,7 +489,7 @@
 
 .topic-step-badge {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 700;
     color: #a47bb8;
     background: rgba(0, 0, 0, 0.5);
@@ -538,7 +538,7 @@
 }
 
 .topic-card-category {
-    font-size: 9.5px;
+    font-size: 12.5px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -567,7 +567,7 @@
 }
 
 .topic-active-indicator {
-    font-size: 10px;
+    font-size: 12.5px;
     color: #00f0ff;
     opacity: 0;
     transition: opacity 0.15s ease, transform 0.15s ease;
@@ -715,7 +715,7 @@
     padding: 3px 7px;
     border-radius: 4px;
     font-family: 'Press Start 2P', monospace;
-    font-size: 8px;
+    font-size: 12px;
     letter-spacing: 0.5px;
     text-transform: uppercase;
 }
@@ -748,8 +748,8 @@
 
 .lesson-hero-summary {
     margin: 0;
-    font-size: 13px;
-    line-height: 1.5;
+    font-size: 14.5px;
+    line-height: 1.55;
     color: #cbd5e1;
 }
 
@@ -780,7 +780,7 @@
 
 .mem-launch-title {
     font-family: 'Press Start 2P', monospace;
-    font-size: 9.5px;
+    font-size: 13.5px;
     color: #e9d5ff;
 }
 
@@ -796,7 +796,7 @@
     gap: 6px;
     padding: 8px 14px;
     font-family: 'Press Start 2P', monospace;
-    font-size: 9px;
+    font-size: 13.5px;
     color: #ffffff;
     background: var(--theme-btn-gradient, linear-gradient(180deg, #7c3aed, #581c87));
     border: 1.5px solid var(--theme-primary, #a855f7);
@@ -839,7 +839,7 @@
 .lesson-section-title {
     margin: 0;
     font-family: 'Inter', system-ui, sans-serif;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 800;
     letter-spacing: 0.8px;
     color: #ffffff;
@@ -848,7 +848,7 @@
 
 /* Explanation Prose */
 .lesson-prose {
-    font-size: 15px;
+    font-size: 16px;
     line-height: 1.75;
     color: #e2e8f0;
     background: rgba(18, 9, 32, 0.7);
@@ -859,7 +859,7 @@
 
 .lesson-prose h2, .lesson-prose h3 {
     margin: 18px 0 10px 0;
-    font-size: 16px;
+    font-size: 18px;
     color: #ffd700;
     font-weight: 700;
 }
@@ -888,7 +888,7 @@
 
 .lesson-prose code {
     font-family: 'JetBrains Mono', 'Consolas', monospace;
-    font-size: 13.5px;
+    font-size: 15px;
     background: rgba(0, 0, 0, 0.65);
     padding: 3px 7px;
     border-radius: 4px;
@@ -965,8 +965,8 @@
     margin: 0;
     padding: 16px 20px;
     font-family: 'JetBrains Mono', Consolas, monospace;
-    font-size: 14px;
-    line-height: 1.65;
+    font-size: 15.5px;
+    line-height: 1.7;
     color: #f1f5f9;
     overflow-x: auto;
     tab-size: 4;
@@ -1066,7 +1066,7 @@
 
 .codex-mem-back-btn {
     font-family: 'Press Start 2P', monospace;
-    font-size: 9.5px;
+    font-size: 14px;
     color: #e2e8f0;
     background: rgba(255, 255, 255, 0.08);
     border: 1.5px solid rgba(255, 255, 255, 0.28);
@@ -1088,7 +1088,7 @@
 
 .codex-mem-diff-pill {
     font-family: 'Press Start 2P', monospace;
-    font-size: 9px;
+    font-size: 12.5px;
     padding: 5px 10px;
     border-radius: 4px;
     letter-spacing: 0.8px;
@@ -1121,7 +1121,7 @@
 }
 
 .codex-mem-stat-chip .chip-lbl {
-    font-size: 9.5px;
+    font-size: 12.5px;
     font-weight: 700;
     color: #a78bfa;
     letter-spacing: 0.5px;
@@ -1137,7 +1137,7 @@
 
 .codex-mem-reset-btn {
     font-family: 'Press Start 2P', monospace;
-    font-size: 9.5px;
+    font-size: 13px;
     color: #ffffff;
     background: var(--theme-btn-deck-bg, linear-gradient(135deg, rgba(88, 28, 135, 0.85), rgba(59, 7, 100, 0.95)));
     border: 1.5px solid var(--theme-primary, #a855f7);
@@ -1256,7 +1256,7 @@
 
 .codex-mem-brand {
     font-family: 'Press Start 2P', monospace;
-    font-size: 9px;
+    font-size: 13px;
     color: #c4b5fd;
     letter-spacing: 1.5px;
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
@@ -1290,7 +1290,7 @@
     top: 5px;
     right: 6px;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 8px;
+    font-size: 12px;
     font-weight: 800;
     text-transform: uppercase;
     color: #ffd700;
@@ -1591,7 +1591,7 @@
         height: 38px;
     }
     .codex-tab {
-        font-size: 8px;
+    font-size: 13.5px;
         padding: 0 4px;
     }
     .codex-tab .tab-sub {

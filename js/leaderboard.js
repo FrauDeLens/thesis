@@ -324,10 +324,10 @@
         if (heroRankChip) heroRankChip.textContent = `RANK #${curUserItem.rank}`;
         if (heroName) heroName.textContent = curUserItem.full_name;
         if (heroUsername) heroUsername.textContent = `@${curUserItem.username}`;
-        if (heroTp) heroTp.textContent = `⭐ ${curUserItem.truePoints.toLocaleString()} TP`;
+        if (heroTp) heroTp.textContent = `${curUserItem.truePoints.toLocaleString()} TP`;
         if (heroTrophies) {
             const pct = Math.round((curUserItem.trophiesCount / 24) * 100);
-            heroTrophies.textContent = `🏆 ${curUserItem.trophiesCount} / 24 (${pct}%)`;
+            heroTrophies.textContent = `${curUserItem.trophiesCount} / 24 Trophies (${pct}%)`;
         }
         if (heroSector) {
             const sec = (curUserItem.highestSector || "easy").toUpperCase();
@@ -373,7 +373,7 @@
 
                 if (p1Name) p1Name.textContent = top1.full_name;
                 if (p1Handle) p1Handle.textContent = `@${top1.username}${top1.isCurrentUser ? ' (YOU)' : ''}`;
-                if (p1Score) p1Score.textContent = `⭐ ${top1.truePoints.toLocaleString()} TP • 🏆 ${top1.trophiesCount}/24`;
+                if (p1Score) p1Score.textContent = `${top1.truePoints.toLocaleString()} TP • ${top1.trophiesCount}/24 Trophies`;
                 if (p1Avatar) p1Avatar.src = `assets/avatars/${top1.avatar || 'item_disk'}.png`;
             } else if (sorted.length === 2) {
                 podiumWrap.style.display = "grid";
@@ -386,12 +386,12 @@
 
                 if (p1Name) p1Name.textContent = top1.full_name;
                 if (p1Handle) p1Handle.textContent = `@${top1.username}${top1.isCurrentUser ? ' (YOU)' : ''}`;
-                if (p1Score) p1Score.textContent = `⭐ ${top1.truePoints.toLocaleString()} TP • 🏆 ${top1.trophiesCount}/24`;
+                if (p1Score) p1Score.textContent = `${top1.truePoints.toLocaleString()} TP • ${top1.trophiesCount}/24 Trophies`;
                 if (p1Avatar) p1Avatar.src = `assets/avatars/${top1.avatar || 'item_disk'}.png`;
 
                 if (p2Name) p2Name.textContent = top2.full_name;
                 if (p2Handle) p2Handle.textContent = `@${top2.username}${top2.isCurrentUser ? ' (YOU)' : ''}`;
-                if (p2Score) p2Score.textContent = `⭐ ${top2.truePoints.toLocaleString()} TP • 🏆 ${top2.trophiesCount}/24`;
+                if (p2Score) p2Score.textContent = `${top2.truePoints.toLocaleString()} TP • ${top2.trophiesCount}/24 Trophies`;
                 if (p2Avatar) p2Avatar.src = `assets/avatars/${top2.avatar || 'item_disk'}.png`;
             } else {
                 // 3 or more contenders
@@ -404,17 +404,17 @@
 
                 if (p1Name) p1Name.textContent = top1.full_name;
                 if (p1Handle) p1Handle.textContent = `@${top1.username}${top1.isCurrentUser ? ' (YOU)' : ''}`;
-                if (p1Score) p1Score.textContent = `⭐ ${top1.truePoints.toLocaleString()} TP • 🏆 ${top1.trophiesCount}/24`;
+                if (p1Score) p1Score.textContent = `${top1.truePoints.toLocaleString()} TP • ${top1.trophiesCount}/24 Trophies`;
                 if (p1Avatar) p1Avatar.src = `assets/avatars/${top1.avatar || 'item_disk'}.png`;
 
                 if (p2Name) p2Name.textContent = top2.full_name;
                 if (p2Handle) p2Handle.textContent = `@${top2.username}${top2.isCurrentUser ? ' (YOU)' : ''}`;
-                if (p2Score) p2Score.textContent = `⭐ ${top2.truePoints.toLocaleString()} TP • 🏆 ${top2.trophiesCount}/24`;
+                if (p2Score) p2Score.textContent = `${top2.truePoints.toLocaleString()} TP • ${top2.trophiesCount}/24 Trophies`;
                 if (p2Avatar) p2Avatar.src = `assets/avatars/${top2.avatar || 'item_disk'}.png`;
 
                 if (p3Name) p3Name.textContent = top3.full_name;
                 if (p3Handle) p3Handle.textContent = `@${top3.username}${top3.isCurrentUser ? ' (YOU)' : ''}`;
-                if (p3Score) p3Score.textContent = `⭐ ${top3.truePoints.toLocaleString()} TP • 🏆 ${top3.trophiesCount}/24`;
+                if (p3Score) p3Score.textContent = `${top3.truePoints.toLocaleString()} TP • ${top3.trophiesCount}/24 Trophies`;
                 if (p3Avatar) p3Avatar.src = `assets/avatars/${top3.avatar || 'item_disk'}.png`;
             }
         }
@@ -453,9 +453,9 @@
                 if (emptyState) emptyState.style.display = "none";
                 tbody.innerHTML = filtered.map(item => {
                     let rankDisplay = `<span class="lb-rank-num">#${item.rank}</span>`;
-                    if (item.rank === 1) rankDisplay = `<span class="lb-rank-1">🥇 #1</span>`;
-                    else if (item.rank === 2) rankDisplay = `<span class="lb-rank-2">🥈 #2</span>`;
-                    else if (item.rank === 3) rankDisplay = `<span class="lb-rank-3">🥉 #3</span>`;
+                    if (item.rank === 1) rankDisplay = `<span class="lb-rank-1">#1</span>`;
+                    else if (item.rank === 2) rankDisplay = `<span class="lb-rank-2">#2</span>`;
+                    else if (item.rank === 3) rankDisplay = `<span class="lb-rank-3">#3</span>`;
 
                     const avId = item.avatar || "item_disk";
 
@@ -478,11 +478,11 @@
                             </td>
                             <td>${getSectorBadgeHtml(item.highestSector)}</td>
                             <td style="font-family: 'JetBrains Mono', monospace; font-weight: 700;">
-                                🏆 ${item.trophiesCount} / 24
+                                ${item.trophiesCount} / 24 Trophies
                             </td>
                             <td>
                                 <span class="lb-score-pill">
-                                    ⭐ ${item.truePoints.toLocaleString()} TP
+                                    ${item.truePoints.toLocaleString()} TP
                                 </span>
                             </td>
                             <td style="color: #94a3b8; font-size: 13px;">${item.lastSeen}</td>

@@ -64,8 +64,10 @@ function persistProgress() {
     if (typeof updateDifficultyButtons === "function") {
         updateDifficultyButtons();
     }
-    if (currentUser && currentUser.role === "student") {
-        api("progress.php", "POST", { progress: progress }).catch(function () {});
+    if (typeof currentUser !== "undefined" && currentUser && currentUser.role === "student") {
+        if (typeof api === "function") {
+            api("progress.php", "POST", { progress: progress }).catch(function () {});
+        }
     }
 }
 
@@ -153,12 +155,28 @@ function getCurrentDifficultyName() {
     return "hell";
 }
 
-function getDifficultyPointValue() {
-    if (typeof currentDifficulty === "undefined") return 5;
-    if (currentDifficulty === easyEnemies) return 5;
-    if (currentDifficulty === normalEnemies) return 10;
-    if (currentDifficulty === hardEnemies) return 15;
-    return 20;
+function getDifficultyPointValue(enemyIndex) {
+    const idx = (typeof enemyIndex === "number") 
+        ? enemyIndex 
+        : ((typeof currentEnemyIndex === "number") ? currentEnemyIndex : 0);
+
+    // Escalating Roguelike Bounty Progression (Enemies 0 to 5)
+    // Enemy 0 to 4 escalate steadily; Enemy 5 (Boss) awards a massive bounty
+    if (typeof currentDifficulty === "undefined" || currentDifficulty === easyEnemies) {
+        const easyScale = [5, 8, 12, 16, 22, 35];
+        return easyScale[Math.min(idx, easyScale.length - 1)] || 5;
+    }
+    if (currentDifficulty === normalEnemies) {
+        const normalScale = [10, 15, 22, 30, 40, 60];
+        return normalScale[Math.min(idx, normalScale.length - 1)] || 10;
+    }
+    if (currentDifficulty === hardEnemies) {
+        const hardScale = [15, 24, 35, 48, 65, 95];
+        return hardScale[Math.min(idx, hardScale.length - 1)] || 15;
+    }
+    // Hell
+    const hellScale = [25, 40, 60, 85, 115, 160];
+    return hellScale[Math.min(idx, hellScale.length - 1)] || 25;
 }
 
 function getCurrentProgress() {

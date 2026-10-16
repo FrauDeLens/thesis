@@ -16,18 +16,18 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/base.css?v=117">
-    <link rel="stylesheet" href="css/auth.css?v=117">
-    <link rel="stylesheet" href="css/menu.css?v=117">
-    <link rel="stylesheet" href="css/difficulty.css?v=117">
-    <link rel="stylesheet" href="css/battle.css?v=117">
-    <link rel="stylesheet" href="css/battle-end-screens.css?v=117">
-    <link rel="stylesheet" href="css/enemy-showcase.css?v=117">
-    <link rel="stylesheet" href="css/study.css?v=117">
-    <link rel="stylesheet" href="css/admin.css?v=117">
-    <link rel="stylesheet" href="css/themes.css?v=117">
-    <link rel="stylesheet" href="css/leaderboard.css?v=117">
-    <link rel="stylesheet" href="css/compiler.css?v=117">
+    <link rel="stylesheet" href="css/base.css?v=122">
+    <link rel="stylesheet" href="css/auth.css?v=122">
+    <link rel="stylesheet" href="css/menu.css?v=122">
+    <link rel="stylesheet" href="css/difficulty.css?v=122">
+    <link rel="stylesheet" href="css/battle.css?v=122">
+    <link rel="stylesheet" href="css/battle-end-screens.css?v=122">
+    <link rel="stylesheet" href="css/enemy-showcase.css?v=122">
+    <link rel="stylesheet" href="css/study.css?v=122">
+    <link rel="stylesheet" href="css/admin.css?v=122">
+    <link rel="stylesheet" href="css/themes.css?v=122">
+    <link rel="stylesheet" href="css/leaderboard.css?v=122">
+    <link rel="stylesheet" href="css/compiler.css?v=122">
 
 </head>
 
@@ -43,15 +43,8 @@
             <div class="access-tools-left">
                 <button id="toggle-theme-picker-btn" class="access-pill-btn theme-pill" type="button"
                     title="Select Color Scheme & Theme">
-                    <span id="theme-selector-btn-icon" class="access-icon">🎨</span>
+                    <span id="theme-selector-btn-icon" class="access-icon">◈</span>
                     <span id="theme-selector-btn-text">Cyber Violet</span>
-                </button>
-            </div>
-            <div class="access-tools-right">
-                <button id="global-profile-btn" class="access-pill-btn profile-pill" type="button"
-                    title="User Profile & Account Settings">
-                    <img id="global-profile-avatar" class="global-user-avatar" src="assets/avatars/item_disk.png" alt="Avatar">
-                    <span id="global-profile-name">Profile</span>
                 </button>
                 <button id="global-tutorial-btn" class="access-pill-btn tutorial-pill" type="button"
                     title="How to Play Tutorial">
@@ -62,6 +55,18 @@
                     <button type="button" class="lang-btn active" data-lang="en">EN</button>
                     <span class="lang-sep">|</span>
                     <button type="button" class="lang-btn" data-lang="fil">FIL</button>
+                </div>
+            </div>
+            <div class="access-tools-right">
+                <button id="global-profile-btn" class="access-pill-btn profile-pill" type="button"
+                    title="User Profile & Account Settings">
+                    <img id="global-profile-avatar" class="global-user-avatar" src="assets/avatars/item_disk.png" alt="Avatar">
+                    <span id="global-profile-name">Profile</span>
+                </button>
+                <div id="global-tp-badge" class="access-pill-btn tp-pill" title="Current True Points Balance (Permanent Wallet)">
+                    <span class="tp-pill-icon">◆</span>
+                    <span class="tp-pill-label">TP</span>
+                    <span id="true-points-menu" class="tp-pill-val">0</span>
                 </div>
             </div>
         </div>
@@ -309,35 +314,35 @@
 
             <div class="menu-buttons-deck">
                 <button id="start-button" class="menu-btn menu-btn-primary" data-i18n="menu_start_game">
-                    ⚔️ Start Game
+                    Start Game
                 </button>
 
                 <button id="leaderboard-button" class="menu-btn menu-btn-leaderboard" data-i18n="menu_leaderboard">
-                    🏅 Leaderboard
+                    Leaderboard
                 </button>
 
                 <button id="codex-button" class="menu-btn" data-i18n="menu_python_codex">
-                    📖 Python Codex
+                    Python Codex
                 </button>
 
                 <button id="compiler-button" class="menu-btn menu-btn-compiler" data-i18n="menu_python_compiler">
-                    ⚡ Online Compiler
+                    Online Compiler
                 </button>
 
                 <button id="shop-button" class="menu-btn" data-i18n="menu_shop">
-                    🛒 Upgrade Shop
+                    Upgrade Shop
                 </button>
 
                 <button id="collection-button" class="menu-btn" data-i18n="menu_collection">
-                    🏆 Trophy Collection
+                    Trophy Collection
                 </button>
 
                 <button id="about-button" class="menu-btn" data-i18n="menu_about">
-                    ℹ️ About
+                    About
                 </button>
 
                 <button id="logout-button" class="menu-btn menu-btn-logout" data-i18n="menu_logout">
-                    🚪 Log Out
+                    Log Out
                 </button>
             </div>
         </div>
@@ -362,8 +367,8 @@
                 <!-- EASY CARD -->
                 <div id="card-easy" class="diff-stage-card card-easy">
                     <div class="card-badge-row">
-                        <span class="card-star-badge">⭐ STAGE 1</span>
-                        <span class="card-powerup-badge">⚡ 3 Free Uses</span>
+                        <span class="card-star-badge">STAGE 1</span>
+                        <span class="card-powerup-badge">3 Free Uses</span>
                     </div>
                     <div class="diff-card-preview">
                         <img src="css/Sprites/Easy/beginnerDragon.png" alt="Beginner Dragon"
@@ -372,20 +377,20 @@
                     <h3 class="card-title">EASY</h3>
                     <p class="card-domain">Python Syntax &amp; Fundamentals</p>
                     <div class="card-info-box">
-                        <div class="card-info-row"><span>👾 Encounters:</span> <strong>6 Monsters</strong></div>
-                        <div class="card-info-row"><span>🐉 Boss:</span> <strong>Beginner Dragon</strong></div>
-                        <div class="card-info-row"><span>💎 True Points:</span> <strong>+5 TP / hit</strong></div>
+                        <div class="card-info-row"><span>Encounters:</span> <strong>6 Monsters</strong></div>
+                        <div class="card-info-row"><span>Boss:</span> <strong>Beginner Dragon</strong></div>
+                        <div class="card-info-row"><span>True Points:</span> <strong>+5 TP / hit</strong></div>
                     </div>
                     <button id="easy-button" class="diff-play-btn" type="button">
-                        <span>⚔️ PLAY EASY</span>
+                        <span>PLAY EASY</span>
                     </button>
                 </div>
 
                 <!-- NORMAL CARD -->
                 <div id="card-normal" class="diff-stage-card card-normal">
                     <div class="card-badge-row">
-                        <span class="card-star-badge">⭐⭐ STAGE 2</span>
-                        <span class="card-powerup-badge">⚡ 2 Free Uses</span>
+                        <span class="card-star-badge">STAGE 2</span>
+                        <span class="card-powerup-badge">2 Free Uses</span>
                     </div>
                     <div class="diff-card-preview">
                         <img src="css/Sprites/Normal/normalTitan.png" alt="Normal Titan" class="diff-boss-preview-img">
@@ -393,20 +398,20 @@
                     <h3 class="card-title">NORMAL</h3>
                     <p class="card-domain">Data Collections &amp; OOP Basics</p>
                     <div class="card-info-box">
-                        <div class="card-info-row"><span>👾 Encounters:</span> <strong>6 Monsters</strong></div>
-                        <div class="card-info-row"><span>🗿 Boss:</span> <strong>Normal Titan</strong></div>
-                        <div class="card-info-row"><span>💎 True Points:</span> <strong>+10 TP / hit</strong></div>
+                        <div class="card-info-row"><span>Encounters:</span> <strong>6 Monsters</strong></div>
+                        <div class="card-info-row"><span>Boss:</span> <strong>Normal Titan</strong></div>
+                        <div class="card-info-row"><span>True Points:</span> <strong>+10 TP / hit</strong></div>
                     </div>
                     <button id="normal-button" class="diff-play-btn" type="button">
-                        <span>⚔️ PLAY NORMAL</span>
+                        <span>PLAY NORMAL</span>
                     </button>
                 </div>
 
                 <!-- HARD CARD -->
                 <div id="card-hard" class="diff-stage-card card-hard">
                     <div class="card-badge-row">
-                        <span class="card-star-badge">⭐⭐⭐ STAGE 3</span>
-                        <span class="card-powerup-badge paid">💎 Paid (10 TP)</span>
+                        <span class="card-star-badge">STAGE 3</span>
+                        <span class="card-powerup-badge paid">Paid (10 TP)</span>
                     </div>
                     <div class="diff-card-preview">
                         <img src="css/Sprites/Hard/hardBoss.png" alt="Code Titan" class="diff-boss-preview-img">
@@ -414,20 +419,20 @@
                     <h3 class="card-title">HARD</h3>
                     <p class="card-domain">Deep OOP &amp; Error Handling</p>
                     <div class="card-info-box">
-                        <div class="card-info-row"><span>👾 Encounters:</span> <strong>6 Monsters</strong></div>
-                        <div class="card-info-row"><span>⚔️ Boss:</span> <strong>Code Titan</strong></div>
-                        <div class="card-info-row"><span>💎 True Points:</span> <strong>+15 TP / hit</strong></div>
+                        <div class="card-info-row"><span>Encounters:</span> <strong>6 Monsters</strong></div>
+                        <div class="card-info-row"><span>Boss:</span> <strong>Code Titan</strong></div>
+                        <div class="card-info-row"><span>True Points:</span> <strong>+15 TP / hit</strong></div>
                     </div>
                     <button id="hard-button" class="diff-play-btn" type="button">
-                        <span>⚔️ PLAY HARD</span>
+                        <span>PLAY HARD</span>
                     </button>
                 </div>
 
                 <!-- HELL CARD -->
                 <div id="card-hell" class="diff-stage-card card-hell">
                     <div class="card-badge-row">
-                        <span class="card-star-badge">💀 FINAL STAGE</span>
-                        <span class="card-powerup-badge paid">💎 Paid (10 TP)</span>
+                        <span class="card-star-badge">FINAL STAGE</span>
+                        <span class="card-powerup-badge paid">Paid (10 TP)</span>
                     </div>
                     <div class="diff-card-preview">
                         <img src="css/Sprites/Hell/hellBoss.png" alt="The Final Compiler" class="diff-boss-preview-img">
@@ -435,12 +440,12 @@
                     <h3 class="card-title">HELL</h3>
                     <p class="card-domain">Concurrency, Async &amp; Mastery</p>
                     <div class="card-info-box">
-                        <div class="card-info-row"><span>👾 Encounters:</span> <strong>6 Monsters</strong></div>
-                        <div class="card-info-row"><span>🌌 Boss:</span> <strong>The Final Compiler</strong></div>
-                        <div class="card-info-row"><span>💎 True Points:</span> <strong>+20 TP / hit</strong></div>
+                        <div class="card-info-row"><span>Encounters:</span> <strong>6 Monsters</strong></div>
+                        <div class="card-info-row"><span>Boss:</span> <strong>The Final Compiler</strong></div>
+                        <div class="card-info-row"><span>True Points:</span> <strong>+20 TP / hit</strong></div>
                     </div>
                     <button id="hell-button" class="diff-play-btn" type="button">
-                        <span>💀 PLAY HELL</span>
+                        <span>PLAY HELL</span>
                     </button>
                 </div>
             </div>
@@ -452,7 +457,7 @@
                 <div class="diff-locked-modal-backdrop" id="difficulty-locked-backdrop"></div>
                 <div class="diff-locked-modal-box">
                     <div class="diff-locked-header">
-                        <span class="diff-locked-icon">🔒</span>
+                        <span class="diff-locked-icon">⚿</span>
                         <div class="diff-locked-titles">
                             <h3 class="diff-locked-title" id="diff-locked-modal-title">SECTOR CLEARANCE LOCKED!</h3>
                             <p class="diff-locked-subtitle" id="diff-locked-modal-sub">Security protocol: Clear prior
@@ -469,7 +474,7 @@
                         </div>
 
                         <div class="diff-requirement-card">
-                            <div class="diff-req-icon">⚠️</div>
+                            <div class="diff-req-icon">!</div>
                             <div class="diff-req-content">
                                 <span class="diff-req-heading">UNLOCK PREREQUISITE</span>
                                 <p id="diff-locked-requirement-text" class="diff-req-text">
@@ -485,25 +490,25 @@
                                 <div id="roadmap-tier-easy" class="roadmap-step">
                                     <span class="step-badge">STAGE 1</span>
                                     <span class="step-name">Easy</span>
-                                    <span class="step-status">✅ Cleared</span>
+                                    <span class="step-status">Cleared</span>
                                 </div>
                                 <div class="roadmap-arrow">➔</div>
                                 <div id="roadmap-tier-normal" class="roadmap-step">
                                     <span class="step-badge">STAGE 2</span>
                                     <span class="step-name">Normal</span>
-                                    <span class="step-status">🔒 Locked</span>
+                                    <span class="step-status">Locked</span>
                                 </div>
                                 <div class="roadmap-arrow">➔</div>
                                 <div id="roadmap-tier-hard" class="roadmap-step">
                                     <span class="step-badge">STAGE 3</span>
                                     <span class="step-name">Hard</span>
-                                    <span class="step-status">🔒 Locked</span>
+                                    <span class="step-status">Locked</span>
                                 </div>
                                 <div class="roadmap-arrow">➔</div>
                                 <div id="roadmap-tier-hell" class="roadmap-step">
                                     <span class="step-badge">FINAL</span>
                                     <span class="step-name">Hell</span>
-                                    <span class="step-status">🔒 Locked</span>
+                                    <span class="step-status">Locked</span>
                                 </div>
                             </div>
                         </div>
@@ -511,7 +516,7 @@
 
                     <div class="diff-locked-footer">
                         <button id="diff-locked-action-btn" class="diff-locked-play-btn" type="button">
-                            <span>⚔️ Play Highest Available</span>
+                            <span>Play Highest Available</span>
                         </button>
                         <button id="diff-locked-ok-btn" class="diff-locked-dismiss-btn" type="button">
                             <span>Understood</span>
@@ -622,7 +627,7 @@
                 <div class="modal-content codex-modal-content">
                     <div class="modal-header codex-modal-header border-bottom border-secondary border-opacity-25">
                         <div class="d-flex align-items-center gap-2">
-                            <span id="codex-modal-icon" class="fs-4">🎯</span>
+                            <span id="codex-modal-icon" class="fs-4">◈</span>
                             <div>
                                 <h5 class="modal-title m-0 fw-bold text-light" id="codexModalLabel">Codex Interactive
                                     Challenge</h5>
@@ -652,7 +657,7 @@
                     <span>&larr;</span> <span data-i18n="lb_back_btn">Main Menu</span>
                 </button>
                 <div class="compiler-header-center">
-                    <h1 class="compiler-title">🐍 PYTHON COMPILER</h1>
+                    <h1 class="compiler-title">PYTHON COMPILER</h1>
                     <p class="compiler-subtitle">Interactive In-Browser Execution &amp; Bug Testing Lab</p>
                 </div>
                 <div class="compiler-header-actions">
@@ -660,13 +665,13 @@
                         <span>▶</span> <span>RUN CODE</span>
                     </button>
                     <button id="compiler-reset-btn" class="compiler-tool-btn" type="button" title="Reload Topic Code Sample">
-                        <span>🔄</span> <span>Reset Code</span>
+                        <span>Reset Code</span>
                     </button>
                     <button id="compiler-clear-code-btn" class="compiler-tool-btn" type="button" title="Clear Code Editor">
-                        <span>🧹</span> <span>Clear</span>
+                        <span>Clear</span>
                     </button>
                     <button id="compiler-clear-output-btn" class="compiler-tool-btn" type="button" title="Clear Terminal Console">
-                        <span>🗑️</span> <span>Clear Output</span>
+                        <span>Clear Output</span>
                     </button>
                 </div>
             </div>
@@ -692,7 +697,6 @@
 
                     <!-- Topic Search Filter -->
                     <div class="compiler-search-box">
-                        <span style="font-size: 12px; margin-right: 6px; color: #a855f7;">🔍</span>
                         <input type="text" id="compiler-search-input" placeholder="Search topic or bug...">
                     </div>
 
@@ -704,14 +708,14 @@
                     <!-- Quick Topic Intel Box -->
                     <div class="compiler-topic-intel-box">
                         <div id="compiler-intel-topic-title" class="compiler-intel-title">
-                            <span>⚡</span> <span>Syntax &amp; Punctuations</span>
+                            <span>Syntax &amp; Punctuations</span>
                         </div>
                         <div class="compiler-template-btns">
                             <button id="compiler-load-example-btn" class="compiler-tmpl-btn" type="button" title="Load working code example">
-                                📄 Example Code
+                                Example Code
                             </button>
                             <button id="compiler-load-blueprint-btn" class="compiler-tmpl-btn" type="button" title="Load clean syntax template">
-                                📐 Blueprint
+                                Blueprint
                             </button>
                         </div>
                     </div>
@@ -723,7 +727,6 @@
                     <div class="compiler-editor-panel">
                         <div class="compiler-editor-bar">
                             <div class="compiler-file-tab">
-                                <span>🐍</span>
                                 <span id="compiler-active-topic-name">main.py (Python 3)</span>
                             </div>
                             <div class="compiler-editor-info">
@@ -746,7 +749,7 @@
                             </div>
                             <div class="compiler-term-meta">
                                 <span id="compiler-exec-time" class="compiler-exec-time"></span>
-                                <button id="compiler-copy-output-btn" class="compiler-term-btn" type="button" title="Copy console output">📋 Copy</button>
+                                <button id="compiler-copy-output-btn" class="compiler-term-btn" type="button" title="Copy console output">Copy</button>
                                 <span style="color: #64748b; font-size: 11px;">Skulpt Python 3.x</span>
                             </div>
                         </div>
@@ -774,7 +777,6 @@
                 </div>
                 <div class="lb-nav-actions">
                     <button id="leaderboard-refresh-btn" class="lb-refresh-btn" type="button" title="Refresh Standings">
-                        <span class="refresh-icon">🔄</span>
                         <span data-i18n="lb_refresh">Refresh</span>
                     </button>
                 </div>
@@ -796,11 +798,11 @@
                 <div class="lb-player-stats-strip">
                     <div class="lb-stat-pill">
                         <div class="lb-stat-label">True Points</div>
-                        <div id="lb-hero-tp" class="lb-stat-val gold">⭐ 0 TP</div>
+                        <div id="lb-hero-tp" class="lb-stat-val gold">0 TP</div>
                     </div>
                     <div class="lb-stat-pill">
                         <div class="lb-stat-label">Trophies</div>
-                        <div id="lb-hero-trophies" class="lb-stat-val green">🏆 0 / 24</div>
+                        <div id="lb-hero-trophies" class="lb-stat-val green">0 / 24 Trophies</div>
                     </div>
                     <div class="lb-stat-pill">
                         <div class="lb-stat-label">Sector Clearance</div>
@@ -813,48 +815,47 @@
             <div id="lb-podium-wrap" class="lb-podium-wrap">
                 <!-- 2nd Place -->
                 <div class="podium-card podium-second">
-                    <div class="podium-crown">🥈</div>
+                    <div class="podium-crown">#2</div>
                     <div class="podium-avatar-wrap">
                         <img id="p2-avatar" class="podium-avatar-img" src="assets/avatars/item_disk.png" alt="Rank #2 Avatar">
                     </div>
                     <span class="podium-rank-badge">RANK #2</span>
                     <h4 id="p2-name" class="podium-name">Player 2</h4>
                     <span id="p2-handle" class="podium-handle">@hunter2</span>
-                    <div id="p2-score" class="podium-points-pill">⭐ 0 TP</div>
+                    <div id="p2-score" class="podium-points-pill">0 TP</div>
                 </div>
                 <!-- 1st Place (Champion) -->
                 <div class="podium-card podium-first">
-                    <div class="podium-crown">👑</div>
+                    <div class="podium-crown">#1</div>
                     <div class="podium-avatar-wrap">
                         <img id="p1-avatar" class="podium-avatar-img" src="assets/avatars/item_disk.png" alt="Champion Avatar">
                     </div>
                     <span class="podium-rank-badge">CHAMPION #1</span>
                     <h4 id="p1-name" class="podium-name">Player 1</h4>
                     <span id="p1-handle" class="podium-handle">@champion</span>
-                    <div id="p1-score" class="podium-points-pill">⭐ 0 TP</div>
+                    <div id="p1-score" class="podium-points-pill">0 TP</div>
                 </div>
                 <!-- 3rd Place -->
                 <div class="podium-card podium-third">
-                    <div class="podium-crown">🥉</div>
+                    <div class="podium-crown">#3</div>
                     <div class="podium-avatar-wrap">
                         <img id="p3-avatar" class="podium-avatar-img" src="assets/avatars/item_disk.png" alt="Rank #3 Avatar">
                     </div>
                     <span class="podium-rank-badge">RANK #3</span>
                     <h4 id="p3-name" class="podium-name">Player 3</h4>
                     <span id="p3-handle" class="podium-handle">@hunter3</span>
-                    <div id="p3-score" class="podium-points-pill">⭐ 0 TP</div>
+                    <div id="p3-score" class="podium-points-pill">0 TP</div>
                 </div>
             </div>
 
             <!-- Controls: Filter Tabs + Search -->
             <div class="lb-controls-bar">
                 <div class="lb-filter-tabs">
-                    <button type="button" class="lb-filter-tab active" data-filter="tp" data-i18n="lb_filter_all">⭐ True Points</button>
-                    <button type="button" class="lb-filter-tab" data-filter="trophies" data-i18n="lb_filter_trophies">🏆 Trophies</button>
-                    <button type="button" class="lb-filter-tab" data-filter="sector" data-i18n="lb_filter_sector">💀 Highest Sector</button>
+                    <button type="button" class="lb-filter-tab active" data-filter="tp" data-i18n="lb_filter_all">True Points</button>
+                    <button type="button" class="lb-filter-tab" data-filter="trophies" data-i18n="lb_filter_trophies">Trophies</button>
+                    <button type="button" class="lb-filter-tab" data-filter="sector" data-i18n="lb_filter_sector">Highest Sector</button>
                 </div>
                 <div class="lb-search-box">
-                    <span class="lb-search-icon">🔍</span>
                     <input id="leaderboard-search-input" class="lb-search-input" type="text" placeholder="Search student or hunter name..." autocomplete="off">
                 </div>
             </div>
@@ -879,7 +880,7 @@
                     </table>
                 </div>
                 <div id="lb-empty-state" class="lb-empty-box" style="display: none;">
-                    <div class="lb-empty-icon">🔍</div>
+                    <div class="lb-empty-icon">✦</div>
                     <div class="lb-empty-text">No student hunters match your search.</div>
                     <div class="lb-empty-sub">Try searching by username or changing the category filter.</div>
                 </div>
@@ -893,13 +894,13 @@
 
         <div id="about-screen" style="display: none;">
             <button id="about-back-button" class="menu-btn about-back-nav-btn" data-i18n="about_back_btn" type="button">
-                <span>⬅️</span>
+                <span>◀</span>
                 <span>Back to Menu</span>
             </button>
 
             <div class="about-card-container">
                 <div class="about-card-header">
-                    <div class="about-icon-badge">👾</div>
+                    <div class="about-icon-badge">✦</div>
                     <h2 data-i18n="about_title">ABOUT BUGHUNT</h2>
                     <div class="about-subtitle">✦ PYTHON DEBUGGING &amp; EDUCATIONAL BATTLE PLATFORM ✦</div>
                 </div>
@@ -920,19 +921,19 @@
                     <!-- 3 Pillars Grid -->
                     <div class="about-pillars-grid">
                         <div class="about-pillar-card pillar-syntax">
-                            <div class="pillar-icon">⚡</div>
+                            <div class="pillar-icon">01</div>
                             <div class="pillar-title">Syntax Errors</div>
                             <div class="pillar-desc">Grammar traps, missing colons, unclosed quotes, brackets, and block
                                 indentation errors.</div>
                         </div>
                         <div class="about-pillar-card pillar-logical">
-                            <div class="pillar-icon">🧠</div>
+                            <div class="pillar-icon">02</div>
                             <div class="pillar-title">Logical Errors</div>
                             <div class="pillar-desc">Infinite loops, unmarked visited nodes in DFS, boundary conditions,
                                 and off-by-one errors.</div>
                         </div>
                         <div class="about-pillar-card pillar-runtime">
-                            <div class="pillar-icon">💥</div>
+                            <div class="pillar-icon">03</div>
                             <div class="pillar-title">Runtime Errors</div>
                             <div class="pillar-desc">Execution crashes, ZeroDivisionError, KeyError, IndexError, and
                                 Recursion depth limits.</div>
@@ -983,13 +984,13 @@
             <!-- Filter Bar -->
             <div class="steam-filter-bar">
                 <button class="trophy-filter-btn active" data-filter="all">All Difficulties (24)</button>
-                <button class="trophy-filter-btn" data-filter="easy">🌱 Easy (6)</button>
-                <button class="trophy-filter-btn" data-filter="normal">⚔️ Normal (6)</button>
-                <button class="trophy-filter-btn" data-filter="hard">🔥 Hard (6)</button>
-                <button class="trophy-filter-btn" data-filter="hell">💀 Hell (6)</button>
+                <button class="trophy-filter-btn" data-filter="easy">Easy (6)</button>
+                <button class="trophy-filter-btn" data-filter="normal">Normal (6)</button>
+                <button class="trophy-filter-btn" data-filter="hard">Hard (6)</button>
+                <button class="trophy-filter-btn" data-filter="hell">Hell (6)</button>
                 <span class="filter-sep">|</span>
-                <button class="trophy-filter-btn" data-filter="unlocked">🏆 Unlocked Only</button>
-                <button class="trophy-filter-btn" data-filter="locked">🔒 Locked Only</button>
+                <button class="trophy-filter-btn" data-filter="unlocked">Unlocked Only</button>
+                <button class="trophy-filter-btn" data-filter="locked">Locked Only</button>
             </div>
 
             <!-- Dedicated Tiers Wrapper with Individual Divs for Easy, Normal, Hard, Hell -->
@@ -1102,7 +1103,7 @@
                         Points</p>
                 </div>
                 <div class="shop-points-pill">
-                    <span class="points-gem-icon">💎</span>
+                    <span class="points-gem-icon">TP</span>
                     <span id="shop-true-points" class="points-val">True Points: 0</span>
                 </div>
             </div>
@@ -1113,10 +1114,10 @@
                 <div id="max-hp-shop" class="shop-card shop-card-hp">
                     <div class="shop-card-badge-row">
                         <span class="shop-tier-badge badge-perm">PERMANENT UPGRADE</span>
-                        <span class="shop-attr-badge">❤️ VITALITY</span>
+                        <span class="shop-attr-badge">VITALITY</span>
                     </div>
                     <div class="shop-icon-wrap icon-hp">
-                        <span class="shop-hero-icon">💖</span>
+                        <span class="shop-hero-icon">HP</span>
                     </div>
                     <h3 class="shop-card-name">MAX HEALTH CORE</h3>
                     <p class="shop-card-desc">
@@ -1144,10 +1145,10 @@
                 <div id="temp-hp-shop" class="shop-card shop-card-temp">
                     <div class="shop-card-badge-row">
                         <span class="shop-tier-badge badge-temp">SINGLE-RUN SHIELD</span>
-                        <span class="shop-attr-badge">🧪 OVERCHARGE</span>
+                        <span class="shop-attr-badge">OVERCHARGE</span>
                     </div>
                     <div class="shop-icon-wrap icon-temp">
-                        <span class="shop-hero-icon">🛡️</span>
+                        <span class="shop-hero-icon">SHIELD</span>
                     </div>
                     <h3 class="shop-card-name">TEMP OVERCHARGE</h3>
                     <p class="shop-card-desc">
@@ -1175,10 +1176,10 @@
                 <div id="free-hint-shop" class="shop-card shop-card-hint">
                     <div class="shop-card-badge-row">
                         <span class="shop-tier-badge badge-perm">RUN PASSIVE</span>
-                        <span class="shop-attr-badge">💡 NEURAL</span>
+                        <span class="shop-attr-badge">NEURAL</span>
                     </div>
                     <div class="shop-icon-wrap icon-hint">
-                        <span class="shop-hero-icon">⚡</span>
+                        <span class="shop-hero-icon">SCAN</span>
                     </div>
                     <h3 class="shop-card-name">NEURAL SCANNER</h3>
                     <p class="shop-card-desc">
@@ -1210,7 +1211,7 @@
                 <div class="shop-alert-backdrop" id="shop-insufficient-backdrop"></div>
                 <div class="shop-alert-box">
                     <div class="shop-alert-header">
-                        <span class="shop-alert-icon">⚠️</span>
+                        <span class="shop-alert-icon">!</span>
                         <div class="shop-alert-titles">
                             <h3 class="shop-alert-title" id="shop-alert-title">INSUFFICIENT TRUE POINTS!</h3>
                             <p class="shop-alert-subtitle" id="shop-alert-sub">Additional True Points required to
@@ -1241,7 +1242,7 @@
                         </div>
 
                         <div class="shop-alert-advice">
-                            <span class="advice-icon">💡</span>
+                            <span class="advice-icon">TIP</span>
                             <div class="advice-content">
                                 <strong>HOW TO EARN TRUE POINTS:</strong>
                                 <p>Defeat Python monsters in combat sectors! Every bug you debug earns True Points:
@@ -1253,7 +1254,7 @@
 
                     <div class="shop-alert-footer">
                         <button id="shop-alert-battles-btn" class="shop-alert-action-btn" type="button">
-                            <span>⚔️ Go Hunt Bugs</span>
+                            <span>Go Hunt Bugs</span>
                         </button>
                         <button id="shop-alert-ok-btn" class="shop-alert-dismiss-btn" type="button">
                             <span>Understood</span>
@@ -1285,7 +1286,7 @@
                     <span id="battle-stage-counter" class="battle-counter-text">ENEMY 1 OF 6</span>
                     <span class="cluster-sep">|</span>
                     <div id="battle-timer-pill" class="battle-timer-pill" title="Time remaining to solve challenge">
-                        <span class="timer-icon">🛡️</span>
+                        <span class="timer-icon">⏱</span>
                         <span id="battle-timer-text">02:00</span>
                     </div>
                 </div>
@@ -1294,7 +1295,7 @@
                 <div class="battle-top-right">
                     <button id="battle-guide-button" type="button"
                         title="View enemy intel, topic guide and combat tutorial">
-                        <span class="guide-icon">📖</span>
+                        <span class="guide-icon">✦</span>
                         <span data-i18n="battle_guide_btn">GUIDE</span>
                     </button>
                     <div class="lang-switch-box battle-lang-box">
@@ -1360,16 +1361,16 @@
 
                             <!-- Streamlined Vitals Strip -->
                             <div class="showcase-vitals-strip">
-                                <div class="vital-pill">
-                                    <span class="vital-icon">❤️</span>
+                                <div class="vital-pill vital-pill-hp" title="Bug Health Points">
+                                    <span class="vital-icon vital-icon-hp">♥</span>
                                     <span id="showcase-enemy-hearts" class="vital-val">5 Hearts</span>
                                 </div>
-                                <div class="vital-pill">
-                                    <span class="vital-icon">⚡</span>
+                                <div class="vital-pill vital-pill-tp" title="Bounty True Points">
+                                    <span class="vital-icon vital-icon-tp">◆</span>
                                     <span id="showcase-enemy-pts" class="vital-val">+10 TP</span>
                                 </div>
-                                <div class="vital-pill">
-                                    <span class="vital-icon">🏆</span>
+                                <div class="vital-pill vital-pill-core" title="Defeat Trophy / Artifact">
+                                    <span class="vital-icon vital-icon-core">◈</span>
                                     <span id="showcase-enemy-trophy" class="vital-val">Slime Core</span>
                                 </div>
                                 <span id="showcase-enemy-threat" style="display: none;"></span>
@@ -1377,7 +1378,7 @@
 
                             <!-- Atmospheric Lore Transmission -->
                             <div class="transmission-box">
-                                <span class="transmission-icon">💬</span>
+                                <span class="transmission-badge">INTEL</span>
                                 <p id="enemy-intro-text" class="transmission-quote"></p>
                             </div>
                         </div>
@@ -1390,12 +1391,12 @@
                         <div class="showcase-tabs-nav">
                             <button id="showcase-tab-btn-intel" class="showcase-tab-btn active" type="button"
                                 data-tab="intel">
-                                <span class="tab-emoji">🎯</span>
+                                <span class="tab-glyph">◈</span>
                                 <span class="tab-name" data-i18n="showcase_tab_intel">Bug Diagnosis &amp; Intel</span>
                             </button>
                             <button id="showcase-tab-btn-tutorial" class="showcase-tab-btn" type="button"
                                 data-tab="tutorial">
-                                <span class="tab-emoji">🎮</span>
+                                <span class="tab-glyph">⚔</span>
                                 <span class="tab-name" data-i18n="showcase_tab_tutorial">How to Battle (Controls)</span>
                             </button>
                         </div>
@@ -1406,7 +1407,7 @@
                             <div class="threat-intel-box">
                                 <div class="threat-intel-header">
                                     <div class="threat-header-left">
-                                        <span class="threat-icon">👾</span>
+                                        <span class="threat-icon">!</span>
                                         <h4 data-i18n="showcase_harm_title">HOW THIS BUG HARMS YOUR PYTHON CODE</h4>
                                     </div>
                                     <div class="threat-error-pill-wrap">
@@ -1423,7 +1424,7 @@
                             <div class="syntax-compare-grid">
                                 <div class="syntax-box bug-box">
                                     <div class="syntax-header-bar bad">
-                                        <div class="syntax-badge bad" data-i18n="showcase_bad_label">❌ COMMON CORRUPTED
+                                        <div class="syntax-badge bad" data-i18n="showcase_bad_label">COMMON CORRUPTED
                                             BUG</div>
                                         <span class="syntax-file-tag">buggy_snippet.py</span>
                                     </div>
@@ -1433,7 +1434,7 @@
                                 </div>
                                 <div class="syntax-box fix-box">
                                     <div class="syntax-header-bar good">
-                                        <div class="syntax-badge good" data-i18n="showcase_good_label">✅ PURIFIED PYTHON
+                                        <div class="syntax-badge good" data-i18n="showcase_good_label">PURIFIED PYTHON
                                             FIX</div>
                                         <span class="syntax-file-tag">solution.py</span>
                                     </div>
@@ -1446,15 +1447,14 @@
                             <!-- Tactical Battle Checklist & Field Tip -->
                             <div class="guide-rules-card">
                                 <div class="guide-rules-header">
-                                    <span class="guide-book-icon">🛡️</span>
+                                    <span class="guide-book-icon">✦</span>
                                     <h4 id="showcase-guide-title" class="guide-topic-heading"
                                         data-i18n="showcase_rules_title">TACTICAL BATTLE CHECKLIST</h4>
                                 </div>
                                 <div id="showcase-guide-rules" class="guide-rules-list"></div>
                                 <div class="tactical-tip-inline">
-                                    <span class="tip-bulb-icon">💡</span>
-                                    <span class="tactical-tip-inline-label" data-i18n="showcase_tip_title">FIELD
-                                        TIP:</span>
+                                    <span class="tip-bulb-icon">TIP:</span>
+                                    <span class="tactical-tip-inline-label" data-i18n="showcase_tip_title">FIELD TIP:</span>
                                     <span id="showcase-enemy-tactical-tip" class="tactical-tip-text"></span>
                                 </div>
                             </div>
@@ -1464,59 +1464,52 @@
                         <div id="showcase-tab-tutorial" class="showcase-tab-panel" style="display: none;">
                             <div class="tutorial-card">
                                 <div class="tutorial-header">
-                                    <span class="tutorial-gamepad-icon">🎮</span>
-                                    <h4>HOW TO BATTLE &amp; DEBUG (PARSONS PUZZLE)</h4>
+                                    <span class="tutorial-gamepad-icon">⚔</span>
+                                    <h4>TACTICAL COMBAT &amp; DEBUGGING PROTOCOLS</h4>
                                 </div>
 
                                 <div class="tutorial-steps-container">
                                     <div class="tut-step">
-                                        <div class="tut-step-num">1</div>
+                                        <div class="tut-step-num">01</div>
                                         <div class="tut-step-body">
-                                            <h5>CHECK MISSION DIRECTIVE</h5>
-                                            <p>Review the expected output and challenge goal in the central directive
-                                                box. Click <strong>SHOW DETAILS</strong> for the full mission briefing.
-                                            </p>
+                                            <h5>ANALYZE BUG DIRECTIVE</h5>
+                                            <p>Inspect the central directive box for expected terminal output, mission objective, and target Python error.</p>
                                         </div>
                                     </div>
 
                                     <div class="tut-step">
-                                        <div class="tut-step-num">2</div>
+                                        <div class="tut-step-num">02</div>
                                         <div class="tut-step-body">
                                             <h5>EXCLUDE BUGGY DISTRACTORS</h5>
-                                            <p>Spot the corrupted or unneeded distractor line and click <strong
-                                                    style="color:#ef4444;">❌</strong> to exclude it from execution.</p>
+                                            <p>Identify corrupted or rogue distractors in the code blocks and click <strong style="color:#ef4444;">[X]</strong> to exclude them.</p>
                                         </div>
                                     </div>
 
                                     <div class="tut-step">
-                                        <div class="tut-step-num">3</div>
+                                        <div class="tut-step-num">03</div>
                                         <div class="tut-step-body">
-                                            <h5>DRAG &amp; REORDER CODE BLOCKS</h5>
-                                            <p>Use the <strong>::</strong> drag handle to arrange blocks into the
-                                                correct logical Python execution sequence.</p>
+                                            <h5>SEQUENCE CODE BLOCKS</h5>
+                                            <p>Grab the <strong>::</strong> drag handles to align code blocks into clean, syntactically valid Python execution order.</p>
                                         </div>
                                     </div>
 
                                     <div class="tut-step">
-                                        <div class="tut-step-num">4</div>
+                                        <div class="tut-step-num">04</div>
                                         <div class="tut-step-body">
-                                            <h5>RUN &amp; EXECUTE PATCH</h5>
-                                            <p>Click <strong>⩒ RUN &amp; EXECUTE PATCH</strong>. When your solution
-                                                matches the goal and expected output, you deal 1 DMG!</p>
+                                            <h5>EXECUTE &amp; TACTICAL POWERUPS</h5>
+                                            <p>Click <strong>RUN &amp; EXECUTE PATCH</strong> to strike for 1 DMG! Deploy Shield, Scanner, or Clue when in danger.</p>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="tutorial-tips-row">
                                     <div class="tut-tip-card">
-                                        <span class="tip-icon">💡</span>
-                                        <span><strong>Teacher Clues:</strong> Use the <em>Clue / Scan</em> power-ups at
-                                            the bottom bar if you need tactical assistance.</span>
+                                        <span class="tip-icon">◈</span>
+                                        <span><strong>Tactical Power-Ups:</strong> Use Shield to block incoming damage, Scanner to inspect bug weaknesses, and Clue for hints.</span>
                                     </div>
                                     <div class="tut-tip-card warn">
-                                        <span class="tip-icon">❤️</span>
-                                        <span><strong>Defend Your Code:</strong> Incorrect solutions cost 1 Heart. Protect
-                                            your hearts and defeat the bug!</span>
+                                        <span class="tip-icon">♥</span>
+                                        <span><strong>Hunter Health:</strong> Failed patch executions or wrong answers cost 1 Heart. Protect your HP to survive the encounter!</span>
                                     </div>
                                 </div>
                             </div>
@@ -1529,11 +1522,11 @@
                 <!-- Bottom Showcase Action Bar -->
                 <div class="showcase-footer-bar">
                     <button id="showcase-back-btn" class="showcase-btn retreat-btn" type="button">
-                        <span data-i18n="showcase_retreat_btn">🔙 Retreat to Stages</span>
+                        <span data-i18n="showcase_retreat_btn">Retreat to Stages</span>
                     </button>
 
                     <button id="enemy-intro-continue" class="showcase-btn engage-btn" type="button">
-                        <span class="sword-icon">⚔️</span>
+                        
                         <span id="enemy-intro-btn-text" data-i18n="showcase_engage_btn">ENGAGE IN BATTLE</span>
                         <span class="arrow-icon">▶</span>
                     </button>
@@ -1576,7 +1569,7 @@
                     <!-- Header Row -->
                     <div class="mission-directive-header">
                         <div class="mission-header-left">
-                            <span id="mission-mode-badge" class="rpg-speaker-badge">🛡️ MISSION DIRECTIVE</span>
+                            <span id="mission-mode-badge" class="rpg-speaker-badge">MISSION DIRECTIVE</span>
                             <h3 id="puzzle-title" class="mission-challenge-title">Python Debugging Mission</h3>
                         </div>
                         <div class="mission-header-right">
@@ -1597,11 +1590,11 @@
                         </div>
                         <div class="mission-goal-output-row">
                             <div class="mission-inline-goal">
-                                <span class="mission-inline-label">🎯 Goal:</span>
+                                <span class="mission-inline-label">Goal:</span>
                                 <span id="puzzle-goal" class="mission-inline-value">I-print ang mensahe.</span>
                             </div>
                             <div class="mission-inline-output">
-                                <span class="mission-inline-label">📋 Expected Output:</span>
+                                <span class="mission-inline-label">Expected Output:</span>
                                 <pre id="puzzle-expected-output"
                                     class="rpg-expected-output-pre minimal-output-pre">Target output</pre>
                             </div>
@@ -1616,7 +1609,7 @@
                                     <span class="step-num-pill">1</span>
                                     <div class="step-desc-wrap">
                                         <strong class="step-title">Hanapin at I-exclude ang Maling Linya:</strong>
-                                        <span class="step-sub">Pindutin ang <code class="exclude-chip">❌</code> sa
+                                        <span class="step-sub">Pindutin ang <code class="exclude-chip">[X]</code> sa
                                             sirang distractor line para maalis ito bago mag-execute.</span>
                                     </div>
                                 </div>
@@ -1632,7 +1625,7 @@
                             <div class="mission-extra-controls">
                                 <button id="rpg-intel-toggle-btn" type="button" class="rpg-intel-btn"
                                     title="Open Code Intel & Bug Diagnosis">
-                                    <span>🔍 Code Intel</span>
+                                    <span>Code Intel</span>
                                 </button>
                             </div>
                         </div>
@@ -1660,11 +1653,9 @@
                         <div class="player-header-pills">
                             <button id="combat-log-toggle-btn" class="combat-log-pill-btn" type="button"
                                 title="Toggle Combat Feedback & Execution Log">
-                                <span class="log-icon">📜</span>
                                 <span class="log-label">LOG</span>
                             </button>
-                            <span id="player-shield-indicator" class="pokemon-shield-pill" style="display: none;">🛡️
-                                SHIELD ACTIVE</span>
+                            <span id="player-shield-indicator" class="pokemon-shield-pill" style="display: none;">SHIELD ACTIVE</span>
                             <span id="true-points-display" class="pokemon-tp-pill">TP 0</span>
                         </div>
                     </div>
@@ -1691,12 +1682,12 @@
                     <div id="parsons-workspace-container" class="parsons-workspace-container">
                         <div class="parsons-workspace-header">
                             <div class="parsons-workspace-title-row">
-                                <span class="parsons-deck-badge">⚙ CORE BLOCKS (DRAG TO REORDER)</span>
-                                <span class="parsons-deck-tip">Exclude buggy distractor lines with ❌</span>
+                                <span class="parsons-deck-badge">CORE BLOCKS (DRAG TO REORDER)</span>
+                                <span class="parsons-deck-tip">Exclude buggy distractor lines with [X]</span>
                             </div>
                             <button id="parsons-reset-btn" class="parsons-reset-btn" type="button"
                                 title="Reset blocks to initial scrambled state">
-                                <span>🔄 Reset</span>
+                                <span>Reset</span>
                             </button>
                         </div>
 
@@ -1709,7 +1700,7 @@
                     <div id="memory-workspace-container" class="memory-workspace-container" style="display: none;">
                         <div class="memory-workspace-header">
                             <div class="memory-title-row">
-                                <span class="memory-deck-badge">🃏 MEMORY MATCH</span>
+                                <span class="memory-deck-badge">MEMORY MATCH</span>
                                 <span class="memory-deck-tip">Select 2 cards to reveal &amp; pair matching
                                     concepts</span>
                             </div>
@@ -1717,7 +1708,7 @@
                                 <span id="memory-pairs-progress" class="memory-progress-pill">PAIRS: 0 / 0</span>
                                 <button id="memory-reset-btn" class="parsons-reset-btn" type="button"
                                     title="Reshuffle cards">
-                                    <span>🔄 Reshuffle</span>
+                                    <span>Reshuffle</span>
                                 </button>
                             </div>
                         </div>
@@ -1731,7 +1722,7 @@
                     <div id="spotbug-workspace-container" class="spotbug-workspace-container" style="display: none;">
                         <div class="spotbug-workspace-header">
                             <div class="spotbug-title-row">
-                                <span class="spotbug-deck-badge">🐞 SPOT THE BUG</span>
+                                <span class="spotbug-deck-badge">SPOT THE BUG</span>
                                 <span class="spotbug-deck-tip">Click the line containing the Python bug</span>
                             </div>
                             <div class="spotbug-target-badge-wrap">
@@ -1749,7 +1740,7 @@
                         style="display: none;">
                         <div class="quiz-workspace-header">
                             <div class="quiz-title-row">
-                                <span class="quiz-deck-badge">🎯 BUG HUNT // MULTIPLE CHOICE</span>
+                                <span class="quiz-deck-badge">BUG HUNT // MULTIPLE CHOICE</span>
                                 <span class="quiz-deck-tip">Inspect the broken snippet &amp; select the correct
                                     patch</span>
                             </div>
@@ -1761,7 +1752,6 @@
 
                         <!-- Prominent Question Callout Banner right above the code! -->
                         <div class="quiz-question-callout" id="quiz-question-callout">
-                            <div class="callout-icon">❓</div>
                             <div class="callout-body">
                                 <span class="callout-label">QUESTION / TANONG:</span>
                                 <div id="quiz-callout-text" class="callout-text">Piliin ang tamang ayos para sa sirang
@@ -1778,7 +1768,7 @@
                                     <span class="code-dot dot-green"></span>
                                     <span class="code-filename">broken_code.py</span>
                                 </div>
-                                <span class="code-error-tag" id="quiz-error-tag">⚡ DETECTED BUG</span>
+                                <span class="code-error-tag" id="quiz-error-tag">DETECTED BUG</span>
                             </div>
                             <pre id="quiz-broken-code-pre"
                                 class="quiz-code-pre"><code># Broken code snippet will load here</code></pre>
@@ -1793,7 +1783,7 @@
                     <!-- Run / Submit Action Row -->
                     <div class="parsons-submit-row">
                         <button id="submit-button" class="pokemon-submit-btn parsons-submit-btn" type="button">
-                            <span id="submit-button-text" data-i18n="hud_submit_button">⩒ RUN &amp; EXECUTE PATCH</span>
+                            <span id="submit-button-text" data-i18n="hud_submit_button">RUN &amp; EXECUTE PATCH</span>
                         </button>
                         <!-- Legacy hidden textarea for backwards compatibility -->
                         <textarea id="answer-input" style="display: none;"></textarea>
@@ -1805,15 +1795,15 @@
                             <span class="powerups-deck-label">POWER-UPS:</span>
                             <button id="powerup-shield-btn" class="powerup-action-btn" type="button"
                                 title="Shield: Blocks next wrong answer heart loss">
-                                <span>🛡️ Shield</span>
+                                <span>Shield</span>
                             </button>
                             <button id="powerup-scan-btn" class="powerup-action-btn" type="button"
                                 title="Scanner: Identifies bug error type">
-                                <span>⚡ Scan</span>
+                                <span>Scan</span>
                             </button>
                             <button id="powerup-hint-btn" class="powerup-action-btn" type="button"
                                 title="Tactical Clue: Free immediate insight">
-                                <span>💡 Clue</span>
+                                <span>Clue</span>
                             </button>
                             <span id="powerup-count-badge" class="powerup-quota-pill free-quota">3 FREE</span>
                         </div>
@@ -1853,7 +1843,7 @@
                 <div class="modal-content intel-modal-shell">
                     <div class="modal-header intel-modal-hdr">
                         <div class="intel-modal-title-wrap">
-                            <span class="intel-modal-hdr-icon">🔍</span>
+                            <span class="intel-modal-hdr-icon">✦</span>
                             <div>
                                 <h4 class="modal-title intel-modal-title-text" id="codeIntelModalTitle">TACTICAL CODE
                                     INTEL &amp; DIAGNOSIS</h4>
@@ -1867,10 +1857,10 @@
                         <!-- Populated dynamically via js/game.js openCodeIntelModal() -->
                     </div>
                     <div class="modal-footer intel-modal-ftr">
-                        <span class="intel-modal-tip">💡 Pro Tip: Exclude the defective line first, then sequence the
+                        <span class="intel-modal-tip">Pro Tip: Exclude the defective line first, then sequence the
                             remaining blocks!</span>
                         <button type="button" class="btn btn-secondary intel-close-action-btn" data-bs-dismiss="modal">
-                            <span>⚔️ Return to Battle</span>
+                            <span>Return to Battle</span>
                         </button>
                     </div>
                 </div>
@@ -1885,7 +1875,7 @@
                 <aside class="admin-sidebar">
                     <!-- Brand / Logo Area -->
                     <div class="admin-sidebar-brand">
-                        <div class="admin-brand-icon">👾</div>
+                        <div class="admin-brand-icon">✦</div>
                         <div class="admin-brand-titles">
                             <h1 class="admin-brand-title">BUGHUNT</h1>
                             <span class="admin-brand-subtitle">TEACHER CONSOLE</span>
@@ -1894,7 +1884,7 @@
 
                     <!-- Teacher Session Profile Card -->
                     <div class="admin-profile-card">
-                        <div class="profile-avatar">👨‍🏫</div>
+                        <div class="profile-avatar">ADM</div>
                         <div class="profile-details">
                             <span class="profile-role-tag">FACULTY INSTRUCTOR</span>
                             <div id="admin-welcome" class="profile-username">Teacher</div>
@@ -1910,7 +1900,7 @@
                         <div class="sidebar-heading">CONSOLE MENU</div>
                         <nav id="admin-tabs" class="admin-sidebar-nav">
                             <button id="admin-students-tab" class="admin-nav-item active" type="button">
-                                <span class="nav-item-icon">📊</span>
+                                <span class="nav-item-icon">[S]</span>
                                 <div class="nav-item-content">
                                     <span class="nav-item-title">Student Scores</span>
                                     <span class="nav-item-caption">Scores & progress</span>
@@ -1919,7 +1909,7 @@
                             </button>
 
                             <button id="admin-questions-tab" class="admin-nav-item" type="button">
-                                <span class="nav-item-icon">⚔️</span>
+                                <span class="nav-item-icon">[Q]</span>
                                 <div class="nav-item-content">
                                     <span class="nav-item-title">Questions & Answers</span>
                                     <span class="nav-item-caption">Bug pool & solutions</span>
@@ -1928,7 +1918,7 @@
                             </button>
 
                             <button id="admin-settings-tab" class="admin-nav-item" type="button">
-                                <span class="nav-item-icon">⚙️</span>
+                                <span class="nav-item-icon">[*]</span>
                                 <div class="nav-item-content">
                                     <span class="nav-item-title">Admin Account</span>
                                     <span class="nav-item-caption">admin1 & admin2 settings</span>
@@ -1961,7 +1951,7 @@
                     <!-- Sidebar Footer: Log Out -->
                     <div class="admin-sidebar-footer">
                         <button id="admin-logout-button" class="admin-logout-btn" type="button">
-                            <span class="logout-icon">🚪</span>
+                            <span class="logout-icon">◀</span>
                             <span>Log Out Console</span>
                         </button>
                     </div>
@@ -1996,7 +1986,7 @@
                             <!-- Division 1: KPI Stat Summary Cards -->
                             <div class="admin-kpi-grid">
                                 <div class="kpi-card">
-                                    <div class="kpi-icon kpi-icon-blue">👥</div>
+                                    <div class="kpi-icon kpi-icon-blue">01</div>
                                     <div class="kpi-info">
                                         <div class="kpi-label">TOTAL STUDENTS</div>
                                         <div id="kpi-total-students" class="kpi-value">0</div>
@@ -2005,7 +1995,7 @@
                                 </div>
 
                                 <div class="kpi-card">
-                                    <div class="kpi-icon kpi-icon-gold">🏆</div>
+                                    <div class="kpi-icon kpi-icon-gold">02</div>
                                     <div class="kpi-info">
                                         <div class="kpi-label">TOP SCORE</div>
                                         <div id="kpi-top-score" class="kpi-value">0 TP</div>
@@ -2014,7 +2004,7 @@
                                 </div>
 
                                 <div class="kpi-card">
-                                    <div class="kpi-icon kpi-icon-purple">📈</div>
+                                    <div class="kpi-icon kpi-icon-purple">03</div>
                                     <div class="kpi-info">
                                         <div class="kpi-label">CLASS AVERAGE</div>
                                         <div id="kpi-avg-score" class="kpi-value">0 TP</div>
@@ -2023,7 +2013,7 @@
                                 </div>
 
                                 <div class="kpi-card">
-                                    <div class="kpi-icon kpi-icon-green">🎖️</div>
+                                    <div class="kpi-icon kpi-icon-green">04</div>
                                     <div class="kpi-info">
                                         <div class="kpi-label">TROPHIES WON</div>
                                         <div id="kpi-total-trophies" class="kpi-value">0</div>
@@ -2035,7 +2025,7 @@
                             <!-- Division 2: Student Score Controls & Filters -->
                             <div class="admin-controls-card">
                                 <div class="search-input-wrap">
-                                    <span class="search-icon-symbol">🔍</span>
+                                    <span class="search-icon-symbol">⚲</span>
                                     <input id="student-search-input" type="text"
                                         placeholder="Search student by username or full name...">
                                 </div>
@@ -2065,7 +2055,7 @@
 
                                     <button id="student-refresh-btn" class="admin-action-btn" type="button"
                                         title="Refresh student scores">
-                                        <span>🔄</span>
+                                        <span>↻</span>
                                         <span>Refresh</span>
                                     </button>
                                 </div>
@@ -2075,7 +2065,7 @@
                             <div class="admin-table-card">
                                 <div class="table-card-topbar">
                                     <div class="table-card-title-group">
-                                        <span class="table-title-icon">📋</span>
+                                        <span class="table-title-icon">≡</span>
                                         <h3 class="table-title-text">STUDENT SCOREBOARD & CLEARANCE STATUS</h3>
                                     </div>
                                     <span id="student-table-count" class="table-row-counter">0 Students Listed</span>
@@ -2094,7 +2084,7 @@
                             <div class="question-bank-panel" style="width: 100%;">
                                 <div class="panel-header-box">
                                     <div class="panel-header-title-row">
-                                        <span class="panel-header-icon">📚</span>
+                                        <span class="panel-header-icon">≡</span>
                                         <h3 class="panel-header-title">QUESTION & ANSWER BANK</h3>
                                         <span id="question-bank-count" class="bank-count-pill">0 Questions</span>
                                     </div>
@@ -2105,7 +2095,7 @@
                                 <!-- Filter toolbar -->
                                 <div class="bank-toolbar">
                                     <div class="bank-search-wrap">
-                                        <span class="search-icon-symbol">🔍</span>
+                                        <span class="search-icon-symbol">⚲</span>
                                         <input id="question-search-input" type="text"
                                             placeholder="Search questions by code, answer, or hint...">
                                     </div>
@@ -2130,15 +2120,15 @@
 
                                     <div class="bank-enemy-select-wrap">
                                         <select id="question-bank-type-filter" class="admin-select">
-                                            <option value="all">🎮 All Challenge Types</option>
-                                            <option value="parson">🧩 Parson Puzzle</option>
-                                            <option value="quiz">📝 Quiz Question</option>
+                                            <option value="all">All Challenge Types</option>
+                                            <option value="parson">Parson Puzzle</option>
+                                            <option value="quiz">Quiz Question</option>
                                         </select>
                                     </div>
 
                                     <button id="open-add-question-modal-btn" class="admin-primary-action-btn"
                                         type="button" style="white-space: nowrap; padding: 8px 20px;">
-                                        <span>➕ Add New Question</span>
+                                        <span>Add New Question</span>
                                     </button>
                                 </div>
 
@@ -2155,7 +2145,7 @@
                             <div class="question-bank-panel" style="width: 100%;">
                                 <div class="panel-header-box">
                                     <div class="panel-header-title-row">
-                                        <span class="panel-header-icon">🛡️</span>
+                                        <span class="panel-header-icon">◈</span>
                                         <h3 class="panel-header-title">ADMIN CREDENTIAL SETTINGS</h3>
                                         <span id="admin-account-badge" class="bank-count-pill">Account: admin1</span>
                                     </div>
@@ -2207,7 +2197,7 @@
                                     <div class="admin-cred-actions">
                                         <button id="admin-save-credentials-btn" class="admin-primary-action-btn"
                                             type="button" style="padding: 10px 28px;">
-                                            💾 Save Credential Changes
+                                            Save Credential Changes
                                         </button>
                                         <span id="admin-cred-status-msg" class="admin-cred-msg"></span>
                                     </div>
@@ -2229,7 +2219,7 @@
                 <div class="admin-modal-dialog">
                     <div class="admin-modal-header">
                         <div class="modal-title-group">
-                            <span class="modal-title-icon">➕</span>
+                            <span class="modal-title-icon">+</span>
                             <div>
                                 <h3 class="modal-title-text" id="admin-add-modal-title">ADD NEW BATTLE CHALLENGE</h3>
                                 <p class="modal-subtitle-text">Create a Parson Puzzle or Quiz question for student battles.</p>
@@ -2247,10 +2237,10 @@
                                 <span class="field-pill pill-solution" id="add-question-type-pill">CHALLENGE MECHANIC</span>
                             </div>
                             <select id="question-type" class="admin-select" style="width: 100%;">
-                                <option value="parson">🧩 Parson Puzzle (Drag &amp; Drop Reorderable Code Blocks)</option>
-                                <option value="quiz">📝 Quiz Question (Multiple Choice Question)</option>
+                                <option value="parson">Parson Puzzle (Drag &amp; Drop Reorderable Code Blocks)</option>
+                                <option value="quiz">Quiz Question (Multiple Choice Question)</option>
                             </select>
-                            <span class="field-help" id="question-type-help">🧩 Parson Puzzle: Students rearrange scrambled code lines and exclude buggy distractors.</span>
+                            <span class="field-help" id="question-type-help">Parson Puzzle: Students rearrange scrambled code lines and exclude buggy distractors.</span>
                         </div>
 
                         <!-- Row 1: Difficulty Tier & Error Category -->
@@ -2258,10 +2248,10 @@
                             <div class="form-field-group">
                                 <label for="question-difficulty">Difficulty Tier</label>
                                 <select id="question-difficulty" class="admin-select">
-                                    <option value="easy">🟢 Easy Tier (Stage 1: Basics - 2 min timer)</option>
-                                    <option value="normal">🔵 Normal Tier (Stage 2: Intermediate - 1.5 min timer)</option>
-                                    <option value="hard">🟣 Hard Tier (Stage 3: Advanced - 1 min timer)</option>
-                                    <option value="hell">🔴 Hell Tier (Stage 4: Expert - 1 min timer)</option>
+                                    <option value="easy">Easy Tier (Stage 1: Basics - 2 min timer)</option>
+                                    <option value="normal">Normal Tier (Stage 2: Intermediate - 1.5 min timer)</option>
+                                    <option value="hard">Hard Tier (Stage 3: Advanced - 1 min timer)</option>
+                                    <option value="hell">Hell Tier (Stage 4: Expert - 1 min timer)</option>
                                 </select>
                             </div>
 
@@ -2301,7 +2291,7 @@
                             <div class="form-grid-2cols">
                                 <div class="form-field-group">
                                     <div class="field-label-row">
-                                        <label for="question-goal">🎯 Function Goal</label>
+                                        <label for="question-goal">Function Goal</label>
                                         <span class="field-pill pill-solution">OBJECTIVE</span>
                                     </div>
                                     <textarea id="question-goal" rows="3"
@@ -2309,7 +2299,7 @@
                                 </div>
                                 <div class="form-field-group">
                                     <div class="field-label-row">
-                                        <label for="question-expected-output">🖥️ Expected Terminal Output</label>
+                                        <label for="question-expected-output">Expected Terminal Output</label>
                                         <span class="field-pill pill-hint">TERMINAL OUTPUT</span>
                                     </div>
                                     <textarea id="question-expected-output" rows="3"
@@ -2337,7 +2327,7 @@
                                     <span class="field-pill pill-challenge">DISTRACTORS</span>
                                 </div>
                                 <textarea id="question-code" rows="3" spellcheck="false"
-                                    placeholder="# 1-2 buggy alternative lines that student must mark with ❌ Exclude&#10;total = total + n&#10;    if n % 2 = 0:"></textarea>
+                                    placeholder="# 1-2 buggy alternative lines that student must mark with [X] Exclude&#10;total = total + n&#10;    if n % 2 = 0:"></textarea>
                                 <span class="field-help">Buggy distractor lines that must be excluded before running the
                                     code.</span>
                             </div>
@@ -2348,7 +2338,7 @@
                             <!-- Question / Problem Prompt -->
                             <div class="form-field-group">
                                 <div class="field-label-row">
-                                    <label for="question-quiz-prompt">📝 Quiz Question / Problem Prompt</label>
+                                    <label for="question-quiz-prompt">Quiz Question / Problem Prompt</label>
                                     <span class="field-pill pill-solution">PROMPT</span>
                                 </div>
                                 <textarea id="question-quiz-prompt" rows="2"
@@ -2360,7 +2350,7 @@
                             <div class="form-grid-2cols">
                                 <div class="form-field-group">
                                     <div class="field-label-row">
-                                        <label for="question-quiz-goal">🎯 Function Goal (Optional)</label>
+                                        <label for="question-quiz-goal">Function Goal (Optional)</label>
                                         <span class="field-pill pill-solution">OBJECTIVE</span>
                                     </div>
                                     <input id="question-quiz-goal" type="text"
@@ -2368,7 +2358,7 @@
                                 </div>
                                 <div class="form-field-group">
                                     <div class="field-label-row">
-                                        <label for="question-quiz-code">💻 Buggy Code Snippet / Context (Optional)</label>
+                                        <label for="question-quiz-code">Buggy Code Snippet / Context (Optional)</label>
                                         <span class="field-pill pill-challenge">CODE CONTEXT</span>
                                     </div>
                                     <input id="question-quiz-code" type="text"
@@ -2379,7 +2369,7 @@
                             <!-- Multiple Choice Options (4 Choices) -->
                             <div class="form-field-group">
                                 <div class="field-label-row">
-                                    <label>🔘 Multiple Choice Options (4 Choices)</label>
+                                    <label>Multiple Choice Options (4 Choices)</label>
                                     <span class="field-pill pill-solution">OPTIONS</span>
                                 </div>
                                 <span class="field-help" style="margin-bottom: 6px; display: block;">Enter the 4 options. Designate which option is the correct answer below.</span>
@@ -2407,7 +2397,7 @@
                             <!-- Correct Option Selector -->
                             <div class="form-field-group">
                                 <div class="field-label-row">
-                                    <label for="question-quiz-correct">✅ Correct Answer Option</label>
+                                    <label for="question-quiz-correct">Correct Answer Option</label>
                                     <span class="field-pill pill-solution">CORRECT ANSWER</span>
                                 </div>
                                 <select id="question-quiz-correct" class="admin-select" style="width: 100%;">
@@ -2438,7 +2428,7 @@
                             <span>Cancel</span>
                         </button>
                         <button id="add-question-button" class="admin-primary-action-btn" type="button">
-                            <span>✨ Add to Question Pool</span>
+                            <span>Add to Question Pool</span>
                         </button>
                     </div>
                 </div>
@@ -2452,7 +2442,7 @@
                 <div class="admin-modal-dialog">
                     <div class="admin-modal-header">
                         <div class="modal-title-group">
-                            <span class="modal-title-icon">✏️</span>
+                            <span class="modal-title-icon">✎</span>
                             <div>
                                 <h3 class="modal-title-text" id="admin-edit-modal-title">EDIT CHALLENGE QUESTION</h3>
                                 <p class="modal-subtitle-text">Update the challenge parameters, puzzle data, target
@@ -2473,8 +2463,8 @@
                                 <span class="field-pill pill-challenge">MECHANIC</span>
                             </div>
                             <select id="edit-question-type" class="admin-select" style="width: 100%;">
-                                <option value="parson">🧩 Parson Puzzle (Order Scrambled Code Blocks)</option>
-                                <option value="quiz">📝 Quiz Question (Multiple Choice Question)</option>
+                                <option value="parson">Parson Puzzle (Order Scrambled Code Blocks)</option>
+                                <option value="quiz">Quiz Question (Multiple Choice Question)</option>
                             </select>
                         </div>
 
@@ -2483,10 +2473,10 @@
                             <div class="form-field-group">
                                 <label for="edit-question-difficulty">Difficulty Tier</label>
                                 <select id="edit-question-difficulty" class="admin-select">
-                                    <option value="easy">🟢 Easy Tier (Stage 1: Basics)</option>
-                                    <option value="normal">🔵 Normal Tier (Stage 2: Intermediate)</option>
-                                    <option value="hard">🟣 Hard Tier (Stage 3: Advanced)</option>
-                                    <option value="hell">🔴 Hell Tier (Stage 4: Expert)</option>
+                                    <option value="easy">Easy Tier (Stage 1: Basics)</option>
+                                    <option value="normal">Normal Tier (Stage 2: Intermediate)</option>
+                                    <option value="hard">Hard Tier (Stage 3: Advanced)</option>
+                                    <option value="hell">Hell Tier (Stage 4: Expert)</option>
                                 </select>
                             </div>
 
@@ -2525,7 +2515,7 @@
                             <div class="form-grid-2cols">
                                 <div class="form-field-group">
                                     <div class="field-label-row">
-                                        <label for="edit-question-goal">🎯 Function Goal</label>
+                                        <label for="edit-question-goal">Function Goal</label>
                                         <span class="field-pill pill-solution">OBJECTIVE</span>
                                     </div>
                                     <textarea id="edit-question-goal" rows="3"
@@ -2533,7 +2523,7 @@
                                 </div>
                                 <div class="form-field-group">
                                     <div class="field-label-row">
-                                        <label for="edit-question-expected-output">🖥️ Expected Output</label>
+                                        <label for="edit-question-expected-output">Expected Output</label>
                                         <span class="field-pill pill-hint">TERMINAL OUTPUT</span>
                                     </div>
                                     <textarea id="edit-question-expected-output" rows="3"
@@ -2571,7 +2561,7 @@
                             <!-- Question / Problem Prompt -->
                             <div class="form-field-group">
                                 <div class="field-label-row">
-                                    <label for="edit-question-quiz-prompt">📝 Quiz Question / Problem Prompt</label>
+                                    <label for="edit-question-quiz-prompt">Quiz Question / Problem Prompt</label>
                                     <span class="field-pill pill-solution">PROMPT</span>
                                 </div>
                                 <textarea id="edit-question-quiz-prompt" rows="2"
@@ -2583,7 +2573,7 @@
                             <div class="form-grid-2cols">
                                 <div class="form-field-group">
                                     <div class="field-label-row">
-                                        <label for="edit-question-quiz-goal">🎯 Function Goal (Optional)</label>
+                                        <label for="edit-question-quiz-goal">Function Goal (Optional)</label>
                                         <span class="field-pill pill-solution">OBJECTIVE</span>
                                     </div>
                                     <input id="edit-question-quiz-goal" type="text"
@@ -2591,7 +2581,7 @@
                                 </div>
                                 <div class="form-field-group">
                                     <div class="field-label-row">
-                                        <label for="edit-question-quiz-code">💻 Buggy Code Snippet / Context (Optional)</label>
+                                        <label for="edit-question-quiz-code">Buggy Code Snippet / Context (Optional)</label>
                                         <span class="field-pill pill-challenge">CODE CONTEXT</span>
                                     </div>
                                     <input id="edit-question-quiz-code" type="text"
@@ -2602,7 +2592,7 @@
                             <!-- Multiple Choice Options (4 Choices) -->
                             <div class="form-field-group">
                                 <div class="field-label-row">
-                                    <label>🔘 Multiple Choice Options (4 Choices)</label>
+                                    <label>Multiple Choice Options (4 Choices)</label>
                                     <span class="field-pill pill-solution">OPTIONS</span>
                                 </div>
                                 <span class="field-help" style="margin-bottom: 6px; display: block;">Enter the 4 options. Designate which option is the correct answer below.</span>
@@ -2630,7 +2620,7 @@
                             <!-- Correct Option Selector -->
                             <div class="form-field-group">
                                 <div class="field-label-row">
-                                    <label for="edit-question-quiz-correct">✅ Correct Answer Option</label>
+                                    <label for="edit-question-quiz-correct">Correct Answer Option</label>
                                     <span class="field-pill pill-solution">CORRECT ANSWER</span>
                                 </div>
                                 <select id="edit-question-quiz-correct" class="admin-select" style="width: 100%;">
@@ -2660,7 +2650,7 @@
                             <span>Cancel</span>
                         </button>
                         <button id="save-edit-question-btn" class="admin-primary-action-btn" type="button">
-                            <span>💾 Save Changes</span>
+                            <span>Save Changes</span>
                         </button>
                     </div>
                 </div>
@@ -2681,13 +2671,10 @@
             <!-- Particle layer -->
             <div class="end-screen-particles" id="victory-particles"></div>
 
-            <!-- Frau sprite -->
-            <img id="victory-frau" src="css/Sprites/user/victory.png" alt="Frau Victory">
-
-            <!-- Content panel (right side) -->
+            <!-- Content panel (Centered) -->
             <div class="end-screen-panel victory-panel">
 
-                <div class="end-panel-eyebrow">✦ STAGE CLEARED ✦</div>
+                <div class="end-panel-eyebrow">STAGE CLEARED</div>
 
                 <h2 class="end-panel-title victory-title">VICTORY!</h2>
 
@@ -2697,21 +2684,93 @@
 
                 <div class="end-panel-stats">
                     <div class="end-stat-row" id="victory-points-row">
-                        <span class="end-stat-icon">⚡</span>
+                        <span class="end-stat-tech-tag">POINTS</span>
                         <span class="end-stat-label">Points Earned</span>
                         <span class="end-stat-value" id="victory-points-message"></span>
                     </div>
                     <div class="end-stat-row" id="trophy-row">
-                        <span class="end-stat-icon">🏆</span>
-                        <span class="end-stat-label">Trophy</span>
+                        <span class="end-stat-tech-tag">TROPHY</span>
+                        <span class="end-stat-label">Sector Trophy</span>
                         <span class="end-stat-value" id="trophy-message"></span>
                     </div>
                 </div>
 
                 <div class="end-panel-divider"></div>
 
+                <!-- Post-Battle Tactical Reward Section (Enemies 1-4) -->
+                <div id="victory-rewards-section" class="victory-rewards-section">
+                    <div class="rewards-section-header">
+                        <span class="rewards-section-eyebrow" data-i18n="victory_reward_eyebrow">TACTICAL POST-BATTLE BOON</span>
+                        <h4 class="rewards-section-title" id="rewards-section-title" data-i18n="victory_reward_prompt">SELECT 1 REWARD PROTOCOL</h4>
+                        <p class="rewards-section-subtitle" id="rewards-section-subtitle" data-i18n="victory_reward_sub">Choose a tactical benefit before engaging the next enemy.</p>
+                    </div>
+
+                    <div id="victory-reward-cards-grid" class="reward-cards-grid">
+                        <!-- Choice A: Heal HP -->
+                        <div id="reward-card-heal" class="reward-choice-card" role="button" tabindex="0">
+                            <div class="reward-card-pill-tag heal-tag">REPAIR</div>
+                            <div class="reward-card-content">
+                                <h5 class="reward-card-title" data-i18n="reward_heal_title">Emergency Repair</h5>
+                                <p class="reward-card-desc" id="reward-heal-desc" data-i18n="reward_heal_desc">Restore +2 HP to current health.</p>
+                                <span class="reward-card-badge heal-badge" id="reward-heal-badge">HP: 3/5</span>
+                            </div>
+                            <div class="reward-card-check">✓</div>
+                        </div>
+
+                        <!-- Choice B: Bank TP -->
+                        <div id="reward-card-bank" class="reward-choice-card" role="button" tabindex="0">
+                            <div class="reward-card-pill-tag bank-tag">SECURE</div>
+                            <div class="reward-card-content">
+                                <h5 class="reward-card-title" data-i18n="reward_bank_title">Secure Data Bank</h5>
+                                <p class="reward-card-desc" id="reward-bank-desc" data-i18n="reward_bank_desc">Bank unbanked TP safely to wallet.</p>
+                                <span class="reward-card-badge bank-badge" id="reward-bank-badge">At Risk: 0 TP</span>
+                            </div>
+                            <div class="reward-card-check">✓</div>
+                        </div>
+
+                        <!-- Choice C: Free Hint -->
+                        <div id="reward-card-hint" class="reward-choice-card" role="button" tabindex="0">
+                            <div class="reward-card-pill-tag hint-tag">SCANNER</div>
+                            <div class="reward-card-content">
+                                <h5 class="reward-card-title" data-i18n="reward_hint_title">Neural Scanner</h5>
+                                <p class="reward-card-desc" id="reward-hint-desc" data-i18n="reward_hint_desc">Receive +1 Free Hint for future questions.</p>
+                                <span class="reward-card-badge hint-badge" id="reward-hint-badge">Stored: 0 Free Hints</span>
+                            </div>
+                            <div class="reward-card-check">✓</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stage Completion Greed Bonus Banner (Enemy 5 Final) -->
+                <div id="victory-stage-bonus-banner" class="victory-stage-bonus-banner" style="display: none;">
+                    <div class="stage-bonus-badge-tag">+25% BONUS</div>
+                    <div class="stage-bonus-body">
+                        <span class="stage-bonus-eyebrow">SECTOR CLEARANCE SURVIVAL BONUS</span>
+                        <h4 class="stage-bonus-title" data-i18n="reward_bonus_title">+25% Sector Clearance Greed Bonus!</h4>
+                        <p class="stage-bonus-desc" data-i18n="reward_bonus_desc">You conquered all sector enemies without cashing out early!</p>
+                        <div class="stage-bonus-calc-strip">
+                            <div class="calc-pill base-pill">
+                                <span class="calc-label">Unbanked TP</span>
+                                <span class="calc-val" id="bonus-calc-base">0 TP</span>
+                            </div>
+                            <span class="calc-plus">+</span>
+                            <div class="calc-pill bonus-pill">
+                                <span class="calc-label">+25% Bonus</span>
+                                <span class="calc-val" id="bonus-calc-bonus">+0 TP</span>
+                            </div>
+                            <span class="calc-eq">=</span>
+                            <div class="calc-pill total-pill">
+                                <span class="calc-label">Banked to Wallet</span>
+                                <span class="calc-val" id="bonus-calc-total">0 TP</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="end-panel-divider"></div>
+
                 <button id="next-enemy-button" class="end-screen-btn victory-btn" data-i18n="victory_next_btn">
-                    ⚔️ Next Enemy
+                    Next Enemy
                 </button>
 
             </div>
@@ -2737,7 +2796,7 @@
             <!-- Content panel (left side) -->
             <div class="end-screen-panel defeat-panel">
 
-                <div class="end-panel-eyebrow">✦ MISSION FAILED ✦</div>
+                <div class="end-panel-eyebrow">MISSION FAILED</div>
 
                 <h1 class="end-panel-title defeat-title" data-i18n="defeat_title">GAME OVER</h1>
 
@@ -2745,7 +2804,6 @@
 
                 <p id="defeat-message" class="end-panel-subtitle"></p>
                 <div class="defeat-tip-box">
-                    <span class="defeat-tip-icon">💡</span>
                     <p class="defeat-tip-text"><strong>TACTICAL RECOVERY INTEL:</strong> Study the bug patterns in the
                         <strong>Python Codex</strong>, stock up on hints from the Shop, and review your code syntax
                         before challenging this sector again!</p>
@@ -2754,10 +2812,10 @@
                 <div class="defeat-actions-row">
                     <button id="defeat-retry-button" class="end-screen-btn defeat-retry-btn" type="button"
                         data-i18n="defeat_retry_btn">
-                        🔄 Retry Sector (Monster #1)
+                        Retry Sector (Monster #1)
                     </button>
                     <button id="defeat-button" class="end-screen-btn defeat-btn" data-i18n="defeat_btn">
-                        ↩ Return to Difficulty
+                        Return to Difficulty
                     </button>
                 </div>
 
@@ -2778,38 +2836,42 @@
                 <div class="tutorial-header">
                     <span class="tutorial-badge">FIELD MANUAL</span>
                     <h2 class="tutorial-title">How to Play BugHunt</h2>
-                    <p class="tutorial-subtitle">Master Python debugging in 3 easy steps</p>
+                    <p class="tutorial-subtitle">Tactical Combat &amp; Python Debugging Field Guide</p>
                 </div>
 
                 <div class="tutorial-steps-grid">
                     <div class="tutorial-step-card">
                         <div class="tutorial-step-num">01</div>
-                        <div class="tutorial-step-icon">🐛</div>
-                        <h3 class="tutorial-step-heading">Spot the Python Bug</h3>
-                        <p class="tutorial-step-desc">A bug monster challenges you with broken Python code. Inspect the
-                            line numbers and identify syntax or logic issues.</p>
+                        <div class="tutorial-step-icon">🧩</div>
+                        <h3 class="tutorial-step-heading">Parsons &amp; Code Battles</h3>
+                        <p class="tutorial-step-desc">Inspect enemy Python code. Reorder logical blocks with drag handles (<strong>::</strong>), exclude rogue distractors with (<strong>✕</strong>), or select the correct patch in Quiz battles.</p>
                     </div>
 
                     <div class="tutorial-step-card">
                         <div class="tutorial-step-num">02</div>
-                        <div class="tutorial-step-icon">⌨️</div>
-                        <h3 class="tutorial-step-heading">Type Your Correction</h3>
-                        <p class="tutorial-step-desc">Enter the correct Python code into the battle action box. Quotes
-                            (' or ") and spacing are automatically recognized.</p>
+                        <div class="tutorial-step-icon">🛡️</div>
+                        <h3 class="tutorial-step-heading">Combat Power-Ups</h3>
+                        <p class="tutorial-step-desc">Deploy <strong>Tactical Shield</strong> to negate counterattacks, <strong>Neural Scanner</strong> to analyze bug weaknesses, and <strong>Teacher Clues</strong> for syntax guidance.</p>
                     </div>
 
                     <div class="tutorial-step-card">
                         <div class="tutorial-step-num">03</div>
-                        <div class="tutorial-step-icon">⚡</div>
-                        <h3 class="tutorial-step-heading">Tactical Power-Ups</h3>
-                        <p class="tutorial-step-desc">Use Shield (blocks damage), Scanner (reveals bug type), or Clue
-                            (hint). Easy gets 3, Normal gets 2, Hard gets 0!</p>
+                        <div class="tutorial-step-icon">⚖️</div>
+                        <h3 class="tutorial-step-heading">Bounties &amp; Greed Streak</h3>
+                        <p class="tutorial-step-desc">Post-battle, choose 1 Protocol: <strong>Emergency Repair</strong> (+2 HP), <strong>Secure Data Bank</strong> (safely deposit 100% TP), or <strong>Risk Greed</strong> (+10% to +50% scaling TP streak).</p>
+                    </div>
+
+                    <div class="tutorial-step-card">
+                        <div class="tutorial-step-num">04</div>
+                        <div class="tutorial-step-icon">💎</div>
+                        <h3 class="tutorial-step-heading">True Points &amp; Upgrades</h3>
+                        <p class="tutorial-step-desc">Banked True Points are permanent across runs. Spend TP in the Terminal Shop for Max HP expansions, Free Neural Scanners, and complete all 24 Steam Trophies!</p>
                     </div>
                 </div>
 
                 <div class="tutorial-footer">
                     <button id="tutorial-close-btn" class="tutorial-gotit-btn" type="button">
-                        Got It! Let's Hunt 🚀
+                        Got It! Let's Hunt
                     </button>
                 </div>
             </div>
@@ -3002,39 +3064,39 @@
     <!-- ==========================
      LOCALIZATION & I18N SYSTEM
 ========================== -->
-    <script src="js/i18n.js?v=117"></script>
-    <script src="data/easy.js?v=117"></script>
-    <script src="data/normal.js?v=117"></script>
-    <script src="data/hard.js?v=117"></script>
-    <script src="data/hell.js?v=117"></script>
-    <script src="data/enemyGuides.js?v=117"></script>
-    <script src="data/pythonLessons.js?v=117"></script>
+    <script src="js/i18n.js?v=122"></script>
+    <script src="data/easy.js?v=122"></script>
+    <script src="data/normal.js?v=122"></script>
+    <script src="data/hard.js?v=122"></script>
+    <script src="data/hell.js?v=122"></script>
+    <script src="data/enemyGuides.js?v=122"></script>
+    <script src="data/pythonLessons.js?v=122"></script>
 
     <!-- ==========================
      FIREBASE CLOUD DATABASE
 ========================= -->
     <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
-    <script src="js/firebase-config.js?v=117"></script>
-    <script src="js/firebase-db.js?v=117"></script>
+    <script src="js/firebase-config.js?v=122"></script>
+    <script src="js/firebase-db.js?v=122"></script>
 
     <!-- ==========================
      MODULAR JAVASCRIPT SYSTEM
 ========================= -->
-    <script src="js/auth.js?v=117"></script>
-    <script src="js/save.js?v=117"></script>
-    <script src="js/points.js?v=117"></script>
-    <script src="js/difficulty.js?v=117"></script>
-    <script src="js/enemyShowcase.js?v=117"></script>
-    <script src="js/game.js?v=117"></script>
-    <script src="js/study.js?v=117"></script>
-    <script src="js/admin.js?v=117"></script>
-    <script src="js/theme.js?v=117"></script>
-    <script src="js/leaderboard.js?v=117"></script>
-    <script src="js/skulpt.min.js?v=117"></script>
-    <script src="js/skulpt-stdlib.js?v=117"></script>
-    <script src="js/compiler.js?v=117"></script>
-    <script src="js/app.js?v=117"></script>
+    <script src="js/auth.js?v=122"></script>
+    <script src="js/save.js?v=122"></script>
+    <script src="js/points.js?v=122"></script>
+    <script src="js/difficulty.js?v=122"></script>
+    <script src="js/enemyShowcase.js?v=122"></script>
+    <script src="js/game.js?v=122"></script>
+    <script src="js/study.js?v=122"></script>
+    <script src="js/admin.js?v=122"></script>
+    <script src="js/theme.js?v=122"></script>
+    <script src="js/leaderboard.js?v=122"></script>
+    <script src="js/skulpt.min.js?v=122"></script>
+    <script src="js/skulpt-stdlib.js?v=122"></script>
+    <script src="js/compiler.js?v=122"></script>
+    <script src="js/app.js?v=122"></script>
 
 
 </body>

@@ -1012,6 +1012,17 @@ body:not([data-theme="violet"]) .access-pill-btn.tutorial-pill:hover {
     transform: translateY(-1px);
 }
 
+body:not([data-theme="violet"]) .access-pill-btn.tp-pill {
+    background: rgba(var(--theme-primary-rgb), 0.12) !important;
+    border-color: var(--theme-border) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 0 10px var(--theme-glow-soft) !important;
+}
+
+body:not([data-theme="violet"]) .access-pill-btn.tp-pill:hover {
+    border-color: var(--theme-accent) !important;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5), 0 0 16px var(--theme-glow) !important;
+}
+
 body:not([data-theme="violet"]) .lang-switch-box {
     background: rgba(var(--theme-primary-rgb), 0.12) !important;
     border: 1px solid var(--theme-border-subtle) !important;

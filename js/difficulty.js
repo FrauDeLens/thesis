@@ -92,10 +92,10 @@ function updateRoadmapTiers(targetDiff) {
         const isEasyDone = unlocks.normal || (prog.easy && Array.isArray(prog.easy.trophies) && prog.easy.trophies.length >= 6);
         if (isEasyDone) {
             easyStep.className = "roadmap-step cleared";
-            easyStep.querySelector(".step-status").textContent = "✅ Cleared";
+            easyStep.querySelector(".step-status").textContent = "Cleared";
         } else {
             easyStep.className = "roadmap-step active";
-            easyStep.querySelector(".step-status").textContent = "⚡ Current";
+            easyStep.querySelector(".step-status").textContent = "Current";
         }
     }
 
@@ -104,13 +104,13 @@ function updateRoadmapTiers(targetDiff) {
         const isNormalDone = unlocks.hard || (prog.normal && Array.isArray(prog.normal.trophies) && prog.normal.trophies.length >= 6);
         if (isNormalDone) {
             normalStep.className = "roadmap-step cleared";
-            normalStep.querySelector(".step-status").textContent = "✅ Cleared";
+            normalStep.querySelector(".step-status").textContent = "Cleared";
         } else if (unlocks.normal) {
             normalStep.className = "roadmap-step active";
-            normalStep.querySelector(".step-status").textContent = "⚡ Available";
+            normalStep.querySelector(".step-status").textContent = "Available";
         } else {
             normalStep.className = "roadmap-step locked" + (targetDiff === "normal" ? " target-tier" : "");
-            normalStep.querySelector(".step-status").textContent = "🔒 Locked";
+            normalStep.querySelector(".step-status").textContent = "Locked";
         }
     }
 
@@ -119,13 +119,13 @@ function updateRoadmapTiers(targetDiff) {
         const isHardDone = unlocks.hell || (prog.hard && Array.isArray(prog.hard.trophies) && prog.hard.trophies.length >= 6);
         if (isHardDone) {
             hardStep.className = "roadmap-step cleared";
-            hardStep.querySelector(".step-status").textContent = "✅ Cleared";
+            hardStep.querySelector(".step-status").textContent = "Cleared";
         } else if (unlocks.hard) {
             hardStep.className = "roadmap-step active";
-            hardStep.querySelector(".step-status").textContent = "⚡ Available";
+            hardStep.querySelector(".step-status").textContent = "Available";
         } else {
             hardStep.className = "roadmap-step locked" + (targetDiff === "hard" ? " target-tier" : "");
-            hardStep.querySelector(".step-status").textContent = "🔒 Locked";
+            hardStep.querySelector(".step-status").textContent = "Locked";
         }
     }
 
@@ -133,10 +133,10 @@ function updateRoadmapTiers(targetDiff) {
     if (hellStep) {
         if (unlocks.hell) {
             hellStep.className = "roadmap-step active";
-            hellStep.querySelector(".step-status").textContent = "⚡ Available";
+            hellStep.querySelector(".step-status").textContent = "Available";
         } else {
             hellStep.className = "roadmap-step locked" + (targetDiff === "hell" ? " target-tier" : "");
-            hellStep.querySelector(".step-status").textContent = "🔒 Locked";
+            hellStep.querySelector(".step-status").textContent = "Locked";
         }
     }
 }
@@ -187,7 +187,7 @@ function showLockedDifficultyPrompt(diffName, cardElem) {
             highest = "normal"; highestList = normalEnemies; highestCard = document.getElementById("card-normal");
         }
 
-        actionBtn.innerHTML = `<span>⚔️ ${isFil ? 'Laruin ang Pinakamataas: ' : 'Challenge '} ${highest.toUpperCase()}</span>`;
+        actionBtn.innerHTML = `<span>${isFil ? 'Laruin ang Pinakamataas: ' : 'Challenge '} ${highest.toUpperCase()}</span>`;
         actionBtn.onclick = function () {
             closeLockedDifficultyPrompt();
             handleDifficultySelect(highest, highestList, highestCard);
@@ -197,8 +197,8 @@ function showLockedDifficultyPrompt(diffName, cardElem) {
     modal.style.display = "flex";
 
     const msg = isFil
-        ? `🔒 Naka-lock ang ${diffName.toUpperCase()}! Tapusin muna ang naunang antas.`
-        : `🔒 ${diffName.toUpperCase()} is locked! Clear the previous sector first.`;
+        ? `Naka-lock ang ${diffName.toUpperCase()}! Tapusin muna ang naunang antas.`
+        : `${diffName.toUpperCase()} is locked! Clear the previous sector first.`;
     if (typeof showGameToast === "function") {
         showGameToast(msg, "warning");
     }

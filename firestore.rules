@@ -14,16 +14,31 @@ service cloud.firestore {
       return id != 'admin' && id != 'admin1' && id != 'admin2' && id != 'teacher';
     }
 
+    function validProgress(prog) {
+      return prog.truePoints is number 
+        && prog.truePoints >= 0 
+        && prog.truePoints <= 100000
+        && (!('shop' in prog) || (
+          prog.shop.maxHp is number && prog.shop.maxHp <= 10
+          && prog.shop.freeHints is number && prog.shop.freeHints <= 5
+        ))
+        && (!('unlocks' in prog) || prog.unlocks.easy == true);
+    }
+
     // Users collection: student registration, updates, and teacher management
     match /users/{userId} {
       // Allow reading user profiles for authentication, leaderboard, and student rosters
       allow read: if true;
 
       // Registration: New accounts can only be created with role 'student' and cannot use reserved names
-      allow create: if isStudentRole() && isNotReservedAdmin(userId);
+      allow create: if isStudentRole() 
+        && isNotReservedAdmin(userId)
+        && (!('progress' in request.resource.data) || validProgress(request.resource.data.progress));
 
-      // Updates: Role cannot be escalated from student to teacher
-      allow update: if roleUnchanged() || resource.data.role == 'teacher';
+      // Updates: Role cannot be escalated; progress and points must respect integrity bounds
+      allow update: if roleUnchanged()
+        && (!('truePoints' in request.resource.data) || (request.resource.data.truePoints is number && request.resource.data.truePoints <= 100000))
+        && (!('progress' in request.resource.data) || validProgress(request.resource.data.progress));
 
       // Deletions: Administrative accounts can NEVER be deleted
       allow delete: if isNotReservedAdmin(userId) && resource.data.role != 'teacher';
@@ -33,8 +48,7 @@ service cloud.firestore {
     match /questions/{questionId} {
       allow read: if true;
       allow create, update: if request.resource.data.keys().hasAll(['title', 'difficulty', 'enemy_id']);
-      allow delete: if true;
+      allow delete: if false;
     }
   }
 }
-

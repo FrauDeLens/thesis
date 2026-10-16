@@ -60,8 +60,8 @@
     border: 1px solid #7c3aed;
     color: #e9d5ff;
     font-family: 'Inter', sans-serif;
-    font-size: clamp(12.5px, 1.2vmin + 2px, 15px);
-    font-weight: 600;
+    font-size: clamp(14px, 1.3vmin + 2px, 16.5px);
+    font-weight: 700;
     padding: clamp(8px, 1vh, 12px) clamp(14px, 1.5vw, 24px);
     border-radius: 10px;
     cursor: pointer;
@@ -86,7 +86,7 @@
 .diff-title-wrap h2 {
     margin: 0 0 clamp(2px, 0.5vh, 6px) 0;
     font-family: 'Inter', sans-serif;
-    font-size: clamp(22px, 2.8vmin + 6px, 38px);
+    font-size: clamp(24px, 3vmin + 6px, 40px);
     font-weight: 800;
     color: #ffffff;
     letter-spacing: 1px;
@@ -96,7 +96,7 @@
 .diff-subtitle {
     margin: 0;
     font-family: 'Inter', sans-serif;
-    font-size: clamp(12px, 1.1vmin + 2px, 15px);
+    font-size: clamp(14.5px, 1.2vmin + 2px, 17px);
     color: #c4b5fd;
     letter-spacing: 0.3px;
 }
@@ -189,22 +189,22 @@
 
 .card-star-badge {
     font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(10px, 1vmin, 12px);
+    font-size: clamp(12px, 1.1vmin, 13.5px);
     font-weight: 700;
     color: #ffd166;
     background: rgba(255, 209, 102, 0.15);
-    padding: 3px 8px;
+    padding: 4px 10px;
     border-radius: 20px;
     border: 1px solid rgba(255, 209, 102, 0.4);
 }
 
 .card-powerup-badge {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(10px, 1vmin, 12px);
+    font-size: clamp(12px, 1.1vmin, 13.5px);
     font-weight: 700;
     color: #6ee7b7;
     background: rgba(16, 185, 129, 0.15);
-    padding: 3px 8px;
+    padding: 4px 10px;
     border-radius: 20px;
     border: 1px solid rgba(16, 185, 129, 0.4);
 }
@@ -275,7 +275,7 @@
 .card-title {
     margin: 0 0 2px 0;
     font-family: 'Inter', sans-serif;
-    font-size: clamp(18px, 2.2vmin, 28px);
+    font-size: clamp(20px, 2.4vmin, 30px);
     font-weight: 800;
     letter-spacing: 0.5px;
     color: #ffffff;
@@ -288,7 +288,7 @@
 
 .card-domain {
     margin: 0 0 clamp(4px, 0.8vh, 12px) 0;
-    font-size: clamp(11px, 1vmin + 2px, 13.5px);
+    font-size: clamp(13px, 1.1vmin + 2px, 15px);
     color: #c4b5fd;
     line-height: 1.35;
     min-height: auto;
@@ -299,10 +299,10 @@
     background: rgba(12, 8, 24, 0.7);
     border: 1px solid rgba(120, 80, 180, 0.25);
     border-radius: 12px;
-    padding: clamp(6px, 1vh, 14px) clamp(8px, 1vw, 14px);
+    padding: clamp(8px, 1.2vh, 14px) clamp(10px, 1.2vw, 16px);
     display: flex;
     flex-direction: column;
-    gap: clamp(4px, 0.6vh, 8px);
+    gap: clamp(6px, 0.8vh, 10px);
     margin-bottom: clamp(6px, 1vh, 16px);
 }
 
@@ -310,7 +310,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: clamp(10.5px, 0.9vmin + 2px, 13px);
+    font-size: clamp(13px, 1vmin + 2px, 15px);
     color: #cbd5e1;
 }
 
@@ -327,10 +327,10 @@
 /* Play Button */
 .diff-play-btn {
     width: 100%;
-    height: clamp(38px, 4.8vh, 52px);
+    height: clamp(42px, 5vh, 54px);
     border-radius: 10px;
     font-family: 'Inter', sans-serif;
-    font-size: clamp(12.5px, 1.2vmin + 2px, 16px);
+    font-size: clamp(14.5px, 1.3vmin + 2px, 17px);
     font-weight: 700;
     cursor: pointer;
     border: none;
@@ -534,7 +534,7 @@
 
 .diff-target-label {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
+    font-size: 13.5px;
     font-weight: 700;
     color: #94a3b8;
     letter-spacing: 1px;
@@ -542,7 +542,7 @@
 
 .diff-target-name {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
+    font-size: 15.5px;
     font-weight: 800;
     color: #fca5a5;
     letter-spacing: 1px;
@@ -572,7 +572,7 @@
 .diff-req-heading {
     display: block;
     font-family: 'Inter', sans-serif;
-    font-size: 12px;
+    font-size: 13.5px;
     font-weight: 800;
     color: #f87171;
     letter-spacing: 1px;
@@ -582,7 +582,7 @@
 .diff-req-text {
     margin: 0;
     font-family: 'Inter', sans-serif;
-    font-size: 14.5px;
+    font-size: 15.5px;
     line-height: 1.5;
     color: #e2e8f0;
 }
@@ -596,7 +596,7 @@
 
 .roadmap-title {
     font-family: 'Inter', sans-serif;
-    font-size: 12px;
+    font-size: 13.5px;
     font-weight: 700;
     color: #c084fc;
     letter-spacing: 0.5px;
@@ -649,20 +649,20 @@
 
 .step-badge {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 700;
     color: #94a3b8;
 }
 
 .step-name {
     font-family: 'Inter', sans-serif;
-    font-size: 13.5px;
+    font-size: 15px;
     font-weight: 700;
     color: #ffffff;
 }
 
 .step-status {
-    font-size: 11.5px;
+    font-size: 13px;
     font-weight: 600;
 }
 
@@ -672,7 +672,7 @@
 
 .roadmap-arrow {
     color: #a855f7;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: bold;
 }
 
@@ -691,7 +691,7 @@
     border: 1px solid rgba(255, 255, 255, 0.3) !important;
     color: #ffffff !important;
     font-family: 'Inter', sans-serif !important;
-    font-size: 14.5px !important;
+    font-size: 15.5px !important;
     font-weight: 700 !important;
     padding: 12px 24px !important;
     border-radius: 10px !important;
@@ -710,7 +710,7 @@
     border: 1px solid rgba(168, 85, 247, 0.4) !important;
     color: #e2e8f0 !important;
     font-family: 'Inter', sans-serif !important;
-    font-size: 14.5px !important;
+    font-size: 15.5px !important;
     font-weight: 600 !important;
     padding: 12px 22px !important;
     border-radius: 10px !important;

@@ -8,8 +8,8 @@ const BUGHUNT_TRANSLATIONS = {
         // App & General
         app_title: "BugHunt",
         lang_name: "English",
-        lang_switch_label: "🌐 Language: English",
-        lang_toggle_short: "🌐 EN",
+        lang_switch_label: "Language: English",
+        lang_toggle_short: "EN",
 
         // Title Screen
         title_continue: "Press Anywhere to Continue",
@@ -48,9 +48,9 @@ const BUGHUNT_TRANSLATIONS = {
         lb_subtitle: "Top Student Hunters Ranked by True Points & Python Trophies",
         lb_back_btn: "Back to Menu",
         lb_refresh: "Refresh Standings",
-        lb_filter_all: "⭐ True Points",
-        lb_filter_trophies: "🏆 Trophies",
-        lb_filter_sector: "💀 Highest Sector",
+        lb_filter_all: "True Points",
+        lb_filter_trophies: "Trophies",
+        lb_filter_sector: "Highest Sector",
         lb_search_ph: "Search student or hunter name...",
 
         // Difficulty Selection
@@ -82,7 +82,7 @@ const BUGHUNT_TRANSLATIONS = {
         locked_step2: "Stage 2: Normal",
         locked_step3: "Stage 3: Hard",
         locked_step4: "Stage 4: Hell",
-        locked_play_highest: "⚔️ Play Highest Available",
+        locked_play_highest: "Play Highest Available",
         locked_understood: "Understood",
 
         // Enemy Showcase / Guide Modal
@@ -94,10 +94,10 @@ const BUGHUNT_TRANSLATIONS = {
         showcase_begin_battle: "Begin Battle",
         showcase_close_guide: "Close Guide",
         showcase_retreat: "Retreat to Menu",
-        showcase_retreat_btn: "🔙 Retreat to Stages",
+        showcase_retreat_btn: "Retreat to Stages",
         showcase_engage_btn: "ENGAGE IN BATTLE",
-        showcase_bad_label: "❌ COMMON CORRUPTED BUG",
-        showcase_good_label: "✅ PURIFIED PYTHON FIX",
+        showcase_bad_label: "COMMON CORRUPTED BUG",
+        showcase_good_label: "PURIFIED PYTHON FIX",
 
         // Battle Screen & HUD
         battle_back_btn: "Back",
@@ -107,7 +107,7 @@ const BUGHUNT_TRANSLATIONS = {
         hud_enemy_points: "Hit Points: {points}",
         hud_answer_tag: "YOUR PYTHON FIX // CODE WORKSPACE",
         hud_answer_placeholder: "Write the corrected Python code here...",
-        hud_submit_button: "⩒ RUN & EXECUTE PATCH",
+        hud_submit_button: "RUN & EXECUTE PATCH",
         puzzle_goal_label: "FUNCTION GOAL",
         puzzle_output_label: "EXPECTED OUTPUT",
         hud_hint_cost_free: "Free Hint Available!",
@@ -125,10 +125,28 @@ const BUGHUNT_TRANSLATIONS = {
         victory_points: "Points earned: {enemyPts} | Difficulty Points: {diffPts}",
         victory_trophy: "You earned: {trophy}",
         victory_next_btn: "Next Enemy",
+        victory_reward_eyebrow: "TACTICAL POST-BATTLE BOON",
+        victory_reward_prompt: "SELECT 1 REWARD PROTOCOL",
+        victory_reward_sub: "Choose a tactical benefit before engaging the next enemy.",
+        reward_heal_title: "Emergency Repair",
+        reward_heal_desc: "Restore +2 HP to current health.",
+        reward_heal_badge: "HP: {cur}/{max}",
+        reward_heal_full: "HP Already Full ({max}/{max})",
+        reward_bank_title: "Secure Data Bank",
+        reward_bank_desc: "Bank {pts} unbanked TP safely to wallet.",
+        reward_bank_badge: "At Risk: {pts} TP",
+        reward_bank_empty: "No unbanked TP to bank",
+        reward_hint_title: "Neural Scanner",
+        reward_hint_desc: "Receive +1 Free Hint for future questions.",
+        reward_hint_badge: "Stored: {hints} Free Hint(s)",
+        reward_bonus_title: "+25% Sector Clearance Greed Bonus!",
+        reward_bonus_desc: "You conquered all sector enemies without cashing out early!",
+        reward_must_select: "Please select 1 reward protocol before advancing!",
+        reward_selected_toast: "Reward applied: {reward}!",
         defeat_title: "DEFEATED...",
         defeat_message: "You ran out of hearts. Returning to difficulty selection.",
         defeat_btn: "Return to Difficulty",
-        defeat_retry_btn: "🔄 Retry Sector (Monster #1)",
+        defeat_retry_btn: "Retry Sector (Monster #1)",
 
         // Shop Screen
         shop_title: "Upgrade Shop",
@@ -181,13 +199,13 @@ const BUGHUNT_TRANSLATIONS = {
         codex_sec_comparison: "BUG HUNT COMPARISON (Mistake vs Solution)",
         codex_sec_rules: "BATTLE CHECKLIST (Key Rules)",
         codex_sec_quiz: "SPOT THE BUG // KNOWLEDGE CHECK",
-        codex_copy_btn: "📋 Copy Fix",
+        codex_copy_btn: "Copy Fix",
         codex_copied_btn: "✔ Copied!",
         codex_why_works: "✔ Why this fix works:",
         codex_quiz_correct_msg: "✔ CORRECT ANSWER!",
         codex_quiz_wrong_msg: "✖ NOT QUITE RIGHT. HERE IS WHY:",
-        codex_quiz_retry_btn: "🔄 Try Again",
-        codex_quiz_practice_again: "🔄 Practice Again",
+        codex_quiz_retry_btn: "Try Again",
+        codex_quiz_practice_again: "Practice Again",
         codex_no_search_results: "No topics found for \"{query}\".<br>Try searching for another keyword!",
 
         // Enemy Showcase Screen
@@ -200,11 +218,11 @@ const BUGHUNT_TRANSLATIONS = {
         showcase_voice_title: "DECODED ENEMY LOG // VOICE TRANSMISSION",
         showcase_harm_title: "HOW THIS BUG HARMS YOUR PYTHON CODE",
         showcase_target_error: "TARGET PYTHON ERROR",
-        showcase_bad_label: "❌ COMMON CORRUPTED BUG",
-        showcase_good_label: "✅ PURIFIED PYTHON FIX",
+        showcase_bad_label: "COMMON CORRUPTED BUG",
+        showcase_good_label: "PURIFIED PYTHON FIX",
         showcase_rules_title: "TACTICAL BATTLE CHECKLIST",
         showcase_tip_title: "FRAU'S FIELD GUIDE TIP",
-        showcase_retreat_btn: "🔙 Retreat to Stages",
+        showcase_retreat_btn: "Retreat to Stages",
         showcase_engage_btn: "ENGAGE IN BATTLE",
         showcase_return_btn: "✕ Return to Battle",
 
@@ -231,8 +249,8 @@ const BUGHUNT_TRANSLATIONS = {
         // App & General
         app_title: "BugHunt",
         lang_name: "Filipino",
-        lang_switch_label: "🌐 Wika: Filipino",
-        lang_toggle_short: "🌐 FIL",
+        lang_switch_label: "Wika: Filipino",
+        lang_toggle_short: "FIL",
 
         // Title Screen
         title_continue: "Pindutin Kahit Saan Para Magpatuloy",
@@ -272,8 +290,8 @@ const BUGHUNT_TRANSLATIONS = {
         lb_back_btn: "Bumalik sa Menu",
         lb_refresh: "I-refresh ang Ranggo",
         lb_filter_all: "⭐ Tunay na Puntos",
-        lb_filter_trophies: "🏆 Mga Tropeo",
-        lb_filter_sector: "💀 Pinakamataas na Antas",
+        lb_filter_trophies: "Mga Tropeo",
+        lb_filter_sector: "Pinakamataas na Antas",
         lb_search_ph: "Maghanap ng pangalan o username...",
 
         // Difficulty Selection
@@ -305,7 +323,7 @@ const BUGHUNT_TRANSLATIONS = {
         locked_step2: "Stage 2: Katamtaman",
         locked_step3: "Stage 3: Mahirap",
         locked_step4: "Stage 4: Hell",
-        locked_play_highest: "⚔️ Laruin ang Bukas na Antas",
+        locked_play_highest: "Laruin ang Bukas na Antas",
         locked_understood: "Naiintindihan Ko",
 
         // Enemy Showcase / Guide Modal
@@ -317,10 +335,10 @@ const BUGHUNT_TRANSLATIONS = {
         showcase_begin_battle: "Simulan ang Laban",
         showcase_close_guide: "Isara ang Gabay",
         showcase_retreat: "Umatras sa Menu",
-        showcase_retreat_btn: "🔙 Umatras sa Antas",
+        showcase_retreat_btn: "Umatras sa Antas",
         showcase_engage_btn: "SIMULAN ANG LABAN",
-        showcase_bad_label: "❌ MALI NA KODIGO (BUG)",
-        showcase_good_label: "✅ TAMANG AYOS (SOLUSYON)",
+        showcase_bad_label: "MALI NA KODIGO (BUG)",
+        showcase_good_label: "TAMANG AYOS (SOLUSYON)",
 
         // Battle Screen & HUD
         battle_back_btn: "Bumalik",
@@ -330,7 +348,7 @@ const BUGHUNT_TRANSLATIONS = {
         hud_enemy_points: "Buhay (HP): {points}",
         hud_answer_tag: "IYONG TAMANG KODIGO // WORKSPACE",
         hud_answer_placeholder: "Isulat dito ang tamang Python code...",
-        hud_submit_button: "⩒ PATAKBUHIN AT ISUBMIT",
+        hud_submit_button: "PATAKBUHIN AT ISUBMIT",
         puzzle_goal_label: "LAYUNIN NG FUNCTION",
         puzzle_output_label: "INAASAHANG OUTPUT",
         hud_hint_cost_free: "Libreng Hint!",
@@ -348,10 +366,28 @@ const BUGHUNT_TRANSLATIONS = {
         victory_points: "Nakuha mong puntos: {enemyPts} | Puntos sa Antas: {diffPts}",
         victory_trophy: "Nakuha mo ang: {trophy}",
         victory_next_btn: "Susunod na Kalaban",
+        victory_reward_eyebrow: "GANTIMPALANG PANG-LABAN",
+        victory_reward_prompt: "PUMILI NG 1 PROTOCOL NA GANTIMPALA",
+        victory_reward_sub: "Pumili ng suportang benepisyo bago harapin ang susunod na kalaban.",
+        reward_heal_title: "Mabilis na Pag-ayos",
+        reward_heal_desc: "Magbalik ng +2 HP sa kasalukuyang buhay.",
+        reward_heal_badge: "HP: {cur}/{max}",
+        reward_heal_full: "Puno na ang HP ({max}/{max})",
+        reward_bank_title: "I-bank ang Datos (TP)",
+        reward_bank_desc: "I-lock ang {pts} unbanked TP sa permanenteng pitaka.",
+        reward_bank_badge: "Nasa Panganib: {pts} TP",
+        reward_bank_empty: "Walang unbanked TP",
+        reward_hint_title: "Neural Scanner",
+        reward_hint_desc: "Makatanggap ng +1 Libreng Hint para sa mga susunod na tanong.",
+        reward_hint_badge: "Nakatabi: {hints} Libreng Hint",
+        reward_bonus_title: "+25% Sector Clearance Greed Bonus!",
+        reward_bonus_desc: "Matagumpay mong natapos ang buong sektor nang hindi nag-ba-bank!",
+        reward_must_select: "Pumili muna ng 1 reward bago magpatuloy!",
+        reward_selected_toast: "Nailapat ang gantimpala: {reward}!",
         defeat_title: "TALO...",
         defeat_message: "Naubusan ka ng puso. Babalik sa pagpili ng hirap.",
         defeat_btn: "Bumalik sa Pagpili",
-        defeat_retry_btn: "🔄 Ulitin ang Sektor (Halimaw #1)",
+        defeat_retry_btn: "Ulitin ang Sektor (Halimaw #1)",
 
         // Shop Screen
         shop_title: "Tindahan ng Upgrade",
@@ -400,13 +436,13 @@ const BUGHUNT_TRANSLATIONS = {
         codex_sec_comparison: "PAGKUKUMPARA NG MALI AT TAMA",
         codex_sec_rules: "MGA DAPAT TANDAAN SA LABAN",
         codex_sec_quiz: "SUBUKAN ANG NALALAMAN",
-        codex_copy_btn: "📋 Kopyahin ang Ayos",
+        codex_copy_btn: "Kopyahin ang Ayos",
         codex_copied_btn: "✔ Nakopya Na!",
         codex_why_works: "✔ Bakit ito gumagana:",
         codex_quiz_correct_msg: "✔ TAMA ANG IYONG SAGOT!",
         codex_quiz_wrong_msg: "✖ HINDI TAMA. ITO ANG DAHILAN:",
-        codex_quiz_retry_btn: "🔄 Subukan Ulit",
-        codex_quiz_practice_again: "🔄 Magsanay Ulit",
+        codex_quiz_retry_btn: "Subukan Ulit",
+        codex_quiz_practice_again: "Magsanay Ulit",
         codex_no_search_results: "Walang nahanap para sa \"{query}\".<br>Subukan maghanap ng ibang salita!",
 
         // Enemy Showcase Screen
@@ -419,11 +455,11 @@ const BUGHUNT_TRANSLATIONS = {
         showcase_voice_title: "NA-DECODE NA BOSES // LOG NG KALABAN",
         showcase_harm_title: "PAANO SINISIRA NG BUG NA ITO ANG CODE MO",
         showcase_target_error: "PUNTIRYANG ERROR SA PYTHON",
-        showcase_bad_label: "❌ KARANIWANG SIRANG BUG",
-        showcase_good_label: "✅ TAMANG AYOS SA PYTHON",
+        showcase_bad_label: "KARANIWANG SIRANG BUG",
+        showcase_good_label: "TAMANG AYOS SA PYTHON",
         showcase_rules_title: "MGA TUNTUNIN SA LABAN",
         showcase_tip_title: "GABAY AT PAYO NI FRAU",
-        showcase_retreat_btn: "🔙 Bumalik sa mga Yugto",
+        showcase_retreat_btn: "Bumalik sa mga Yugto",
         showcase_engage_btn: "SIMULAN ANG LABAN",
         showcase_return_btn: "✕ Bumalik sa Laban",
 
@@ -546,8 +582,11 @@ function applyTranslations() {
 
     // Update True Points in Menu
     const truePointsMenu = document.getElementById("true-points-menu");
-    if (truePointsMenu && typeof truePoints !== "undefined") {
-        truePointsMenu.textContent = t("true_points_label", { points: truePoints });
+    if (truePointsMenu) {
+        const pts = (typeof progress !== "undefined" && progress && typeof progress.truePoints === "number")
+            ? progress.truePoints
+            : ((typeof truePoints !== "undefined") ? truePoints : 0);
+        truePointsMenu.textContent = Number(pts).toLocaleString();
     }
 
     // Update Difficulty introduction if open

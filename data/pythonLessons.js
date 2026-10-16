@@ -430,7 +430,7 @@ const PYTHON_CODEX_DATA = {
             "id": "hard_comprehensions",
             "enemyId": "dictionary_golem",
             "enemyName": "Dictionary Golem",
-            "sprite": "css/Sprites/Hard/dictGolem.png",
+            "sprite": "css/Sprites/Hard/dictionaryGolem.png",
             "en": {
                 "title": "List & Dict Comprehensions",
                 "category": "Functional Python",

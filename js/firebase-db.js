@@ -498,8 +498,24 @@ async function executeFirebaseApi(path, method, body) {
         if (method === "POST") {
             const newProgress = body && body.progress;
             if (newProgress && typeof newProgress === "object") {
+                const userSnap = await userRef.get();
+                if (!userSnap.exists) {
+                    throw new Error("User record not found.");
+                }
+                const userData = userSnap.data() || {};
+                const prevProg = userData.progress || {};
+                const prevTP = Number(prevProg.truePoints || 0);
+                const rawProposedTP = parseInt(newProgress.truePoints, 10) || 0;
+
+                // Anti-tamper sanity check: prevent arbitrary point injections
+                let sanitizedTP = Math.max(0, Math.min(100000, rawProposedTP));
+                if (sanitizedTP > prevTP + 2500) {
+                    console.warn("Security Alert: Abnormal TP jump detected (" + prevTP + " -> " + sanitizedTP + "). Limiting increase.");
+                    sanitizedTP = prevTP + 500;
+                }
+
                 const cleanProgress = {
-                    truePoints: Math.max(0, Math.min(100000, parseInt(newProgress.truePoints, 10) || 0)),
+                    truePoints: sanitizedTP,
                     unlocks: {
                         easy: true,
                         normal: Boolean(newProgress.unlocks && newProgress.unlocks.normal),

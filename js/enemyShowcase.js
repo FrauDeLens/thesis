@@ -41,8 +41,8 @@ function getEnemyGuideInfo(enemy) {
                 "Provide the complete corrected solution to defeat this bug."
             ],
         tip: isFil
-            ? "I-drag ang mga code block sa tamang ayos gamit ang drag handle. I-exclude ang sirang distractor block gamit ang ❌ bago patakbuhin."
-            : "Drag code blocks into proper sequence using the drag handle. Exclude buggy distractor lines with ❌ before executing.",
+            ? "I-drag ang mga code block sa tamang ayos gamit ang drag handle. I-exclude ang sirang distractor block gamit ang [X] bago patakbuhin."
+            : "Drag code blocks into proper sequence using the drag handle. Exclude buggy distractor lines with [X] before executing.",
         bad: '# Corrupted ' + (enemy.topic || "Python") + ' distractor block',
         good: '# Purified ' + (enemy.topic || "Python") + ' solution blocks'
     };
@@ -218,7 +218,7 @@ function showEnemyIntro(enemy, isReferenceMode) {
         guideData.rules.forEach(function (rule) {
             const ruleDiv = document.createElement("div");
             ruleDiv.className = "guide-rule-item";
-            ruleDiv.innerHTML = "<span class='rule-item-icon'>🔹</span> <span class='rule-item-text'>" + (typeof escapeHtml === "function" ? escapeHtml(rule) : rule) + "</span>";
+            ruleDiv.innerHTML = "<span class='rule-item-icon'>✦</span> <span class='rule-item-text'>" + (typeof escapeHtml === "function" ? escapeHtml(rule) : rule) + "</span>";
             rulesContainer.appendChild(ruleDiv);
         });
     }
@@ -227,8 +227,8 @@ function showEnemyIntro(enemy, isReferenceMode) {
     const tipEl = document.getElementById("showcase-enemy-tactical-tip");
     if (tipEl) {
         tipEl.textContent = guideData.tip || (isFil
-            ? "I-exclude ang sirang distractor gamit ang ❌, at i-drag ang blocks sa tamang pagkakasunod-sunod bago mag-Run & Execute."
-            : "Exclude buggy distractor lines with ❌, then drag blocks into proper logical sequence before clicking Run & Execute.");
+            ? "I-exclude ang sirang distractor gamit ang [X], at i-drag ang blocks sa tamang pagkakasunod-sunod bago mag-Run & Execute."
+            : "Exclude buggy distractor lines with [X], then drag blocks into proper logical sequence before clicking Run & Execute.");
     }
 
     // Side-by-side Bad vs Good Code
@@ -243,14 +243,14 @@ function showEnemyIntro(enemy, isReferenceMode) {
         if (retreatBtn) retreatBtn.style.display = "none";
         if (continueBtn) {
             const resumeText = isFil ? "ITULOY ANG LABAN" : "RESUME BATTLE";
-            continueBtn.innerHTML = "<span class='sword-icon'>⚔️</span><span>" + resumeText + "</span><span class='arrow-icon'>▶</span>";
+            continueBtn.innerHTML = "<span>" + resumeText + "</span><span class='arrow-icon'>▶</span>";
         }
     } else {
         if (closeBtn) closeBtn.style.display = "none";
         if (retreatBtn) retreatBtn.style.display = "inline-flex";
         if (continueBtn) {
             const engageText = isFil ? "SIMULAN ANG LABAN" : "ENGAGE IN BATTLE";
-            continueBtn.innerHTML = "<span class='sword-icon'>⚔️</span><span>" + engageText + "</span><span class='arrow-icon'>▶</span>";
+            continueBtn.innerHTML = "<span>" + engageText + "</span><span class='arrow-icon'>▶</span>";
         }
     }
 
